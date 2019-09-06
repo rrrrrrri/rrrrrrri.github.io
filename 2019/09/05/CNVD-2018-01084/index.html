@@ -23,7 +23,9 @@
 <meta property="og:image" content="http://yoursite.com/img/CNVD-2018-01084-5.png">
 <meta property="og:image" content="http://yoursite.com/img/CNVD-2018-01084-6.png">
 <meta property="og:image" content="http://yoursite.com/img/CNVD-2018-01084-7.png">
-<meta property="og:updated_time" content="2019-09-05T12:54:28.440Z">
+<meta property="og:image" content="http://yoursite.com/img/CNVD-2018-01084-8.png">
+<meta property="og:image" content="http://yoursite.com/img/CNVD-2018-01084-9.png">
+<meta property="og:updated_time" content="2019-09-06T02:04:13.931Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CNVD-2018-01084 漏洞复现">
 <meta name="twitter:description" content="CNVD-2018-01084 是 Dlink 系列路由器的一个漏洞，影响设备包括 DIR 615/645/815 路由器。 漏洞存在于 /htdocs/cgibin 二进制文件中，漏洞成因是 service.cgi 中未经任何过滤检查就将用户的输入拼接到原始命令中，导致任意代码执行。">
@@ -274,6 +276,18 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">use &apos;elevateprivileges&apos; to allow or deny QEMU process to elevate its privileges by blacklisting all set*uid|gid system calls.</span><br><span class="line">The value &apos;children&apos; will deny set*uid|gid system calls for main QEMU process but will allow forks and execves to run unprivileged</span><br></pre></td></tr></table></figure>
 
 <p>不知道是不是官方添加的 execve 系统调用？</p>
+<p>最后看一下官方的修复手段：</p>
+<p>下载比较新的固件(1.03 以上)，用 Ghidra 打开，直接定位到存在漏洞的函数附近：</p>
+<p><img src="/img/CNVD-2018-01084-8.png" alt></p>
+<p>发现函数的参数传递变成了 文件路径 + 参数形式。进入函数内部：</p>
+<p><img src="/img/CNVD-2018-01084-9.png" alt></p>
+<p>修复手段简单粗暴，直接 fork 出一个新的进程，然后关闭 stdout，利用 execl 执行命令。</p>
+<p>由于 execl 的特性，我们再注入的命令就无效了。例如下面两个程序：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"execl test\n"</span>);</span><br><span class="line">        <span class="keyword">char</span>* var1 = <span class="string">"/bin/ls"</span>;</span><br><span class="line">        <span class="keyword">char</span>* var2 = <span class="string">"ls"</span>;</span><br><span class="line">        <span class="keyword">char</span>* var3 = <span class="string">"-la"</span>;</span><br><span class="line">        <span class="keyword">char</span>* var4 = <span class="string">"/etc/passwd"</span>;</span><br><span class="line">        <span class="keyword">int</span> ret = execl(var1, var2, var3, var4, (<span class="keyword">char</span>*)<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"execl test\n"</span>);</span><br><span class="line">        <span class="keyword">char</span>* var1 = <span class="string">"/bin/ls"</span>;</span><br><span class="line">        <span class="keyword">char</span>* var2 = <span class="string">"ls"</span>;</span><br><span class="line">        <span class="keyword">char</span>* var3 = <span class="string">"-la"</span>;</span><br><span class="line">        <span class="keyword">char</span>* var4 = <span class="string">"/etc/passwd&amp;ls&amp;"</span>;</span><br><span class="line">        <span class="keyword">int</span> ret = execl(var1, var2, var3, var4, (<span class="keyword">char</span>*)<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>大家可以自行编译运行查看结果。</p>
 
       
 
