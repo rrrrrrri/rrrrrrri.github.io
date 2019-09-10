@@ -7,15 +7,27 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>CataLpa&#39;s Home</title>
+  <title>QEMU 网络配置一把梭 | CataLpa&#39;s Home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="CataLpa&#39;s Home">
-<meta property="og:url" content="http://yoursite.com/page/4/index.html">
+  <meta name="description" content="最近复现一些路由器的漏洞，由于架构和主机不一样，所以需要利用 qemu 进行固件模拟。在配置模拟环境的时候遇到了致命的问题–QEMU 虚拟机不能联通网络。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="QEMU 网络配置一把梭">
+<meta property="og:url" content="http://yoursite.com/2019/09/10/QEMU-networking/index.html">
 <meta property="og:site_name" content="CataLpa&#39;s Home">
+<meta property="og:description" content="最近复现一些路由器的漏洞，由于架构和主机不一样，所以需要利用 qemu 进行固件模拟。在配置模拟环境的时候遇到了致命的问题–QEMU 虚拟机不能联通网络。">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/img/QEMU-networking-1.png">
+<meta property="og:image" content="http://yoursite.com/img/QEMU-networking-2.png">
+<meta property="og:image" content="http://yoursite.com/img/QEMU-networking-3.png">
+<meta property="og:image" content="http://yoursite.com/img/QEMU-networking-4.png">
+<meta property="og:image" content="http://yoursite.com/img/QEMU-networking-5.png">
+<meta property="og:image" content="http://yoursite.com/img/QEMU-networking-6.png">
+<meta property="og:image" content="http://yoursite.com/img/QEMU-networking-7.png">
+<meta property="og:updated_time" content="2019-09-10T07:46:00.768Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CataLpa&#39;s Home">
+<meta name="twitter:title" content="QEMU 网络配置一把梭">
+<meta name="twitter:description" content="最近复现一些路由器的漏洞，由于架构和主机不一样，所以需要利用 qemu 进行固件模拟。在配置模拟环境的时候遇到了致命的问题–QEMU 虚拟机不能联通网络。">
+<meta name="twitter:image" content="http://yoursite.com/img/QEMU-networking-1.png">
   
     <link rel="alternative" href="/atom.xml" title="CataLpa&#39;s Home" type="application/atom+xml">
   
@@ -141,32 +153,129 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-reversingkr4-5" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-QEMU-networking" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/09/04/reversingkr4-5/">Reversing.kr 4 5</a>
+    <h1 class="article-title" itemprop="name">
+      QEMU 网络配置一把梭
     </h1>
   
 
         
-        <a href="/2018/09/04/reversingkr4-5/" class="archive-article-date">
-  	<time datetime="2018-09-03T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-04</time>
+        <a href="/2019/09/10/QEMU-networking/" class="archive-article-date">
+  	<time datetime="2019-09-09T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-10</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="04-Music-Player"><a href="#04-Music-Player" class="headerlink" title="04 Music Player"></a>04 Music Player</h2><p>第四题增加了一些难度，打开文件，是一个简单的音乐播放器，但是载入的歌曲最多只能播放1分钟，根据题目提示，如果能够使它播放超过一分钟，就能看到flag。  </p>
-        
+        <p>最近复现一些路由器的漏洞，由于架构和主机不一样，所以需要利用 qemu 进行固件模拟。在配置模拟环境的时候遇到了致命的问题–QEMU 虚拟机不能<strong>联通网络</strong>。</p>
+<a id="more"></a>
+
+<p>其实之前复现 CVE 的时候就遇到过，问了几个大佬也没有好的解决办法，最后按照某篇教程配置了一下，用户模式(单文件模拟)可以连接网络，鉴于之前也是参考网上的教程，并没有详细了解背后的原理，我专门去收集了一批参考资料，其中最有用的是这两篇文章：</p>
+<p><a href="https://blog.csdn.net/u014022631/article/details/53411557" target="_blank" rel="noopener">https://blog.csdn.net/u014022631/article/details/53411557</a></p>
+<p><a href="https://shadow-file.blogspot.com/2013/05/running-debian-mips-linux-in-qemu.html" target="_blank" rel="noopener">https://shadow-file.blogspot.com/2013/05/running-debian-mips-linux-in-qemu.html</a></p>
+<p>感谢这两篇文章的作者，解决了这个一直困扰着我的问题！</p>
+<p>有关前篇文章可在 <a href="https://wzt.ac.cn/2019/03/19/CVE-2018-5767/" target="_blank" rel="noopener">https://wzt.ac.cn/2019/03/19/CVE-2018-5767/</a> 这里找到</p>
+<h2 id="在-Linux-下如何上网？"><a href="#在-Linux-下如何上网？" class="headerlink" title="在 Linux 下如何上网？"></a>在 Linux 下如何上网？</h2><p>说到上网，这是一台计算机的灵魂功能，不能联网的电脑还不如拿去卖废品。。。</p>
+<p>无论哪种操作系统，只要想连接网络，就必须拥有至少一张网卡，根据计算机网络的相关知识，网卡充当了转发数据帧的重要角色，在 Linux 终端中输入命令 ifconfig 就能查看当前系统中处于活跃状态的网卡信息(ifconfig -a 可查看所有网卡信息)。例如我的机器上网卡信息如下：</p>
+<p><img src="/img/QEMU-networking-1.png" alt></p>
+<p>现在我有 2 张网卡，第一个是真正能够上网的网卡 enp0s5，第二个是本地环回接口，如果想要测试你的网卡本身是否存在问题，就可以 ping 环回口。</p>
+<p>其实一般情况下默认网卡的名称应该是 eth0 ，至于为什么某些机器网卡名称很奇怪，我们下面再说。</p>
+<p>当一个应用程序产生了一个网络请求，经过运输层、网络层、到达网卡，再通过网线送到指定位置(具体流程参考计算机网络相关内容)。</p>
+<h2 id="关于-parallels-Vmware-等虚拟机"><a href="#关于-parallels-Vmware-等虚拟机" class="headerlink" title="关于 parallels/Vmware 等虚拟机"></a>关于 parallels/Vmware 等虚拟机</h2><p>所谓虚拟机其本质也是一台独立的计算机，如果虚拟机想要上网，也需要网卡这一设备，但是硬件设备只有一个，又不能同时给物理机和虚拟机使用，这时候虚拟化软件就起作用了，它们会利用软件模拟出各种硬件设备，其中就包含网卡，这些模拟的设备在虚拟机看来和物理设备没什么差别，自然就能正常使用。</p>
+<p>上面提到了网卡名称的问题，如果你用的是 VMware 虚拟机，那么网卡名称大概率会是 eth0，其实网卡叫什么并没有什么影响，它只是一个代号，不同品牌的虚拟化软件在模拟网卡的时候有不一样的策略，所以在我的 parallels 虚拟机上面默认叫做 enp0s5。</p>
+<h2 id="关于-QEMU-的网络策略"><a href="#关于-QEMU-的网络策略" class="headerlink" title="关于 QEMU 的网络策略"></a>关于 QEMU 的网络策略</h2><p>终于说到重点了，如果你对 QEMU 有所了解的话，不难发现它本质上也是一款虚拟化软件，不过和 VMware 这些商业软件不同，它是开源免费的，并且功能定位是利用现有的硬件资源去模拟各种架构的系统，利用它我们可以做很多有意思的事情，至少不必花钱去购买各种 IOT 设备就可以模拟其中的固件了！</p>
+<p>不过 QEMU 还存在一些缺点，其中一个最显然的问题就是配置比较麻烦，特别是网络相关的配置。</p>
+<p>QEMU 提供 4 种网络通信方法，它们分别是：</p>
+<ol>
+<li>User mode stack：用户协议栈方式，这种方式的大概原理是在 QEMU 进程中实现一个协议栈，这个协议栈可以被视为一个主机与虚拟机之间的 NAT 服务器，它负责将 QEMU 所模拟的系统网络请求转发到外部网卡上面，从而实现网络通信。但是不能将外面的请求转发到虚拟机内部，并且虚拟机 VLAN 中的每个接口必须放在 10.0.2.0 子网中。</li>
+<li>socket： 为 VLAN 创建套接字，并把多个 VLAN 连接起来。</li>
+<li>TAP/bridge：最重要的一种通信方式，我们想要实现 QEMU 虚拟机和外部通信就需要使用这种方式。</li>
+<li>VDE：也是用于连接 VLAN 的，如果没有 VLAN 连接需求基本用不到。</li>
+</ol>
+<p>重点解释一下 tap 模式，之前说了如果计算机想要访问网络，必须有网卡的支持，那么我们可以仿照 VMware 的方式，给 QEMU 的虚拟机虚拟化一张网卡，这样就可以实现网络通信了。</p>
+<p>TAP 属于 LInux 内核支持的一种虚拟化网络设备，还有 TUN 也属于这种设备，它们完全由软件模拟实现，TUN/TAP 负责在内核协议栈和用户进程之间传送协议数据单元。TUN 工作在网络层，而 TAP 工作在数据链路层，TUN 负责与应用程序交换 IP 数据包，而 TAP 与应用程序交换以太网帧。所以 TUN 经常涉及路由，而 TAP 常用于网络桥接。</p>
+<p>所谓桥接就是在两张网卡之间搭一座桥，这样呢一端有数据就可以通过桥走到另一端，对于实现 QEMU 虚拟机通信正合适。桥接技术在 VMWARE 中非常常用，我们设置虚拟机网络的时候就能看见桥接选项，实际上 VMware 在物理机上虚拟化了 3 张网卡，分别负责桥接、仅主机、共享网络。</p>
+<h2 id="具体的配置过程"><a href="#具体的配置过程" class="headerlink" title="具体的配置过程"></a>具体的配置过程</h2><p>（<strong>首先确定你的机器支持 TAP/TUN 虚拟设备</strong>）</p>
+<p>既然要搭桥，先把工具准备好，安装如下软件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt-get install bridge-utils        # 虚拟网桥工具</span><br><span class="line">apt-get install uml-utilities       # UML（User-mode linux）工具</span><br></pre></td></tr></table></figure>
+
+<p>然后新建一座桥(添加网桥，<strong>大部分操作都需要 root 权限</strong>)：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">ifconfig &lt;你的网卡名称(能上网的那张)&gt; down    # 首先关闭宿主机网卡接口</span><br><span class="line">brctl addbr br0                     # 添加一座名为 br0 的网桥</span><br><span class="line">brctl addif br0 &lt;你的网卡名称&gt;        # 在 br0 中添加一个接口</span><br><span class="line">brctl stp br0 off                   # 如果只有一个网桥，则关闭生成树协议</span><br><span class="line">brctl setfd br0 1                   # 设置 br0 的转发延迟</span><br><span class="line">brctl sethello br0 1                # 设置 br0 的 hello 时间</span><br><span class="line">ifconfig br0 0.0.0.0 promisc up     # 启用 br0 接口</span><br><span class="line">ifconfig &lt;你的网卡名称&gt; 0.0.0.0 promisc up    # 启用网卡接口</span><br><span class="line">dhclient br0                        # 从 dhcp 服务器获得 br0 的 IP 地址</span><br><span class="line">brctl show br0                      # 查看虚拟网桥列表</span><br><span class="line">brctl showstp br0                   # 查看 br0 的各接口信息</span><br></pre></td></tr></table></figure>
+
+<p>当配置完成之后执行 ifconfig 结果应该如下：</p>
+<p><img src="/img/QEMU-networking-2.png" alt></p>
+<p>此时网桥已经得到了 IP，并且能够连接网络的网卡 enp0s5 也加入了网桥，此时我们的网桥状态大致是这种情况</p>
+<p><img src="/img/QEMU-networking-3.png" alt></p>
+<p>桥的一端连接到 enp0s5，我们只需要再把另一端接到 QEMU 虚拟机(准确的说是 VLAN )上面就可以了！</p>
+<p>创建一个 TAP 设备，作为 QEMU 一端的接口：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tunctl -t tap0 -u root              # 创建一个 tap0 接口，只允许 root 用户访问</span><br><span class="line">brctl addif br0 tap0                # 在虚拟网桥中增加一个 tap0 接口</span><br><span class="line">ifconfig tap0 0.0.0.0 promisc up    # 启用 tap0 接口</span><br><span class="line">brctl showstp br0                   # 显示 br0 的各个接口</span><br></pre></td></tr></table></figure>
+
+<p>此时网桥的信息应该是：</p>
+<p><img src="/img/QEMU-networking-4.png" alt></p>
+<p>这样就相当于把两张网卡通过网桥连起来了：</p>
+<p><img src="/img/QEMU-networking-5.png" alt></p>
+<p>现在只需要启动镜像，指定网络连接模式是 TAP 即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo qemu-system-mipsel -M malta -kernel vmlinux-3.2.0-4-4kc-malta -hda debian_squeeze_mipsel_standard.qcow2 -append &quot;root=/dev/sda1 console=tty0&quot; -nographic -net nic -net tap,ifname=tap0,script=no,downscript=no</span><br></pre></td></tr></table></figure>
+
+<p>特别说明一下参数含义：-net nic 表示希望 QEMU 在虚拟机中创建一张虚拟网卡，-net tap 表示连接类型为 TAP，并且指定了网卡接口名称(就是刚才创建的 tap0，相当于把虚拟机接入网桥)。</p>
+<p>script 和 downscript 两个选项的作用是告诉 QEMU 在启动系统的时候是否调用脚本自动配置网络环境，如果这两个选项为空，那么 QEMU 启动和退出时会自动选择第一个不存在的 tap 接口(通常是 tap0)为参数，调用脚本 /etc/qemu-ifup 和 /etc/qemu-ifdown。由于我们已经配置完毕，所以这两个参数设置为 no 即可。</p>
+<p>这条命令是我模拟 MIPS 固件使用的，其他结构可参考 QEMU 的一些使用方法。</p>
+<p>等到镜像 boot 完毕，在命令行中 ping 一下百度：</p>
+<p><img src="/img/QEMU-networking-6.png" alt></p>
+<p>成功连接网络！</p>
+<h2 id="还有一些问题！"><a href="#还有一些问题！" class="headerlink" title="还有一些问题！"></a>还有一些问题！</h2><ol>
+<li><p>有可能在某个特殊的情况你的主机不能连接网络，用 ifconfig 查看一下网桥和网卡的配置，如果网卡有 IP 地址但是网桥没有，尝试执行 sudo dhclient br0 为网桥重新指派一枚 IP。</p>
+</li>
+<li><p>一座网桥只有两端吗(或者说只能连接两个接口吗)？并不是，例如我的 mac 上面有一座网桥，查看信息如下：</p>
+<p><img src="/img/QEMU-networking-7.png" alt></p>
+</li>
+</ol>
+<p>可以看到这座网桥拥有至少 4 个接口，可以类比成胶州湾大桥，一座桥连接了多个不同的地点。</p>
+<ol start="3">
+<li><p>这样配置之后虽然可以使用，但是一旦重启了系统配置就会丢失，所以我们可以编写之前提到的那两个脚本来实现自动配置和恢复，但是不推荐编辑这两个脚本，因为很可能会影响到正常的网络通信，造成更大的困扰。</p>
+<p>我们编写一个 python 脚本，内部写好前面提到的命令，每次需要使用的时候执行一下脚本就可以了。</p>
+</li>
+</ol>
+
       
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>Buy me a cup of coffee~<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/z.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/w.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -175,16 +284,75 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/09/04/reversingkr4-5/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/09/10/QEMU-networking/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2019/09/05/CNVD-2018-01084/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">CNVD-2018-01084 漏洞复现</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -199,643 +367,48 @@
         </div>
         
         
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-reversingkr1-3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/09/02/reversingkr1-3/">Reversing.kr 1-3</a>
-    </h1>
-  
-
-        
-        <a href="/2018/09/02/reversingkr1-3/" class="archive-article-date">
-  	<time datetime="2018-09-01T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="01-Easy-Crack"><a href="#01-Easy-Crack" class="headerlink" title="01 Easy Crack"></a>01 Easy Crack</h2><p>基础题，不需要动态分析，直接丢到IDA中，Shift+F12搜索字符串，发现有 “Congratulation !!” 以及 “Incorrect Password” 的字样，定位到相关函数，就能看到处理逻辑：</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/09/02/reversingkr1-3/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#在-Linux-下如何上网？"><span class="toc-number">1.</span> <span class="toc-text">在 Linux 下如何上网？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关于-parallels-Vmware-等虚拟机"><span class="toc-number">2.</span> <span class="toc-text">关于 parallels/Vmware 等虚拟机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关于-QEMU-的网络策略"><span class="toc-number">3.</span> <span class="toc-text">关于 QEMU 的网络策略</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#具体的配置过程"><span class="toc-number">4.</span> <span class="toc-text">具体的配置过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#还有一些问题！"><span class="toc-number">5.</span> <span class="toc-text">还有一些问题！</span></a></li></ol>
+                    </div>
+                </span>
             </div>
         </div>
         
-        
     </div>
 </aside>
 
 
 
-
-  
-    <article id="post-jarvisoj_pwn_xman_0-4" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/07/01/jarvisoj_pwn_xman_0-4/">Jarvis OJ pwn [XMAN] 0-4</a>
-    </h1>
-  
-
-        
-        <a href="/2018/07/01/jarvisoj_pwn_xman_0-4/" class="archive-article-date">
-  	<time datetime="2018-06-30T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>pwn这方面好久没有搞了，有些生疏。。。正好在 jarvis oj 上面看到几个栈溢出的 pwn 题目，感觉难度不是很高，拿来练练手，其中还真有我没见过的，这回学到了。</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/07/01/jarvisoj_pwn_xman_0-4/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-angr-sctf-babymips" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/21/angr-sctf-babymips/">符号执行实例–SCTF2018 babymips</a>
-    </h1>
-  
-
-        
-        <a href="/2018/06/21/angr-sctf-babymips/" class="archive-article-date">
-  	<time datetime="2018-06-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="一-前言"><a href="#一-前言" class="headerlink" title="一.  前言"></a>一.  前言</h2><p>鼓捣符号执行也一段时间了，不过都是断断续续的，并没有深入挖掘过其中的奥妙。。。。 </p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/angr//" class="article-tag-list-link color5">angr</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/21/angr-sctf-babymips/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-unlink" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/27/unlink/">堆溢出之 double free 及 unlink</a>
-    </h1>
-  
-
-        
-        <a href="/2018/05/27/unlink/" class="archive-article-date">
-  	<time datetime="2018-05-27T05:10:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-27</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="一-前言"><a href="#一-前言" class="headerlink" title="一. 前言"></a>一. 前言</h2><p><strong>本文的内容包括我自己的一些理解，如果存在错误或不严谨之处，还请大佬们斧正。</strong></p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/05/27/unlink/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-格式化字符串漏洞" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/09/格式化字符串漏洞/">栈溢出之 格式化字符串漏洞</a>
-    </h1>
-  
-
-        
-        <a href="/2018/04/09/格式化字符串漏洞/" class="archive-article-date">
-  	<time datetime="2018-04-08T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><em>本篇文章将会结合一个例子简要的介绍一下格式化字符串漏洞的原理以及应用。</em>  </p>
-<p>如果说“交流”是人类最基础的能力的话，那么将这种结论映射到程序上，“输出结果”就是一个程序最基础的功能了。<br>我们知道，一个合格的计算机程序应该包含以下功能： 接收数据–处理数据–输出数据，由此可见，输出结果是重要且最为常用的，但是就控制台应用程序而言，你能相信几乎每天都在使用的 “printf” 如果用法不当将会产生严重的安全隐患吗？</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/pwn//" class="article-tag-list-link color4">pwn</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/09/格式化字符串漏洞/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-angr深入理解" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/06/angr深入理解/">angr深入理解1–CLE装载器和angr.Project</a>
-    </h1>
-  
-
-        
-        <a href="/2018/04/06/angr深入理解/" class="archive-article-date">
-  	<time datetime="2018-04-05T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>上一篇文章简要的说明了有关于angr的一些基本信息并进行了基本的操作，在这篇文章里，我们会了解一下关于angr装载文件的流程。</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/angr//" class="article-tag-list-link color5">angr</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/06/angr深入理解/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-angr框架初探" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/04/angr框架初探/">angr框架初探</a>
-    </h1>
-  
-
-        
-        <a href="/2018/04/04/angr框架初探/" class="archive-article-date">
-  	<time datetime="2018-04-03T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h4><p>在我的印象里，逆向工程的实用工具似乎只有像IDA，OD，gdb这样的软件，它们扮演的更多是辅助类型的角色，人脑和这些软件就像战场上的将军和士兵，士兵只是按照命令去执行任务，而真正发号施令的却是将军。  </p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/angr//" class="article-tag-list-link color5">angr</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/04/angr框架初探/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-爬虫" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/03/爬虫/">第一个爬虫--爬取OJ代码(SDUSTOJ外网)</a>
-    </h1>
-  
-
-        
-        <a href="/2018/04/03/爬虫/" class="archive-article-date">
-  	<time datetime="2018-04-02T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-03</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p> 一、 <strong>环境搭建</strong></p>
-<p>使用python3.X + beautifulsoup4 + lxml + request + html实现。</p>
-<p>首先当然要安装python3.x 和 pip</p>
-<p>然后使用pip安装beautifulsoup4、html以及request模块。</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/爬虫//" class="article-tag-list-link color3">爬虫</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/03/爬虫/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-ROP" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/02/ROP/">栈溢出之ROP</a>
-    </h1>
-  
-
-        
-        <a href="/2018/04/02/ROP/" class="archive-article-date">
-  	<time datetime="2018-04-02T03:40:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>上一篇文章简单的介绍了栈溢出攻击的一种方式 –hijack GOT,即覆写GOT表而间接控制程序，这篇文章会介绍另一种攻击方式 –ROP，即返回导向编程。</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/02/ROP/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
   
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
-    </nav>
+  
+
+  
+
+  
+
+  
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="https://billts.site/extra_css/gitment.css">
+<script src="https://billts.site/js/gitment.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "http://yoursite.com/2019/09/10/QEMU-networking/",
+  owner: 'rrrrrrri',
+  repo: 'rrrrrrri.github.io',
+  oauth: {
+    client_id: 'b02ae2fd83142bce4350',
+    client_secret: 'dad31d4a347d05c4f146be764e2848dc72cbd576',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
   
 
 
@@ -858,8 +431,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
