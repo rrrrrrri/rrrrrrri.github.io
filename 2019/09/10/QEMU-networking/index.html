@@ -23,7 +23,7 @@
 <meta property="og:image" content="http://yoursite.com/img/QEMU-networking-5.png">
 <meta property="og:image" content="http://yoursite.com/img/QEMU-networking-6.png">
 <meta property="og:image" content="http://yoursite.com/img/QEMU-networking-7.png">
-<meta property="og:updated_time" content="2019-09-10T07:46:00.768Z">
+<meta property="og:updated_time" content="2019-09-10T07:47:27.485Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="QEMU 网络配置一把梭">
 <meta name="twitter:description" content="最近复现一些路由器的漏洞，由于架构和主机不一样，所以需要利用 qemu 进行固件模拟。在配置模拟环境的时候遇到了致命的问题–QEMU 虚拟机不能联通网络。">
@@ -237,11 +237,8 @@
 </li>
 </ol>
 <p>可以看到这座网桥拥有至少 4 个接口，可以类比成胶州湾大桥，一座桥连接了多个不同的地点。</p>
-<ol start="3">
-<li><p>这样配置之后虽然可以使用，但是一旦重启了系统配置就会丢失，所以我们可以编写之前提到的那两个脚本来实现自动配置和恢复，但是不推荐编辑这两个脚本，因为很可能会影响到正常的网络通信，造成更大的困扰。</p>
+<p>这样配置之后虽然可以使用，但是一旦重启了系统配置就会丢失，所以我们可以编写之前提到的那两个脚本来实现自动配置和恢复，但是不推荐编辑这两个脚本，因为很可能会影响到正常的网络通信，造成更大的困扰。</p>
 <p>我们编写一个 python 脚本，内部写好前面提到的命令，每次需要使用的时候执行一下脚本就可以了。</p>
-</li>
-</ol>
 
       
 
