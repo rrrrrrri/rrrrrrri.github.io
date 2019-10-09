@@ -7,15 +7,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | CataLpa&#39;s Home</title>
+  <title>Android 学习 day1 | CataLpa&#39;s Home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="CataLpa&#39;s Home">
-<meta property="og:url" content="http://yoursite.com/archives/page/5/index.html">
+  <meta name="description" content="目录组织开发过程中最常用的目录是 app 目录，其余目录基本是 AS 和 gradle 自动生成的，初学阶段暂时不关注这些自动生成的文件。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 学习 day1">
+<meta property="og:url" content="http://yoursite.com/2019/10/09/Android_code_day1/index.html">
 <meta property="og:site_name" content="CataLpa&#39;s Home">
+<meta property="og:description" content="目录组织开发过程中最常用的目录是 app 目录，其余目录基本是 AS 和 gradle 自动生成的，初学阶段暂时不关注这些自动生成的文件。">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/img/android_code1.png">
+<meta property="og:updated_time" content="2019-10-09T13:39:56.811Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CataLpa&#39;s Home">
+<meta name="twitter:title" content="Android 学习 day1">
+<meta name="twitter:description" content="目录组织开发过程中最常用的目录是 app 目录，其余目录基本是 AS 和 gradle 自动生成的，初学阶段暂时不关注这些自动生成的文件。">
+<meta name="twitter:image" content="http://yoursite.com/img/android_code1.png">
   
     <link rel="alternative" href="/atom.xml" title="CataLpa&#39;s Home" type="application/atom+xml">
   
@@ -141,171 +147,257 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Android_code_day1" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android 学习 day1
+    </h1>
+  
+
+        
+        <a href="/2019/10/09/Android_code_day1/" class="archive-article-date">
+  	<time datetime="2019-10-08T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-09</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="目录组织"><a href="#目录组织" class="headerlink" title="目录组织"></a>目录组织</h2><p>开发过程中最常用的目录是 app 目录，其余目录基本是 AS 和 gradle 自动生成的，初学阶段暂时不关注这些自动生成的文件。</p>
+<a id="more"></a>
+
+<p>/app/main/java 目录下面存放的是项目代码文件，平时编写的源代码就保存在这个目录下面。</p>
+<p>/app/main/res 是资源文件夹，里面又存在许多其他文件夹，其中 drawable 存放图片文件，layout 存放布局文件，mipmap 存放图标文件，values 存放字符串等资源，保存图片的文件夹又会带有很多后缀，例如：drawable-hdpi、drawablep-xhdpi 等，这些后缀区别的不同的分辨率，因为不同型号的设备屏幕分辨率也不同，为了确保用户最好的体验，系统会自动根据当前设备的分辨率取出最佳的图片使用，所以通常建议开发者准备不同分辨率的图像文件分别放在这些文件夹中，但是某些情况下这个条件不好实现，此时可以直接将图片放在 xxhdpi 文件夹下面。</p>
+<h2 id="创建-Activity"><a href="#创建-Activity" class="headerlink" title="创建 Activity"></a>创建 Activity</h2><p>Activity 是用户看得见摸得着的界面，一个应用程序 Activity 的制作水平高低很大程度上决定了这款应用能否吸引用户使用。</p>
+<p>创建 AS 项目的时候会自动创建一个 MainActivity，我们也可以继续创建更多的 Activity，创建方法：右键点击 app 文件夹，New -&gt; Activity -&gt; Empty Activity 即可新建一个 Activity。</p>
+<p>需要注意的是 AS 在创建一个新的 Activity 之后会自动帮我们完成 3 件事：</p>
+<ol>
+<li>创建 DisplayMessageActivity 文件</li>
+<li>创建 activity_display_message.xml 文件</li>
+<li>在 AndroidManifest.xml 文件中注册新建的 Activity。</li>
+</ol>
+<p>但是用另一些 IDE 的时候可能不会在 AndroidManifest.xml 中注册，此时需要我们手动注册。</p>
+<p>创建 Intent 之后 AS 会自动创建布局文件，位于 /res/layout 中，并且会自动在代码窗口打开，通过 layout 文件我们可以自定义 Activity 界面样式，有两种方法，一是直接编写 xml 代码，二是通过 AS 自带的编辑器图形化设计。</p>
+<p><strong>关于 AndroidManifest.xml 的配置</strong></p>
+<p>新建的 Activity 需要确定它是否是主 Activity，如果是，则需要添加如下内容</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.intent.action.MAIN"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.LAUNCHER"</span> /&gt;</span><span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>所谓主 Activity 就是我们在手机上点击 App 图标之后弹出来的那个界面。</p>
+<p>另外的一些 Activity 可能也需要通过 intent-filter 来进一步配置。</p>
+<p>android 的设计比较特殊，不同应用之间可以互相调用各自的 Activity(被调用程序需要同意)，这样应用就可以实现很多功能，例如我们想要设计一个程序，包含一个按钮，点击按钮就打开浏览器访问 <a href="http://www.baidu.com。" target="_blank" rel="noopener">www.baidu.com。</a></p>
+<p>如果应用之间不能互相调用 Activity 的话，开发者就需要自己实现一个浏览器来满足设计功能，这几乎是不可能的。</p>
+<p>但是通过 android 的特性我们可以简单轻松地调用浏览器开放的 Activity，从而访问百度。</p>
+<p>调用其他 Activity 需要通过 Intent 来实现。顾名思义，当前 Activity 有一个调用其他 Activity 的 “意图”，系统收到这种意图之后就会询问能够满足条件的应用，从而完成 Activity 间调用。</p>
+<p>Intent 的使用非常简单，分为两种情况，一个是显示，另一个是隐式的。</p>
+<p>显示的 Intent 意思就是我们指明要调用哪个 Activity，系统会直接通知对应的 Activity 启动，而隐式的调用类似于广播通知，想要调用其他 Activity 的程序发布一个意图，系统根据这个意图中的约束信息查找到符合条件的 Activity，然后调用之。</p>
+<p>由于多数情况下我们并不知道其他应用的 Activity 叫什么，所以显示的 Intent 一般用于调用自己程序的 Activity，隐式的 Intent 用于和其他程序通信。</p>
+<p>显示 Intent</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"></span><br><span class="line">        Button button1 = (Button) findViewById(R.id.button);</span><br><span class="line">        button1.setOnClickListener(<span class="keyword">new</span> View.OnClickListener()&#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View V)</span></span>&#123;</span><br><span class="line">                Toast.makeText(MainActivity.<span class="keyword">this</span>, <span class="string">"You clicked Button!"</span>, Toast.LENGTH_SHORT).show();</span><br><span class="line">                Intent intent = <span class="keyword">new</span> Intent(MainActivity.<span class="keyword">this</span>, SecondActivity.class);</span><br><span class="line">                startActivity(intent);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>例子中实例化了一个 Intent 对象，构造函数的参数分别是当前 Activity 的 context 上下文和被调用 Activity 的类对象。</p>
+<p>这就相当于 MainActivity 显示地通告系统想要调用 SecondActivity。最后需要使用 startActivity 方法启动 Intent。</p>
+<p>隐式 Intent</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">    setContentView(R.layout.activity_main);</span><br><span class="line"></span><br><span class="line">    Button button1 = (Button) findViewById(R.id.button);</span><br><span class="line">    button1.setOnClickListener(<span class="keyword">new</span> View.OnClickListener()&#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View V)</span></span>&#123;</span><br><span class="line">            Toast.makeText(MainActivity.<span class="keyword">this</span>, <span class="string">"You clicked Button!"</span>, Toast.LENGTH_SHORT).show();</span><br><span class="line">            Intent intent = <span class="keyword">new</span> Intent(Intent.ACTION_VIEW);    <span class="comment">// 隐式 Intent</span></span><br><span class="line">            intent.setData(Uri.parse(<span class="string">"http://www.baidu.com"</span>));</span><br><span class="line">            startActivity(intent);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>依旧是实例化了 Intent 对象，但是这次构造函数传入的参数是 Intent.ACTION_VIEW 常量。</p>
+<p>这个常量是 Intent 类定义的，API 文档显示它用于向用户显示数据，是一种最为常见的数据操作。</p>
+<p>它可以用在许多条件下面，例如查询联系人、拨打电话、打开网页等等。</p>
+<p>利用 intent 的 setData 方法设置这个 Intent 的参数，例子中设置了一个 Uri 对象，解析了 <a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a> 这个网页为 Uri 格式，然后作为 Intent 的参数传递。</p>
+<p>Intent 启动之后系统会查找最符合条件的 Activity，此时浏览器的 Activity 作出相应，接受了提供的参数并访问了百度网站。</p>
+<p>隐式的 Intent 也可以用于访问自己编写的 Activity，例如我们创建一个名为 ThirdActivity 的 Activity，要想让这个 Activity 能够响应我们定义的隐式条件，需要修改 AndroidManifest.xml 的注册信息，通过添加 intent-filter 字段可以设置 Activity 的隐式响应条件。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">activity</span> <span class="attr">android:name</span>=<span class="string">".ThirdActivity"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">intent-filter</span> <span class="attr">tools:ignore</span>=<span class="string">"AppLinkUrlError"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.intent.action.VIEW"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.DEFAULT"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">data</span> <span class="attr">android:scheme</span>=<span class="string">"http"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">activity</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>每个 Activity 只能设置一种 action 但是可以设置多个 category，当隐式 Intent 发生的时候，只有这个 Activity 的 action 和全部 category （还有 data）都满足条件的时候 Activity 才会被调用。</p>
+<p>例如例子中定义 action 为响应 Intent.ACTION_VIEW ，category 定义为 DEFAULT，这个是 API 中定义的常量，通常情况下如果一个 Acitivty 想要被其他程序调用，就需要在 category 中添加这一项。</p>
+<p>另外定义了 data 字段，data 更为细致的限制了什么样的隐式 Intent 能够调用这个 Activity，例子中定义了 scheme 信息，要求只有 http 协议才能唤起这个 Activity。</p>
+<p>再次运行程序点击按钮，会出现这样的画面：</p>
+<p><img src="/img/android_code1.png" alt></p>
+<p>此时系统接收了隐式 Intent 请求，浏览器可以进行处理，同时我们自己编写的 Activity 也可以处理，系统就要求用户自己选择使用哪一个应用处理。我们使用手机的时候经常会遇到这种情况，通常是由于同类软件较多造成的，这些软件都注册了一样的隐式 Intent 条件，所以都能够进行响应。</p>
+<p>开发项目的时候要避免自己程序的不同 Activity 出现这种冲突情况。</p>
+<p>拨号实例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">    setContentView(R.layout.activity_main);</span><br><span class="line"></span><br><span class="line">    Button button1 = (Button) findViewById(R.id.button);</span><br><span class="line">    button1.setOnClickListener(<span class="keyword">new</span> View.OnClickListener()&#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View V)</span></span>&#123;</span><br><span class="line">            Toast.makeText(MainActivity.<span class="keyword">this</span>, <span class="string">"You clicked Button!"</span>, Toast.LENGTH_SHORT).show();</span><br><span class="line"></span><br><span class="line">            Intent intent = <span class="keyword">new</span> Intent(Intent.ACTION_DIAL);</span><br><span class="line">            intent.setData(Uri.parse(<span class="string">"tel:10086"</span>));</span><br><span class="line">            startActivity(intent);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Toast</strong></p>
+<p>上面的例子中都用到了一个 Toast 类，我们在使用某些应用的时候经常会看到屏幕下方弹出一个悬浮框，里面写了一些信息，几秒钟之后就会消失，这个就是利用 Toast 类实现的。</p>
+<p>使用方法很简单，直接调用 Toast 的静态方法 makeText 即可，传入三个参数 context、信息以及存在时间，之后调用 show 方法显示在屏幕上面。</p>
+<p><strong>findViewById</strong></p>
+<p>layout 中定义好 view 之后有两种方法为它们安排事件方法，一是定义新的方法，在里面写好逻辑，在 layout 中配置 view 的 onClick 属性，二是直接在 onCreate 函数中定义对应的 View 对象，利用 findViewById 查找到 View 的 ID，利用代码直接定义行为。</p>
+<p>上面的例子中用的是第二种方法。定义 Button 对象，用 findViewById 函数寻找到 View 组件的 ID，再调用 setOnClickListener 方法绑定按钮事件。</p>
+<p>这个方法的参数比较特别，是一个 onClickListener 方法，我们可以单独编写，也可以直接写在小括号里面。程序默认调用按钮事件中的 onClick 方法。</p>
+<p>今天学习了四大组件之一的 Activity 使用方法，还有一些原理性质的东西没有写进来，现在我们能够创建 Activity 并且调用它们，甚至调用其他程序的 Activity。</p>
+<p>但是很多情况下我们希望在 Activity 之间传递数据，如何实现这一点呢？</p>
+<p>明天再看。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>Buy me a cup of coffee~<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/z.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/w.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/04/03/爬虫/" class="archive-article-date">
-  	<time datetime="2018-04-02T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-03</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/04/03/爬虫/">第一个爬虫--爬取OJ代码(SDUSTOJ外网)</a>
-    </h1>
-  
+      
 
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/爬虫//" class="article-tag-list-link color3">爬虫</a>
-        		</li>
-      		
-		</ul>
-	</div>
+      
 
-
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/10/09/Android_code_day1/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/04/02/ROP/" class="archive-article-date">
-  	<time datetime="2018-04-02T03:40:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-02</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2019/09/18/D-Link_BUG/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">D-Link DIR-878 路由器存在漏洞两枚</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/04/02/ROP/">栈溢出之ROP</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#目录组织"><span class="toc-number">1.</span> <span class="toc-text">目录组织</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建-Activity"><span class="toc-number">2.</span> <span class="toc-text">创建 Activity</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/03/20/GiWiFi-crack/" class="archive-article-date">
-  	<time datetime="2018-03-19T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-20</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/03/20/GiWiFi-crack/">免费使用 GiWiFi ？</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/03/19/pwnable-kr-passcodeWP/" class="archive-article-date">
-  	<time datetime="2018-03-19T08:40:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-19</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/03/19/pwnable-kr-passcodeWP/">栈溢出之 hijack GOT</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/03/16/Python3-x总结/" class="archive-article-date">
-  	<time datetime="2018-03-15T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-16</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/03/16/Python3-x总结/">Python3.x基础总结</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/page/4/">&laquo; Prev</a><a class="page-number" href="/archives/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/3/">3</a><a class="page-number" href="/archives/page/4/">4</a><span class="page-number current">5</span>
-    </nav>
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="https://billts.site/extra_css/gitment.css">
+<script src="https://billts.site/js/gitment.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "http://yoursite.com/2019/10/09/Android_code_day1/",
+  owner: 'rrrrrrri',
+  repo: 'rrrrrrri.github.io',
+  oauth: {
+    client_id: 'b02ae2fd83142bce4350',
+    client_secret: 'dad31d4a347d05c4f146be764e2848dc72cbd576',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
   
 
 
@@ -329,8 +421,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
