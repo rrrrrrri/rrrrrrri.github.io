@@ -17,7 +17,7 @@
 <meta property="og:description" content="目录组织开发过程中最常用的目录是 app 目录，其余目录基本是 AS 和 gradle 自动生成的，初学阶段暂时不关注这些自动生成的文件。">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/img/android_code1.png">
-<meta property="og:updated_time" content="2019-10-09T13:39:56.811Z">
+<meta property="og:updated_time" content="2019-10-10T02:33:38.746Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 学习 day1">
 <meta name="twitter:description" content="目录组织开发过程中最常用的目录是 app 目录，其余目录基本是 AS 和 gradle 自动生成的，初学阶段暂时不关注这些自动生成的文件。">
@@ -181,7 +181,7 @@
 <li>在 AndroidManifest.xml 文件中注册新建的 Activity。</li>
 </ol>
 <p>但是用另一些 IDE 的时候可能不会在 AndroidManifest.xml 中注册，此时需要我们手动注册。</p>
-<p>创建 Intent 之后 AS 会自动创建布局文件，位于 /res/layout 中，并且会自动在代码窗口打开，通过 layout 文件我们可以自定义 Activity 界面样式，有两种方法，一是直接编写 xml 代码，二是通过 AS 自带的编辑器图形化设计。</p>
+<p>创建 Activity 之后 AS 会自动创建布局文件，位于 /res/layout 中，并且会自动在代码窗口打开，通过 layout 文件我们可以自定义 Activity 界面样式，有两种方法，一是直接编写 xml 代码，二是通过 AS 自带的编辑器图形化设计。</p>
 <p><strong>关于 AndroidManifest.xml 的配置</strong></p>
 <p>新建的 Activity 需要确定它是否是主 Activity，如果是，则需要添加如下内容</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.intent.action.MAIN"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.LAUNCHER"</span> /&gt;</span><span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br></pre></td></tr></table></figure>
@@ -192,14 +192,14 @@
 <p>如果应用之间不能互相调用 Activity 的话，开发者就需要自己实现一个浏览器来满足设计功能，这几乎是不可能的。</p>
 <p>但是通过 android 的特性我们可以简单轻松地调用浏览器开放的 Activity，从而访问百度。</p>
 <p>调用其他 Activity 需要通过 Intent 来实现。顾名思义，当前 Activity 有一个调用其他 Activity 的 “意图”，系统收到这种意图之后就会询问能够满足条件的应用，从而完成 Activity 间调用。</p>
-<p>Intent 的使用非常简单，分为两种情况，一个是显示，另一个是隐式的。</p>
-<p>显示的 Intent 意思就是我们指明要调用哪个 Activity，系统会直接通知对应的 Activity 启动，而隐式的调用类似于广播通知，想要调用其他 Activity 的程序发布一个意图，系统根据这个意图中的约束信息查找到符合条件的 Activity，然后调用之。</p>
-<p>由于多数情况下我们并不知道其他应用的 Activity 叫什么，所以显示的 Intent 一般用于调用自己程序的 Activity，隐式的 Intent 用于和其他程序通信。</p>
-<p>显示 Intent</p>
+<p>Intent 的使用非常简单，分为两种情况，一个是显式，另一个是隐式的。</p>
+<p>显式的 Intent 意思就是我们指明要调用哪个 Activity，系统会直接通知对应的 Activity 启动，而隐式的调用类似于广播通知，想要调用其他 Activity 的程序发布一个意图，系统根据这个意图中的约束信息查找到符合条件的 Activity，然后调用之。</p>
+<p>由于多数情况下我们并不知道其他应用的 Activity 叫什么，所以显式的 Intent 一般用于调用自己程序的 Activity，隐式的 Intent 用于和其他程序通信。</p>
+<p>显式 Intent</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"></span><br><span class="line">        Button button1 = (Button) findViewById(R.id.button);</span><br><span class="line">        button1.setOnClickListener(<span class="keyword">new</span> View.OnClickListener()&#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View V)</span></span>&#123;</span><br><span class="line">                Toast.makeText(MainActivity.<span class="keyword">this</span>, <span class="string">"You clicked Button!"</span>, Toast.LENGTH_SHORT).show();</span><br><span class="line">                Intent intent = <span class="keyword">new</span> Intent(MainActivity.<span class="keyword">this</span>, SecondActivity.class);</span><br><span class="line">                startActivity(intent);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
 <p>例子中实例化了一个 Intent 对象，构造函数的参数分别是当前 Activity 的 context 上下文和被调用 Activity 的类对象。</p>
-<p>这就相当于 MainActivity 显示地通告系统想要调用 SecondActivity。最后需要使用 startActivity 方法启动 Intent。</p>
+<p>这就相当于 MainActivity 显式地通告系统想要调用 SecondActivity。最后需要使用 startActivity 方法启动 Intent。</p>
 <p>隐式 Intent</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">    setContentView(R.layout.activity_main);</span><br><span class="line"></span><br><span class="line">    Button button1 = (Button) findViewById(R.id.button);</span><br><span class="line">    button1.setOnClickListener(<span class="keyword">new</span> View.OnClickListener()&#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View V)</span></span>&#123;</span><br><span class="line">            Toast.makeText(MainActivity.<span class="keyword">this</span>, <span class="string">"You clicked Button!"</span>, Toast.LENGTH_SHORT).show();</span><br><span class="line">            Intent intent = <span class="keyword">new</span> Intent(Intent.ACTION_VIEW);    <span class="comment">// 隐式 Intent</span></span><br><span class="line">            intent.setData(Uri.parse(<span class="string">"http://www.baidu.com"</span>));</span><br><span class="line">            startActivity(intent);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -228,7 +228,7 @@
 <p>layout 中定义好 view 之后有两种方法为它们安排事件方法，一是定义新的方法，在里面写好逻辑，在 layout 中配置 view 的 onClick 属性，二是直接在 onCreate 函数中定义对应的 View 对象，利用 findViewById 查找到 View 的 ID，利用代码直接定义行为。</p>
 <p>上面的例子中用的是第二种方法。定义 Button 对象，用 findViewById 函数寻找到 View 组件的 ID，再调用 setOnClickListener 方法绑定按钮事件。</p>
 <p>这个方法的参数比较特别，是一个 onClickListener 方法，我们可以单独编写，也可以直接写在小括号里面。程序默认调用按钮事件中的 onClick 方法。</p>
-<p>今天学习了四大组件之一的 Activity 使用方法，还有一些原理性质的东西没有写进来，现在我们能够创建 Activity 并且调用它们，甚至调用其他程序的 Activity。</p>
+<p>今天学习了四大组件之一的 Activity 简单的使用方法，还有一些原理性质的东西没有写进来，现在我们能够创建 Activity 并且调用它们，甚至调用其他程序的 Activity。</p>
 <p>但是很多情况下我们希望在 Activity 之间传递数据，如何实现这一点呢？</p>
 <p>明天再看。</p>
 
