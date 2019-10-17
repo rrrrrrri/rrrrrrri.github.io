@@ -7,15 +7,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | CataLpa&#39;s Home</title>
+  <title>Android 学习 day6 | CataLpa&#39;s Home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="CataLpa&#39;s Home">
-<meta property="og:url" content="http://yoursite.com/archives/page/3/index.html">
+  <meta name="description" content="之前用过一款软件可以用来查看所有链接过的 wifi SSID 和 密码，最近研究了一下原理发现很简单，Android 系统把关于 wifi 的信息保存在 /data/misc/wifi 目录下面，7.0 之上和之下保存的文件不同，分别是 WifiConfigStore.xml 和 wpa_supplicant.conf。 通过读取这个文件就能获得所有保存的 wifi 名称和密码。下面我们就来自己实">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 学习 day6">
+<meta property="og:url" content="http://yoursite.com/2019/10/17/Android_code_day6/index.html">
 <meta property="og:site_name" content="CataLpa&#39;s Home">
+<meta property="og:description" content="之前用过一款软件可以用来查看所有链接过的 wifi SSID 和 密码，最近研究了一下原理发现很简单，Android 系统把关于 wifi 的信息保存在 /data/misc/wifi 目录下面，7.0 之上和之下保存的文件不同，分别是 WifiConfigStore.xml 和 wpa_supplicant.conf。 通过读取这个文件就能获得所有保存的 wifi 名称和密码。下面我们就来自己实">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/2019/10/17/Android_code_day6/android_code12.png">
+<meta property="og:updated_time" content="2019-10-17T07:51:14.061Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CataLpa&#39;s Home">
+<meta name="twitter:title" content="Android 学习 day6">
+<meta name="twitter:description" content="之前用过一款软件可以用来查看所有链接过的 wifi SSID 和 密码，最近研究了一下原理发现很简单，Android 系统把关于 wifi 的信息保存在 /data/misc/wifi 目录下面，7.0 之上和之下保存的文件不同，分别是 WifiConfigStore.xml 和 wpa_supplicant.conf。 通过读取这个文件就能获得所有保存的 wifi 名称和密码。下面我们就来自己实">
+<meta name="twitter:image" content="http://yoursite.com/2019/10/17/Android_code_day6/android_code12.png">
   
     <link rel="alternative" href="/atom.xml" title="CataLpa&#39;s Home" type="application/atom+xml">
   
@@ -141,305 +147,216 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Android_code_day6" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android 学习 day6
+    </h1>
+  
+
+        
+        <a href="/2019/10/17/Android_code_day6/" class="archive-article-date">
+  	<time datetime="2019-10-16T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-17</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>之前用过一款软件可以用来查看所有链接过的 wifi SSID 和 密码，最近研究了一下原理发现很简单，Android 系统把关于 wifi 的信息保存在 /data/misc/wifi 目录下面，7.0 之上和之下保存的文件不同，分别是 WifiConfigStore.xml 和 wpa_supplicant.conf。</p>
+<p>通过读取这个文件就能获得所有保存的 wifi 名称和密码。下面我们就来自己实现一个最简单的 wifi 密码查看工具。</p>
+<a id="more"></a>
+
+<h2 id="编写-MainActivity"><a href="#编写-MainActivity" class="headerlink" title="编写 MainActivity"></a>编写 MainActivity</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.wififcuker;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> androidx.appcompat.app.AlertDialog;</span><br><span class="line"><span class="keyword">import</span> androidx.recyclerview.widget.LinearLayoutManager;</span><br><span class="line"><span class="keyword">import</span> androidx.recyclerview.widget.RecyclerView;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.content.DialogInterface;</span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="keyword">import</span> android.util.Log;</span><br><span class="line"><span class="keyword">import</span> android.widget.Toast;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.DataInputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.DataOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.FileInputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.FileOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">BaseActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> List&lt;WiFi&gt; wifiList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    WiFIAdapter wiFIAdapter;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"></span><br><span class="line">        initWiFi();</span><br><span class="line">        wiFIAdapter = <span class="keyword">new</span> WiFIAdapter(wifiList);</span><br><span class="line">        LinearLayoutManager linearLayoutManager = <span class="keyword">new</span> LinearLayoutManager(<span class="keyword">this</span>);</span><br><span class="line">        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.msg_recycler_view);</span><br><span class="line">        recyclerView.setLayoutManager(linearLayoutManager);</span><br><span class="line">        recyclerView.setAdapter(wiFIAdapter);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initWiFi</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">boolean</span> res = getRootPermission(getPackageCodePath());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(!res)&#123;</span><br><span class="line">            keyAlert(<span class="string">"App 需要 ROOT 权限！"</span>, <span class="string">"Permission Error!"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            String targetDir = <span class="string">"/data/misc/wifi/WifiConfigStore.xml"</span>;</span><br><span class="line">            String content = execRootCmd(<span class="string">"cat "</span> + targetDir);</span><br><span class="line">            <span class="keyword">if</span>(content.equals(<span class="string">""</span>))&#123;</span><br><span class="line">                Toast.makeText(<span class="keyword">this</span>, <span class="string">"无法读取配置文件！"</span>, Toast.LENGTH_SHORT).show();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">boolean</span> writeState = writeFile(<span class="string">"WifiConfigStore.xml"</span>, content);</span><br><span class="line">                <span class="keyword">if</span>(!writeState)&#123;</span><br><span class="line">                    Toast.makeText(<span class="keyword">this</span>, <span class="string">"写入文件失败！"</span>, Toast.LENGTH_SHORT).show();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span>&#123;</span><br><span class="line">                    XmlResParser xmlResParser = parseXML(<span class="string">"WifiConfigStore.xml"</span>, wifiList);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">getRootPermission</span><span class="params">(String pkgCodePath)</span> </span>&#123;</span><br><span class="line">        Log.d(<span class="string">"MainActivity111"</span>, <span class="string">"pkgCodePath="</span> + pkgCodePath);</span><br><span class="line">        Process process = <span class="keyword">null</span>;</span><br><span class="line">        DataOutputStream os = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            String cmd = <span class="string">"chmod 777 "</span> + pkgCodePath;</span><br><span class="line">            process = Runtime.getRuntime().exec(<span class="string">"su"</span>); <span class="comment">//切换到root帐号</span></span><br><span class="line">            os = <span class="keyword">new</span> DataOutputStream(process.getOutputStream());</span><br><span class="line">            os.writeBytes(cmd + <span class="string">"\n"</span>);</span><br><span class="line">            os.writeBytes(<span class="string">"exit\n"</span>);</span><br><span class="line">            os.flush();</span><br><span class="line">            process.waitFor();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            Toast.makeText(<span class="keyword">this</span>, <span class="string">"root error!"</span> + pkgCodePath, Toast.LENGTH_SHORT).show();</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (os != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    os.close();</span><br><span class="line">                &#125;</span><br><span class="line">                process.destroy();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        Toast.makeText(<span class="keyword">this</span>, <span class="string">"root success!"</span> + pkgCodePath, Toast.LENGTH_SHORT).show();</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">execRootCmd</span><span class="params">(String cmd)</span> </span>&#123;</span><br><span class="line">        String result = <span class="string">""</span>;</span><br><span class="line">        DataOutputStream dos = <span class="keyword">null</span>;</span><br><span class="line">        DataInputStream dis = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Process p = Runtime.getRuntime().exec(<span class="string">"su"</span>);<span class="comment">// 经过Root处理的android系统即有su命令</span></span><br><span class="line">            dos = <span class="keyword">new</span> DataOutputStream(p.getOutputStream());</span><br><span class="line">            dis = <span class="keyword">new</span> DataInputStream(p.getInputStream());</span><br><span class="line"></span><br><span class="line">           <span class="comment">// Log.i(TAG, cmd);</span></span><br><span class="line">            dos.writeBytes(cmd + <span class="string">"\n"</span>);</span><br><span class="line">            dos.flush();</span><br><span class="line">            dos.writeBytes(<span class="string">"exit\n"</span>);</span><br><span class="line">            dos.flush();</span><br><span class="line">            String line = <span class="keyword">null</span>;</span><br><span class="line">            <span class="keyword">while</span> ((line = dis.readLine()) != <span class="keyword">null</span>) &#123;</span><br><span class="line">                Log.d(<span class="string">"result"</span>, line);</span><br><span class="line">                result += line;</span><br><span class="line">            &#125;</span><br><span class="line">            p.waitFor();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (dos != <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    dos.close();</span><br><span class="line">                &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (dis != <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    dis.close();</span><br><span class="line">                &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">keyAlert</span><span class="params">(String message, String title)</span></span>&#123;</span><br><span class="line">        AlertDialog.Builder alertDialog = <span class="keyword">new</span> AlertDialog.Builder(MainActivity.<span class="keyword">this</span>);</span><br><span class="line">        alertDialog.setPositiveButton(<span class="string">"OK"</span>, <span class="keyword">new</span> DialogInterface.OnClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(DialogInterface dialog, <span class="keyword">int</span> which)</span> </span>&#123;</span><br><span class="line">                ActivityManager.finishAll();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        alertDialog.setCancelable(<span class="keyword">false</span>);</span><br><span class="line">        alertDialog.setMessage(message);</span><br><span class="line">        alertDialog.setTitle(title);</span><br><span class="line">        alertDialog.show();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">writeFile</span><span class="params">(String filename, String content)</span></span>&#123;</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            FileOutputStream fileOutputStream = openFileOutput(filename, MODE_PRIVATE);</span><br><span class="line">            fileOutputStream.write(content.getBytes());</span><br><span class="line">            fileOutputStream.close();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> XmlResParser <span class="title">parseXML</span><span class="params">(String filename, List&lt;WiFi&gt; wifiList)</span></span>&#123;</span><br><span class="line">        XmlResParser xmlResParser = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            FileInputStream inputStream = openFileInput(filename);</span><br><span class="line">            xmlResParser = <span class="keyword">new</span> XmlResParser(inputStream, wifiList);</span><br><span class="line">            xmlResParser.parse();</span><br><span class="line">            inputStream.close();</span><br><span class="line">            <span class="keyword">return</span> xmlResParser;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">catch</span>(Exception e) &#123;</span><br><span class="line">            <span class="keyword">return</span> xmlResParser;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="编写-MainActivity-布局文件"><a href="#编写-MainActivity-布局文件" class="headerlink" title="编写 MainActivity 布局文件"></a>编写 MainActivity 布局文件</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span>?&gt;</span><br><span class="line">&lt;LinearLayout xmlns:android=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    android:orientation=<span class="string">"vertical"</span></span><br><span class="line">    android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">    android:layout_height=<span class="string">"match_parent"</span></span><br><span class="line">    android:background=<span class="string">"#d8e0e8"</span> &gt;</span><br><span class="line"></span><br><span class="line">    &lt;androidx.recyclerview.widget.RecyclerView</span><br><span class="line">        android:id=<span class="string">"@+id/msg_recycler_view"</span></span><br><span class="line">        android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">        android:layout_height=<span class="string">"0dp"</span></span><br><span class="line">        android:layout_weight=<span class="string">"1"</span></span><br><span class="line">        android:background=<span class="string">"#00FF0000"</span> /&gt;</span><br><span class="line"></span><br><span class="line">&lt;/LinearLayout&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="编写进程管理器"><a href="#编写进程管理器" class="headerlink" title="编写进程管理器"></a>编写进程管理器</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.wififcuker;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> androidx.annotation.Nullable;</span><br><span class="line"><span class="keyword">import</span> androidx.appcompat.app.AppCompatActivity;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BaseActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(@Nullable Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        <span class="comment">//Log.d("BaseActivity", "Current Activity: " + getClass().getSimpleName());</span></span><br><span class="line">        ActivityManager.addActivity(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onDestroy();</span><br><span class="line">        ActivityManager.removeActivity(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="编写-WIFI-类"><a href="#编写-WIFI-类" class="headerlink" title="编写 WIFI 类"></a>编写 WIFI 类</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.wififcuker;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WiFi</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String SSID;</span><br><span class="line">    <span class="keyword">private</span> String wifiPassword;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">WiFi</span><span class="params">(String name, String password)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.SSID = name;</span><br><span class="line">        <span class="keyword">this</span>.wifiPassword = password;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">WiFi</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.SSID = <span class="string">""</span>;</span><br><span class="line">        <span class="keyword">this</span>.wifiPassword = <span class="string">""</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setSSID</span><span class="params">(String SSID)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.SSID = SSID;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setWifiPassword</span><span class="params">(String password)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.wifiPassword = password;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getSSID</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> SSID;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getWifiPassword</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> wifiPassword;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="编写适配器"><a href="#编写适配器" class="headerlink" title="编写适配器"></a>编写适配器</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.wififcuker;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.view.LayoutInflater;</span><br><span class="line"><span class="keyword">import</span> android.view.View;</span><br><span class="line"><span class="keyword">import</span> android.view.ViewGroup;</span><br><span class="line"><span class="keyword">import</span> android.widget.ImageView;</span><br><span class="line"><span class="keyword">import</span> android.widget.TextView;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> androidx.annotation.NonNull;</span><br><span class="line"><span class="keyword">import</span> androidx.recyclerview.widget.RecyclerView;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WiFIAdapter</span> <span class="keyword">extends</span> <span class="title">RecyclerView</span>.<span class="title">Adapter</span>&lt;<span class="title">WiFIAdapter</span>.<span class="title">ViewHolder</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> List&lt;WiFi&gt; wifiList;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ViewHolder</span> <span class="keyword">extends</span> <span class="title">RecyclerView</span>.<span class="title">ViewHolder</span></span>&#123;</span><br><span class="line">        TextView ssid_data;</span><br><span class="line">        TextView password_data;</span><br><span class="line">        ImageView wifi_pic;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">ViewHolder</span><span class="params">(View view)</span></span>&#123;</span><br><span class="line">            <span class="keyword">super</span>(view);</span><br><span class="line">            ssid_data = (TextView) view.findViewById(R.id.ssid_data);</span><br><span class="line">            password_data = (TextView) view.findViewById(R.id.password_data);</span><br><span class="line">            wifi_pic = (ImageView) view.findViewById(R.id.wifi_pic);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">WiFIAdapter</span><span class="params">(List&lt;WiFi&gt; wifilist)</span></span>&#123;</span><br><span class="line">        wifiList = wifilist;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@NonNull</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ViewHolder <span class="title">onCreateViewHolder</span><span class="params">(@NonNull ViewGroup parent, <span class="keyword">int</span> viewType)</span> </span>&#123;</span><br><span class="line">        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.wifi_item, parent, <span class="keyword">false</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ViewHolder(view);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onBindViewHolder</span><span class="params">(@NonNull ViewHolder holder, <span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">        WiFi wifi = wifiList.get(position);</span><br><span class="line">        String tempSSID;</span><br><span class="line">        String tempPassword;</span><br><span class="line">        tempSSID = wifi.getSSID();</span><br><span class="line">        tempPassword = wifi.getWifiPassword();</span><br><span class="line">        <span class="keyword">if</span>(tempSSID == <span class="string">""</span>)&#123;</span><br><span class="line">            tempSSID = <span class="string">"None"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(tempPassword == <span class="string">""</span>)&#123;</span><br><span class="line">            tempPassword = <span class="string">"None"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        holder.ssid_data.setText(tempSSID);</span><br><span class="line">        holder.password_data.setText(tempPassword);</span><br><span class="line">        holder.wifi_pic.setImageResource(R.drawable.wifi_pic);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getItemCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> wifiList.size();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="编写子项布局文件"><a href="#编写子项布局文件" class="headerlink" title="编写子项布局文件"></a>编写子项布局文件</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span>?&gt;</span><br><span class="line">&lt;androidx.constraintlayout.widget.ConstraintLayout xmlns:android=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    xmlns:app=<span class="string">"http://schemas.android.com/apk/res-auto"</span></span><br><span class="line">    xmlns:tools=<span class="string">"http://schemas.android.com/tools"</span></span><br><span class="line">    android:id=<span class="string">"@+id/wifi_item"</span></span><br><span class="line">    android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">    android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">    android:background=<span class="string">"#FFFFFF"</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;androidx.constraintlayout.widget.Guideline</span><br><span class="line">        android:id=<span class="string">"@+id/guideline"</span></span><br><span class="line">        android:layout_width=<span class="string">"wrap_content"</span></span><br><span class="line">        android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">        android:orientation=<span class="string">"vertical"</span></span><br><span class="line">        app:layout_constraintGuide_begin=<span class="string">"82dp"</span> /&gt;</span><br><span class="line"></span><br><span class="line">    &lt;TextView</span><br><span class="line">        android:id=<span class="string">"@+id/ssid_textview"</span></span><br><span class="line">        android:layout_width=<span class="string">"wrap_content"</span></span><br><span class="line">        android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">        android:layout_marginTop=<span class="string">"8dp"</span></span><br><span class="line">        android:text=<span class="string">"@string/wifi_ssid"</span></span><br><span class="line">        app:layout_constraintStart_toStartOf=<span class="string">"@+id/guideline"</span></span><br><span class="line">        app:layout_constraintTop_toTopOf=<span class="string">"parent"</span> /&gt;</span><br><span class="line"></span><br><span class="line">    &lt;TextView</span><br><span class="line">        android:id=<span class="string">"@+id/password_textview"</span></span><br><span class="line">        android:layout_width=<span class="string">"wrap_content"</span></span><br><span class="line">        android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">        android:layout_marginTop=<span class="string">"8dp"</span></span><br><span class="line">        android:layout_marginBottom=<span class="string">"16dp"</span></span><br><span class="line">        android:text=<span class="string">"@string/wifi_password"</span></span><br><span class="line">        app:layout_constraintBottom_toBottomOf=<span class="string">"parent"</span></span><br><span class="line">        app:layout_constraintStart_toStartOf=<span class="string">"@+id/guideline"</span></span><br><span class="line">        app:layout_constraintTop_toBottomOf=<span class="string">"@+id/ssid_textview"</span> /&gt;</span><br><span class="line"></span><br><span class="line">    &lt;TextView</span><br><span class="line">        android:id=<span class="string">"@+id/ssid_data"</span></span><br><span class="line">        android:layout_width=<span class="string">"wrap_content"</span></span><br><span class="line">        android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">        android:layout_marginStart=<span class="string">"16dp"</span></span><br><span class="line">        android:layout_marginLeft=<span class="string">"16dp"</span></span><br><span class="line">        android:layout_marginTop=<span class="string">"8dp"</span></span><br><span class="line">        app:layout_constraintStart_toEndOf=<span class="string">"@+id/ssid_textview"</span></span><br><span class="line">        app:layout_constraintTop_toTopOf=<span class="string">"parent"</span> /&gt;</span><br><span class="line"></span><br><span class="line">    &lt;TextView</span><br><span class="line">        android:id=<span class="string">"@+id/password_data"</span></span><br><span class="line">        android:layout_width=<span class="string">"wrap_content"</span></span><br><span class="line">        android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">        android:layout_marginStart=<span class="string">"16dp"</span></span><br><span class="line">        android:layout_marginLeft=<span class="string">"16dp"</span></span><br><span class="line">        android:layout_marginTop=<span class="string">"8dp"</span></span><br><span class="line">        app:layout_constraintStart_toEndOf=<span class="string">"@+id/password_textview"</span></span><br><span class="line">        app:layout_constraintTop_toBottomOf=<span class="string">"@+id/ssid_data"</span> /&gt;</span><br><span class="line"></span><br><span class="line">    &lt;ImageView</span><br><span class="line">        android:id=<span class="string">"@+id/wifi_pic"</span></span><br><span class="line">        android:layout_width=<span class="string">"54dp"</span></span><br><span class="line">        android:layout_height=<span class="string">"51dp"</span></span><br><span class="line">        android:layout_marginTop=<span class="string">"8dp"</span></span><br><span class="line">        android:layout_marginEnd=<span class="string">"16dp"</span></span><br><span class="line">        android:layout_marginRight=<span class="string">"16dp"</span></span><br><span class="line">        app:layout_constraintEnd_toStartOf=<span class="string">"@+id/guideline"</span></span><br><span class="line">        app:layout_constraintTop_toTopOf=<span class="string">"parent"</span></span><br><span class="line">        app:srcCompat=<span class="string">"@drawable/wifi_pic"</span> /&gt;</span><br><span class="line"></span><br><span class="line">&lt;/androidx.constraintlayout.widget.ConstraintLayout&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="编写-XML-解析工具"><a href="#编写-XML-解析工具" class="headerlink" title="编写 XML 解析工具"></a>编写 XML 解析工具</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.wififcuker;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.util.Xml;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.xmlpull.v1.XmlPullParser;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">XmlResParser</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> List&lt;WiFi&gt; wifiList;</span><br><span class="line">    <span class="keyword">public</span> InputStream file;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">XmlResParser</span><span class="params">(InputStream inputStream, List&lt;WiFi&gt; wifilist)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">        file = inputStream;</span><br><span class="line">        wifiList = wifilist;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">parse</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        XmlPullParser xpp = Xml.newPullParser();</span><br><span class="line">        xpp.setInput(file, <span class="string">"utf-8"</span>);</span><br><span class="line">        <span class="keyword">int</span> eventType = xpp.getEventType();</span><br><span class="line">        WiFi tempWiFi = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>(eventType != XmlPullParser.END_DOCUMENT)&#123;</span><br><span class="line">            <span class="keyword">switch</span>(eventType)&#123;</span><br><span class="line">                <span class="keyword">case</span> XmlPullParser.START_TAG:</span><br><span class="line">                    <span class="keyword">if</span>(xpp.getName().equals(<span class="string">"WifiConfiguration"</span>))&#123;</span><br><span class="line">                        tempWiFi = <span class="keyword">new</span> WiFi();</span><br><span class="line">                    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(xpp.getName().equals(<span class="string">"string"</span>) &amp;&amp; xpp.getAttributeCount() == <span class="number">1</span> &amp;&amp; xpp.getAttributeValue(<span class="number">0</span>).equals(<span class="string">"SSID"</span>))&#123;</span><br><span class="line">                        tempWiFi.setSSID(xpp.nextText());</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">else</span> <span class="keyword">if</span>(xpp.getName().equals(<span class="string">"string"</span>) &amp;&amp; xpp.getAttributeCount() == <span class="number">1</span> &amp;&amp; xpp.getAttributeValue(<span class="number">0</span>).equals(<span class="string">"PreSharedKey"</span>))&#123;</span><br><span class="line">                        tempWiFi.setWifiPassword(xpp.nextText());</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> XmlPullParser.END_TAG:</span><br><span class="line">                    <span class="keyword">if</span>(xpp.getName().equals(<span class="string">"WifiConfiguration"</span>) &amp;&amp; tempWiFi != <span class="keyword">null</span>)&#123;</span><br><span class="line">                        wifiList.add(tempWiFi);</span><br><span class="line">                        tempWiFi = <span class="keyword">null</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                <span class="keyword">default</span>:</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            eventType = xpp.next();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>写这个小程序的时候遇到一个麻烦的问题，由于需要访问系统级的配置文件，所以首先要给 root 权限。这里遇到的问题就是只找到以 root 身份执行命令的方法，这就导致之后利用 File 等方法尝试读取文件的时候会由于权限不足导致读取失败。一开始没想到是权限的问题，卡住了很久，之后想出的一个办法是先用 cat 以 root 身份读取文件内容，再用 API 在程序自己的目录中创建一个文件，将之前读取的内容写进去。这样就能利用 xml 解析器操作文件对象了。</p>
+<p>这个方法效率很低，暂时没有找到更好的办法 ORZ。</p>
+<p>但是写这个程序的主要目的是练习适配器、UI 等使用方法，另外的一些东西慢慢学习吧。</p>
+<p>另附程序执行效果：</p>
+<p><img src="android_code12.png" alt></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>Buy me a cup of coffee~<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/z.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/w.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/15/glibc_analyse2/" class="archive-article-date">
-  	<time datetime="2019-03-14T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/15/glibc_analyse2/">glibc 中的 malloc 与 free 概述 (二)</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/11/kanxue2019Q1/" class="archive-article-date">
-  	<time datetime="2019-03-10T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-11</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/11/kanxue2019Q1/">看雪 CTF 2019 Q1</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/07/glibc_analyse1/" class="archive-article-date">
-  	<time datetime="2019-03-06T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-07</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/07/glibc_analyse1/">glibc 中的 malloc 与 free 概述 (一)</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/02/13/pyc-simple/" class="archive-article-date">
-  	<time datetime="2019-02-13T05:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-13</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/02/13/pyc-simple/">PYC 文件的简单分析</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/02/02/hgame-2019/" class="archive-article-date">
-  	<time datetime="2019-02-01T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/02/02/hgame-2019/">HGAME 2019 week1</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/02/01/flask_note/" class="archive-article-date">
-  	<time datetime="2019-01-31T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/02/01/flask_note/">flask 入门笔记</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/01/20/pcb2018-online/" class="archive-article-date">
-  	<time datetime="2019-01-19T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/20/pcb2018-online/">鹏程杯 2018 部分题目复现</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/01/19/s-pwn-project-8/" class="archive-article-date">
-  	<time datetime="2019-01-19T11:41:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-19</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/19/s-pwn-project-8/">菜鸡的 Pwn 08 IO_FILE 利用</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/01/13/s-pwn-project-7/" class="archive-article-date">
-  	<time datetime="2019-01-13T01:26:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-13</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/13/s-pwn-project-7/">菜鸡的 Pwn 07 0ctf 2018 babyheap</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
       
-        </div></section>
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/12/28/s-pwn-project-6/" class="archive-article-date">
-  	<time datetime="2018-12-28T12:29:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-28</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/12/28/s-pwn-project-6/">菜鸡的 Pwn 06 0ctf 2017 babyheap</a>
-    </h1>
-  
 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/10/17/Android_code_day6/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2019/10/15/Android_code_day5/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Android 学习 day5</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#编写-MainActivity"><span class="toc-number">1.</span> <span class="toc-text">编写 MainActivity</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编写-MainActivity-布局文件"><span class="toc-number">2.</span> <span class="toc-text">编写 MainActivity 布局文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编写进程管理器"><span class="toc-number">3.</span> <span class="toc-text">编写进程管理器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编写-WIFI-类"><span class="toc-number">4.</span> <span class="toc-text">编写 WIFI 类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编写适配器"><span class="toc-number">5.</span> <span class="toc-text">编写适配器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编写子项布局文件"><span class="toc-number">6.</span> <span class="toc-text">编写子项布局文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编写-XML-解析工具"><span class="toc-number">7.</span> <span class="toc-text">编写 XML 解析工具</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/page/2/">&laquo; Prev</a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/archives/page/4/">4</a><a class="page-number" href="/archives/page/5/">5</a><a class="page-number" href="/archives/page/6/">6</a><a class="extend next" rel="next" href="/archives/page/4/">Next &raquo;</a>
-    </nav>
+  
+
+  
+
+  
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="https://billts.site/extra_css/gitment.css">
+<script src="https://billts.site/js/gitment.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "http://yoursite.com/2019/10/17/Android_code_day6/",
+  owner: 'rrrrrrri',
+  repo: 'rrrrrrri.github.io',
+  oauth: {
+    client_id: 'b02ae2fd83142bce4350',
+    client_secret: 'dad31d4a347d05c4f146be764e2848dc72cbd576',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
   
 
 
@@ -463,8 +380,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
