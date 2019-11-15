@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="CataLpa&#39;s Home">
 <meta property="og:description" content="Parallels Desktop 用过 MAC 的同学应该了解，在 MAC 上它比 VM ware 的效率要高一些，由于种种原因，我目前的版本停留在 14，最近安装 ubuntu 19.10 的时候遇到许多问题，查阅资料发现有组件进行了更新，parallels tools 代码中用到了部分已经被删除的东西，导致编译没法通过，现总结解决方案如下，希望能给大家一些帮助。">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-11-15T03:13:56.034Z">
+<meta property="og:updated_time" content="2019-11-15T03:21:38.587Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在 ubuntu 19.10 上安装 Parallels tools">
 <meta name="twitter:description" content="Parallels Desktop 用过 MAC 的同学应该了解，在 MAC 上它比 VM ware 的效率要高一些，由于种种原因，我目前的版本停留在 14，最近安装 ubuntu 19.10 的时候遇到许多问题，查阅资料发现有组件进行了更新，parallels tools 代码中用到了部分已经被删除的东西，导致编译没法通过，现总结解决方案如下，希望能给大家一些帮助。">
@@ -168,7 +168,8 @@
         <p>Parallels Desktop 用过 MAC 的同学应该了解，在 MAC 上它比 VM ware 的效率要高一些，由于种种原因，我目前的版本停留在 14，最近安装 ubuntu 19.10 的时候遇到许多问题，查阅资料发现有组件进行了更新，parallels tools 代码中用到了部分已经被删除的东西，导致编译没法通过，现总结解决方案如下，希望能给大家一些帮助。</p>
 <a id="more"></a>
 
-<h2 id="系统安装完毕黑屏，只有一个闪烁的小横杠"><a href="#系统安装完毕黑屏，只有一个闪烁的小横杠" class="headerlink" title="系统安装完毕黑屏，只有一个闪烁的小横杠"></a>系统安装完毕黑屏，只有一个闪烁的小横杠</h2><p>这个问题在网上没有找到解决办法，安装过程中没有出现什么报错，只是在安装完毕要求重启系统之后黑屏，之前安装 windows 虚拟机有过类似的情况，但是 windows 有一个提示，大概意思是在硬盘上没有找到操作系统，猜测这里也是同样的原因，所以在上面控制栏里面把光驱断开了，虚拟机自动重启，熟悉的界面就出现了。</p>
+<h2 id="系统安装完毕黑屏，只有一个闪烁的小横杠"><a href="#系统安装完毕黑屏，只有一个闪烁的小横杠" class="headerlink" title="系统安装完毕黑屏，只有一个闪烁的小横杠"></a>系统安装完毕黑屏，只有一个闪烁的小横杠</h2><p>这个问题在网上没有找到解决办法，安装过程中没有出现什么报错，只是在安装完毕要求重启系统之后黑屏。</p>
+<p>经过实验发现只要多等一会就能进入系统了….</p>
 <h2 id="进入系统没法上网？"><a href="#进入系统没法上网？" class="headerlink" title="进入系统没法上网？"></a>进入系统没法上网？</h2><p>可以将网卡改成桥接模式试试。</p>
 <h2 id="安装-parallels-tools-报错"><a href="#安装-parallels-tools-报错" class="headerlink" title="安装 parallels tools 报错"></a>安装 parallels tools 报错</h2><p>我在安装的时候遇到两个错误，第一个：</p>
 <p><strong>/usr/lib64/parallels-tools/kmods/prl_eth/pvmnet/pvmnet.c:194:3: error: ‘struct ethtool_ops’ has no member named ‘get_settings’; did you mean ‘get_strings’?</strong></p>
