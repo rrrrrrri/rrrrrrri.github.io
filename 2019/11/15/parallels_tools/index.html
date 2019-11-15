@@ -7,15 +7,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2019 | CataLpa&#39;s Home</title>
+  <title>在 ubuntu 19.10 上安装 Parallels tools | CataLpa&#39;s Home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="CataLpa&#39;s Home">
-<meta property="og:url" content="http://yoursite.com/archives/2019/page/3/index.html">
+  <meta name="description" content="Parallels Desktop 用过 MAC 的同学应该了解，在 MAC 上它比 VM ware 的效率要高一些，由于种种原因，我目前的版本停留在 14，最近安装 ubuntu 19.10 的时候遇到许多问题，查阅资料发现有组件进行了更新，parallels tools 代码中用到了部分已经被删除的东西，导致编译没法通过，现总结解决方案如下，希望能给大家一些帮助。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在 ubuntu 19.10 上安装 Parallels tools">
+<meta property="og:url" content="http://yoursite.com/2019/11/15/parallels_tools/index.html">
 <meta property="og:site_name" content="CataLpa&#39;s Home">
+<meta property="og:description" content="Parallels Desktop 用过 MAC 的同学应该了解，在 MAC 上它比 VM ware 的效率要高一些，由于种种原因，我目前的版本停留在 14，最近安装 ubuntu 19.10 的时候遇到许多问题，查阅资料发现有组件进行了更新，parallels tools 代码中用到了部分已经被删除的东西，导致编译没法通过，现总结解决方案如下，希望能给大家一些帮助。">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-11-15T03:13:56.034Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CataLpa&#39;s Home">
+<meta name="twitter:title" content="在 ubuntu 19.10 上安装 Parallels tools">
+<meta name="twitter:description" content="Parallels Desktop 用过 MAC 的同学应该了解，在 MAC 上它比 VM ware 的效率要高一些，由于种种原因，我目前的版本停留在 14，最近安装 ubuntu 19.10 的时候遇到许多问题，查阅资料发现有组件进行了更新，parallels tools 代码中用到了部分已经被删除的东西，导致编译没法通过，现总结解决方案如下，希望能给大家一些帮助。">
   
     <link rel="alternative" href="/atom.xml" title="CataLpa&#39;s Home" type="application/atom+xml">
   
@@ -141,295 +145,216 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-parallels_tools" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      在 ubuntu 19.10 上安装 Parallels tools
+    </h1>
+  
+
+        
+        <a href="/2019/11/15/parallels_tools/" class="archive-article-date">
+  	<time datetime="2019-11-15T02:47:30.248Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-15</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Parallels Desktop 用过 MAC 的同学应该了解，在 MAC 上它比 VM ware 的效率要高一些，由于种种原因，我目前的版本停留在 14，最近安装 ubuntu 19.10 的时候遇到许多问题，查阅资料发现有组件进行了更新，parallels tools 代码中用到了部分已经被删除的东西，导致编译没法通过，现总结解决方案如下，希望能给大家一些帮助。</p>
+<a id="more"></a>
+
+<h2 id="系统安装完毕黑屏，只有一个闪烁的小横杠"><a href="#系统安装完毕黑屏，只有一个闪烁的小横杠" class="headerlink" title="系统安装完毕黑屏，只有一个闪烁的小横杠"></a>系统安装完毕黑屏，只有一个闪烁的小横杠</h2><p>这个问题在网上没有找到解决办法，安装过程中没有出现什么报错，只是在安装完毕要求重启系统之后黑屏，之前安装 windows 虚拟机有过类似的情况，但是 windows 有一个提示，大概意思是在硬盘上没有找到操作系统，猜测这里也是同样的原因，所以在上面控制栏里面把光驱断开了，虚拟机自动重启，熟悉的界面就出现了。</p>
+<h2 id="进入系统没法上网？"><a href="#进入系统没法上网？" class="headerlink" title="进入系统没法上网？"></a>进入系统没法上网？</h2><p>可以将网卡改成桥接模式试试。</p>
+<h2 id="安装-parallels-tools-报错"><a href="#安装-parallels-tools-报错" class="headerlink" title="安装 parallels tools 报错"></a>安装 parallels tools 报错</h2><p>我在安装的时候遇到两个错误，第一个：</p>
+<p><strong>/usr/lib64/parallels-tools/kmods/prl_eth/pvmnet/pvmnet.c:194:3: error: ‘struct ethtool_ops’ has no member named ‘get_settings’; did you mean ‘get_strings’?</strong></p>
+<p>在 parallels forums 上面找到了<a href="https://forum.parallels.com/threads/parallels-vm-tools-on-gentoo-vm-gcc-install-error.346287/" target="_blank" rel="noopener">解决方案</a></p>
+<p>大概意思是 ethtool 组件更新，把一个结构体的成员进行了修改，我们只需要删除这个成员即可。</p>
+<p>先在控制栏点黄色的三角符号，虚拟机中自动加载了一个光驱，里面是 parallels tools 的文件。我们在桌面上创建一个文件夹(名字随意)，把光驱内的文件全部拷贝过去。</p>
+<p>分别执行下面的命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&gt; cd ~/Desktop/&lt;文件夹名字&gt;/kmods</span><br><span class="line">&gt; tar xvf ./prl_mod.tar.gz</span><br><span class="line">&gt; vim prl_eth/pvmnet/pvmnet.c</span><br><span class="line"></span><br><span class="line">| and replace the line (or just delete the line)</span><br><span class="line">|------------------------------------------------------------</span><br><span class="line">| 	.get_settings = pvmnet_get_settings,</span><br><span class="line">|------------------------------------------------------------</span><br><span class="line">| with</span><br><span class="line">|------------------------------------------------------------</span><br><span class="line">| #ifndef ETHTOOL_GLINKSETTINGS</span><br><span class="line">| 	.get_settings = pvmnet_get_settings,</span><br><span class="line">| #endif</span><br><span class="line">|------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">&gt; tar -zcvf prl_mod.tar.gz ./ dkms.conf Makefile.kmods</span><br><span class="line">&gt; cd ..</span><br><span class="line">&gt; ./install --install</span><br></pre></td></tr></table></figure>
+
+<p>这样上面的报错应该可以解决。</p>
+<p>之后可能还会出现另一个错误：</p>
+<p><strong>MS_RDONLY undeclared</strong></p>
+<p>google 发现在<a href="https://gist.github.com/rudolfratusinski/a4d9e3caff11a4d9d81d2e84abc9afbf" target="_blank" rel="noopener">这里</a>有解决方案。</p>
+<p>对于 ubuntu 19.10，不需要按照一楼的办法操作，在浏览器搜索一下 dennsporcic ，他提供的办法如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">I have success installing on Ubuntu 19.04 with only one file change.</span><br><span class="line"></span><br><span class="line">Follow the preparation step as described at top of this page</span><br><span class="line">Edit kmods/prl_fs/SharedFolders/Guest/Linux/prl_fs/super.c</span><br><span class="line">Simply add an extra include</span><br><span class="line">#include &lt;uapi/linux/mount.h&gt;</span><br><span class="line">and run the install script. :) Happy days !</span><br></pre></td></tr></table></figure>
+
+<p>只需要修改 kmods/prl_fs/SharedFolders/Guest/Linux/prl_fs/super.c 文件添加一个 include 即可。</p>
+<p>感谢这些作者。</p>
+<p> 另外，在其他版本的系统中有可能会出现别的问题，有条件的同学可尝试更换 parallels desktop 15。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>Buy me a cup of coffee~<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/z.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/w.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/04/18/largebin_attack/" class="archive-article-date">
-  	<time datetime="2019-04-17T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-18</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/04/18/largebin_attack/">Largebin attack</a>
-    </h1>
-  
+      
 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/11/15/parallels_tools/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/26/RFID/" class="archive-article-date">
-  	<time datetime="2019-03-25T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-26</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2019/11/04/sdnisc2019/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">第八届山东省大学生网络安全技能大赛--“深思杯” WP</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/26/RFID/">RFID 安全初探</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#系统安装完毕黑屏，只有一个闪烁的小横杠"><span class="toc-number">1.</span> <span class="toc-text">系统安装完毕黑屏，只有一个闪烁的小横杠</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#进入系统没法上网？"><span class="toc-number">2.</span> <span class="toc-text">进入系统没法上网？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装-parallels-tools-报错"><span class="toc-number">3.</span> <span class="toc-text">安装 parallels tools 报错</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/19/CVE-2018-5767/" class="archive-article-date">
-  	<time datetime="2019-03-18T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-19</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/19/CVE-2018-5767/">CVE-2018-5767 复现分析</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/15/glibc_analyse2/" class="archive-article-date">
-  	<time datetime="2019-03-14T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/15/glibc_analyse2/">glibc 中的 malloc 与 free 概述 (二)</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/11/kanxue2019Q1/" class="archive-article-date">
-  	<time datetime="2019-03-10T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-11</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/11/kanxue2019Q1/">看雪 CTF 2019 Q1</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/07/glibc_analyse1/" class="archive-article-date">
-  	<time datetime="2019-03-06T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-07</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/07/glibc_analyse1/">glibc 中的 malloc 与 free 概述 (一)</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/02/13/pyc-simple/" class="archive-article-date">
-  	<time datetime="2019-02-13T05:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-13</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/02/13/pyc-simple/">PYC 文件的简单分析</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/02/02/hgame-2019/" class="archive-article-date">
-  	<time datetime="2019-02-01T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/02/02/hgame-2019/">HGAME 2019 week1</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/02/01/flask_note/" class="archive-article-date">
-  	<time datetime="2019-01-31T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/02/01/flask_note/">flask 入门笔记</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/01/20/pcb2018-online/" class="archive-article-date">
-  	<time datetime="2019-01-19T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/20/pcb2018-online/">鹏程杯 2018 部分题目复现</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/2019/page/2/">&laquo; Prev</a><a class="page-number" href="/archives/2019/">1</a><a class="page-number" href="/archives/2019/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/archives/2019/page/4/">4</a><a class="extend next" rel="next" href="/archives/2019/page/4/">Next &raquo;</a>
-    </nav>
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="https://billts.site/extra_css/gitment.css">
+<script src="https://billts.site/js/gitment.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "http://yoursite.com/2019/11/15/parallels_tools/",
+  owner: 'rrrrrrri',
+  repo: 'rrrrrrri.github.io',
+  oauth: {
+    client_id: 'b02ae2fd83142bce4350',
+    client_secret: 'dad31d4a347d05c4f146be764e2848dc72cbd576',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
   
 
 
@@ -453,8 +378,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
