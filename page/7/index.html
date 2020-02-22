@@ -7,22 +7,15 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Android 学习 day2 | CataLpa&#39;s Home</title>
+  <title>CataLpa&#39;s Home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="开始之前首先对 AS 进行一下设置，在学习过程中经常会碰到一些没有见过的 API，为了快速查找文档的有关帮助，我们可以开启 AS 中的一个小功能，在 设置的 Edit-&amp;gt;General-&amp;gt;Other 下面有一个 Show quick documentation xxx 选项，把它打上勾就好了。">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Android 学习 day2">
-<meta property="og:url" content="http://yoursite.com/2019/10/11/Android_code_day2/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="CataLpa&#39;s Home">
+<meta property="og:url" content="http://yoursite.com/page/7/index.html">
 <meta property="og:site_name" content="CataLpa&#39;s Home">
-<meta property="og:description" content="开始之前首先对 AS 进行一下设置，在学习过程中经常会碰到一些没有见过的 API，为了快速查找文档的有关帮助，我们可以开启 AS 中的一个小功能，在 设置的 Edit-&amp;gt;General-&amp;gt;Other 下面有一个 Show quick documentation xxx 选项，把它打上勾就好了。">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://yoursite.com/img/android_code2.png">
-<meta property="og:image" content="http://yoursite.com/img/android_code3.png">
-<meta property="og:updated_time" content="2019-10-11T02:54:51.951Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android 学习 day2">
-<meta name="twitter:description" content="开始之前首先对 AS 进行一下设置，在学习过程中经常会碰到一些没有见过的 API，为了快速查找文档的有关帮助，我们可以开启 AS 中的一个小功能，在 设置的 Edit-&amp;gt;General-&amp;gt;Other 下面有一个 Show quick documentation xxx 选项，把它打上勾就好了。">
-<meta name="twitter:image" content="http://yoursite.com/img/android_code2.png">
+<meta name="twitter:title" content="CataLpa&#39;s Home">
   
     <link rel="alternative" href="/atom.xml" title="CataLpa&#39;s Home" type="application/atom+xml">
   
@@ -148,158 +141,32 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Android_code_day2" class="article article-type-post " itemscope itemprop="blogPost">
+            
+  
+    <article id="post-Python3-x总结" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 class="article-title" itemprop="name">
-      Android 学习 day2
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/16/Python3-x总结/">Python3.x基础总结</a>
     </h1>
   
 
         
-        <a href="/2019/10/11/Android_code_day2/" class="archive-article-date">
-  	<time datetime="2019-10-10T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-11</time>
+        <a href="/2018/03/16/Python3-x总结/" class="archive-article-date">
+  	<time datetime="2018-03-15T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-16</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>开始之前首先对 AS 进行一下设置，在学习过程中经常会碰到一些没有见过的 API，为了快速查找文档的有关帮助，我们可以开启 AS 中的一个小功能，在 设置的 Edit-&gt;General-&gt;Other 下面有一个 Show quick documentation xxx 选项，把它打上勾就好了。</p>
-<a id="more"></a>
-
-<p>开启之后只要鼠标悬停在某些方法上面就会自动弹出关于这个 API 的一些帮助信息。(如果没有的话可能需要下载离线的文档，具体下载方法在网上有)</p>
-<h2 id="Intent-之间传递数据"><a href="#Intent-之间传递数据" class="headerlink" title="Intent 之间传递数据"></a>Intent 之间传递数据</h2><p><strong>调用者 -&gt; 被调用者</strong></p>
-<p>这是一种非常常见的需求，例如用户在一个 Activity 输入了一些信息，点击按钮唤醒程序中另外一个 Activity，我们希望将这些信息显示在新的 Activity 上面，此时就需要在 Activity 之间传递信息。</p>
-<p>Intent 传递信息非常简单，只需要使用 putExtra 方法即可，查找 API 文档定义如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Add extended data to the intent. The name must include a package prefix, for example the app com.android.contacts would use names like &quot;com.android.contacts.ShowAll&quot;.</span><br></pre></td></tr></table></figure>
-
-<p>将额外的信息添加到 Intent 中，方法接受两个参数，第一个是信息的键(也可以称之为名字)，第二个就是信息本身。文档中建议信息的名字要添加当前应用的前缀，防止出现程序之间的冲突。</p>
-<p>例如</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">    setContentView(R.layout.activity_main);</span><br><span class="line"></span><br><span class="line">    Button button1 = (Button) findViewById(R.id.button);</span><br><span class="line">    button1.setOnClickListener(<span class="keyword">new</span> View.OnClickListener()&#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View V)</span></span>&#123;</span><br><span class="line">            Toast.makeText(MainActivity.<span class="keyword">this</span>, <span class="string">"You clicked Button!"</span>, Toast.LENGTH_SHORT).show();</span><br><span class="line">            Intent intent = <span class="keyword">new</span> Intent(MainActivity.<span class="keyword">this</span>, SecondActivity.class);</span><br><span class="line">            String test_string = <span class="string">"My String! Secret Message."</span>;</span><br><span class="line">            intent.putExtra(<span class="string">"Message"</span>, test_string);</span><br><span class="line">            startActivity(intent);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>MainActivity 定义了一个名为 test_string 的字符串，利用 putExtra 方法添加到 Intent 中，然后显式调用 SecondActivity。</p>
-<p>发送 Intent 的代码写完了，还需要定义好接收方的逻辑，用以接受数据。</p>
-<p>在接收方也需要实例化一个 Intent，然后调用其中的 getStringExtra 方法从 Intent 中获取数据。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">    setContentView(R.layout.activity_second);</span><br><span class="line">    Intent intent = getIntent();</span><br><span class="line">    String message = intent.getStringExtra(<span class="string">"Message"</span>);</span><br><span class="line">    Log.d(<span class="string">"SecondActivity"</span>, message);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这里实例化 Intent 的方式是使用 getIntent 方法，查找 API 文档发现这个方法用于返回调用当前 Activity 的 Intent 对象，正好是我们需要的 Intent。</p>
-<p>通过 Intent 的 getStringExtra 方法传入之前定义好的名称，即可获取到传递过来的数据。</p>
-<p>这里用到了 Log 类中定义的 debug 方法，在开发过程中经常需要进行 DEBUG，根据以往的经验，DEBUG 比较高效的方式就是利用 print 函数打印自己想要看到的信息，在 JAVA 中向控制台输出信息一般使用 System.out.println 方法，但是这种方式一般不推荐在实际开发场合使用，因为它打印的信息很少，并且难于定位。</p>
-<p>我们通常使用 Log 定义的几个方法来打印信息，常用的有 </p>
-<p>Log.v()  Log.d()  Log.i()  Log.w()  Log.e() </p>
-<p>它们接受两个参数，分别是 log 的 tag 和 log 本身的信息。</p>
-<p>这些方法打印的 Log 等级不同，在 AS 中运行程序之后下方控制栏中有一个名为 Logcat 的窗口，我们可以在里面使用搜索功能和过滤器查找符合条件的 LOG 信息，随机选择一条如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2019-10-10 10:12:29.506 20823-20823/com.example.activitytest D/SecondActivity: My String! Secret Message.</span><br></pre></td></tr></table></figure>
-
-<p>Log 默认包含了时间、进程号、包名等信息，方便定位。</p>
-<p><strong>被调用者 -&gt; 调用者</strong></p>
-<p>某些情况我们希望从被调用的 Activity 中获取某些信息，传回调用者做进一步的处理，这个也是可以简单实现的。</p>
-<p>利用 startActivityForResult 方法即可，这个方法接受两个参数，第一个依旧是 Intent，第二个是一个 requestcode，由于在一个 Activity 中可能会调用多个其他的 Activity，所以需要通过 requestcode 区别到底调用了哪一个 Activity。</p>
-<p>调用者启动 Activity 之后，被启动的 Acitvity 接受用户操作，例如我们设置一个按钮事件，当用户点击按钮之后就向调用者返回一个字符串。</p>
-<p>编写 SecondActivity 的代码</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">    setContentView(R.layout.activity_second);</span><br><span class="line">    <span class="comment">//Intent intent = getIntent();</span></span><br><span class="line">    <span class="comment">//String message = intent.getStringExtra("Message");</span></span><br><span class="line">    <span class="comment">//Log.d("SecondActivity", message);</span></span><br><span class="line">    Button button = (Button) findViewById(R.id.button2);</span><br><span class="line">    button.setOnClickListener(<span class="keyword">new</span> View.OnClickListener()&#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span></span>&#123;</span><br><span class="line">            Intent intent = <span class="keyword">new</span> Intent();</span><br><span class="line">            intent.putExtra(<span class="string">"SecondActivity"</span>, <span class="string">"Second Activity: Message Received!"</span>);</span><br><span class="line">            setResult(RESULT_OK, intent);</span><br><span class="line">            finish();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>为按钮添加了一个按钮事件，在事件中实例化一个 Intent，由于这个 Intent 只是用于返回数据，所以不需要添加任何参数。</p>
-<p>通过 putExtra 方法将数据附加到 Intent 上面，setResult 方法设置 returncode，用于表示这个 Activity 成功返回了。最后利用 finish 方法销毁当前 Activity。</p>
-<p>当子 Activity 被销毁之后，程序会自动回调父 Activity 中的 onActivityResule 方法，我们只需要重写这个方法，添加一定的逻辑就能得到子 Activity 传来的数据</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onActivityResult</span><span class="params">(<span class="keyword">int</span> requestCode, <span class="keyword">int</span> resultCode, @Nullable Intent data)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onActivityResult(requestCode, resultCode, data);</span><br><span class="line">    <span class="keyword">switch</span> (requestCode) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">if</span> (resultCode == RESULT_OK) &#123;</span><br><span class="line">                String returnData = data.getStringExtra(<span class="string">"SecondActivity"</span>);</span><br><span class="line">                Log.d(<span class="string">"MainActivity"</span>, returnData);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>重写方法的快捷键是 control+O (Mac)。</p>
-<p>为了兼容 Activity 里面可能会调用多个 Activity，首先要对 requestcode 进行判断，然后对 resultcode 进行判断，都满足条件之后才获取数据。</p>
-<p>如果用户是通过点击返回键回到上一个 Activity 的话，需要重写 onBackPressed 方法</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onBackPressed</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Intent intent = <span class="keyword">new</span> Intent();</span><br><span class="line">    intent.putExtra(<span class="string">"SecondActivity"</span>, <span class="string">"Back Pressed: Message Received!"</span>);</span><br><span class="line">    setResult(RESULT_OK, intent);</span><br><span class="line">    finish();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>逻辑相同，只不过写在了不同的方法里面。</p>
-<h2 id="Activity-的生命周期"><a href="#Activity-的生命周期" class="headerlink" title="Activity 的生命周期"></a>Activity 的生命周期</h2><p>使用安卓手机的时候经常遇到这种情况：点击某个按钮打开一个新的页面，在新的页面中又能进入到其他的页面中，而点击返回键又能一次回到之前的各个 Activity 中，那么系统是如何保存这些 Activity 调用顺序的呢？</p>
-<p>答案是利用返回栈保存 Activity 的调用顺序，当一个新的 Activity 被调用的时候，系统自动把它添加到栈顶，当它被销毁的时候就从栈中移除(所以手机只有返回键，而没有前进键)。</p>
-<p>每个时刻在屏幕上面显示的 Activity 都是栈顶那个 Activity。</p>
-<p><strong>Activity 的四个状态</strong></p>
-<ol>
-<li>活跃状态：当前 Activity 活跃，用户正在使用/与之交互，通常显示在屏幕上面的那个 Activity 就处于活跃状态，系统不到迫不得已的时候不会回收这种 Activity，因为那会造成很差的用户体验。</li>
-<li>暂停状态：当来了一个新的 Activity 进入栈顶，新的界面就会覆盖之前的界面，但是这种覆盖并不是绝对的，例如 QQ 看点，当一条消息到来，点击消息会打开半个屏幕大小的对话框，原来的界面被部分覆盖，但是仍然可见，此时这个 Activity 就进入了暂停状态。系统也不愿意去回收这种 Activity，因为会对用户体验造成影响。</li>
-<li>停止状态：还是到来了一个新的 Activity，但是这个 Activity 将原来的 Activity 完全覆盖，用户不可见，此时原 Activity 就进入了停止状态，系统在内存不足的情况下可能会回收这种 Activity。</li>
-<li>销毁状态： 一个 Activity 被从栈中完全移除，例如用户点击返回按钮，此时 Activity 进入销毁状态，等待被系统回收释放空间。</li>
-</ol>
-<p><strong>回调方法</strong></p>
-<p>Activity 中定义了 7 个回调方法，当 Activity 状态发生转换的时候会调用这些方法，这 7 个方法也对应着之前说到的 4 种状态。它们分别是：</p>
-<ol>
-<li>onCreate() 当 Activity 第一次被创建的时候会调用这个方法，之前的一些例子中都用到了这个方法，最简单的情况是用户点击应用图标的时候，主 Activity 就会调用自己的 onCreate 方法，在这个方法中主要执行一些初始化操作，例如加载布局、绑定事件等等。</li>
-<li>onStart() 当 Activity 由不可见变成可见的时候就会调用这个方法，例如用户点击返回按钮从一个活跃的 Activity 返回到停止状态的 Activity 的时候，系统会调用这个停止的 Activity oinStart 方法。</li>
-<li>onResume() 当 Activity 准备好和用户进行交互的时候会调用这个方法，此时 Activity 一定位于返回栈的栈顶，并且处于活跃状态。</li>
-<li>onPause() 当系统调用新的 Activity 或者恢复其他 Activity 的时候调用，通常在这个方法中清理资源，保存数据。此方法执行速度要快，否则会影响新 Activity 的创建。</li>
-<li>onStop()  当 Activity 完全不可见的时候调用，和 onPause 方法的区别是如果新启动的 Activity 是对话框式的，就会调用 onPause，否则执行 onStop。</li>
-<li>onDestory() 当 Activity 被销毁之前调用，用于清理程序数据，执行之后当前 Activity 会变成销毁状态。</li>
-<li>onRestart() 当 Activity 从停止状态变成活跃状态的时候调用。</li>
-</ol>
-<p>三个生存期：</p>
-<ol>
-<li>完整生存期： 一个 Activity 在 onCreate() 方法和 onDestory() 方法之间经历的就是一个完整生存期，在 onCreate 方法中执行各种初始化操作，在 onDestory 方法中执行释放内存操作。</li>
-<li>可见生存期： 在 onStart() 和 onStop() 之间经历的就是一个可见生存期，在可见生存期之内 Activity 总是对用户可见的，即使用户没法和它进行交互。利用这两个方法可以合理的对资源进行管理，在 onStart 方法中进行资源的加载，在 onStop 方法中卸载资源。</li>
-<li>前台生存期： 在 onResume() 和 onPause() 方法之间经历的就是一个前台生存期，在前台生存期，Activity 总是活跃的，并且用户可以和它进行交互。</li>
-</ol>
-<p>三个生存期和 7 个方法的关系：</p>
-<p><img src="/img/android_code2.png" alt></p>
-<h2 id="编写代码体验-Activity-生命周期"><a href="#编写代码体验-Activity-生命周期" class="headerlink" title="编写代码体验 Activity 生命周期"></a>编写代码体验 Activity 生命周期</h2><p>在 AS 中新建一个项目，再创建两个新的 Activity 分别叫做 NormalActivity 和 DialogActivity。一个是普通的 Activity ，另一个是对话框形式的 Activity。</p>
-<p>分别编写它们的 layout 文件，MainActivity 中放置 2 个按钮，分别用于启动这两个 Activity，两个 Activity 中简单的添加 TextView 即可，而 DialogActivity 需要注意，在 AndroidManifest.xml 中注册的时候需要添加一条属性</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">activity</span> <span class="attr">android:name</span>=<span class="string">".DialogActivity"</span> <span class="attr">android:theme</span>=<span class="string">"@style/Theme.AppCompat.Dialog "</span>/&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>利用 android:theme 属性设置 DialogActivity 的主题是对话框形式。</p>
-<p>在 MainActivity 中编写两个按钮的按钮事件，用显式 Intent 启动其他两个 Activity 即可。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">    setContentView(R.layout.activity_main);</span><br><span class="line"></span><br><span class="line">    Button dialog_button = (Button) findViewById(R.id.start_dialog_activity);</span><br><span class="line">    Button normal_button = (Button) findViewById(R.id.start_normal_activity);</span><br><span class="line"></span><br><span class="line">    normal_button.setOnClickListener(<span class="keyword">new</span> View.OnClickListener()&#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">            Intent normal_intent = <span class="keyword">new</span> Intent(MainActivity.<span class="keyword">this</span>, NormalActivity.class);</span><br><span class="line">            startActivity(normal_intent);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    dialog_button.setOnClickListener(<span class="keyword">new</span> View.OnClickListener()&#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">            Intent dialog_intent = <span class="keyword">new</span> Intent(MainActivity.<span class="keyword">this</span>, DialogActivity.class);</span><br><span class="line">            startActivity(dialog_intent);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>然后需要重写其余 6 个方法，在里面添加 LOG 打印信息，方便我们看到程序运行中发生了什么。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onStart</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onStart();</span><br><span class="line">    Log.d(TAG, <span class="string">"onStart"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onResume</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onResume();</span><br><span class="line">    Log.d(TAG, <span class="string">"onResume"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onPause</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onPause();</span><br><span class="line">    Log.d(TAG, <span class="string">"onPause"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onRestart</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onRestart();</span><br><span class="line">    Log.d(TAG, <span class="string">"onRestart"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onStop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onStop();</span><br><span class="line">    Log.d(TAG, <span class="string">"onStop"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onDestroy();</span><br><span class="line">    Log.d(TAG, <span class="string">"onDestroy"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>运行程序，分别点击两个按钮，再尝试退出程序，回到 AS 中的 Logcat 就能看到具体的函数执行流程，和上面的图片描述的差不多，我们主要关注 NormalActivity 和 DialogActivity 的不同。</p>
-<p>当 MainActivity 执行 NormalActivity 的时候 Logcat 打印信息如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">2019-10-11 10:12:22.000 30732-30732/com.example.activityliftcycletest D/MainActivity111: onPause</span><br><span class="line">2019-10-11 10:12:22.677 30732-30732/com.example.activityliftcycletest D/MainActivity111: onStop</span><br><span class="line">2019-10-11 10:12:39.516 30732-30732/com.example.activityliftcycletest D/MainActivity111: onRestart</span><br><span class="line">2019-10-11 10:12:39.517 30732-30732/com.example.activityliftcycletest D/MainActivity111: onStart</span><br><span class="line">2019-10-11 10:12:39.518 30732-30732/com.example.activityliftcycletest D/MainActivity111: onResume</span><br></pre></td></tr></table></figure>
-
-<p>而执行 DialogActivity 的时候信息如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2019-10-11 10:12:43.894 30732-30732/com.example.activityliftcycletest D/MainActivity111: onPause</span><br><span class="line">2019-10-11 10:12:56.217 30732-30732/com.example.activityliftcycletest D/MainActivity111: onResume</span><br></pre></td></tr></table></figure>
-
-<p>不同之处在于前者执行了 onPause -&gt; onStop -&gt; onRestart -&gt; onStart 这些方法，而后者只需要执行 onPause -&gt; onResume。原因就是 DialogActivity 启动之后，MainActivity 依旧处于可见状态</p>
-<p><img src="/img/android_code3.png" alt></p>
-<p>但是调用 NormalActivity 的时候 MainActivity 会被完全遮盖，这也对应了图片中对于生命周期的描述。</p>
-<p>今天学习了 Activity 的有关概念，包括 4 个状态，3 个生存期，7 个方法，并且编写代码进行了实践。另外学习了如何在 Activity 之间传递数据，从调用者向被调用者传递可以直接附加在 Intent 中，反之需要使用 startIntentForResult 配合 requestCode 和 resultCode 进行判断，涉及到回调方法 onActivityResult 和 onBackPressed。</p>
-<p>明天继续学习关于 Activity 的概念。</p>
-
+        <p>虽然不是边学边记，但是什么时候开始都不算晚，不妨从现在开始，借着整理Python的机会，培养一下做笔记的习惯，更是磨练自己的韧性、毅力。</p>
+        
       
 
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>Buy me a cup of coffee~<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    <div class="reward-box-item">
-                      <img class="reward-img" src="/img/z.png">
-                      <span class="reward-type">支付宝</span>
-                    </div>
-                    
-                    
-                    <div class="reward-box-item">
-                      <img class="reward-img" src="/img/w.png">
-                      <span class="reward-type">微信</span>
-                    </div>
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -308,75 +175,16 @@
       
 
       
-
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/16/Python3-x总结/">展开全文 >></a>
+        </p>
       
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
-        </div>
-      </div>
-    </span>
-  </div>
-</div>
 
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/10/11/Android_code_day2/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-  
-    <a href="/2019/10/11/Android_code_day3/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Android 学习 day3</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -391,48 +199,17 @@
         </div>
         
         
-        <div class="toc-container tooltip-left">
-            <i class="icon-font icon-category"></i>
-            <div class="tooltip tooltip-east">
-                <span class="tooltip-item">
-                </span>
-                <span class="tooltip-content">
-                    <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Intent-之间传递数据"><span class="toc-number">1.</span> <span class="toc-text">Intent 之间传递数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Activity-的生命周期"><span class="toc-number">2.</span> <span class="toc-text">Activity 的生命周期</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编写代码体验-Activity-生命周期"><span class="toc-number">3.</span> <span class="toc-text">编写代码体验 Activity 生命周期</span></a></li></ol>
-                    </div>
-                </span>
-            </div>
-        </div>
-        
     </div>
 </aside>
 
 
 
-  
-  
-  
 
   
-
   
-
-  
-  <div id="gitment-ctn"></div> 
-<link rel="stylesheet" href="https://billts.site/extra_css/gitment.css">
-<script src="https://billts.site/js/gitment.js"></script>
-<script>
-var gitment = new Gitment({
-  id: "http://yoursite.com/2019/10/11/Android_code_day2/",
-  owner: 'rrrrrrri',
-  repo: 'rrrrrrri.github.io',
-  oauth: {
-    client_id: 'b02ae2fd83142bce4350',
-    client_secret: 'dad31d4a347d05c4f146be764e2848dc72cbd576',
-  },
-})
-gitment.render('gitment-ctn')
-</script>
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/page/6/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span>
+    </nav>
   
 
 
@@ -443,7 +220,7 @@ gitment.render('gitment-ctn')
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2019 CataLpa
+    		&copy; 2020 CataLpa
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -455,8 +232,8 @@ gitment.render('gitment-ctn')
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: false,
-		isPost: true,
+		isHome: true,
+		isPost: false,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
