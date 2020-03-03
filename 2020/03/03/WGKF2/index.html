@@ -7,15 +7,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>CataLpa&#39;s Home</title>
+  <title>简单游戏修改器编写2 | CataLpa&#39;s Home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="CataLpa&#39;s Home">
-<meta property="og:url" content="http://yoursite.com/page/3/index.html">
+  <meta name="description" content="上一篇简单写了一个修改器，功能比较简单，只能修改人物的血量，实际上想要写出功能强大的修改器，需要对游戏进程一定程度的逆向分析，以便于定位关键逻辑和相关数据结构。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="简单游戏修改器编写2">
+<meta property="og:url" content="http://yoursite.com/2020/03/03/WGKF2/index.html">
 <meta property="og:site_name" content="CataLpa&#39;s Home">
+<meta property="og:description" content="上一篇简单写了一个修改器，功能比较简单，只能修改人物的血量，实际上想要写出功能强大的修改器，需要对游戏进程一定程度的逆向分析，以便于定位关键逻辑和相关数据结构。">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/img/WGKF2-1.png">
+<meta property="og:image" content="http://yoursite.com/img/WGKF2-2.png">
+<meta property="og:image" content="http://yoursite.com/img/WGKF2-3.png">
+<meta property="og:updated_time" content="2020-03-03T02:39:27.470Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CataLpa&#39;s Home">
+<meta name="twitter:title" content="简单游戏修改器编写2">
+<meta name="twitter:description" content="上一篇简单写了一个修改器，功能比较简单，只能修改人物的血量，实际上想要写出功能强大的修改器，需要对游戏进程一定程度的逆向分析，以便于定位关键逻辑和相关数据结构。">
+<meta name="twitter:image" content="http://yoursite.com/img/WGKF2-1.png">
   
     <link rel="alternative" href="/atom.xml" title="CataLpa&#39;s Home" type="application/atom+xml">
   
@@ -141,33 +149,84 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-CNVD-2018-01084" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-WGKF2" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/05/CNVD-2018-01084/">CNVD-2018-01084 漏洞复现</a>
+    <h1 class="article-title" itemprop="name">
+      简单游戏修改器编写2
     </h1>
   
 
         
-        <a href="/2019/09/05/CNVD-2018-01084/" class="archive-article-date">
-  	<time datetime="2019-09-04T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-05</time>
+        <a href="/2020/03/03/WGKF2/" class="archive-article-date">
+  	<time datetime="2020-03-02T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-03</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>CNVD-2018-01084 是 Dlink 系列路由器的一个漏洞，影响设备包括 DIR 615/645/815 路由器。</p>
-<p>漏洞存在于 /htdocs/cgibin 二进制文件中，漏洞成因是 service.cgi 中未经任何过滤检查就将用户的输入拼接到原始命令中，导致任意代码执行。</p>
-        
+        <p>上一篇简单写了一个修改器，功能比较简单，只能修改人物的血量，实际上想要写出功能强大的修改器，需要对游戏进程一定程度的逆向分析，以便于定位关键逻辑和相关数据结构。</p>
+<a id="more"></a>
+
+<h2 id="从内存数据入手"><a href="#从内存数据入手" class="headerlink" title="从内存数据入手"></a>从内存数据入手</h2><p>依旧以挺进地牢这款游戏为例，上次我们利用 CE 找到了一些静态指针，考虑到游戏开发的一些内容，角色的血量等数据肯定被保存在某个对象中，既然找到了血量，血量附近一定存在另外一些和角色相关的内容。</p>
+<p>首先找到血量所在的地址，将它添加到列表中，然后右键选择 Browse this memory region 选项，弹出一个窗口，选择 Tool 选项卡中的 Dissect data/structures，弹出另外一个窗口，选择 Structures 选项卡中的 Define new structure，默认选项 ok 即可。</p>
+<p><img src="/img/WGKF2-1.png" alt></p>
+<p>窗口中会出现很多数据，第一项是血量，其余数据暂时不知道是什么。保持这个窗口不要关闭，回到游戏操作人物，当进行某些特定操作的时候，列表中的数据会发生变动，例如当拾取了一个护甲，有数据会增加，那么我们可以合理的猜测这个数据代表了护甲的数量，依照此思路可以逐个搜索其他数据，例如子弹数量、金币数量等等，在这些数据附近会发现更多随着操作变动的内容。</p>
+<p>某些数据是可以猜测出来的，但是更多的数据看似在随机变动，并且手动修改也看不出来有什么影响，此时就需要对游戏进程一定程度的逆向分析，尝试从代码中梳理游戏的逻辑。</p>
+<h2 id="逆向分析"><a href="#逆向分析" class="headerlink" title="逆向分析"></a>逆向分析</h2><p>不同游戏逆向分析的过程是不同的，因为游戏采用了不一样的引擎，例如挺进地牢使用的是 Unity3D 引擎开发，意味着游戏使用 C# 编写，而起源引擎等可能使用的是 C++ 编写，不同语言开发的游戏在逆向上有一定的差别，但是思路大体相同。</p>
+<p>C# 逆向相对比较简单，游戏的主体是 Assembly-CSharp.dll，在没有混淆保护的情况下，使用 ILSpy、dnspy 等工具可轻易的反编译此文件。</p>
+<p>打开文件后可以看到其中定义了很多类，考虑到血量数据，我们首先寻找和单词 Health 有关的类。</p>
+<p>和 Health 相关的类较少，简单分析一下可以发现类 HealthHaver 很可疑，dnSpy 等工具包含“分析”功能，通过分析，发现这个类被很多类所引用，并且引用此类的类都和游戏角色(进一步讲，是具有血量的角色)有关，例如 AIActor、Player 等。查看此类的成员发现存在 currentHealth、currentArmor 等。</p>
+<p>单从逆向结果上看并不能确定这个类就和角色血量有关，此时我们可以结合 CE 修改来确定。首先在 dnSpy  中点击成员变量的 Token</p>
+<p><img src="/img/WGKF2-2.png" alt></p>
+<p>左侧会显示出变量的正确定义顺序(默认情况是字母排序)，可以发现在 currentHealth 下方就是 currentArmor ，并且还有 maximumHealth 等</p>
+<p><img src="/img/WGKF2-3.png" alt></p>
+<p>在 CE 的结构体列表中我们能够定位的是 CurrentHealth，那么尝试修改和它相邻的两个成员呢？</p>
+<p>修改之后返回游戏查看，如果你操作的没错，角色的最大生命值和护甲将发生变化。这样我们就成功定位到了和血上限、护甲相关的数据。</p>
+<p>这个游戏中有很多武器，按照开发的思路来看，不同的武器应该会继承于同一个类，或者直接使用一个类来表示，武器拥有子弹数量，这个数量肯定通过类中的某个成员表示。那么和修改血量一样，我们可以通过搜索当前子弹数量来定位到枪械的结构体，在 dnSpy 中刚好发现了一个类叫做 Gun，里面包含子弹数量、武器名字等等数据。</p>
+<p>和修改血量的思路一样，在 dnSpy 中找到数据的位置，在 CE 中尝试修改即可逐步理清各个数据的作用。</p>
+<p>但是这里有一个问题，当修改完武器的数据之后，如果我们拾取了新的武器，刚刚修改的效果并不会转移到新的武器上面，思考其原因，保存角色信息的类肯定存在某个成员例如 currentGun，用于表示当前角色正在使用的武器对象，切换武器之后这个成员内容会发生变化。所以想要稳定修改所有武器的数据，就要找到保存角色信息的数据。</p>
+<p>如法炮制，通过逆向分析找到角色信息类，然后通过 CE 修改确定。这里不在赘述，保存角色信息的类叫做 PlayerController，里面的 inventory 字段表示一个 GunInventory 对象，这个对象拥有 currentGun 成员，表示当前角色正在使用的武器对象。</p>
+<h2 id="代码实现修改器"><a href="#代码实现修改器" class="headerlink" title="代码实现修改器"></a>代码实现修改器</h2><p>基于以上思路，对之前的修改器进行修改，添加了无限子弹，一击必杀等功能(可能有 BUG)，修改版本已经上传到 Github，感兴趣的同学可以看一下。</p>
+<p><a href="https://github.com/rrrrrrri/MyEtGTrainer" target="_blank" rel="noopener">https://github.com/rrrrrrri/MyEtGTrainer</a></p>
+
       
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>Buy me a cup of coffee~<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/z.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/w.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -176,16 +235,75 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/09/05/CNVD-2018-01084/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/03/03/WGKF2/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2020/02/29/CVE-2019-7406/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">CVE-2019-7406 复现？</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -200,591 +318,48 @@
         </div>
         
         
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Ghidra_mac" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/04/Ghidra_mac/">Ghidra 在 mac 下不能正常使用？</a>
-    </h1>
-  
-
-        
-        <a href="/2019/09/04/Ghidra_mac/" class="archive-article-date">
-  	<time datetime="2019-09-03T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>今天复现个 MIPS 的漏洞，IDA 不能反编译，突然想起来 NSA 的 Ghidra，这东西在虚拟机里吃了大半年灰，今天终于要掏出来用用了。</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/09/04/Ghidra_mac/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#从内存数据入手"><span class="toc-number">1.</span> <span class="toc-text">从内存数据入手</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#逆向分析"><span class="toc-number">2.</span> <span class="toc-text">逆向分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码实现修改器"><span class="toc-number">3.</span> <span class="toc-text">代码实现修改器</span></a></li></ol>
+                    </div>
+                </span>
             </div>
         </div>
         
-        
     </div>
 </aside>
 
 
 
-
-  
-    <article id="post-classroom-machine" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/03/classroom-machine/">记一次安卓设备渗透(误)</a>
-    </h1>
-  
-
-        
-        <a href="/2019/09/03/classroom-machine/" class="archive-article-date">
-  	<time datetime="2019-09-02T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-03</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>本文纯属虚构</strong></p>
-<p>最近学校在每个教室门口安装了电子显示屏，能够显示课表、空闲教室、天气等信息(为啥不给装空调捏？)，据说之后还会启用人脸识别打卡功能 emmm…</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/09/03/classroom-machine/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Gitment" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/02/Gitment/">关于 Gitment 无法登陆的解决方案</a>
-    </h1>
-  
-
-        
-        <a href="/2019/09/02/Gitment/" class="archive-article-date">
-  	<time datetime="2019-09-01T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近刚把博客找回来，之前使用的是 hexo + nexT 主题，评论系统后端部署在 LeanCloud.</p>
-<p>刚去 LeanCloud 看了一下，居然需要实名认证了，这就很讨厌，于是弃用 LeanCloud 。</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/09/02/Gitment/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-xnuca2019" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/31/xnuca2019/">XNUCA 2019 部分题目</a>
-    </h1>
-  
-
-        
-        <a href="/2019/08/31/xnuca2019/" class="archive-article-date">
-  	<time datetime="2019-08-30T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-31</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>和队友打了 XNUCA 2019，话说这个比赛题目要不要那么难。。。</p>
-<p>满眼全是 kernel、windows、虚拟机逃逸。。。</p>
-<p>而且记错了比赛时间，浪费半天时间 ORZ</p>
-<p>看来还是自己太菜，只出了俩简单的逆向题，其他的实在是不了解呀。。</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/08/31/xnuca2019/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-binary_patch" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/16/binary_patch/">二进制文件应急修复</a>
-    </h1>
-  
-
-        
-        <a href="/2019/06/16/binary_patch/" class="archive-article-date">
-  	<time datetime="2019-06-15T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="漏洞修复概述"><a href="#漏洞修复概述" class="headerlink" title="漏洞修复概述"></a>漏洞修复概述</h2><p>在具体分析一个漏洞之前，我先将漏洞简单的分一下类，根据漏洞修复的难度，可以把漏洞分为以下四类</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/06/16/binary_patch/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Ret2runtime_dlresolve" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/02/Ret2runtime_dlresolve/">Ret2 runtime_dlresolve</a>
-    </h1>
-  
-
-        
-        <a href="/2019/05/02/Ret2runtime_dlresolve/" class="archive-article-date">
-  	<time datetime="2019-05-01T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Ret2dlresolve 是高级 ROP 技巧之一，世界著名的黑客杂志 phrack 在某一期提到过这个攻击技巧，该手段用于没有较好的 gadget、函数、利用链的情况。ret2dlresolve 主要利用了 linux 下的延迟绑定机制，通过修改解析字符串，我们就可以控制最终解析出的函数，从而获取任意函数执行的能力。</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/05/02/Ret2runtime_dlresolve/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-DDCTF2019" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/18/DDCTF2019/">DDCTF 2019</a>
-    </h1>
-  
-
-        
-        <a href="/2019/04/18/DDCTF2019/" class="archive-article-date">
-  	<time datetime="2019-04-17T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近打了 DDCTF，封榜之后本来排名 20 多，但是前面的人数一直在减少，水涨船高顶到 13名 ORZ 。</p>
-<p>PS： DD公司总部环境不错</p>
-<h2 id="真-签到题"><a href="#真-签到题" class="headerlink" title="真-签到题"></a>真-签到题</h2><p>在公告里面找到 flag</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/04/18/DDCTF2019/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-largebin_attack" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/18/largebin_attack/">Largebin attack</a>
-    </h1>
-  
-
-        
-        <a href="/2019/04/18/largebin_attack/" class="archive-article-date">
-  	<time datetime="2019-04-17T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近打了西湖论剑预选赛，比赛中一道 pwn 题的利用手法是 largebin attack。largebin attack 在 CTF 比赛中的出现频率比较低，但是一旦出现肯定就是难度较高的题目。今天就来探究一下关于 largebin attack 的相关攻击手段。</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/04/18/largebin_attack/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-RFID" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/26/RFID/">RFID 安全初探</a>
-    </h1>
-  
-
-        
-        <a href="/2019/03/26/RFID/" class="archive-article-date">
-  	<time datetime="2019-03-25T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="RFID-简介"><a href="#RFID-简介" class="headerlink" title="RFID 简介"></a>RFID 简介</h2><p>RFID(Radio Frequency Identification) 全称射频识别技术，这个名字大家可能比较陌生，但是提起我们生活中经常使用的饭卡，水卡，银行卡等等这些东西，大家应该很熟悉了。我们几乎每天都会使用这些小小的卡片，吃饭需要，取钱需要，甚至回家使用电梯也需要，可以说我们的生活已经离不开 RFID 这一技术了。</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/03/26/RFID/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
   
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
-    </nav>
+  
+
+  
+
+  
+
+  
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="https://billts.site/extra_css/gitment.css">
+<script src="https://billts.site/js/gitment.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "http://yoursite.com/2020/03/03/WGKF2/",
+  owner: 'rrrrrrri',
+  repo: 'rrrrrrri.github.io',
+  oauth: {
+    client_id: 'b02ae2fd83142bce4350',
+    client_secret: 'dad31d4a347d05c4f146be764e2848dc72cbd576',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
   
 
 
@@ -816,8 +391,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
