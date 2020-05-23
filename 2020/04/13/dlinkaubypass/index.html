@@ -17,7 +17,7 @@
 <meta property="og:description" content="在 IoT 漏洞中，身份验证漏洞出现频率较高，并且能够造成的危害很大，通过身份验证的绕过，攻击者可以访问到很多敏感 API，甚至可以结合其他漏洞直接获取设备 shell，给用户带来重大损失。">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/img/aubypass-1.png">
-<meta property="og:updated_time" content="2020-04-13T04:24:17.376Z">
+<meta property="og:updated_time" content="2020-04-13T04:29:37.696Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="几个漏洞">
 <meta name="twitter:description" content="在 IoT 漏洞中，身份验证漏洞出现频率较高，并且能够造成的危害很大，通过身份验证的绕过，攻击者可以访问到很多敏感 API，甚至可以结合其他漏洞直接获取设备 shell，给用户带来重大损失。">
@@ -194,7 +194,7 @@
 <p>这个函数的代码比较多，我用 C 写了一个简化版</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;malloc.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">char</span>* username = <span class="string">"admin"</span>;</span><br><span class="line">    <span class="keyword">char</span>* password = <span class="string">"admin888"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">char</span>* realUsername = <span class="string">"admin"</span>;</span><br><span class="line">    <span class="keyword">char</span>* realPassword = <span class="string">"admin888"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">strncmp</span>(realUsername, username, <span class="number">5</span>))&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"Username incorrect!\n"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> len = <span class="built_in">strlen</span>(password);</span><br><span class="line">    <span class="keyword">if</span>(!<span class="built_in">strncmp</span>(realPassword, password, len))&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"Success\n"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Failed\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>前两个字符串代表用户的请求，后两个代表正确的字符串，代码判断逻辑是要求用户名等于 admin，者没有什么问题，但是在判断密码的时候，首先会使用 strlen 计算用户输入的密码长度，然后带入 strncmp 函数和正确的密码进行比较，如果用户输入的密码为空，那么最终参与 strncmp 比较的 len 就是 0，此时函数会默认返回 0。</p>
+<p>前两个字符串代表用户的请求，后两个代表正确的字符串，代码判断逻辑是要求用户名等于 admin，这没有什么问题，但是在判断密码的时候，首先会使用 strlen 计算用户输入的密码长度，然后带入 strncmp 函数和正确的密码进行比较，如果用户输入的密码为空，那么最终参与 strncmp 比较的 len 就是 0，此时函数会默认返回 0。</p>
 <p>于是验证成功就存在了两种情况，一是密码真的正确，二是密码为空，大家可以自己编译上面的代码试一下。</p>
 <p>修复手段呢？可以在 strlen 计算密码长度之后对长度进行判断，如果等于零就直接返回登录失败。</p>
 <p>经过测试，DIR 878 等型号的路由器对于 HNAP login 请求的处理是相同的，漏洞的成因也是一样。</p>
@@ -218,7 +218,7 @@
 
 <p>没有 Canary 保护，并且存在 RWX 段。结合 MIPS 指令集的特点，此函数又是非叶子函数，返回地址会被保存到 stack 上面，攻击者就可以利用 ROP + Shellcode 技术来实现无授权的任意代码执行。</p>
 <p>不过一切前提都是 cookie 用户可控，由于没有必要的环境，我暂时没法确定这一点。</p>
-<p>另外细心的同学应该可以发现，在处理 Username 的地方也存在问题，代码如下</p>
+<p>细心的同学应该可以发现，在处理 Username 的地方也存在问题，代码如下</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ((iVar1 == <span class="number">0</span>) &amp;&amp; (iVar1 = getElementValue(param_1,<span class="string">"Username"</span>,&amp;local_2b8), <span class="number">1</span> &lt; iVar1)) &#123;</span><br><span class="line">  <span class="built_in">memset</span>(acStack196,<span class="number">0</span>,<span class="number">0x96</span>);</span><br><span class="line">  <span class="built_in">strcpy</span>(acStack196,<span class="string">"UserName"</span>);</span><br><span class="line">  __s1 = (<span class="keyword">char</span> *)<span class="built_in">tolower</span>(local_2b8);</span><br><span class="line">  <span class="built_in">strcpy</span>(acStack146,__s1);</span><br><span class="line">  <span class="built_in">memset</span>(&amp;local_200,<span class="number">0</span>,<span class="number">0x52</span>);</span><br><span class="line">  getDeviceSecurity(&amp;local_200,acStack196,<span class="number">1</span>);</span><br></pre></td></tr></table></figure>
 
 <p>通过 getElementValue 获取 Username 的值，保存在 local_2b8 变量中，后面直接使用在 strcpy 函数中，也会导致栈溢出，不过和上一个问题一样，我暂时没办法确定 getElementValue 是否会做对应的长度限制。</p>
@@ -383,6 +383,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2020/05/23/IPC43AN/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          TP-Link 摄像头漏洞
+        
+      </div>
+    </a>
   
   
     <a href="/2020/03/03/WGKF2/" id="article-nav-older" class="article-nav-link-wrap">
