@@ -31,9 +31,9 @@
 <meta property="og:image" content="http://yoursite.com/img/seven3.png">
 <meta property="og:image" content="http://yoursite.com/img/seven4.png">
 <meta property="og:image" content="http://yoursite.com/img/seven5.png">
-<meta property="og:image" content="http://yoursite.com/image/seven6.png">
+<meta property="og:image" content="http://yoursite.com/img/seven6.png">
 <meta property="og:image" content="http://yoursite.com/img/seven7.png">
-<meta property="og:updated_time" content="2019-09-02T12:51:16.910Z">
+<meta property="og:updated_time" content="2020-11-07T01:08:56.450Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HCTF 2018 部分复现">
 <meta name="twitter:description" content="和师傅们打了一天半的 HCTF，题目质量很高，感谢杭电的师傅们带来的精彩比赛，膜一波各位大佬，我还是太菜了。。。">
@@ -266,7 +266,7 @@
 
 <p>确定了断点位置，使用命令 bp fffff880`032a7000+12f0 就可以在关键函数下断点，紧接着 f5 继续运行，当在虚拟机中输入一个字符(在键盘上按下任意一个键)，windbg就会再次断下，这回位置就在关键函数的入口。<br><img src="/img/seven4.png" alt="image"></p>
 <p><img src="/img/seven5.png" alt="image"></p>
-<p>接着就可以着手调试了，F10 和 F11 对应着 OD 的 F7 和 F8，通过调试可以理解这个函数的目的，它多次对内置的一个字符数组进行操作，在 IDA 中这个数组是：<br><img src="/image/seven6.png" alt="image"></p>
+<p>接着就可以着手调试了，F10 和 F11 对应着 OD 的 F7 和 F8，通过调试可以理解这个函数的目的，它多次对内置的一个字符数组进行操作，在 IDA 中这个数组是：<br><img src="/img/seven6.png" alt="image"></p>
 <p>看上去没什么意义，但是根据经验推断，这个应该是一种迷宫，最后对是否到达字符 ‘7’ 进行验证，猜测是要把 o 移动到 7 的位置，在 windbg 中随便调整了一下宽度，得出了迷宫：<br><img src="/img/seven7.png" alt="image"></p>
 <p>一个 7 型迷宫，使用 wasd 操控 o 走到 7 就胜利了！<br>走一波记录下来每一步的操作，到最后一步的时候单步调试，查看 Dbgprint 函数的参数就是 The input is the flag!，表示输入正确。  </p>
 <p>flag: <strong>hctf{ddddddddddddddssaasasasasasasasasas}</strong></p>
