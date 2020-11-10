@@ -354,6 +354,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="malloc-中的-consolidate"><a href="#malloc-中的-consolidate" class="headerlink" title="malloc 中的 consolidate"></a>malloc 中的 consolidate</h2><p>在 malloc 的流程中有几处调用到了这个函数，它的主要作用是遍历 fastbin 链表，将其中的堆块进行合并，插入到 unsorted bin 当中。</p>
+<p>Update: 2020-11-02</p>
         
       
 
@@ -480,6 +481,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="〇"><a href="#〇" class="headerlink" title="〇."></a>〇.</h2><p>最近做一些堆利用的题目时感觉基础掌握的不是很牢靠，之前没有仔细的研究过 glibc 中的内存管理策略，导致遇到某些题目的时候总是会忽略掉重要的细节(libc 层面)，所以这次就来仔细研究一下 malloc 和 free 的实现。<br><strong>文章中难免有疏漏，欢迎大家指正。</strong></p>
+<p>Update: 2020-11-02</p>
         
       
 
@@ -967,7 +969,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
     
     	<section class="tools-section tools-section-me" q-show="aboutme">
   	  	
-  	  		<div class="aboutme-wrap" id="js-aboutme">大三网络专业学生&lt;br&gt;喜欢安全方面的研究～&lt;br&gt;求实习</div>
+  	  		<div class="aboutme-wrap" id="js-aboutme">致力于 IoT 安全研究</div>
   	  	
     	</section>
     
