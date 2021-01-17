@@ -18,7 +18,7 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/img/AC2400-1.png">
 <meta property="og:image" content="http://yoursite.com/img/AC2400-2.png">
-<meta property="og:updated_time" content="2021-01-14T10:34:54.750Z">
+<meta property="og:updated_time" content="2021-01-15T02:14:50.438Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NetGear AC2400 漏洞复现">
 <meta name="twitter:description" content="身份验证绕过以及命令注入">
@@ -266,7 +266,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1. URL 中包含 ?signature=</span><br><span class="line">2. 请求类型是 GET </span><br><span class="line">3. URL 中不包含 currentsetting.htm 以及上面写出的一些字符串</span><br></pre></td></tr></table></figure>
 
 <p>程序会先用 strstr 定位 ?signature= 的位置，然后跳过这个字符串，接着用 sscanf 函数将后续内容拷贝到变量 v229。</p>
-<p>在拷贝的过程中没有判断源字符串长度，可能会导致溢出。不过 IDA 自动识别目的缓冲器大小为 2500 字节，能否传入这么长的 URL 暂时无法确定。</p>
+<p>在拷贝的过程中没有判断源字符串长度，可能会导致溢出。不过 IDA 自动识别目的缓冲区大小为 2500 字节，能否传入这么长的 URL 暂时无法确定。</p>
 
       
 
@@ -369,6 +369,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2021/01/17/DCS-960L/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Dlink DCS-960L 漏洞复现
+        
+      </div>
+    </a>
   
   
     <a href="/2020/12/04/realinfo/" id="article-nav-older" class="article-nav-link-wrap">

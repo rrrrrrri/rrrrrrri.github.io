@@ -9,19 +9,19 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>IoT 设备中身份验证绕过的一些漏洞 | CataLpa&#39;s Home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="在 IoT 漏洞中，身份验证漏洞出现频率较高，并且能够造成的危害很大，通过身份验证的绕过，攻击者可以访问到很多敏感 API，甚至可以结合其他漏洞直接获取设备 shell，给用户带来重大损失。 bypass 身份验证漏洞的成因有很多，本文旨在长期收集一些 IoT 设备身份验证的漏洞，学习其中的绕过思路和方法。">
+  <meta name="description" content="在 IoT 漏洞中，身份验证漏洞出现频率较高，并且能够造成的危害很大，通过身份验证的绕过，攻击者可以访问到很多敏感 API，甚至可以结合其他漏洞直接获取设备 shell，给用户带来重大损失。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="IoT 设备中身份验证绕过的一些漏洞">
 <meta property="og:url" content="http://yoursite.com/2020/08/28/bypass_auth/index.html">
 <meta property="og:site_name" content="CataLpa&#39;s Home">
-<meta property="og:description" content="在 IoT 漏洞中，身份验证漏洞出现频率较高，并且能够造成的危害很大，通过身份验证的绕过，攻击者可以访问到很多敏感 API，甚至可以结合其他漏洞直接获取设备 shell，给用户带来重大损失。 bypass 身份验证漏洞的成因有很多，本文旨在长期收集一些 IoT 设备身份验证的漏洞，学习其中的绕过思路和方法。">
+<meta property="og:description" content="在 IoT 漏洞中，身份验证漏洞出现频率较高，并且能够造成的危害很大，通过身份验证的绕过，攻击者可以访问到很多敏感 API，甚至可以结合其他漏洞直接获取设备 shell，给用户带来重大损失。">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/img/aubypass-1.png">
 <meta property="og:image" content="http://yoursite.com/img/aubypass-2.png">
-<meta property="og:updated_time" content="2020-08-28T06:56:43.027Z">
+<meta property="og:updated_time" content="2021-01-15T02:18:54.168Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="IoT 设备中身份验证绕过的一些漏洞">
-<meta name="twitter:description" content="在 IoT 漏洞中，身份验证漏洞出现频率较高，并且能够造成的危害很大，通过身份验证的绕过，攻击者可以访问到很多敏感 API，甚至可以结合其他漏洞直接获取设备 shell，给用户带来重大损失。 bypass 身份验证漏洞的成因有很多，本文旨在长期收集一些 IoT 设备身份验证的漏洞，学习其中的绕过思路和方法。">
+<meta name="twitter:description" content="在 IoT 漏洞中，身份验证漏洞出现频率较高，并且能够造成的危害很大，通过身份验证的绕过，攻击者可以访问到很多敏感 API，甚至可以结合其他漏洞直接获取设备 shell，给用户带来重大损失。">
 <meta name="twitter:image" content="http://yoursite.com/img/aubypass-1.png">
   
     <link rel="alternative" href="/atom.xml" title="CataLpa&#39;s Home" type="application/atom+xml">
@@ -169,7 +169,6 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>在 IoT 漏洞中，身份验证漏洞出现频率较高，并且能够造成的危害很大，通过身份验证的绕过，攻击者可以访问到很多敏感 API，甚至可以结合其他漏洞直接获取设备 shell，给用户带来重大损失。</p>
-<p>bypass 身份验证漏洞的成因有很多，本文旨在长期收集一些 IoT 设备身份验证的漏洞，学习其中的绕过思路和方法。</p>
 <a id="more"></a>
 
 <h1 id="CVE-2020-8864"><a href="#CVE-2020-8864" class="headerlink" title="CVE-2020-8864"></a>CVE-2020-8864</h1><p>2020 年 2 月 24 日，ZDI 团队披露了存在于 D-Link 多个型号路由器中的身份验证绕过漏洞，通过利用漏洞，攻击者可从 LAN 侧轻易的控制路由器，实现修改 admin 用户密码、篡改路由器默认配置、甚至结合其他漏洞实现蠕虫植入等操作。</p>
