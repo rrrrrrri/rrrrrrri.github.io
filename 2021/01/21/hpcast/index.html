@@ -7,15 +7,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | CataLpa&#39;s Home</title>
+  <title>乐播投屏多个漏洞通告 | CataLpa&#39;s Home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="CataLpa&#39;s Home">
-<meta property="og:url" content="http://yoursite.com/archives/page/5/index.html">
+  <meta name="description" content="乐播投屏是深圳市乐播科技有限公司开发的一款无线投屏软件，在国内广泛应用于智能电视、电视盒子等需要无线投屏的场景，其官网显示有 “2 亿” 用户都在使用。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="乐播投屏多个漏洞通告">
+<meta property="og:url" content="http://yoursite.com/2021/01/21/hpcast/index.html">
 <meta property="og:site_name" content="CataLpa&#39;s Home">
+<meta property="og:description" content="乐播投屏是深圳市乐播科技有限公司开发的一款无线投屏软件，在国内广泛应用于智能电视、电视盒子等需要无线投屏的场景，其官网显示有 “2 亿” 用户都在使用。">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2021-01-21T13:02:59.546Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CataLpa&#39;s Home">
+<meta name="twitter:title" content="乐播投屏多个漏洞通告">
+<meta name="twitter:description" content="乐播投屏是深圳市乐播科技有限公司开发的一款无线投屏软件，在国内广泛应用于智能电视、电视盒子等需要无线投屏的场景，其官网显示有 “2 亿” 用户都在使用。">
   
     <link rel="alternative" href="/atom.xml" title="CataLpa&#39;s Home" type="application/atom+xml">
   
@@ -141,305 +145,226 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-hpcast" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      乐播投屏多个漏洞通告
+    </h1>
+  
+
+        
+        <a href="/2021/01/21/hpcast/" class="archive-article-date">
+  	<time datetime="2021-01-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-21</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>乐播投屏是深圳市乐播科技有限公司开发的一款无线投屏软件，在国内广泛应用于智能电视、电视盒子等需要无线投屏的场景，其官网显示有 “2 亿” 用户都在使用。</p>
+<a id="more"></a>
+
+<p>据信相关漏洞早在 2020 年 4 月就被报告给官方以及某些漏洞平台，但是截至 2021 年 1 月，最新版中依然存在相关问题。</p>
+<p>存在漏洞的软件： 乐播投屏接收端</p>
+<h2 id="投屏协议身份验证缺失"><a href="#投屏协议身份验证缺失" class="headerlink" title="投屏协议身份验证缺失"></a>投屏协议身份验证缺失</h2><p>漏洞编号：暂无</p>
+<p>CVSS 评分：8.3(<a href="https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator?vector=AV:A/AC:L/PR:N/UI:N/S:U/C:L/I:H/A:H&version=3.0" target="_blank" rel="noopener">AV:A/AC:L/PR:N/UI:N/S:U/C:L/I:H/A:H</a>)</p>
+<p>漏洞细节：乐播投屏内部实现了一套私有的投屏协议，其在处理用户发送的请求时没有验证用户是否具有合法权限，攻击者可通过构造特殊格式的投屏请求控制软件的投屏行为，包括强制投放任意图片、任意视频、修改设备音量等。</p>
+<p>时间线：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2020-04 向厂商报告</span><br><span class="line">2021-01 公开漏洞通告</span><br></pre></td></tr></table></figure>
+
+<h2 id="多个拒绝服务"><a href="#多个拒绝服务" class="headerlink" title="多个拒绝服务"></a>多个拒绝服务</h2><p>漏洞编号：暂无</p>
+<p>CVSS 评分：6.5(<a href="https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator?vector=AV:A/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H&version=3.0" target="_blank" rel="noopener">AV:A/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H</a>)</p>
+<p>漏洞细节：乐播投屏内部实现了一套私有的投屏协议，其在处理用户发送的请求时存在多处空指针解引用，攻击者可利用这些漏洞实现拒绝服务攻击。</p>
+<p>时间线：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2020-04 向厂商报告</span><br><span class="line">2021-01 公开漏洞通告</span><br></pre></td></tr></table></figure>
+
+<h2 id="内存破坏"><a href="#内存破坏" class="headerlink" title="内存破坏"></a>内存破坏</h2><p>漏洞编号：暂无</p>
+<p>CVSS 评分：7.5(<a href="https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator?vector=AV:A/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H&version=3.0" target="_blank" rel="noopener">AV:A/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H</a>)</p>
+<p>漏洞细节：乐播投屏内部实现了一套私有的投屏协议，其在处理用户发送的请求时存在多处内存破坏(栈溢出)，攻击者可精心构造请求来利用这些漏洞，成功利用漏洞的攻击者可在设备上执行任意代码。</p>
+<p>时间线：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2020-04 向厂商报告</span><br><span class="line">2021-01 公开漏洞通告</span><br></pre></td></tr></table></figure>
+
+<h2 id="命令注入"><a href="#命令注入" class="headerlink" title="命令注入"></a>命令注入</h2><p>漏洞编号：暂无</p>
+<p>CVSS 评分：8.8(<a href="https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator?vector=AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H&version=3.0" target="_blank" rel="noopener">AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H</a>)</p>
+<p>漏洞细节：乐播投屏内部实现了一套私有的投屏协议，其在处理用户发送的请求时对用户提交的参数过滤不严格，导致命令注入，攻击者可利用此漏洞执行任意命令。</p>
+<p>时间线：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2020-04 向厂商报告</span><br><span class="line">2021-01 公开漏洞通告</span><br></pre></td></tr></table></figure>
+
+<p>注：1. 新版本中检测设备是否第一次发起投屏请求，如果是，会在主界面弹出提示，用户需要点击同意才能正常投屏，但是检测逻辑是基于 MAC 地址，在局域网中，获取其他设备的 MAC 地址非常简单，而且 MAC 地址可伪造。</p>
+<ol start="2">
+<li>新版本对 APP 进行了加壳。</li>
+</ol>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>Buy me a cup of coffee~<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/z.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/w.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/02/02/hgame-2019/" class="archive-article-date">
-  	<time datetime="2019-02-01T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/02/02/hgame-2019/">HGAME 2019 week1</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/02/01/flask_note/" class="archive-article-date">
-  	<time datetime="2019-01-31T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/02/01/flask_note/">flask 入门笔记</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/01/20/pcb2018-online/" class="archive-article-date">
-  	<time datetime="2019-01-19T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/20/pcb2018-online/">鹏程杯 2018 部分题目复现</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/01/19/s-pwn-project-8/" class="archive-article-date">
-  	<time datetime="2019-01-19T11:41:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-19</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/19/s-pwn-project-8/">菜鸡的 Pwn 08 IO_FILE 利用</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/01/13/s-pwn-project-7/" class="archive-article-date">
-  	<time datetime="2019-01-13T01:26:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-13</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/13/s-pwn-project-7/">菜鸡的 Pwn 07 0ctf 2018 babyheap</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
       
-        </div></section>
+
       
+
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/12/28/s-pwn-project-6/" class="archive-article-date">
-  	<time datetime="2018-12-28T12:29:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-28</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/12/28/s-pwn-project-6/">菜鸡的 Pwn 06 0ctf 2017 babyheap</a>
-    </h1>
-  
+      </div>
+    </span>
+  </div>
+</div>
 
-        <div class="article-info info-on-right">
-          
-          
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2021/01/21/hpcast/" alt="微信分享二维码">
+    </div>
+</div>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/11/20/hxb-2018-online/" class="archive-article-date">
-  	<time datetime="2018-11-19T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-20</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2021/01/17/DCS-960L/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Dlink DCS-960L 漏洞复现</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/11/20/hxb-2018-online/">湖湘杯 2018 线上赛部分题目复现</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#投屏协议身份验证缺失"><span class="toc-number">1.</span> <span class="toc-text">投屏协议身份验证缺失</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#多个拒绝服务"><span class="toc-number">2.</span> <span class="toc-text">多个拒绝服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内存破坏"><span class="toc-number">3.</span> <span class="toc-text">内存破坏</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#命令注入"><span class="toc-number">4.</span> <span class="toc-text">命令注入</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/11/09/HCTF2018/" class="archive-article-date">
-  	<time datetime="2018-11-08T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-09</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/11/09/HCTF2018/">HCTF 2018 部分复现</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/11/05/kelaibei/" class="archive-article-date">
-  	<time datetime="2018-11-04T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-05</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/11/05/kelaibei/">第七届山东省大学生网络安全技能大赛–“科来杯” 部分WP</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/11/02/s-pwn-project-5/" class="archive-article-date">
-  	<time datetime="2018-11-02T02:19:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/11/02/s-pwn-project-5/">菜鸡的 Pwn 05 0ctf freenote</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/page/4/">&laquo; Prev</a><a class="page-number" href="/archives/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/3/">3</a><a class="page-number" href="/archives/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/archives/page/6/">6</a><a class="page-number" href="/archives/page/7/">7</a><a class="extend next" rel="next" href="/archives/page/6/">Next &raquo;</a>
-    </nav>
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="https://billts.site/extra_css/gitment.css">  <!--如果失效了 本地有保存 themes\yilia --> 
+<script src="https://billts.site/js/gitment.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "http://yoursite.com/2021/01/21/hpcast/",
+  owner: 'rrrrrrri',
+  repo: 'rrrrrrri.github.io',
+  oauth: {
+    client_id: 'b02ae2fd83142bce4350',
+    client_secret: 'dad31d4a347d05c4f146be764e2848dc72cbd576',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
   
 
 
@@ -472,8 +397,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
