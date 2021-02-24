@@ -7,15 +7,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2019/9 | CataLpa&#39;s Home</title>
+  <title>D-Link DIR-878 路由器存在漏洞两枚 | CataLpa&#39;s Home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="CataLpa&#39;s Home">
-<meta property="og:url" content="http://yoursite.com/archives/2019/09/index.html">
+  <meta name="description" content="之前复现了几个路由器的 CVE，也算是掌握了一点点漏洞挖掘的方法，在 CVE 网站发现 DIR-878 路由器存在很多漏洞，下血本购买了一台 D-Link DIR-878 路由器，分析 3 天找到了两枚漏洞，也算是入行以来第一次挖掘到了真实软件的漏洞hh，特此记录。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="D-Link DIR-878 路由器存在漏洞两枚">
+<meta property="og:url" content="http://yoursite.com/2019/09/18/D-Link_BUG/index.html">
 <meta property="og:site_name" content="CataLpa&#39;s Home">
+<meta property="og:description" content="之前复现了几个路由器的 CVE，也算是掌握了一点点漏洞挖掘的方法，在 CVE 网站发现 DIR-878 路由器存在很多漏洞，下血本购买了一台 D-Link DIR-878 路由器，分析 3 天找到了两枚漏洞，也算是入行以来第一次挖掘到了真实软件的漏洞hh，特此记录。">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/img/D-LinkBUG1.png">
+<meta property="og:image" content="http://yoursite.com/img/D-LinkBUG2.png">
+<meta property="og:image" content="http://yoursite.com/img/D-LinkBUG3.png">
+<meta property="og:updated_time" content="2021-01-15T02:22:23.946Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CataLpa&#39;s Home">
+<meta name="twitter:title" content="D-Link DIR-878 路由器存在漏洞两枚">
+<meta name="twitter:description" content="之前复现了几个路由器的 CVE，也算是掌握了一点点漏洞挖掘的方法，在 CVE 网站发现 DIR-878 路由器存在很多漏洞，下血本购买了一台 D-Link DIR-878 路由器，分析 3 天找到了两枚漏洞，也算是入行以来第一次挖掘到了真实软件的漏洞hh，特此记录。">
+<meta name="twitter:image" content="http://yoursite.com/img/D-LinkBUG1.png">
   
     <link rel="alternative" href="/atom.xml" title="CataLpa&#39;s Home" type="application/atom+xml">
   
@@ -141,157 +149,260 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-D-Link_BUG" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      D-Link DIR-878 路由器存在漏洞两枚
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/18/D-Link_BUG/" class="archive-article-date">
+
+        
+        <a href="/2019/09/18/D-Link_BUG/" class="archive-article-date">
   	<time datetime="2019-09-17T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-18</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/18/D-Link_BUG/">D-Link DIR-878 路由器存在漏洞两枚</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>之前复现了几个路由器的 CVE，也算是掌握了一点点漏洞挖掘的方法，在 CVE 网站发现 DIR-878 路由器存在很多漏洞，下血本购买了一台 D-Link DIR-878 路由器，分析 3 天找到了两枚漏洞，也算是入行以来第一次挖掘到了真实软件的漏洞hh，特此记录。</p>
+<a id="more"></a>
 
-        <div class="article-info info-on-right">
-          
-          
+<h2 id="家用路由器固件常用解包方法"><a href="#家用路由器固件常用解包方法" class="headerlink" title="家用路由器固件常用解包方法"></a>家用路由器固件常用解包方法</h2><p>某些厂商为了保护自己的产品，增加逆向分析的成本，通常会将路由器的固件进行加密，经过加密的固件使用一般的解包方法不能提取。要想分析这种固件，首先就要找到其对应的加密方法。</p>
+<p>实际上固件加密并不是随随便便拿来一种算法就可以的，由于家用路由器机能有限，所以 RSA 等效率较低的加密体系用的比较少，AES 或者 RC4 这些效率高的算法通常是首选的固件加密手段。</p>
+<p><strong>家用路由器固件加密原理</strong></p>
+<p>当买回来一台路由器的时候，其内部的固件版本通常不是最新的，这时就需要进行固件升级，升级的原理很简单，从官方网站下载最新版本的固件，然后对固件进行检验，满足某些条件之后解压固件替换原始文件。</p>
+<p>现在的问题是如果下载到的固件是加密的，路由器内部应该如何解密呢？</p>
+<p>最简单的想法就是内部放置了对应的解密程序，可以先解密固件再执行正常的升级过程。这里就引出了家用路由器固件加密的几种常见形式：</p>
+<p>第一种： 固件从设备推出就处于加密状态，在更换固件加密算法的时候会涉及到中间版本，更换逻辑如下：</p>
+<p><img src="/img/D-LinkBUG1.png" alt></p>
+<p>第二种： 固件在出厂的时候由于某些原因没有采用加密算法，在中间某一个版本突然要增加固件加密：</p>
+<p><img src="/img/D-LinkBUG2.png" alt></p>
+<p>还有一种更换逻辑是：</p>
+<p><img src="/img/D-LinkBUG3.png" alt></p>
+<p>前序版本进行了加密，但中间版本提供了未加密的程序。</p>
+<p>其中第一种方法解包比较困难，中间版本也是经过加密的，如果想要解密固件就必须先从真机上拿到解密之后的内容进行逆向分析，寻找固件加密方式。</p>
+<p>其余两种就比较简单了，通过中间版本能直接拿到固件的解密程序或者算法，通过算法再去解密新的固件。</p>
+<p>以我们今天的主角 DIR-878 为例，它所采用的是上述第三种迭代方法，即中间版本没有加密，可以透过 binwalk 直接获取固件。</p>
+<p>首先从官网 <a href="ftp://ftp2.dlink.com/PRODUCTS/DIR-878/REVA/" target="_blank" rel="noopener">ftp://ftp2.dlink.com/PRODUCTS/DIR-878/REVA/</a> 下载所有能看见的固件，因为我们不知道哪个版本是中间版本。</p>
+<p>下载固件之后又一个判断中间版本的技巧，那就是利用 binwalk 的 -E 选项，大致原理就是一个系统越有序，其熵值就越低，经过加密的固件属于无序度很大的系统，所以 -E 的结果通常是一根直线。</p>
+<p>不过对于 878 的固件不用那么麻烦，依次解压+binwalk 分析固件，最终在 1.10B05 这个压缩包中获取到了中间版本的固件：DIR878A1_FW104B05_Middle_FW_Unencrypt</p>
+<p>binwalk 解包即可得到对应的文件系统。并且经过进一步查看，仅仅在这个版本更换了加密算法，所以最新版本的固件也可以利用此固件中的算法解密。</p>
+<p>我们找到了中间版本，现在的问题是去哪里寻找解密程序？按照固件升级的思路，肯定有一个升级程序，在这个程序内部可能存在着加密算法，我们首要目的就是去寻找这个升级程序。</p>
+<p>不过对于 878 这台路由器，我们的工作量可以大大缩减，我在翻找程序目录的时候，发现了一个名为 imgdecrypt 的二进制文件，就位于 /bin 文件夹下面。</p>
+<p>这是踏破铁鞋无觅处的最好代表(hh)，看名字就知道是用来解密镜像的，用下面的命令模拟运行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-mipsel -L . ./bin/imgdecrypt</span><br></pre></td></tr></table></figure>
 
+<p>输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/imgdecrypt &lt;sourceFile&gt;</span><br></pre></td></tr></table></figure>
+
+<p>用最新版的固件来试一下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-mipsel -L . ./bin/imgdecrypt ./DIR_878_FW120B05.BIN</span><br></pre></td></tr></table></figure>
+
+<p>执行后再用 binwalk 检测发现解密成功，至此我们就可以成功提取中间版本之后任意一个版本的固件了(只要未来不更换加密算法)！</p>
+<h2 id="漏洞1-未授权用户构造恶意请求造成栈溢出"><a href="#漏洞1-未授权用户构造恶意请求造成栈溢出" class="headerlink" title="漏洞1 未授权用户构造恶意请求造成栈溢出"></a>漏洞1 未授权用户构造恶意请求造成栈溢出</h2><p>由于接下来的两枚漏洞初步看是 0day，所以敏感信息会进行隐藏，漏洞已经报告厂商。</p>
+<p>我们拿到最新版本(1.20 2019-7) 的固件进行解密、解包，得到文件系统，在 etc_ro 目录下面看到很多和服务相关的文件，初步判定这是路由器的核心文件目录。</p>
+<p>etc_ro 目录下有一个名为 lighttpd 的文件夹，lighttpd 是一个轻量级的 web 服务器，进去之后发现其配置文件 lighttpd.conf，初步分析配置文件，发现几乎所有 web 请求都被定向到了 /bin 目录下的 prog.cgi 中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">fastcgi.server = ( </span><br><span class="line">	&quot;/HNAP1/&quot; =&gt; </span><br><span class="line">	((</span><br><span class="line">		&quot;socket&quot; =&gt; &quot;/var/prog.fcgi.socket-0&quot;,</span><br><span class="line">		&quot;check-local&quot; =&gt; &quot;enable&quot;,</span><br><span class="line">		&quot;bin-path&quot; =&gt; &quot;/bin/prog.cgi&quot;,</span><br><span class="line">		&quot;idle-timeout&quot; =&gt; 10,</span><br><span class="line">		&quot;min-procs&quot; =&gt; 1,</span><br><span class="line">		&quot;max-procs&quot; =&gt; 1</span><br><span class="line">	)), </span><br><span class="line">	&quot;.fcgi&quot; =&gt; </span><br><span class="line">	((</span><br><span class="line">		&quot;socket&quot; =&gt; &quot;/var/prog.fcgi.socket-0&quot;,</span><br><span class="line">		&quot;check-local&quot; =&gt; &quot;enable&quot;,</span><br><span class="line">		&quot;bin-path&quot; =&gt; &quot;/bin/prog.cgi&quot;,</span><br><span class="line">		&quot;idle-timeout&quot; =&gt; 10,</span><br><span class="line">		&quot;min-procs&quot; =&gt; 1,</span><br><span class="line">		&quot;max-procs&quot; =&gt; 1</span><br><span class="line">	))</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>file 查看 cgi 的文件格式，是 MIPS32 小端架构。初步想法是先把固件模拟起来，然后对照功能去调试，但是我试了很多方法，包括 firmadyne、qemu 全模拟、单文件模拟等等，都达不到理想的效果。只好购买真机来进行测试。</p>
+<p>第一个漏洞出现在 prog.cgi 的 main 函数中，是处理 HNAP 请求的第一个函数。在这个函数中存在栈溢出，并且不需要用户身份认证即可触发。</p>
+<p>main 函数某处存在这样的代码</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span> &#123;</span><br><span class="line">  __s1 = <span class="built_in">strstr</span>((<span class="keyword">char</span> *)piVar5[<span class="number">0x31</span>],<span class="string">"method="</span>);</span><br><span class="line">  <span class="keyword">if</span> (__s1 == (<span class="keyword">char</span> *)<span class="number">0x0</span>) &#123;</span><br><span class="line">    __s1 = <span class="built_in">strstr</span>((<span class="keyword">char</span> *)piVar5[<span class="number">0x35</span>],<span class="string">"http://purenetworks.com"</span>);</span><br><span class="line">    <span class="keyword">if</span> (__s1 == (<span class="keyword">char</span> *)<span class="number">0x0</span>) &#123;</span><br><span class="line">      iVar3 = bstrdupNoBalloc(piVar5[<span class="number">0x31</span>],<span class="string">"fastcgi.c"</span>,<span class="number">0xf2</span>);</span><br><span class="line">      piVar5[<span class="number">0x31</span>] = iVar3;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">      __s1 = __s1 + <span class="number">0x17</span>;</span><br><span class="line">      __haystack = <span class="built_in">strchr</span>(__s1,<span class="number">0x22</span>);</span><br><span class="line">      <span class="keyword">if</span> (__haystack == (<span class="keyword">char</span> *)<span class="number">0x0</span>) &#123;</span><br><span class="line">        iVar3 = bstrdupNoBalloc(__s1,<span class="string">"fastcgi.c"</span>,<span class="number">0xef</span>);</span><br><span class="line">        piVar5[<span class="number">0x31</span>] = iVar3;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">memset</span>(&amp;cStack1292,<span class="number">0</span>,<span class="number">0xfe</span>);</span><br><span class="line">        <span class="built_in">strncpy</span>(&amp;cStack1292,__s1,(<span class="keyword">size_t</span>)(__haystack + -(<span class="keyword">int</span>)__s1));</span><br><span class="line">        iVar3 = bstrdupNoBalloc(&amp;cStack1292,<span class="string">"fastcgi.c"</span>,<span class="number">0xed</span>);</span><br><span class="line">        piVar5[<span class="number">0x31</span>] = iVar3;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>是用于处理 HNAP 的 SOAPaction 字段的，仔细观察发现 strncpy 函数的长度字段是用户可控的，它的计算逻辑是利用 strchr 函数从 SOAPaction 字段定位字符 “ ,然后利用指针减法运算得到整个字符串的长度。显然如果恶意用户构造一个超长的字符串传入请求头，就会触发 strncpy 函数拷贝很长的内容到 stack 空间，这样会破坏其他函数的栈帧，使程序崩溃。</p>
+<p>由于我现在没有合适的调试环境，所以暂时无法确定是否能够利用此处漏洞达到 RCE 的功能，但是考虑到溢出任意字符数量，RCE 应该是可行的。</p>
+<p>初步测试如果一直向路由器发送畸形数据包，会导致管理页面 500 或 503 崩溃。</p>
+<h2 id="漏洞2-授权用户命令注入"><a href="#漏洞2-授权用户命令注入" class="headerlink" title="漏洞2 授权用户命令注入"></a>漏洞2 授权用户命令注入</h2><p>这个漏洞比较有趣，它是在 2019 年 6 月左右已经被提交的漏洞，厂商也发布了对应的补丁，但是由于补丁的修复效果有限，问题依然存在。</p>
+<p>DIR-878 路由器有很多功能，其中站点过滤功能允许用户添加特定的网站进行拦截，放置其他用户访问。</p>
+<p>但是这个功能的后端实现使用了 execv 函数，并且对于用户传入的 URL 检验不严格，导致恶意用户可以拼接任意命令到 execv 函数中执行，严重的导致可以获取路由器的交互式 shell。</p>
+<p>漏洞依然出现在 prog.cgi 中，在 SetWebFilterSettings 接口绑定函数中对于 URL 调用了 tbsCheckHttpUrl 函数进行过滤(在之前的版本中不存在过滤)，这个函数位于 librcm.so 中。</p>
+<p>利用 IDA 打开 so 文件可以定位到此函数（ghidra 不知道问什么无法解析到这个函数），内部实现流程大致是利用一段正则表达式去匹配输入的 URL，如果匹配失败就拒绝此 URL，涉及的<strong>部分</strong>正则如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">^(http://)?(([0-9a-zA-Z_!~*&apos;(*a-zA-Z_!~*&apos;().&amp;=+$%-]+@)?(([0-9]&#123;1,3&#125;\.)*&#123;1,4&#125;)|(:6*0-4][0-9]&#123;2&#125;)|(:655[0-2][0-9])|(:6553[0-5]))?((/?)|(/[0-9a-zA-Z_!~*&apos;().;?:@&amp;=+$,%#-]+)+/?)$</span><br></pre></td></tr></table></figure>
+
+<p>虽然正则过滤掉了一部分危险输入(主要是空格符)，但是我们可以利用多种办法来绕过空格符的过滤，由于这个 API 接口除了 tbsCheckHttpUrl 处理 URL 之外就没有其他防护了，绕过过滤之后依然可执行任意 shell 命令。</p>
+<p>拿到交互式的 shell 之后即可上传一份调试器，再去调试固件就方便多了。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>Buy me a cup of coffee~<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/z.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/w.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/09/18/D-Link_BUG/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/10/QEMU-networking/" class="archive-article-date">
-  	<time datetime="2019-09-09T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-10</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2019/10/09/Android_code_day1/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Android 学习 day1
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/09/10/QEMU-networking/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">QEMU 网络配置一把梭</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/10/QEMU-networking/">QEMU 网络配置一把梭</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#家用路由器固件常用解包方法"><span class="toc-number">1.</span> <span class="toc-text">家用路由器固件常用解包方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#漏洞1-未授权用户构造恶意请求造成栈溢出"><span class="toc-number">2.</span> <span class="toc-text">漏洞1 未授权用户构造恶意请求造成栈溢出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#漏洞2-授权用户命令注入"><span class="toc-number">3.</span> <span class="toc-text">漏洞2 授权用户命令注入</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/05/CNVD-2018-01084/" class="archive-article-date">
-  	<time datetime="2019-09-04T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-05</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/05/CNVD-2018-01084/">CNVD-2018-01084 漏洞复现</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/02/Gitment/" class="archive-article-date">
-  	<time datetime="2019-09-01T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/02/Gitment/">关于 Gitment 无法登陆的解决方案</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/01/hello-world/" class="archive-article-date">
-  	<time datetime="2019-08-31T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/01/hello-world/">写在前面</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">  <!--如果失效了 本地有保存 themes\yilia --> 
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "http://yoursite.com/2019/09/18/D-Link_BUG/",
+  owner: 'rrrrrrri',
+  repo: 'rrrrrrri.github.io',
+  oauth: {
+    client_id: 'b02ae2fd83142bce4350',
+    client_secret: 'dad31d4a347d05c4f146be764e2848dc72cbd576',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
   
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -323,8 +434,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
