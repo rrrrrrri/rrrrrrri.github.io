@@ -7,22 +7,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>D-Link DIR-878 路由器存在漏洞两枚 | CataLpa&#39;s Home</title>
+  <title>家用路由器固件常用解包方法 &amp; D-Link DIR-878 BUGS | CataLpa&#39;s Home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="之前复现了几个路由器的 CVE，也算是掌握了一点点漏洞挖掘的方法，在 CVE 网站发现 DIR-878 路由器存在很多漏洞，下血本购买了一台 D-Link DIR-878 路由器，分析 3 天找到了两枚漏洞，也算是入行以来第一次挖掘到了真实软件的漏洞hh，特此记录。">
+  <meta name="description" content="DIR-878 是友讯科技生产的家用路由器。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="D-Link DIR-878 路由器存在漏洞两枚">
+<meta property="og:title" content="家用路由器固件常用解包方法 &amp; D-Link DIR-878 BUGS">
 <meta property="og:url" content="http://yoursite.com/2019/09/18/D-Link_BUG/index.html">
 <meta property="og:site_name" content="CataLpa&#39;s Home">
-<meta property="og:description" content="之前复现了几个路由器的 CVE，也算是掌握了一点点漏洞挖掘的方法，在 CVE 网站发现 DIR-878 路由器存在很多漏洞，下血本购买了一台 D-Link DIR-878 路由器，分析 3 天找到了两枚漏洞，也算是入行以来第一次挖掘到了真实软件的漏洞hh，特此记录。">
+<meta property="og:description" content="DIR-878 是友讯科技生产的家用路由器。">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/img/D-LinkBUG1.png">
 <meta property="og:image" content="http://yoursite.com/img/D-LinkBUG2.png">
 <meta property="og:image" content="http://yoursite.com/img/D-LinkBUG3.png">
-<meta property="og:updated_time" content="2021-01-15T02:22:23.946Z">
+<meta property="og:updated_time" content="2021-02-24T11:00:09.031Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="D-Link DIR-878 路由器存在漏洞两枚">
-<meta name="twitter:description" content="之前复现了几个路由器的 CVE，也算是掌握了一点点漏洞挖掘的方法，在 CVE 网站发现 DIR-878 路由器存在很多漏洞，下血本购买了一台 D-Link DIR-878 路由器，分析 3 天找到了两枚漏洞，也算是入行以来第一次挖掘到了真实软件的漏洞hh，特此记录。">
+<meta name="twitter:title" content="家用路由器固件常用解包方法 &amp; D-Link DIR-878 BUGS">
+<meta name="twitter:description" content="DIR-878 是友讯科技生产的家用路由器。">
 <meta name="twitter:image" content="http://yoursite.com/img/D-LinkBUG1.png">
   
     <link rel="alternative" href="/atom.xml" title="CataLpa&#39;s Home" type="application/atom+xml">
@@ -156,7 +156,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      D-Link DIR-878 路由器存在漏洞两枚
+      家用路由器固件常用解包方法 &amp; D-Link DIR-878 BUGS
     </h1>
   
 
@@ -169,7 +169,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>之前复现了几个路由器的 CVE，也算是掌握了一点点漏洞挖掘的方法，在 CVE 网站发现 DIR-878 路由器存在很多漏洞，下血本购买了一台 D-Link DIR-878 路由器，分析 3 天找到了两枚漏洞，也算是入行以来第一次挖掘到了真实软件的漏洞hh，特此记录。</p>
+        <p>DIR-878 是友讯科技生产的家用路由器。</p>
 <a id="more"></a>
 
 <h2 id="家用路由器固件常用解包方法"><a href="#家用路由器固件常用解包方法" class="headerlink" title="家用路由器固件常用解包方法"></a>家用路由器固件常用解包方法</h2><p>某些厂商为了保护自己的产品，增加逆向分析的成本，通常会将路由器的固件进行加密，经过加密的固件使用一般的解包方法不能提取。要想分析这种固件，首先就要找到其对应的加密方法。</p>
