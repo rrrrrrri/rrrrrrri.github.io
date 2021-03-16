@@ -7,14 +7,14 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>QEMU 网络配置一把梭 | CataLpa&#39;s Home</title>
+  <title>QEMU 网络配置一把梭 [archived] | CataLpa&#39;s Home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="最近复现一些路由器的漏洞，由于架构和主机不一样，所以需要利用 qemu 进行固件模拟。在配置模拟环境的时候遇到了致命的问题–QEMU 虚拟机不能联通网络。">
+  <meta name="description" content="最近复现一些路由器的漏洞，由于架构和主机不一样，所以需要利用 qemu 进行固件模拟。在配置模拟环境的时候遇到了致命的问题–QEMU 虚拟机不能联通网络。 PS：致想要深入了解物联网安全/物联网设备漏洞挖掘的小伙伴，建议能接触到真机的话就用真机来测试！固件模拟中会出现各种问题，并且模拟环境和真实设备会有较大差别。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="QEMU 网络配置一把梭">
+<meta property="og:title" content="QEMU 网络配置一把梭 [archived]">
 <meta property="og:url" content="http://yoursite.com/2019/09/10/QEMU-networking/index.html">
 <meta property="og:site_name" content="CataLpa&#39;s Home">
-<meta property="og:description" content="最近复现一些路由器的漏洞，由于架构和主机不一样，所以需要利用 qemu 进行固件模拟。在配置模拟环境的时候遇到了致命的问题–QEMU 虚拟机不能联通网络。">
+<meta property="og:description" content="最近复现一些路由器的漏洞，由于架构和主机不一样，所以需要利用 qemu 进行固件模拟。在配置模拟环境的时候遇到了致命的问题–QEMU 虚拟机不能联通网络。 PS：致想要深入了解物联网安全/物联网设备漏洞挖掘的小伙伴，建议能接触到真机的话就用真机来测试！固件模拟中会出现各种问题，并且模拟环境和真实设备会有较大差别。">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/img/QEMU-networking-1.png">
 <meta property="og:image" content="http://yoursite.com/img/QEMU-networking-2.png">
@@ -23,10 +23,10 @@
 <meta property="og:image" content="http://yoursite.com/img/QEMU-networking-5.png">
 <meta property="og:image" content="http://yoursite.com/img/QEMU-networking-6.png">
 <meta property="og:image" content="http://yoursite.com/img/QEMU-networking-7.png">
-<meta property="og:updated_time" content="2019-09-10T07:47:27.480Z">
+<meta property="og:updated_time" content="2021-03-16T04:41:39.825Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="QEMU 网络配置一把梭">
-<meta name="twitter:description" content="最近复现一些路由器的漏洞，由于架构和主机不一样，所以需要利用 qemu 进行固件模拟。在配置模拟环境的时候遇到了致命的问题–QEMU 虚拟机不能联通网络。">
+<meta name="twitter:title" content="QEMU 网络配置一把梭 [archived]">
+<meta name="twitter:description" content="最近复现一些路由器的漏洞，由于架构和主机不一样，所以需要利用 qemu 进行固件模拟。在配置模拟环境的时候遇到了致命的问题–QEMU 虚拟机不能联通网络。 PS：致想要深入了解物联网安全/物联网设备漏洞挖掘的小伙伴，建议能接触到真机的话就用真机来测试！固件模拟中会出现各种问题，并且模拟环境和真实设备会有较大差别。">
 <meta name="twitter:image" content="http://yoursite.com/img/QEMU-networking-1.png">
   
     <link rel="alternative" href="/atom.xml" title="CataLpa&#39;s Home" type="application/atom+xml">
@@ -160,7 +160,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      QEMU 网络配置一把梭
+      QEMU 网络配置一把梭 [archived]
     </h1>
   
 
@@ -174,6 +174,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>最近复现一些路由器的漏洞，由于架构和主机不一样，所以需要利用 qemu 进行固件模拟。在配置模拟环境的时候遇到了致命的问题–QEMU 虚拟机不能<strong>联通网络</strong>。</p>
+<p><strong>PS：致想要深入了解物联网安全/物联网设备漏洞挖掘的小伙伴，建议能接触到真机的话就用真机来测试！固件模拟中会出现各种问题，并且模拟环境和真实设备会有较大差别。</strong></p>
 <a id="more"></a>
 
 <p>其实之前复现 CVE 的时候就遇到过，问了几个大佬也没有好的解决办法，最后按照某篇教程配置了一下，用户模式(单文件模拟)可以连接网络，鉴于之前也是参考网上的教程，并没有详细了解背后的原理，我专门去收集了一批参考资料，其中最有用的是这两篇文章：</p>

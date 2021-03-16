@@ -9,21 +9,21 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>firmadyne 简单使用指南 &amp; 模拟示例 | CataLpa&#39;s Home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="当分析路由器固件的时候，我发现难点并不在于代码审计，而是当发现了疑似漏洞的点，在测试验证阶段，苦于没有实际设备，只能使用软件模拟，当前对于固件模拟比较好的解决方案就是 firmadyne，但在实际使用 firmadyne 的过程中会遇到很多问题，最近也有小伙伴拿着问题来问我(其实我也很菜 233)，我就在这篇文章中简单总结一下使用 firmadyne 可能会遇到的问题，以及部分解决方案。">
+  <meta name="description" content="当分析路由器固件的时候，我发现难点并不在于代码审计，而是当发现了疑似漏洞的点，在测试验证阶段，苦于没有实际设备，只能使用软件模拟，当前对于固件模拟比较好的解决方案就是 firmadyne，但在实际使用 firmadyne 的过程中会遇到很多问题，最近也有小伙伴拿着问题来问我(其实我也很菜 233)，我就在这篇文章中简单总结一下使用 firmadyne 可能会遇到的问题，以及部分解决方案。 PS：致">
 <meta property="og:type" content="article">
 <meta property="og:title" content="firmadyne 简单使用指南 &amp; 模拟示例">
 <meta property="og:url" content="http://yoursite.com/2020/01/08/iot_brief/index.html">
 <meta property="og:site_name" content="CataLpa&#39;s Home">
-<meta property="og:description" content="当分析路由器固件的时候，我发现难点并不在于代码审计，而是当发现了疑似漏洞的点，在测试验证阶段，苦于没有实际设备，只能使用软件模拟，当前对于固件模拟比较好的解决方案就是 firmadyne，但在实际使用 firmadyne 的过程中会遇到很多问题，最近也有小伙伴拿着问题来问我(其实我也很菜 233)，我就在这篇文章中简单总结一下使用 firmadyne 可能会遇到的问题，以及部分解决方案。">
+<meta property="og:description" content="当分析路由器固件的时候，我发现难点并不在于代码审计，而是当发现了疑似漏洞的点，在测试验证阶段，苦于没有实际设备，只能使用软件模拟，当前对于固件模拟比较好的解决方案就是 firmadyne，但在实际使用 firmadyne 的过程中会遇到很多问题，最近也有小伙伴拿着问题来问我(其实我也很菜 233)，我就在这篇文章中简单总结一下使用 firmadyne 可能会遇到的问题，以及部分解决方案。 PS：致">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/img/firmadyne-1.png">
 <meta property="og:image" content="http://yoursite.com/img/firmadyne-2.png">
 <meta property="og:image" content="http://yoursite.com/img/firmadyne-3.png">
 <meta property="og:image" content="http://yoursite.com/img/firmadyne-4.png">
-<meta property="og:updated_time" content="2020-01-08T09:24:58.286Z">
+<meta property="og:updated_time" content="2021-03-16T04:41:49.146Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="firmadyne 简单使用指南 &amp; 模拟示例">
-<meta name="twitter:description" content="当分析路由器固件的时候，我发现难点并不在于代码审计，而是当发现了疑似漏洞的点，在测试验证阶段，苦于没有实际设备，只能使用软件模拟，当前对于固件模拟比较好的解决方案就是 firmadyne，但在实际使用 firmadyne 的过程中会遇到很多问题，最近也有小伙伴拿着问题来问我(其实我也很菜 233)，我就在这篇文章中简单总结一下使用 firmadyne 可能会遇到的问题，以及部分解决方案。">
+<meta name="twitter:description" content="当分析路由器固件的时候，我发现难点并不在于代码审计，而是当发现了疑似漏洞的点，在测试验证阶段，苦于没有实际设备，只能使用软件模拟，当前对于固件模拟比较好的解决方案就是 firmadyne，但在实际使用 firmadyne 的过程中会遇到很多问题，最近也有小伙伴拿着问题来问我(其实我也很菜 233)，我就在这篇文章中简单总结一下使用 firmadyne 可能会遇到的问题，以及部分解决方案。 PS：致">
 <meta name="twitter:image" content="http://yoursite.com/img/firmadyne-1.png">
   
     <link rel="alternative" href="/atom.xml" title="CataLpa&#39;s Home" type="application/atom+xml">
@@ -171,6 +171,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>当分析路由器固件的时候，我发现难点并不在于代码审计，而是当发现了疑似漏洞的点，在测试验证阶段，苦于没有实际设备，只能使用软件模拟，当前对于固件模拟比较好的解决方案就是 firmadyne，但在实际使用 firmadyne 的过程中会遇到很多问题，最近也有小伙伴拿着问题来问我(其实我也很菜 233)，我就在这篇文章中简单总结一下使用 firmadyne 可能会遇到的问题，以及部分解决方案。</p>
+<p><strong>PS：致想要深入了解物联网安全/物联网设备漏洞挖掘的小伙伴，建议能接触到真机的话就用真机来测试！固件模拟中会出现各种问题，并且模拟环境和真实设备会有较大差别。</strong></p>
 <a id="more"></a>
 
 <h2 id="关于-firmadyne-的原理"><a href="#关于-firmadyne-的原理" class="headerlink" title="关于 firmadyne 的原理"></a>关于 firmadyne 的原理</h2><p>拿来一款工具我们一般不会深究它的原理，但是了解过其内部实现思路之后，再遇到某些问题不会自乱阵脚。</p>

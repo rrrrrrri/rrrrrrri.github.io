@@ -25,7 +25,7 @@
 <meta property="og:image" content="http://yoursite.com/img/CNVD-2018-01084-7.png">
 <meta property="og:image" content="http://yoursite.com/img/CNVD-2018-01084-8.png">
 <meta property="og:image" content="http://yoursite.com/img/CNVD-2018-01084-9.png">
-<meta property="og:updated_time" content="2019-09-06T02:04:13.930Z">
+<meta property="og:updated_time" content="2021-02-24T11:14:45.525Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CNVD-2018-01084 漏洞复现">
 <meta name="twitter:description" content="CNVD-2018-01084 是 Dlink 系列路由器的一个漏洞，影响设备包括 DIR 615/645/815 路由器。 漏洞存在于 /htdocs/cgibin 二进制文件中，漏洞成因是 service.cgi 中未经任何过滤检查就将用户的输入拼接到原始命令中，导致任意代码执行。">
@@ -241,6 +241,8 @@
 <p>运行上面的命令可以同时得到三条指令的结果。</p>
 <p>如果我们构造 EVENT=&amp;ls&amp;，那么拼接出来的结果就是 event &amp;ls&amp; &gt; /dev/null，从而完成任意命令执行。</p>
 <h2 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h2><p><strong>注意： 上一篇文章说过 IDA 在调试的时候存在一些问题，调试这个程序的时候也是一样，地址位于 0x7fxxxxxx 的数据不能查看，可能是 IDA 和 gdb 交互过程存在一些问题，导致数据读取异常。。。</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Update(2021-02-24)：当 IDA 使用原生 gdb 调试的时候，会弹出警告信息，提示我们 IDA 无法读取某些内存区域的数据，通常来说这是正常情况，想要读取目标内存数据的话可以手动设置地址范围，具体做法大家可自行搜索。</span><br></pre></td></tr></table></figure>
+
 <p>根据逆向分析的结果，我们需要手动传入一些参数以防止程序自动退出。按照网上的教程构造如下命令：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chroot . ./qemu -0 &quot;service.cgi&quot; -g 10000 -E REQUEST_METHOD=&quot;POST&quot; -E CONTENT_LENGTH=10 -E REQUEST_URI=&quot;service.cgi?EVENT=%26ls%26&quot;  -E CONTENT_TYPE=&quot;application/x-www-form-urlencoded&quot; -E HTTP_COOKIE=&quot;uid=aaaaa&quot; ./htdocs/cgibin</span><br></pre></td></tr></table></figure>
 
@@ -395,14 +397,14 @@
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          QEMU 网络配置一把梭
+          QEMU 网络配置一把梭 [archived]
         
       </div>
     </a>
   
   
     <a href="/2019/09/02/Gitment/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">关于 Gitment 无法登陆的解决方案</div>
+      <div class="article-nav-title">关于 Gitment 无法登陆的解决方案 [archived]</div>
       <i class="icon-circle-right"></i>
     </a>
   

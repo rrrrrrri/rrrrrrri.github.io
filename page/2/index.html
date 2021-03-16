@@ -270,19 +270,19 @@
 
 
   
-    <article id="post-whydebuggercandebug" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-dig_debugger" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/02/21/whydebuggercandebug/">为什么调试器能调试？</a>
+      <a class="article-title" href="/2020/02/21/dig_debugger/">为什么调试器能调试？</a>
     </h1>
   
 
         
-        <a href="/2020/02/21/whydebuggercandebug/" class="archive-article-date">
+        <a href="/2020/02/21/dig_debugger/" class="archive-article-date">
   	<time datetime="2020-02-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-21</time>
 </a>
         
@@ -304,7 +304,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/02/21/whydebuggercandebug/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/02/21/dig_debugger/">展开全文 >></a>
         </p>
       
 
@@ -358,6 +358,7 @@
 <p>最近分析 Dlink 的一款设备 DI-500WF，官网产品地址：<a href="http://www.dlink.com.cn/business/product?id=2918" target="_blank" rel="noopener">http://www.dlink.com.cn/business/product?id=2918</a></p>
 <p>这种设备在酒店、机场等公共场所比较常见，一般称之为路由条。因为类似酒店、车站这种公共地点摆放普通路由器提供 WiFI 服务存在一定问题（体积太大，走线困难等），所以在房屋装修的时候会考虑安装多个弱电箱或在不显眼的位置安装网络接口，此时路由条就派上用场了，这种设备不需要外接电源，可以直接使用 RJ-45 接口供电，并且体积小，易于安装。虽然路由条体积小，但是其内部系统和普通路由器类似，今天我们来简单看一下如何模拟 DI-500WF 这款设备的系统。</p>
 <p><em>注：我会一步步展示在模拟过程中遇到的问题，并提出解决问题的几个方法，希望能给大家拓展一下思路。</em></p>
+<p><strong>PS：致想要深入了解物联网安全/物联网设备漏洞挖掘的小伙伴，建议能接触到真机的话就用真机来测试！固件模拟中会出现各种问题，并且模拟环境和真实设备会有较大差别。</strong></p>
         
       
 
@@ -421,6 +422,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>当分析路由器固件的时候，我发现难点并不在于代码审计，而是当发现了疑似漏洞的点，在测试验证阶段，苦于没有实际设备，只能使用软件模拟，当前对于固件模拟比较好的解决方案就是 firmadyne，但在实际使用 firmadyne 的过程中会遇到很多问题，最近也有小伙伴拿着问题来问我(其实我也很菜 233)，我就在这篇文章中简单总结一下使用 firmadyne 可能会遇到的问题，以及部分解决方案。</p>
+<p><strong>PS：致想要深入了解物联网安全/物联网设备漏洞挖掘的小伙伴，建议能接触到真机的话就用真机来测试！固件模拟中会出现各种问题，并且模拟环境和真实设备会有较大差别。</strong></p>
         
       
 
@@ -497,133 +499,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2019/12/23/CVE-2019-5096/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Ret2runtime_dlresolve" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/12/01/Ret2runtime_dlresolve/">Ret2 runtime_dlresolve</a>
-    </h1>
-  
-
-        
-        <a href="/2019/12/01/Ret2runtime_dlresolve/" class="archive-article-date">
-  	<time datetime="2019-12-01T01:54:01.282Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Update: 2020-11-10</p>
-<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Ret2dlresolve 是高级 ROP 技巧之一，世界著名的黑客杂志 phrack 在某一期提到过这个攻击技巧，该手段用于没有较好的 gadget、函数、利用链的情况。ret2dlresolve 主要利用了 linux 下的延迟绑定机制，通过修改解析字符串，我们就可以控制最终解析出的函数，从而获取任意函数执行的能力。</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/12/01/Ret2runtime_dlresolve/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-parallels_tools" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/12/01/parallels_tools/">在 ubuntu 19.10 上安装 Parallels tools</a>
-    </h1>
-  
-
-        
-        <a href="/2019/12/01/parallels_tools/" class="archive-article-date">
-  	<time datetime="2019-12-01T01:53:32.158Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Parallels Desktop 用过 MAC 的同学应该了解，在 MAC 上它比 VM ware 的效率要高一些，由于种种原因，我目前的版本停留在 14，最近安装 ubuntu 19.10 的时候遇到许多问题，查阅资料发现有组件进行了更新，parallels tools 代码中用到了部分已经被删除的东西，导致编译没法通过，现总结解决方案如下，希望能给大家一些帮助。</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/12/01/parallels_tools/">展开全文 >></a>
         </p>
       
 
@@ -738,9 +613,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>声明：本文翻译自 《Fuzzing: a survey》</p>
+        <p>本文翻译自 《Fuzzing: a survey》</p>
 <p> <a href="https://link.springer.com/article/10.1186/s42400-018-0002-y" target="_blank" rel="noopener">https://link.springer.com/article/10.1186/s42400-018-0002-y</a></p>
-<p>如有侵权行为请联系，立刻删除。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Copyright information</span><br><span class="line"></span><br><span class="line">© The Author(s) 2018</span><br><span class="line"></span><br><span class="line">Open Access</span><br><span class="line"></span><br><span class="line">This article is distributed under the terms of the Creative Commons Attribution 4.0 International License (http://creativecommons.org/licenses/by/4.0/), which permits unrestricted use, distribution, and reproduction in any medium, provided you give appropriate credit to the original author(s) and the source, provide a link to the Creative Commons license, and indicate if changes were made.</span><br></pre></td></tr></table></figure>
 
 <p>Update: 2020-11-03</p>
@@ -786,9 +660,136 @@
 
 
   
+    <article id="post-D-Link_BUG" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/09/18/D-Link_BUG/">家用路由器固件常用解包方法 &amp; D-Link DIR-878 BUGS</a>
+    </h1>
+  
+
+        
+        <a href="/2019/09/18/D-Link_BUG/" class="archive-article-date">
+  	<time datetime="2019-09-17T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>DIR-878 是友讯科技生产的家用路由器。</p>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/09/18/D-Link_BUG/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-QEMU-networking" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/09/10/QEMU-networking/">QEMU 网络配置一把梭 [archived]</a>
+    </h1>
+  
+
+        
+        <a href="/2019/09/10/QEMU-networking/" class="archive-article-date">
+  	<time datetime="2019-09-09T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近复现一些路由器的漏洞，由于架构和主机不一样，所以需要利用 qemu 进行固件模拟。在配置模拟环境的时候遇到了致命的问题–QEMU 虚拟机不能<strong>联通网络</strong>。</p>
+<p><strong>PS：致想要深入了解物联网安全/物联网设备漏洞挖掘的小伙伴，建议能接触到真机的话就用真机来测试！固件模拟中会出现各种问题，并且模拟环境和真实设备会有较大差别。</strong></p>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/09/10/QEMU-networking/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
     </nav>
   
 

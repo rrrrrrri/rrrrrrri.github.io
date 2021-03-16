@@ -18,7 +18,7 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/img/firmware1.png">
 <meta property="og:image" content="http://yoursite.com/img/firmware2.png">
-<meta property="og:updated_time" content="2020-01-10T12:00:35.806Z">
+<meta property="og:updated_time" content="2021-03-16T04:43:31.855Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="我的固件模拟之路(二)">
 <meta name="twitter:description" content="上一篇关于 firmadyne 的文章就当做本系列的第一篇吧。 最近分析 Dlink 的一款设备 DI-500WF，官网产品地址：http://www.dlink.com.cn/business/product?id=2918 这种设备在酒店、机场等公共场所比较常见，一般称之为路由条。因为类似酒店、车站这种公共地点摆放普通路由器提供 WiFI 服务存在一定问题（体积太大，走线困难等），所以在房屋装">
@@ -172,6 +172,7 @@
 <p>最近分析 Dlink 的一款设备 DI-500WF，官网产品地址：<a href="http://www.dlink.com.cn/business/product?id=2918" target="_blank" rel="noopener">http://www.dlink.com.cn/business/product?id=2918</a></p>
 <p>这种设备在酒店、机场等公共场所比较常见，一般称之为路由条。因为类似酒店、车站这种公共地点摆放普通路由器提供 WiFI 服务存在一定问题（体积太大，走线困难等），所以在房屋装修的时候会考虑安装多个弱电箱或在不显眼的位置安装网络接口，此时路由条就派上用场了，这种设备不需要外接电源，可以直接使用 RJ-45 接口供电，并且体积小，易于安装。虽然路由条体积小，但是其内部系统和普通路由器类似，今天我们来简单看一下如何模拟 DI-500WF 这款设备的系统。</p>
 <p><em>注：我会一步步展示在模拟过程中遇到的问题，并提出解决问题的几个方法，希望能给大家拓展一下思路。</em></p>
+<p><strong>PS：致想要深入了解物联网安全/物联网设备漏洞挖掘的小伙伴，建议能接触到真机的话就用真机来测试！固件模拟中会出现各种问题，并且模拟环境和真实设备会有较大差别。</strong></p>
 <a id="more"></a>
 
 <h2 id="下载固件"><a href="#下载固件" class="headerlink" title="下载固件"></a>下载固件</h2><p>固件下载地址：<a href="http://support.dlink.com.cn/techsupport/DI-500WF-WT" target="_blank" rel="noopener">http://support.dlink.com.cn/techsupport/DI-500WF-WT</a> (目前最新版本为 2019-01-08)</p>
@@ -330,7 +331,7 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/02/21/whydebuggercandebug/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2020/02/21/dig_debugger/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         

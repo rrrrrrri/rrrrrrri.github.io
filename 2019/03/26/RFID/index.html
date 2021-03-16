@@ -22,9 +22,8 @@
 <meta property="og:image" content="http://yoursite.com/img/RFID-4.jpg">
 <meta property="og:image" content="http://yoursite.com/img/RFID-5.jpg">
 <meta property="og:image" content="http://yoursite.com/img/RFID-6.jpg">
-<meta property="og:image" content="http://yoursite.com/img/RFID-7.jpg">
 <meta property="og:image" content="http://yoursite.com/img/RFID-8.jpg">
-<meta property="og:updated_time" content="2019-09-02T12:39:56.180Z">
+<meta property="og:updated_time" content="2021-03-16T04:28:54.462Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RFID 安全初探">
 <meta name="twitter:description" content="RFID 简介RFID(Radio Frequency Identification) 全称射频识别技术，这个名字大家可能比较陌生，但是提起我们生活中经常使用的饭卡，水卡，银行卡等等这些东西，大家应该很熟悉了。我们几乎每天都会使用这些小小的卡片，吃饭需要，取钱需要，甚至回家使用电梯也需要，可以说我们的生活已经离不开 RFID 这一技术了。">
@@ -250,9 +249,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[+] LF antenna: 26.34 V - 125.00 kHz          </span><br><span class="line">[+] LF antenna: 31.58 V - 134.00 kHz          </span><br><span class="line">[+] LF optimal: 31.44 V - 131.87 kHz          </span><br><span class="line">[+] LF antenna is OK  </span><br><span class="line">          </span><br><span class="line">[+] HF antenna: 10.55 V - 13.56 MHz          </span><br><span class="line">[+] HF antenna is OK           </span><br><span class="line">          </span><br><span class="line">[+] Displaying LF tuning graph. Divisor 89 is 134khz, 95 is 125khz.</span><br></pre></td></tr></table></figure>
 
 <p>提示低频电压和高频电压稳定，硬件运行正常。</p>
-<p>下面我们将待复制的卡片放在板子的高频卡阅读区域</p>
-<p><img src="/img/RFID-7.jpg" alt></p>
-<p>点击软件中的读IC 卡类型返回了以下信息</p>
+<p>下面我们将待复制的卡片放在板子的高频卡阅读区域，点击软件中的读IC 卡类型返回了以下信息</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"> UID : E0 F3 12 17           </span><br><span class="line">ATQA : 00 04          </span><br><span class="line"> SAK : 08 [2]          </span><br><span class="line">TYPE : NXP MIFARE CLASSIC 1k | Plus 2k SL1 | 1k Ev1          </span><br><span class="line">[=] proprietary non iso14443-4 card found, RATS not supported          </span><br><span class="line">[=] Answers to magic commands: NO          </span><br><span class="line">[+] Prng detection: WEAK          </span><br><span class="line">          </span><br><span class="line">[+] Valid ISO14443-A Tag Found</span><br></pre></td></tr></table></figure>
 
 <p>卡的类型是 MIFARE CLASSIC 1k，并且提示我们 Prng detection: WEAK  ，表示卡片存在漏洞，我们能通过漏洞破解出整张卡片的密码！</p>
@@ -371,7 +368,7 @@
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          Largebin attack
+          Largebin attack [archived]
         
       </div>
     </a>
