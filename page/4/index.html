@@ -143,70 +143,6 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-glibc_analyse2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/15/glibc_analyse2/">glibc 中的 malloc 与 free 概述 (二)</a>
-    </h1>
-  
-
-        
-        <a href="/2019/03/15/glibc_analyse2/" class="archive-article-date">
-  	<time datetime="2019-03-14T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-15</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="malloc-中的-consolidate"><a href="#malloc-中的-consolidate" class="headerlink" title="malloc 中的 consolidate"></a>malloc 中的 consolidate</h2><p>在 malloc 的流程中有几处调用到了这个函数，它的主要作用是遍历 fastbin 链表，将其中的堆块进行合并，插入到 unsorted bin 当中。</p>
-<p>Update: 2020-11-02</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/03/15/glibc_analyse2/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
     <article id="post-kanxue2019Q1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -746,6 +682,69 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/12/28/0ctf_babyheap/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-hxb-2018-online" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/20/hxb-2018-online/">湖湘杯 2018 线上赛部分题目复现 [archived]</a>
+    </h1>
+  
+
+        
+        <a href="/2018/11/20/hxb-2018-online/" class="archive-article-date">
+  	<time datetime="2018-11-19T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="RE"><a href="#RE" class="headerlink" title="RE"></a>RE</h2><h3 id="1-Replace"><a href="#1-Replace" class="headerlink" title="1. Replace"></a>1. Replace</h3><p>程序给加了 UPX 的壳，直接在 linux 下面脱掉，注意脱完壳的程序就不能正常运行了。<br>脱了壳直接丢到 IDA 里面去看，逻辑很清晰，主函数只有一点点代码</p>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/11/20/hxb-2018-online/">展开全文 >></a>
         </p>
       
 
