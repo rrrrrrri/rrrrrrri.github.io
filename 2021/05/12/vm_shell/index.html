@@ -7,19 +7,27 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>乐播投屏多个漏洞通告 | CataLpa&#39;s Home</title>
+  <title>一些虚拟机获取 shell 的方法 | CataLpa&#39;s Home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="乐播投屏是深圳市乐播科技有限公司开发的一款无线投屏软件，在国内广泛应用于智能电视、电视盒子等需要无线投屏的场景，其官网显示有 “2 亿” 用户都在使用。">
+  <meta name="description" content="前端时间碰到一些网络设备，它们可以以虚拟机形式进行安装部署，在分析此类设备的时候，获取一个 root shell 会更加方便，但是大部分设备镜像中都设置了自定义的 cli 作为 jail，防止用户直接访问到 linux sh，提高设备安全性。 通过一段时间的测试，现总结一些获取虚拟机设备 root shell 的方法，分享给大家。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="乐播投屏多个漏洞通告">
-<meta property="og:url" content="http://yoursite.com/2021/01/21/hpcast/index.html">
+<meta property="og:title" content="一些虚拟机获取 shell 的方法">
+<meta property="og:url" content="http://yoursite.com/2021/05/12/vm_shell/index.html">
 <meta property="og:site_name" content="CataLpa&#39;s Home">
-<meta property="og:description" content="乐播投屏是深圳市乐播科技有限公司开发的一款无线投屏软件，在国内广泛应用于智能电视、电视盒子等需要无线投屏的场景，其官网显示有 “2 亿” 用户都在使用。">
+<meta property="og:description" content="前端时间碰到一些网络设备，它们可以以虚拟机形式进行安装部署，在分析此类设备的时候，获取一个 root shell 会更加方便，但是大部分设备镜像中都设置了自定义的 cli 作为 jail，防止用户直接访问到 linux sh，提高设备安全性。 通过一段时间的测试，现总结一些获取虚拟机设备 root shell 的方法，分享给大家。">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2021-01-21T13:02:59.546Z">
+<meta property="og:image" content="http://yoursite.com/img/vmshell-1.png">
+<meta property="og:image" content="http://yoursite.com/img/vmshell-2.png">
+<meta property="og:image" content="http://yoursite.com/img/vmshell-3.png">
+<meta property="og:image" content="http://yoursite.com/img/vmshell-4.png">
+<meta property="og:image" content="http://yoursite.com/img/vmshell-5.png">
+<meta property="og:image" content="http://yoursite.com/img/vmshell-6.png">
+<meta property="og:image" content="http://yoursite.com/img/vmshell-7.png">
+<meta property="og:updated_time" content="2021-05-12T00:16:31.735Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="乐播投屏多个漏洞通告">
-<meta name="twitter:description" content="乐播投屏是深圳市乐播科技有限公司开发的一款无线投屏软件，在国内广泛应用于智能电视、电视盒子等需要无线投屏的场景，其官网显示有 “2 亿” 用户都在使用。">
+<meta name="twitter:title" content="一些虚拟机获取 shell 的方法">
+<meta name="twitter:description" content="前端时间碰到一些网络设备，它们可以以虚拟机形式进行安装部署，在分析此类设备的时候，获取一个 root shell 会更加方便，但是大部分设备镜像中都设置了自定义的 cli 作为 jail，防止用户直接访问到 linux sh，提高设备安全性。 通过一段时间的测试，现总结一些获取虚拟机设备 root shell 的方法，分享给大家。">
+<meta name="twitter:image" content="http://yoursite.com/img/vmshell-1.png">
   
     <link rel="alternative" href="/atom.xml" title="CataLpa&#39;s Home" type="application/atom+xml">
   
@@ -145,59 +153,115 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-hpcast" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-vm_shell" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      乐播投屏多个漏洞通告
+      一些虚拟机获取 shell 的方法
     </h1>
   
 
         
-        <a href="/2021/01/21/hpcast/" class="archive-article-date">
-  	<time datetime="2021-01-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-21</time>
+        <a href="/2021/05/12/vm_shell/" class="archive-article-date">
+  	<time datetime="2021-05-11T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-12</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>乐播投屏是深圳市乐播科技有限公司开发的一款无线投屏软件，在国内广泛应用于智能电视、电视盒子等需要无线投屏的场景，其官网显示有 “2 亿” 用户都在使用。</p>
+        <p>前端时间碰到一些网络设备，它们可以以虚拟机形式进行安装部署，在分析此类设备的时候，获取一个 root shell 会更加方便，但是大部分设备镜像中都设置了自定义的 cli 作为 jail，防止用户直接访问到 linux sh，提高设备安全性。</p>
+<p>通过一段时间的测试，现总结一些获取虚拟机设备 root shell 的方法，分享给大家。</p>
 <a id="more"></a>
 
-<p>据信相关漏洞早在 2020 年 4 月就被报告给官方以及某些漏洞平台，但是截至 2021 年 1 月，最新版中依然存在相关问题。</p>
-<p>存在漏洞的软件： 乐播投屏接收端</p>
-<h2 id="投屏协议身份验证缺失"><a href="#投屏协议身份验证缺失" class="headerlink" title="投屏协议身份验证缺失"></a>投屏协议身份验证缺失</h2><p>漏洞编号：暂无</p>
-<p>CVSS 评分：8.3(<a href="https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator?vector=AV:A/AC:L/PR:N/UI:N/S:U/C:L/I:H/A:H&version=3.0" target="_blank" rel="noopener">AV:A/AC:L/PR:N/UI:N/S:U/C:L/I:H/A:H</a>)</p>
-<p>漏洞细节：乐播投屏内部实现了一套私有的投屏协议，其在处理用户发送的请求时没有验证用户是否具有合法权限，攻击者可通过构造特殊格式的投屏请求控制软件的投屏行为，包括强制投放任意图片、任意视频、修改设备音量等。</p>
-<p>时间线：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2020-04 向厂商报告</span><br><span class="line">2021-01 公开漏洞通告</span><br></pre></td></tr></table></figure>
-
-<h2 id="多个拒绝服务"><a href="#多个拒绝服务" class="headerlink" title="多个拒绝服务"></a>多个拒绝服务</h2><p>漏洞编号：暂无</p>
-<p>CVSS 评分：6.5(<a href="https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator?vector=AV:A/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H&version=3.0" target="_blank" rel="noopener">AV:A/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H</a>)</p>
-<p>漏洞细节：乐播投屏内部实现了一套私有的投屏协议，其在处理用户发送的请求时存在多处空指针解引用，攻击者可利用这些漏洞实现拒绝服务攻击。</p>
-<p>时间线：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2020-04 向厂商报告</span><br><span class="line">2021-01 公开漏洞通告</span><br></pre></td></tr></table></figure>
-
-<h2 id="内存破坏"><a href="#内存破坏" class="headerlink" title="内存破坏"></a>内存破坏</h2><p>漏洞编号：暂无</p>
-<p>CVSS 评分：7.5(<a href="https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator?vector=AV:A/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H&version=3.0" target="_blank" rel="noopener">AV:A/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H</a>)</p>
-<p>漏洞细节：乐播投屏内部实现了一套私有的投屏协议，其在处理用户发送的请求时存在多处内存破坏(栈溢出)，攻击者可精心构造请求来利用这些漏洞，成功利用漏洞的攻击者可在设备上执行任意代码。</p>
-<p>时间线：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2020-04 向厂商报告</span><br><span class="line">2021-01 公开漏洞通告</span><br></pre></td></tr></table></figure>
-
-<h2 id="命令注入"><a href="#命令注入" class="headerlink" title="命令注入"></a>命令注入</h2><p>漏洞编号：暂无</p>
-<p>CVSS 评分：8.8(<a href="https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator?vector=AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H&version=3.0" target="_blank" rel="noopener">AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H</a>)</p>
-<p>漏洞细节：乐播投屏内部实现了一套私有的投屏协议，其在处理用户发送的请求时对用户提交的参数过滤不严格，导致命令注入，攻击者可利用此漏洞执行任意命令。</p>
-<p>时间线：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2020-04 向厂商报告</span><br><span class="line">2021-01 公开漏洞通告</span><br></pre></td></tr></table></figure>
-
-<p>注：1. 新版本中检测设备是否第一次发起投屏请求，如果是，会在主界面弹出提示，用户需要点击同意才能正常投屏，但是检测逻辑是基于 MAC 地址，在局域网中，获取其他设备的 MAC 地址非常简单，而且 MAC 地址可伪造。</p>
-<ol start="2">
-<li>新版本对 APP 进行了加壳。</li>
+<h2 id="shell-提权"><a href="#shell-提权" class="headerlink" title="shell 提权"></a>shell 提权</h2><p>某些设备没有内置自定义的 cli 程序，但是它们默认提供的 shell 权限较低，此时可以考虑通过某些历史漏洞进行提权，获取 root 权限，例如前段时间爆出的 sudo 堆溢出漏洞等，由于设备内核版本普遍不高，一般都可以成功提权。</p>
+<h2 id="cli-自带的功能"><a href="#cli-自带的功能" class="headerlink" title="cli 自带的功能"></a>cli 自带的功能</h2><p>为了更方便的维护设备，cli jail 中可能会添加一些特殊的命令，通过执行这些命令就能获取 linux sh，以 Citrix Netscaler 为例，其 cli 提供了 shell 命令，直接执行就可以获取 linux shell</p>
+<p><img src="/img/vmshell-1.png" alt></p>
+<p>另外例如 check point Gateway，可使用 set expert-password 设置专家模式密码，然后用 expert 命令进入专家模式，所谓专家模式就是 linux root shell。</p>
+<p><img src="/img/vmshell-2.png" alt></p>
+<p>所以遇到一款新设备应该先查看其 cli 命令手册，看看是否存在能够直接获取 root shell 的命令。</p>
+<h2 id="利用历史漏洞获取-shell"><a href="#利用历史漏洞获取-shell" class="headerlink" title="利用历史漏洞获取 shell"></a>利用历史漏洞获取 shell</h2><p>通过查看历史 CVE 或官方漏洞通告信息，可以发现一些 cli jail 存在命令注入/逃逸的问题，通过利用这些历史漏洞就能拿到 linux shell。</p>
+<p><a href="https://repo.zenk-security.com/Conferences/HITB/D2T1%20-%20Felix%20Wilhelm%20-%20Attacking%20Next%20Generation%20Firewalls.pdf" target="_blank" rel="noopener">参考资料</a></p>
+<h2 id="解包修改文件系统"><a href="#解包修改文件系统" class="headerlink" title="解包修改文件系统"></a>解包修改文件系统</h2><p>前提：磁盘文件没有加密</p>
+<p>cli jail 背后对应着某个程序，通过解包文件系统，我们可以尝试修改这个 jail 程序或者直接在初始化脚本等位置添加代码，例如启动 telnet 或者反弹 shell 来实现逃逸。</p>
+<p>需要注意的是系统可能对 file system 进行检测，如果发现文件被修改则拒绝启动，此时有两种解决方案。</p>
+<ol>
+<li>修改 vmtools 相关文件，位于 /etc/vmware-tools 目录下的 vmtools 脚本文件属于第三方代码，厂商可能不会对它们进行检查。</li>
+<li>修改文件系统检测程序，这种方式需要对程序进行逆向分析，尝试定位具体的检查逻辑。</li>
 </ol>
+<h2 id="rbash-逃逸思路"><a href="#rbash-逃逸思路" class="headerlink" title="rbash 逃逸思路"></a>rbash 逃逸思路</h2><p>某些 cli jail 中可使用部分正常的 linux 命令，例如 find、more 等，方便用户操作，其中某些 linux 命令可用于逃逸，例如 find 的 exec 参数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -exec /bin/bash \;</span><br></pre></td></tr></table></figure>
+
+<p>more 的 subshell，在交互式界面使用感叹号执行命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">catalpa@CataLpa:/$ cat /bin/bash | more</span><br><span class="line">ELFxxxxxxxx</span><br><span class="line">--More--    // press h</span><br><span class="line">Most commands optionally preceded by integer argument k.  Defaults in brackets.</span><br><span class="line">Star (*) indicates argument becomes new default.</span><br><span class="line">-------------------------------------------------------------------------------</span><br><span class="line">&lt;space&gt;                 Display next k lines of text [current screen size]</span><br><span class="line">z                       Display next k lines of text [current screen size]*</span><br><span class="line">&lt;return&gt;                Display next k lines of text [1]*</span><br><span class="line">d or ctrl-D             Scroll k lines [current scroll size, initially 11]*</span><br><span class="line">q or Q or &lt;interrupt&gt;   Exit from more</span><br><span class="line">s                       Skip forward k lines of text [1]</span><br><span class="line">f                       Skip forward k screenfuls of text [1]</span><br><span class="line">b or ctrl-B             Skip backwards k screenfuls of text [1]</span><br><span class="line">&apos;                       Go to place where previous search started</span><br><span class="line">=                       Display current line number</span><br><span class="line">/&lt;regular expression&gt;   Search for kth occurrence of regular expression [1]</span><br><span class="line">n                       Search for kth occurrence of last r.e [1]</span><br><span class="line">!&lt;cmd&gt; or :!&lt;cmd&gt;       Execute &lt;cmd&gt; in a subshell</span><br><span class="line">v                       Start up /usr/bin/vi at current line</span><br><span class="line">ctrl-L                  Redraw screen</span><br><span class="line">:n                      Go to kth next file [1]</span><br><span class="line">:p                      Go to kth previous file [1]</span><br><span class="line">:f                      Display current file name and line number</span><br><span class="line">.                       Repeat previous command</span><br><span class="line">-------------------------------------------------------------------------------</span><br><span class="line">!uname -a</span><br><span class="line">Linux CataLpa 4.4.0-19041-Microsoft #488-Microsoft Mon Sep 01 13:43:00 PST 2020 x86_64 x86_64 x86_64 GNU/Linux</span><br><span class="line">------------------------</span><br></pre></td></tr></table></figure>
+
+<p>less 的 MISCELLANEOUS COMMANDS，可以使用 !command 或 |Xcommand 等执行命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">---------------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">                   MISCELLANEOUS COMMANDS</span><br><span class="line"></span><br><span class="line"> -&lt;flag&gt;              Toggle a command line option [see OPTIONS below].</span><br><span class="line"> --&lt;name&gt;             Toggle a command line option, by name.</span><br><span class="line"> _&lt;flag&gt;              Display the setting of a command line option.</span><br><span class="line"> __&lt;name&gt;             Display the setting of an option, by name.</span><br><span class="line"> +cmd                 Execute the less cmd each time a new file is examined.</span><br><span class="line"></span><br><span class="line"> !command             Execute the shell command with $SHELL.</span><br><span class="line"> |Xcommand            Pipe file between current pos &amp; mark X to shell command.</span><br><span class="line"> s file               Save input to a file.</span><br><span class="line"> v                    Edit the current file with $VISUAL or $EDITOR.</span><br><span class="line"> V                    Print version number of &quot;less&quot;.</span><br><span class="line">---------------------------------------------------------------------------</span><br></pre></td></tr></table></figure>
+
+<p>还有一些方法可参考<a href="https://www.exploit-db.com/docs/english/44592-linux-restricted-shell-bypass-guide.pdf" target="_blank" rel="noopener">此文章</a>。</p>
+<h2 id="虚拟机调试"><a href="#虚拟机调试" class="headerlink" title="虚拟机调试"></a>虚拟机调试</h2><p>blackhat DEVCORE 团队成员的议题中提到的一种方法。首先要大概了解 linux 系统的启动引导流程，详情可以参考此<a href="https://blog.csdn.net/star19830909/article/details/88235535" target="_blank" rel="noopener">文章</a>。简单来说，Linux 启动时，主要做了以下操作:</p>
+<ol>
+<li>BIOS 运行，执行 POST，硬件自检。</li>
+<li>硬件自检通过，BIOS 在磁盘查找引导记录，并加载到内存执行 (MBR)。</li>
+<li>引导记录启动引导加载器，常用的加载器包括 GRUB、GRUB2、LILO 等。</li>
+<li>引导加载器在磁盘寻找内核文件并装载到内存，将控制权转移到内核继续执行。</li>
+<li>内核通常是自解压文件，文件名带有 vmlinuz 前缀，内核负责完成剩余的启动流程。</li>
+</ol>
+<p>关键在于 vmlinuz 内核初始化操作中，详细流程可参考此<a href="https://blog.csdn.net/zxygww/article/details/49154859" target="_blank" rel="noopener">文章</a>。</p>
+<p>在初始化流程中最后一步，内核会执行 init_post 函数，此时内核初始化接近尾声，此函数主要用于启动用户空间中的 init 进程，代码如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> noinline <span class="title">init_post</span><span class="params">(<span class="keyword">void</span>)</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">    free_initmem();  </span><br><span class="line">    unlock_kernel();  </span><br><span class="line">    mark_rodata_ro();  </span><br><span class="line">    system_state = SYSTEM_RUNNING;  </span><br><span class="line">    numa_default_policy();  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">if</span> (sys_open((<span class="keyword">const</span> <span class="keyword">char</span> __user *) <span class="string">"/dev/console"</span>, O_RDWR, <span class="number">0</span>) &lt; <span class="number">0</span>)  </span><br><span class="line">        printk(KERN_WARNING <span class="string">"Warning: unable to open an initial console.\n"</span>);  </span><br><span class="line">  </span><br><span class="line">    (<span class="keyword">void</span>) sys_dup(<span class="number">0</span>);  </span><br><span class="line">    (<span class="keyword">void</span>) sys_dup(<span class="number">0</span>);  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">if</span> (ramdisk_execute_command) &#123;  </span><br><span class="line">        run_init_process(ramdisk_execute_command);  </span><br><span class="line">        printk(KERN_WARNING <span class="string">"Failed to execute %s\n"</span>,  </span><br><span class="line">                ramdisk_execute_command);  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="comment">/*  </span></span><br><span class="line"><span class="comment">     * We try each of these until one succeeds.  </span></span><br><span class="line"><span class="comment">     *  </span></span><br><span class="line"><span class="comment">     * The Bourne shell can be used instead of init if we are  </span></span><br><span class="line"><span class="comment">     * trying to recover a really broken machine.  </span></span><br><span class="line"><span class="comment">     */</span>  </span><br><span class="line">    <span class="keyword">if</span> (execute_command) &#123;  </span><br><span class="line">        run_init_process(execute_command);  </span><br><span class="line">        printk(KERN_WARNING <span class="string">"Failed to execute %s.  Attempting "</span>  </span><br><span class="line">                    <span class="string">"defaults...\n"</span>, execute_command);  </span><br><span class="line">    &#125;  </span><br><span class="line">    run_init_process(<span class="string">"/sbin/init"</span>);  </span><br><span class="line">    run_init_process(<span class="string">"/etc/init"</span>);  </span><br><span class="line">    run_init_process(<span class="string">"/bin/init"</span>);  </span><br><span class="line">    run_init_process(<span class="string">"/bin/sh"</span>);  </span><br><span class="line">  </span><br><span class="line">    panic(<span class="string">"No init found.  Try passing init= option to kernel."</span>);  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们可以看到在函数末尾包含 4 个 run_init_process，分别尝试执行 /sbin/init、/etc/init、/bin/init、/bin/sh，通常文件系统中都会包含 /sbin/init，它会作为用户空间的第一个进程执行剩余的初始化操作。</p>
+<p>所以，如果我们能够修改 run_init_process 的参数，例如将 /sbin/init 修改成 /bin/sh，或者劫持内核的流程到 run_init_process(“/bin/sh”)，可能就会得到一个 linux shell。</p>
+<p>为了实现上述操作，要解决几个问题。</p>
+<p><strong>如何对内核进行 debug</strong></p>
+<p>vmware workstation 提供了虚拟机调试接口，官方文档指出只需要在虚拟机的 vmx 文件中添加以下选项，即可在外部使用 gdb 附加到虚拟机上，从而实现对虚拟机的调试</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">debugStub.listen.guest64 = &quot;TRUE&quot;</span><br><span class="line">debugStub.listen.guest64.remote = &quot;TRUE&quot;</span><br><span class="line">debugStub.port.guest64 = &quot;12345&quot;</span><br><span class="line">debugStub.listen.guest32 = &quot;TRUE&quot;</span><br><span class="line">debugStub.listen.guest32.remote = &quot;TRUE&quot;</span><br><span class="line">debugStub.port.guest32 = &quot;12346&quot;</span><br></pre></td></tr></table></figure>
+
+<p><strong>如何定位 init_post 函数代码</strong></p>
+<p>某些设备 vmdk 未加密，可以直接从中解出 vmlinuz 内核文件，通过解压 vmdk 文件获取 vmlinuz 内核。</p>
+<p>获取内核之后需要进一步处理，将格式转换为 elf 方便分析，已经有大佬开发了工具 <a href="https://github.com/marin-m/vmlinux-to-elf" target="_blank" rel="noopener">vmlinux-to-elf</a>，直接转换即可。</p>
+<p>修复的内核用 IDA 分析，搜索字符串能够定位 /sbin/init，交叉引用记下 init_post 函数的地址。</p>
+<p>如果 vmdk 无法解出内核文件，请参考下文。</p>
+<p><strong>修改内存</strong></p>
+<p>以 fortiweb 虚拟机为例，首先在 vmware 中导入 ovf 文件，如图</p>
+<p><img src="/img/vmshell-3.png" alt></p>
+<p>虚拟机库中选择导入的虚拟机，右键打开虚拟机目录，找到 .vmx 配置文件，用文本编辑器打开。</p>
+<p>在文件末尾添加配置并保存</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">debugStub.listen.guest64 = &quot;TRUE&quot;</span><br><span class="line">debugStub.listen.guest64.remote = &quot;TRUE&quot;</span><br><span class="line">debugStub.port.guest64 = &quot;12345&quot;</span><br><span class="line">debugStub.listen.guest32 = &quot;TRUE&quot;</span><br><span class="line">debugStub.listen.guest32.remote = &quot;TRUE&quot;</span><br><span class="line">debugStub.port.guest32 = &quot;12346&quot;</span><br></pre></td></tr></table></figure>
+
+<p>在宿主机打开终端，开启 gdb。windows 下推荐使用 wsl，在 wsl 中启动 gdb 即可。</p>
+<p>vmware 启动虚拟机，同时在 gdb 中执行命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">target remote 0:12345</span><br></pre></td></tr></table></figure>
+
+<p>注：附加的时间要仔细调整，太早会由于调试桥的原因导致 gdb 附加失败，太晚又会错过 init_post 阶段。</p>
+<p>当出现以下信息说明附加正确。</p>
+<p><img src="/img/vmshell-4.png" alt></p>
+<p>大多数内核中地址都形如 0xffffffff8xxxxxxx。附加成功后根据之前得到的 init_post 函数地址下断点，然后继续运行。如果无法获得内核文件，可以直接从内存中搜索，执行命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find 0xffffffff80000000, 0xffffffff81000000, &quot;/sbin/init&quot;</span><br></pre></td></tr></table></figure>
+
+<p>如果提示  Unable to access 16010 bytes，说明开始地址太小，可逐渐调整直到能够正常搜索。</p>
+<p>如果搜索正确会出现以下信息</p>
+<p><img src="/img/vmshell-5.png" alt></p>
+<p>查看此处内存内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x /10s 0xffffffff80f7df37</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/vmshell-6.png" alt></p>
+<p>修改字符串信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set &#123;char [8]&#125; 0xffffffff80f7df37 = &quot;/bin/sh&quot;</span><br></pre></td></tr></table></figure>
+
+<p>之后 continue 让内核继续执行，如果操作无误就得到一个 linux shell。</p>
+<p><img src="/img/vmshell-7.png" alt></p>
+<p>需要注意的是由于我们修改了用户空间的 init 为 sh，所以此时系统是没有完全初始化的，现在可进行固件导出操作，也可以尝试修改 vmtools 或者其他操作来在下一次开机时获取完整的 shell。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://repo.zenk-security.com/Conferences/HITB/D2T1%20-%20Felix%20Wilhelm%20-%20Attacking%20Next%20Generation%20Firewalls.pdf" target="_blank" rel="noopener">Attacking NextGeneration Firewalls</a></p>
+<p><a href="https://www.exploit-db.com/docs/english/44592-linux-restricted-shell-bypass-guide.pdf" target="_blank" rel="noopener">Linux Restricted Shell Bypass</a></p>
+<p><a href="https://blog.csdn.net/zxygww/article/details/49154859" target="_blank" rel="noopener">Linux启动流程解析：init_post函数</a></p>
+<p><a href="https://blog.csdn.net/star19830909/article/details/88235535" target="_blank" rel="noopener">Linux 开机引导和启动过程详解</a></p>
+<p><a href="https://github.com/marin-m/vmlinux-to-elf" target="_blank" rel="noopener">vmlinux-to-elf</a></p>
+<p><a href="https://i.blackhat.com/USA-19/Wednesday/us-19-Tsai-Infiltrating-Corporate-Intranet-Like-NSA.pdf" target="_blank" rel="noopener">Infiltrating Corporate Intranet Like NSA</a></p>
 
       
 
@@ -287,7 +351,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2021/01/21/hpcast/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2021/05/12/vm_shell/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -301,18 +365,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2021/03/16/vulns1/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          一些漏洞
-        
-      </div>
-    </a>
   
-  
-    <a href="/2021/01/17/DCS-960L/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Dlink DCS-960L 漏洞复现</div>
+    <a href="/2021/03/16/vulns1/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">一些漏洞</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -339,7 +394,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#投屏协议身份验证缺失"><span class="toc-number">1.</span> <span class="toc-text">投屏协议身份验证缺失</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#多个拒绝服务"><span class="toc-number">2.</span> <span class="toc-text">多个拒绝服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内存破坏"><span class="toc-number">3.</span> <span class="toc-text">内存破坏</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#命令注入"><span class="toc-number">4.</span> <span class="toc-text">命令注入</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#shell-提权"><span class="toc-number">1.</span> <span class="toc-text">shell 提权</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cli-自带的功能"><span class="toc-number">2.</span> <span class="toc-text">cli 自带的功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#利用历史漏洞获取-shell"><span class="toc-number">3.</span> <span class="toc-text">利用历史漏洞获取 shell</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解包修改文件系统"><span class="toc-number">4.</span> <span class="toc-text">解包修改文件系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#rbash-逃逸思路"><span class="toc-number">5.</span> <span class="toc-text">rbash 逃逸思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#虚拟机调试"><span class="toc-number">6.</span> <span class="toc-text">虚拟机调试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">7.</span> <span class="toc-text">Reference</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -364,7 +419,7 @@
 <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
 var gitment = new Gitment({
-  id: "http://yoursite.com/2021/01/21/hpcast/",
+  id: "http://yoursite.com/2021/05/12/vm_shell/",
   owner: 'rrrrrrri',
   repo: 'rrrrrrri.github.io',
   oauth: {
