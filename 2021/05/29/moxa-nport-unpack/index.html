@@ -7,15 +7,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | CataLpa&#39;s Home</title>
+  <title>Moxa Nport 系列设备固件解包 | CataLpa&#39;s Home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="CataLpa&#39;s Home">
-<meta property="og:url" content="http://yoursite.com/archives/page/4/index.html">
+  <meta name="description" content="Moxa Nport series firmware unpack.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Moxa Nport 系列设备固件解包">
+<meta property="og:url" content="http://yoursite.com/2021/05/29/moxa-nport-unpack/index.html">
 <meta property="og:site_name" content="CataLpa&#39;s Home">
+<meta property="og:description" content="Moxa Nport series firmware unpack.">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2021-05-29T01:35:52.828Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CataLpa&#39;s Home">
+<meta name="twitter:title" content="Moxa Nport 系列设备固件解包">
+<meta name="twitter:description" content="Moxa Nport series firmware unpack.">
   
     <link rel="alternative" href="/atom.xml" title="CataLpa&#39;s Home" type="application/atom+xml">
   
@@ -141,295 +145,197 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-moxa-nport-unpack" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Moxa Nport 系列设备固件解包
+    </h1>
+  
+
+        
+        <a href="/2021/05/29/moxa-nport-unpack/" class="archive-article-date">
+  	<time datetime="2021-05-28T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-29</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Moxa Nport series firmware unpack.</p>
+<a id="more"></a>
+
+<h2 id="固件格式"><a href="#固件格式" class="headerlink" title="固件格式"></a>固件格式</h2><p>前四个字节为 *FRM，用于识别固件。固件头部大小为 0x160，内部包括文件数量、代码段偏移量等数据结构，头部后面跟着的是文件表，每一个条目大小 0x40，包括文件名、文件偏移量、大小等信息。最后是代码段。</p>
+<h2 id="解包脚本"><a href="#解包脚本" class="headerlink" title="解包脚本"></a>解包脚本</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Author: CataLpa</span></span><br><span class="line"><span class="comment"># Date: 2021-05-29</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">parser = argparse.ArgumentParser()</span><br><span class="line">parser.add_argument(<span class="string">'-f'</span>, help=<span class="string">'file'</span>)</span><br><span class="line">args = parser.parse_args()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">extractFile</span><span class="params">(filename, start_address, end_address, data)</span>:</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        t = open(<span class="string">"./unpacked/"</span> + filename, <span class="string">"w"</span>)</span><br><span class="line">        i = start_address</span><br><span class="line">        temp_data = <span class="string">""</span></span><br><span class="line">        <span class="keyword">while</span> i &lt;= end_address:</span><br><span class="line">            temp_data += data[i]</span><br><span class="line">            i += <span class="number">1</span></span><br><span class="line">        t.write(temp_data)</span><br><span class="line">        t.close()</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        print(<span class="string">"[-] No unpacked folder."</span>)</span><br><span class="line">        exit(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    <span class="keyword">if</span> args.f:</span><br><span class="line">        <span class="keyword">if</span> os.path.isfile(args.f):</span><br><span class="line">            f = open(args.f)</span><br><span class="line">            data = f.read()</span><br><span class="line">            f.close()</span><br><span class="line">            magic = data[<span class="number">0</span>:<span class="number">4</span>]</span><br><span class="line">            <span class="keyword">if</span> magic != <span class="string">"*FRM"</span>:</span><br><span class="line">                print(<span class="string">"[-] Not a valid firmware file."</span>)</span><br><span class="line">                exit(<span class="number">0</span>)</span><br><span class="line">            </span><br><span class="line">            header_length = <span class="number">0x160</span></span><br><span class="line">            code_offset = u32(data[<span class="number">0x54</span>:<span class="number">0x58</span>])</span><br><span class="line">            print(<span class="string">"[*] Code offset: 0x%x"</span> % code_offset)</span><br><span class="line">            table_length = u32(data[<span class="number">0xa2</span>:<span class="number">0xa4</span>].ljust(<span class="number">4</span>, <span class="string">"\x00"</span>))    <span class="comment"># Nport-5400</span></span><br><span class="line">            <span class="comment"># table_length = u32(data[0x9a:0x9c].ljust(4, "\x00"))  # Nport-5100</span></span><br><span class="line">            print(<span class="string">"[*] File: 0x%x"</span> % table_length)</span><br><span class="line">            </span><br><span class="line">            i = header_length</span><br><span class="line">            j = <span class="number">0</span></span><br><span class="line">            filename = <span class="string">""</span></span><br><span class="line">            <span class="keyword">while</span> i &lt; header_length + (table_length * <span class="number">0x40</span>):</span><br><span class="line">                j = <span class="number">0</span></span><br><span class="line">                filename = <span class="string">""</span></span><br><span class="line">                <span class="keyword">while</span> j &lt; <span class="number">0x30</span>:</span><br><span class="line">                    <span class="keyword">if</span> data[j + i] != <span class="string">'\x00'</span>:</span><br><span class="line">                        filename += data[j + i]</span><br><span class="line">                    j += <span class="number">1</span></span><br><span class="line">                j += <span class="number">8</span></span><br><span class="line">                length = u32(data[j + i] +  data[j + i + <span class="number">1</span>] + data[j + i + <span class="number">2</span>] + data[j + i + <span class="number">3</span>])</span><br><span class="line">                j += <span class="number">4</span></span><br><span class="line">                start_address = u32(data[j + i] +  data[j + i + <span class="number">1</span>] + data[j + i + <span class="number">2</span>] + data[j + i + <span class="number">3</span>])</span><br><span class="line">                i += <span class="number">0x40</span></span><br><span class="line">                print(<span class="string">"[*] Extracting "</span> + filename + <span class="string">" ..."</span>)</span><br><span class="line">                extractFile(filename, start_address + <span class="number">0x60</span>, start_address + <span class="number">0x60</span> + length, data)</span><br><span class="line">            binary = open(<span class="string">"binary.bin"</span>, <span class="string">"w"</span>)</span><br><span class="line">            binary.write(data[code_offset:])</span><br><span class="line">            binary.close()</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            print(<span class="string">"[-] No such file."</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(<span class="string">"[*] Use -h to get help."</span>)</span><br></pre></td></tr></table></figure>
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>Buy me a cup of coffee~<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/z.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/w.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/19/CVE-2018-5767/" class="archive-article-date">
-  	<time datetime="2019-03-18T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-19</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/19/CVE-2018-5767/">CVE-2018-5767 复现分析</a>
-    </h1>
-  
+      
 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2021/05/29/moxa-nport-unpack/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/15/glibc_analyse2/" class="archive-article-date">
-  	<time datetime="2019-03-14T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-15</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2021/05/12/vm_shell/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">一些虚拟机获取 shell 的方法</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/15/glibc_analyse2/">glibc 中的 malloc 与 free 概述 (二)</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#固件格式"><span class="toc-number">1.</span> <span class="toc-text">固件格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解包脚本"><span class="toc-number">2.</span> <span class="toc-text">解包脚本</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/11/kanxue2019Q1/" class="archive-article-date">
-  	<time datetime="2019-03-10T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-11</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/11/kanxue2019Q1/">看雪 CTF 2019 Q1 [archived]</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/07/glibc_analyse1/" class="archive-article-date">
-  	<time datetime="2019-03-06T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-07</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/07/glibc_analyse1/">glibc 中的 malloc 与 free 概述 (一)</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/02/13/pyc-simple/" class="archive-article-date">
-  	<time datetime="2019-02-13T05:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-13</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/02/13/pyc-simple/">PYC 文件的简单分析</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/02/02/hgame-2019/" class="archive-article-date">
-  	<time datetime="2019-02-01T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/02/02/hgame-2019/">HGAME 2019 week1</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/02/01/flask_note/" class="archive-article-date">
-  	<time datetime="2019-01-31T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/02/01/flask_note/">flask 入门笔记 [archived]</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/01/20/pcb2018-online/" class="archive-article-date">
-  	<time datetime="2019-01-19T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/20/pcb2018-online/">鹏程杯 2018 部分题目复现 [archived]</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/01/19/IO_FILE/" class="archive-article-date">
-  	<time datetime="2019-01-19T11:41:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-19</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/19/IO_FILE/">IO_FILE</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/01/13/0ctf_babyheap2/" class="archive-article-date">
-  	<time datetime="2019-01-13T01:26:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-13</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/13/0ctf_babyheap2/">0ctf 2018 babyheap</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/page/3/">&laquo; Prev</a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/archives/page/5/">5</a><a class="page-number" href="/archives/page/6/">6</a><a class="extend next" rel="next" href="/archives/page/5/">Next &raquo;</a>
-    </nav>
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">  <!--如果失效了 本地有保存 themes\yilia --> 
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "http://yoursite.com/2021/05/29/moxa-nport-unpack/",
+  owner: 'rrrrrrri',
+  repo: 'rrrrrrri.github.io',
+  oauth: {
+    client_id: 'b02ae2fd83142bce4350',
+    client_secret: 'dad31d4a347d05c4f146be764e2848dc72cbd576',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
   
 
 
@@ -462,8 +368,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
