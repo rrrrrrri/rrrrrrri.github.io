@@ -24,7 +24,7 @@
 <meta property="og:image" content="https://wzt.ac.cn/img/fortios_padding_5.png">
 <meta property="og:image" content="https://wzt.ac.cn/img/fortios_padding_6.png">
 <meta property="article:published_time" content="2023-02-22T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-02-23T02:41:34.573Z">
+<meta property="article:modified_time" content="2023-02-24T04:27:20.237Z">
 <meta property="article:author" content="CataLpa">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://wzt.ac.cn/img/fortios_padding_1.png">
@@ -209,7 +209,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">2k字</span>
+      <span class="post-count">2.2k字</span>
     </span>
   </span>
 
@@ -218,7 +218,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">9分</span>
+      <span class="post-count">10分</span>
     </span>
   </span>
 </div>
@@ -261,8 +261,6 @@
 <p>经过验证，只需要 patch fgtsum 和 rootfs 两个检验即可，将对应跳转指令取反，保存并替换原始文件。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( sub_44F240() )</span><br><span class="line">  do_halt();</span><br><span class="line"><span class="keyword">if</span> ( sub_44F1A0(<span class="number">1LL</span>, <span class="string">&quot;%s()-%d: %s: run_initlevel(SYSINIT)\n\n&quot;</span>) )</span><br><span class="line">  do_halt();</span><br><span class="line"><span class="keyword">if</span> ( sub_2745D50() )</span><br><span class="line">&#123;</span><br><span class="line">  sub_2825E00();</span><br><span class="line">  <span class="keyword">if</span> ( sub_44DFC0(<span class="string">&quot;/bin/fips_self_test&quot;</span>) )</span><br><span class="line">    do_halt();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">if</span> ( !sub_44F1F0(<span class="number">1LL</span>, <span class="string">&quot;%s()-%d: %s: run_initlevel(SYSINIT)\n\n&quot;</span>) )</span><br><span class="line">    do_halt();</span><br><span class="line">  sub_2781560();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-
-
 <h2 id="植入后门和启动"><a href="#植入后门和启动" class="headerlink" title="植入后门和启动"></a>植入后门和启动</h2><p>后续的操作和参考文章提到的类似，先用 msf 生成一个后门程序，替换 /bin/smartctl 文件，然后将 patch 的 init 程序替换 /bin/init，同时在系统中放置一个 busybox 并将 /bin/sh 指向 busybox 方便后续使用。</p>
 <p>根据前面的文章我们知道系统启动时会首先执行 /sbin/init，这个程序的逻辑很简单：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">__int64 __fastcall <span class="title">main</span><span class="params">(__int64 a1, <span class="keyword">char</span> **a2, <span class="keyword">char</span> **a3)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">char</span> *argv[<span class="number">4</span>]; <span class="comment">// [rsp+0h] [rbp-20h] BYREF</span></span><br><span class="line"></span><br><span class="line">  argv[<span class="number">3</span>] = (<span class="keyword">char</span> *)__readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  sub_4017D0(a1, a2, a3);</span><br><span class="line">  unlink(<span class="string">&quot;/sbin/init.chk&quot;</span>);</span><br><span class="line">  <span class="keyword">if</span> ( (<span class="keyword">int</span>)sub_401AD0(<span class="string">&quot;bin&quot;</span>) &gt;= <span class="number">0</span> &amp;&amp; (<span class="keyword">int</span>)sub_401AD0(<span class="string">&quot;migadmin&quot;</span>) &gt;= <span class="number">0</span> &amp;&amp; (<span class="keyword">int</span>)sub_401AD0(<span class="string">&quot;node-scripts&quot;</span>) &gt;= <span class="number">0</span> )</span><br><span class="line">    sub_401AD0(<span class="string">&quot;usr&quot;</span>);</span><br><span class="line">  argv[<span class="number">0</span>] = <span class="string">&quot;/bin/init&quot;</span>;</span><br><span class="line">  argv[<span class="number">1</span>] = <span class="number">0LL</span>;</span><br><span class="line">  execve(<span class="string">&quot;/bin/init&quot;</span>, argv, <span class="number">0LL</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0LL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -281,6 +279,9 @@
 
 <p>这样就可以获取一个完整的 root 权限：</p>
 <p><img src="/img/fortios_padding_6.png"></p>
+<p>由于有些朋友对操作还存在一定的疑问，我们总结一下具体的操作步骤为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">1. 解包原始的 rootfs.gz</span><br><span class="line">2. 解包全部 xxx.tar.xz，同时保留原始的 xxx.tar.xz</span><br><span class="line">3. patch /bin/init 中的校验逻辑，以及植入后门程序</span><br><span class="line">4. 将文件系统重新打包成 rootfs.gz 替换到虚拟磁盘</span><br><span class="line">5. 为虚拟机添加调试桥 (请参考 https://wzt.ac.cn/2021/05/12/vm_shell/)</span><br><span class="line">6. 启动系统时附加 gdb，在执行 /sbin/init 之前断下，将 /sbin/init 字符串修改为 /bin/init</span><br><span class="line">7. 继续运行系统，进入 CLI 执行命令 diagnose hardware smartctl</span><br><span class="line">8. 在接收端得到 shell</span><br></pre></td></tr></table></figure>
+
 <p>本文介绍了作者在研究 FortiOS 过程中使用的一种简单获取权限的方法，没有深入涉及 FortiOS 的文件系统检查逻辑，权当抛砖引玉，希望能对有需要的朋友有一些帮助。如果您有更简单的方法，也请分享给安全社区交流学习。</p>
 
     
