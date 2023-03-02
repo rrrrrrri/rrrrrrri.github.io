@@ -6,28 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://wzt.ac.cn">
-  <title>一种获取 FortiOS 权限的方法 | CataLpa&#39;s Home</title>
+  <title>Archives: 2023/3 | CataLpa&#39;s Home</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="如何获取 FortiOS shell 权限？">
-<meta property="og:type" content="article">
-<meta property="og:title" content="一种获取 FortiOS 权限的方法">
-<meta property="og:url" content="https://wzt.ac.cn/2023/02/23/fortios_padding/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="CataLpa&#39;s Home">
+<meta property="og:url" content="https://wzt.ac.cn/archives/2023/03/index.html">
 <meta property="og:site_name" content="CataLpa&#39;s Home">
-<meta property="og:description" content="如何获取 FortiOS shell 权限？">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://wzt.ac.cn/img/fortios_padding_1.png">
-<meta property="og:image" content="https://wzt.ac.cn/img/fortios_padding_2.png">
-<meta property="og:image" content="https://wzt.ac.cn/img/fortios_padding_3.png">
-<meta property="og:image" content="https://wzt.ac.cn/img/fortios_padding_4.png">
-<meta property="og:image" content="https://wzt.ac.cn/img/fortios_padding_5.png">
-<meta property="og:image" content="https://wzt.ac.cn/img/fortios_padding_6.png">
-<meta property="article:published_time" content="2023-02-22T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-02-24T04:27:20.237Z">
 <meta property="article:author" content="CataLpa">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://wzt.ac.cn/img/fortios_padding_1.png">
   
     <link rel="alternative" href="/atom.xml" title="CataLpa&#39;s Home" type="application/atom+xml">
   
@@ -181,228 +170,54 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-fortios_padding" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
+            
+  
+  
     
-      <header class="article-header">
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2023" class="archive-year">2023</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	
+<a href="/2023/03/02/fortios_padding/" class="archive-article-date">
+        <time datetime="2023-03-01T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-03-02</time>
+</a>
+
+        </div>
+    	 
   
+    <h1 itemprop="name">
+	
+	  <a class="archive-article-title" href="/2023/03/02/fortios_padding/" target="_blank">一种获取 FortiGate 权限的方法 &amp; License 授权分析</a>
   
-    <h1 class="article-title" itemprop="name">
-      一种获取 FortiOS 权限的方法
     </h1>
   
 
 
-  
-  
-<a href="/2023/02/23/fortios_padding/" class="archive-article-date">
-        <time datetime="2023-02-22T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-02-23</time>
-</a>
-
-  
-  
-    
-<div style="margin-top:10px;">
-  <span class="post-time">
-    <span class="post-meta-item-icon">
-      <!-- fonts.scss -->
-      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
-      <i class="icon-statistics"></i>
-      <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">2.2k字</span>
-    </span>
-  </span>
-
-  <span class="post-time">
-    &nbsp; | &nbsp;
-    <span class="post-meta-item-icon">
-      <i class="icon-book icon"></i>
-      <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">10分</span>
-    </span>
-  </span>
-</div>
-
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>如何获取 FortiOS shell 权限？</p>
-<span id="more"></span>
-
-<h2 id="绕过判断逻辑"><a href="#绕过判断逻辑" class="headerlink" title="绕过判断逻辑"></a>绕过判断逻辑</h2><p>最近很多朋友来询问我如何获取新版本 FortiOS 的 root 权限，在前面文章中我提到过一篇<a target="_blank" rel="noopener" href="https://www.cnblogs.com/studyskill/p/6524672.html">参考资料</a>，不过这篇资料是针对旧版本 FortiOS 的，Fortinet 曾在 2019 年 11 月 14 日发布了一个影响 FortiOS 的 <a target="_blank" rel="noopener" href="https://www.fortiguard.com/psirt/FG-IR-19-017">CVE</a>，在这个漏洞的描述中，官方认为 VM 应用缺少对文件系统的检查，可能导致攻击者向系统中注入恶意程序。为此在启动流程中添加了文件系统校验，按照参考资料的步骤修改系统文件之后可能会导致无法启动或者无限重启。</p>
-<p>对于这个问题，我们首先想到的是定位检查逻辑，看看能否根据算法打包出正确的文件或者直接将检查逻辑 patch 掉。先看一下系统启动时的输出信息：</p>
-<p><img src="/img/fortios_padding_1.png"></p>
-<p>考虑文件系统的校验可能是在内核或者用户态实现，我们首先在文件系统中尝试搜索 System is starting 字符串</p>
-<p><img src="/img/fortios_padding_2.png"></p>
-<p>在二进制文件 bin/init 中找到了匹配，逆向该文件看看这个字符串是何时打印的：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">  t_printf(<span class="string">&quot;\nSystem is starting...\n&quot;</span>, v11, v8, v12, v5, v6, requested_time.tv_sec);<span class="comment">// 打印字符串</span></span><br><span class="line">  fflush(<span class="built_in">stdout</span>);</span><br><span class="line">  sub_206FB40();</span><br><span class="line">  reboot(<span class="number">0</span>);</span><br><span class="line">  close(<span class="number">0</span>);</span><br><span class="line">  close(<span class="number">1</span>);</span><br><span class="line">  close(<span class="number">2</span>);</span><br><span class="line">  sub_44DE80(<span class="number">0</span>);</span><br><span class="line">  chdir(<span class="string">&quot;/&quot;</span>);</span><br><span class="line">  setsid();</span><br><span class="line">  v14 = sub_44DDF0(<span class="string">&quot;/dev/null&quot;</span>);</span><br><span class="line">  v15 = v14;</span><br><span class="line">  <span class="keyword">if</span> ( v14 &gt;= <span class="number">0</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    dup2(v14, <span class="number">0</span>);</span><br><span class="line">    dup2(v15, <span class="number">1</span>);</span><br><span class="line">    dup2(v15, <span class="number">2</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> ( sub_290E8D0(<span class="number">1024LL</span>, <span class="number">1LL</span>) &lt; <span class="number">0</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    t_printf(<span class="string">&quot;could not setup epoll in init.\n&quot;</span>, <span class="number">1</span>, v16, v17, v18, v19, requested_time.tv_sec);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> ( sub_452C00() &gt;= <span class="number">0</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    sub_450A80();</span><br><span class="line">    sub_1F6CD90(<span class="number">16</span>, <span class="string">&quot;%s()-%d: %s: run_initlevel(SYSINIT)\n\n&quot;</span>, <span class="string">&quot;main&quot;</span>, <span class="number">2649</span>, <span class="string">&quot;main&quot;</span>, v20, requested_time.tv_sec);</span><br><span class="line">    sub_44E2D0(<span class="number">1LL</span>);</span><br><span class="line">    sub_451670();</span><br><span class="line">    sub_450BC0();</span><br><span class="line">    <span class="keyword">if</span> ( sub_44F240() )</span><br><span class="line">      do_halt();</span><br><span class="line">    <span class="keyword">if</span> ( !sub_44F1A0() )</span><br><span class="line">      do_halt();</span><br><span class="line">    <span class="keyword">if</span> ( sub_2745D50() )</span><br><span class="line">    &#123;</span><br><span class="line">      sub_2825E00();</span><br><span class="line">      <span class="keyword">if</span> ( sub_44DFC0(<span class="string">&quot;/bin/fips_self_test&quot;</span>) )</span><br><span class="line">        do_halt();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">if</span> ( sub_44F1F0() )</span><br><span class="line">        do_halt();</span><br><span class="line">      sub_2781560();</span><br><span class="line">    &#125;</span><br><span class="line">      <span class="comment">// ...</span></span><br><span class="line">  &#125;</span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
-
-<p>我们看到在 init 程序的 main 函数中第 82 行位置打印了此字符串，而向下分析发现有几处判断，其中比较明显的位置引用了 /bin/fips_self_test 字符串。do_halt 函数的内容：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">unsigned</span> __int64 <span class="title">do_halt</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  FILE *v0; <span class="comment">// rax</span></span><br><span class="line">  FILE *v1; <span class="comment">// r12</span></span><br><span class="line">  <span class="keyword">int</span> v2; <span class="comment">// eax</span></span><br><span class="line">  <span class="keyword">int</span> v3; <span class="comment">// er12</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">timespec</span> <span class="title">requested_time</span>;</span> <span class="comment">// [rsp+0h] [rbp-30h] BYREF</span></span><br><span class="line">  <span class="keyword">unsigned</span> __int64 v6; <span class="comment">// [rsp+18h] [rbp-18h]</span></span><br><span class="line"></span><br><span class="line">  v6 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  sub_451FA0(<span class="string">&quot;do_halt&quot;</span>, <span class="number">1388</span>);</span><br><span class="line">  v0 = fopen(<span class="string">&quot;/etc/shutdown.dat&quot;</span>, <span class="string">&quot;w&quot;</span>);</span><br><span class="line">  <span class="keyword">if</span> ( v0 )</span><br><span class="line">  &#123;</span><br><span class="line">    v1 = v0;</span><br><span class="line">    <span class="built_in">fprintf</span>(v0, <span class="string">&quot;%d&quot;</span>, <span class="number">1LL</span>);</span><br><span class="line">    fclose(v1);</span><br><span class="line">    sync();</span><br><span class="line">    sleep(<span class="number">1u</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  sub_44EF50();</span><br><span class="line">  v2 = open(<span class="string">&quot;/dev/console&quot;</span>, <span class="number">2305</span>);</span><br><span class="line">  v3 = v2;</span><br><span class="line">  <span class="keyword">if</span> ( v2 &gt;= <span class="number">0</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    dprintf(v2, <span class="string">&quot;\r\nThe system is halted.\r\n&quot;</span>);</span><br><span class="line">    fsync(v3);</span><br><span class="line">    close(v3);</span><br><span class="line">  &#125;</span><br><span class="line">  requested_time.tv_sec = <span class="number">2LL</span>;</span><br><span class="line">  requested_time.tv_nsec = <span class="number">0LL</span>;</span><br><span class="line">  <span class="keyword">while</span> ( nanosleep(&amp;requested_time, &amp;requested_time) == <span class="number">-1</span> &amp;&amp; *__errno_location() == <span class="number">4</span> )</span><br><span class="line">    ;</span><br><span class="line">  <span class="keyword">if</span> ( !fork() )</span><br><span class="line">    reboot(<span class="number">1126301404</span>);</span><br><span class="line">  <span class="keyword">while</span> ( pause() )</span><br><span class="line">    ;</span><br><span class="line">  <span class="keyword">return</span> v6 - __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这里会输出信息 The system is halted，表示系统已停止运行。</p>
-<p>第一个判断函数内部执行了 ioctl 和 socket 等函数，向内核发送或接收某些信息</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> __fastcall <span class="title">sub_2907930</span><span class="params">(<span class="keyword">int</span> a1, __int64 a2)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> v2; <span class="comment">// eax</span></span><br><span class="line">  <span class="keyword">int</span> v3; <span class="comment">// er13</span></span><br><span class="line">  <span class="keyword">int</span> v4; <span class="comment">// er12</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> ( dword_468D350 &gt;= <span class="number">0</span> )</span><br><span class="line">    <span class="keyword">return</span> ioctl(dword_468D350, a1, a2);</span><br><span class="line">  v2 = socket(<span class="number">2</span>, <span class="number">2</span>, <span class="number">0</span>);</span><br><span class="line">  v3 = v2;</span><br><span class="line">  <span class="keyword">if</span> ( v2 &lt; <span class="number">0</span> )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">  v4 = ioctl(v2, a1, a2);</span><br><span class="line">  close(v3);</span><br><span class="line">  <span class="keyword">return</span> v4;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>第二个函数 fork 出一个子进程，主要处理逻辑：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">_BOOL8 <span class="title">sub_447D40</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">char</span> v0; <span class="comment">// cl</span></span><br><span class="line">  <span class="keyword">char</span> v1; <span class="comment">// dl</span></span><br><span class="line">  __int64 i; <span class="comment">// rax</span></span><br><span class="line">  <span class="keyword">char</span> v3; <span class="comment">// cl</span></span><br><span class="line">  <span class="keyword">char</span> v4; <span class="comment">// dl</span></span><br><span class="line">  __int64 v5; <span class="comment">// rax</span></span><br><span class="line">  FILE *v6; <span class="comment">// rax</span></span><br><span class="line">  FILE *v7; <span class="comment">// r12</span></span><br><span class="line">  <span class="keyword">int</span> v8; <span class="comment">// ebx</span></span><br><span class="line">  FILE *v9; <span class="comment">// r13</span></span><br><span class="line">  _BOOL8 v10; <span class="comment">// r12</span></span><br><span class="line">  __int64 v11; <span class="comment">// rax</span></span><br><span class="line">  __int64 v12; <span class="comment">// r15</span></span><br><span class="line">  __int64 v13; <span class="comment">// rax</span></span><br><span class="line">  __int64 v14; <span class="comment">// r14</span></span><br><span class="line">  <span class="keyword">void</span> *v15; <span class="comment">// rsp</span></span><br><span class="line">  <span class="keyword">void</span> *v16; <span class="comment">// rsp</span></span><br><span class="line">  <span class="keyword">size_t</span> v17; <span class="comment">// rax</span></span><br><span class="line">  __int64 v19; <span class="comment">// [rsp+0h] [rbp-F0h] BYREF</span></span><br><span class="line">  <span class="keyword">size_t</span> n; <span class="comment">// [rsp+8h] [rbp-E8h]</span></span><br><span class="line">  <span class="keyword">void</span> *v21; <span class="comment">// [rsp+10h] [rbp-E0h]</span></span><br><span class="line">  __int64 *v22; <span class="comment">// [rsp+18h] [rbp-D8h]</span></span><br><span class="line">  <span class="keyword">void</span> *v23; <span class="comment">// [rsp+20h] [rbp-D0h] BYREF</span></span><br><span class="line">  __int64 v24; <span class="comment">// [rsp+28h] [rbp-C8h]</span></span><br><span class="line">  <span class="keyword">char</span> v25[<span class="number">32</span>]; <span class="comment">// [rsp+30h] [rbp-C0h] BYREF</span></span><br><span class="line">  <span class="keyword">char</span> filename[<span class="number">8</span>]; <span class="comment">// [rsp+50h] [rbp-A0h] BYREF</span></span><br><span class="line">  __int16 v27; <span class="comment">// [rsp+58h] [rbp-98h]</span></span><br><span class="line">  __int64 ptr[<span class="number">16</span>]; <span class="comment">// [rsp+70h] [rbp-80h] BYREF</span></span><br><span class="line"></span><br><span class="line">  v0 = <span class="number">97</span>;</span><br><span class="line">  v1 = <span class="number">78</span>;</span><br><span class="line">  ptr[<span class="number">9</span>] = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  *filename = <span class="number">0x42F1C441217474E</span>LL;</span><br><span class="line">  <span class="built_in">strcpy</span>(ptr, <span class="string">&quot;aiqu0oZi&quot;</span>);</span><br><span class="line">  <span class="keyword">for</span> ( i = <span class="number">0LL</span>; ; v0 = *(ptr + i) )</span><br><span class="line">  &#123;</span><br><span class="line">    v25[i++] = v0 ^ v1;</span><br><span class="line">    <span class="keyword">if</span> ( i == <span class="number">8</span> )</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    v1 = filename[i];</span><br><span class="line">  &#125;</span><br><span class="line">  v3 = <span class="number">97</span>;</span><br><span class="line">  v4 = <span class="number">78</span>;</span><br><span class="line">  v24 = <span class="number">0x42F1C441217474E</span>LL;</span><br><span class="line">  <span class="built_in">strcpy</span>(ptr, <span class="string">&quot;aiqu0oZi&quot;</span>);</span><br><span class="line">  v5 = <span class="number">0LL</span>;</span><br><span class="line">  v25[<span class="number">8</span>] = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">while</span> ( <span class="number">1</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    filename[v5++] = v3 ^ v4;</span><br><span class="line">    <span class="keyword">if</span> ( v5 == <span class="number">8</span> )</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    v4 = *(&amp;v24 + v5);</span><br><span class="line">    v3 = *(ptr + v5);</span><br><span class="line">  &#125;</span><br><span class="line">  v27 = <span class="number">50</span>;</span><br><span class="line">  v6 = fopen(filename, <span class="string">&quot;r&quot;</span>);</span><br><span class="line">  v7 = v6;</span><br><span class="line">  <span class="keyword">if</span> ( v6 &amp;&amp; (v8 = fread(ptr, <span class="number">1uLL</span>, <span class="number">0x40</span>uLL, v6), fclose(v7), v8 &gt; <span class="number">0</span>) &amp;&amp; (v9 = fopen(v25, <span class="string">&quot;r&quot;</span>)) != <span class="number">0LL</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    LODWORD(v10) = <span class="number">0</span>;</span><br><span class="line">    v23 = &amp;unk_3FAC280;</span><br><span class="line">    v11 = d2i_PUBKEY(<span class="number">0LL</span>, &amp;v23, <span class="number">294LL</span>);</span><br><span class="line">    v12 = v11;</span><br><span class="line">    <span class="keyword">if</span> ( v11 )</span><br><span class="line">    &#123;</span><br><span class="line">      v13 = EVP_PKEY_get1_RSA(v11);</span><br><span class="line">      v14 = v13;</span><br><span class="line">      <span class="keyword">if</span> ( v13 )</span><br><span class="line">      &#123;</span><br><span class="line">        v22 = &amp;v19;</span><br><span class="line">        n = RSA_size(v13);</span><br><span class="line">        v15 = alloca(n);</span><br><span class="line">        v21 = &amp;v19;</span><br><span class="line">        v16 = alloca(RSA_size(v14));</span><br><span class="line">        v17 = fread(v21, <span class="number">1uLL</span>, n, v9);</span><br><span class="line">        <span class="keyword">if</span> ( RSA_public_decrypt(v17, v21, &amp;v19, v14, <span class="number">1LL</span>) == v8 )</span><br><span class="line">          v10 = <span class="built_in">memcmp</span>(ptr, &amp;v19, v8) == <span class="number">0</span>;</span><br><span class="line">        RSA_free(v14);</span><br><span class="line">      &#125;</span><br><span class="line">      EVP_PKEY_free(v12);</span><br><span class="line">    &#125;</span><br><span class="line">    fclose(v9);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    LODWORD(v10) = <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> v10;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>函数开头通过异或运算处理了一个字符串，解密之后得到结果 <code>/.fgtsum</code></p>
-<p><img src="/img/fortios_padding_3.png"></p>
-<p>在根目录能找到这个文件，那么显然此函数就是利用该文件实现了某些系统校验。</p>
-<p>第三个函数(sub_2745D50)似乎和 FIPS 模式相关，FIPS 简单来说是美国政府针对计算机系统定义的一种标准化信息处理方式，旨在提升信息的安全性。第四个函数(sub_44F1F0)同样 fork 出了子进程，相关逻辑</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">_BOOL8 __fastcall <span class="title">sub_2780BD0</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">int</span> a1)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  __int64 v1; <span class="comment">// rax</span></span><br><span class="line">  __int64 v2; <span class="comment">// r12</span></span><br><span class="line">  _BOOL8 result; <span class="comment">// rax</span></span><br><span class="line">  <span class="keyword">char</span> *v4; <span class="comment">// [rsp+8h] [rbp-138h] BYREF</span></span><br><span class="line">  <span class="keyword">char</span> v5[<span class="number">268</span>]; <span class="comment">// [rsp+10h] [rbp-130h] BYREF</span></span><br><span class="line">  __int16 v6; <span class="comment">// [rsp+11Ch] [rbp-24h]</span></span><br><span class="line">  <span class="keyword">char</span> v7; <span class="comment">// [rsp+11Eh] [rbp-22h]</span></span><br><span class="line">  <span class="keyword">unsigned</span> __int64 v8; <span class="comment">// [rsp+128h] [rbp-18h]</span></span><br><span class="line"></span><br><span class="line">  v8 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  qmemcpy(v5, &amp;off_35CFDC0, <span class="keyword">sizeof</span>(v5));</span><br><span class="line">  v6 = <span class="number">256</span>;</span><br><span class="line">  v7 = <span class="number">0</span>;</span><br><span class="line">  v4 = v5;</span><br><span class="line">  v1 = d2i_RSAPublicKey(<span class="number">0LL</span>, &amp;v4, <span class="number">270LL</span>);</span><br><span class="line">  <span class="keyword">if</span> ( v1 &amp;&amp; (v2 = v1, !sub_2746F20(<span class="string">&quot;/data/rootfs.gz&quot;</span>, <span class="string">&quot;/data/rootfs.gz.chk&quot;</span>, a1, v1)) )</span><br><span class="line">    result = sub_2746F20(<span class="string">&quot;/data/flatkc&quot;</span>, <span class="string">&quot;/data/flatkc.chk&quot;</span>, a1, v2) == <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    result = <span class="number">0LL</span>;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>此函数实现对 rootfs.gz 的判断。</p>
-<p>到这里可以大体推断文件系统的校验是在用户态程序 /bin/init 中实现的。相关逻辑并不复杂，我们可以深入研究以便于打包一份合适的 rootfs.gz 通过校验，或者采用更简单的方法即 patch 掉校验逻辑。</p>
-<p>经过验证，只需要 patch fgtsum 和 rootfs 两个检验即可，将对应跳转指令取反，保存并替换原始文件。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( sub_44F240() )</span><br><span class="line">  do_halt();</span><br><span class="line"><span class="keyword">if</span> ( sub_44F1A0(<span class="number">1LL</span>, <span class="string">&quot;%s()-%d: %s: run_initlevel(SYSINIT)\n\n&quot;</span>) )</span><br><span class="line">  do_halt();</span><br><span class="line"><span class="keyword">if</span> ( sub_2745D50() )</span><br><span class="line">&#123;</span><br><span class="line">  sub_2825E00();</span><br><span class="line">  <span class="keyword">if</span> ( sub_44DFC0(<span class="string">&quot;/bin/fips_self_test&quot;</span>) )</span><br><span class="line">    do_halt();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">if</span> ( !sub_44F1F0(<span class="number">1LL</span>, <span class="string">&quot;%s()-%d: %s: run_initlevel(SYSINIT)\n\n&quot;</span>) )</span><br><span class="line">    do_halt();</span><br><span class="line">  sub_2781560();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="植入后门和启动"><a href="#植入后门和启动" class="headerlink" title="植入后门和启动"></a>植入后门和启动</h2><p>后续的操作和参考文章提到的类似，先用 msf 生成一个后门程序，替换 /bin/smartctl 文件，然后将 patch 的 init 程序替换 /bin/init，同时在系统中放置一个 busybox 并将 /bin/sh 指向 busybox 方便后续使用。</p>
-<p>根据前面的文章我们知道系统启动时会首先执行 /sbin/init，这个程序的逻辑很简单：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">__int64 __fastcall <span class="title">main</span><span class="params">(__int64 a1, <span class="keyword">char</span> **a2, <span class="keyword">char</span> **a3)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">char</span> *argv[<span class="number">4</span>]; <span class="comment">// [rsp+0h] [rbp-20h] BYREF</span></span><br><span class="line"></span><br><span class="line">  argv[<span class="number">3</span>] = (<span class="keyword">char</span> *)__readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  sub_4017D0(a1, a2, a3);</span><br><span class="line">  unlink(<span class="string">&quot;/sbin/init.chk&quot;</span>);</span><br><span class="line">  <span class="keyword">if</span> ( (<span class="keyword">int</span>)sub_401AD0(<span class="string">&quot;bin&quot;</span>) &gt;= <span class="number">0</span> &amp;&amp; (<span class="keyword">int</span>)sub_401AD0(<span class="string">&quot;migadmin&quot;</span>) &gt;= <span class="number">0</span> &amp;&amp; (<span class="keyword">int</span>)sub_401AD0(<span class="string">&quot;node-scripts&quot;</span>) &gt;= <span class="number">0</span> )</span><br><span class="line">    sub_401AD0(<span class="string">&quot;usr&quot;</span>);</span><br><span class="line">  argv[<span class="number">0</span>] = <span class="string">&quot;/bin/init&quot;</span>;</span><br><span class="line">  argv[<span class="number">1</span>] = <span class="number">0LL</span>;</span><br><span class="line">  execve(<span class="string">&quot;/bin/init&quot;</span>, argv, <span class="number">0LL</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0LL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>它负责解压各个压缩包并唤起 /bin/init 继续执行，没有其他操作。方便起见我们跳过重新打包 xxx.tar.xz 的步骤，在系统启动过程中调试内核并修改内核参数，让它直接去执行 /bin/init 程序。</p>
-<p>打包命令</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">find . | cpio -H newc -o &gt; ../rootfs.raw</span><br><span class="line">cat ./rootfs.raw | gzip &gt; rootfs.gz</span><br></pre></td></tr></table></figure>
-
-<p>将新的 rootfs.gz 替换到磁盘中，挂载到原先系统上，并添加调试桥。</p>
-<p>启动时用 gdb 附加，并定位到执行用户空间程序位置：</p>
-<p><img src="/img/fortios_padding_4.png"></p>
-<p>此时执行的目标程序为 /sbin/init</p>
-<p><img src="/img/fortios_padding_5.png"></p>
-<p>我们将其修改成 /bin/init，然后继续执行，系统将正常启动，执行命令 <code>diagnose hardware smartctl</code> 即可触发后门程序。由于设备存在防火墙，端口不能随便访问，我们将其自带的 sshd 服务 kill 掉并替换成 telnetd 后门</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">killall sshd &amp;&amp; busybox telnetd -l /bin/sh -b 0.0.0.0 -p 22</span><br></pre></td></tr></table></figure>
-
-<p>这样就可以获取一个完整的 root 权限：</p>
-<p><img src="/img/fortios_padding_6.png"></p>
-<p>由于有些朋友对操作还存在一定的疑问，我们总结一下具体的操作步骤为：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">1. 解包原始的 rootfs.gz</span><br><span class="line">2. 解包全部 xxx.tar.xz，同时保留原始的 xxx.tar.xz</span><br><span class="line">3. patch /bin/init 中的校验逻辑，以及植入后门程序</span><br><span class="line">4. 将文件系统重新打包成 rootfs.gz 替换到虚拟磁盘</span><br><span class="line">5. 为虚拟机添加调试桥 (请参考 https://wzt.ac.cn/2021/05/12/vm_shell/)</span><br><span class="line">6. 启动系统时附加 gdb，在执行 /sbin/init 之前断下，将 /sbin/init 字符串修改为 /bin/init</span><br><span class="line">7. 继续运行系统，进入 CLI 执行命令 diagnose hardware smartctl</span><br><span class="line">8. 在接收端得到 shell</span><br></pre></td></tr></table></figure>
-
-<p>本文介绍了作者在研究 FortiOS 过程中使用的一种简单获取权限的方法，没有深入涉及 FortiOS 的文件系统检查逻辑，权当抛砖引玉，希望能对有需要的朋友有一些帮助。如果您有更简单的方法，也请分享给安全社区交流学习。</p>
-
-    
-
-    
-    <div class="page-reward">
-      <a href="javascript:void(0);" class="page-reward-btn tooltip-top" target="_self">
-        <div class="tooltip tooltip-east">
-          <span class="tooltip-item">
-            赏
-          </span>
-          <span class="tooltip-content">
-            <span class="tooltip-text">
-              <span class="tooltip-inner">
-                <p class="reward-p"><i class="icon icon-quo-left"></i>Buy me a cup of coffee~<i
-                    class="icon icon-quo-right"></i></p>
-                <div class="reward-box">
-                  
-                  
-                  <div class="reward-box-item">
-                    <img class="reward-img" src="/img/w.png">
-                    <span class="reward-type">微信</span>
-                  </div>
-                  
-                </div>
-              </span>
-            </span>
-          </span>
-        </div>
-      </a>
-    </div>
-    
-
-    
-    <div class="declare"> 
-      <ul class="post-copyright">
-        <li>
-          <strong>本文作者：</strong>
-          CataLpa
-        </li>
-        <li>
-          <strong>本文链接：</strong>
-          <a href="https://wzt.ac.cn/2023/02/23/fortios_padding/" title="一种获取 FortiOS 权限的方法" target="_blank">https://wzt.ac.cn/2023/02/23/fortios_padding/</a>
-        </li>
-        
-        <li>
-          <strong>版权声明： </strong>
+        <div class="article-info info-on-right">
           
-          <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br />本作品采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a>进行许可。
-        </li>
-        
-      </ul>
-    </div>
-    
+          
 
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-    
-
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
+        </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-
-<nav id="article-nav">
   
   
-    <a href="/2023/02/06/CVE-2022-27596/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">CVE-2022-27596</div>
-      <i class="icon-circle-right"></i>
-    </a>
+    </div></section>
   
-</nav>
 
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-        <div class="toc-container tooltip-left">
-            <i class="icon-font icon-category"></i>
-            <div class="tooltip tooltip-east">
-                <span class="tooltip-item">
-                </span>
-                <span class="tooltip-content">
-                    <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%95%E8%BF%87%E5%88%A4%E6%96%AD%E9%80%BB%E8%BE%91"><span class="toc-number">1.</span> <span class="toc-text">绕过判断逻辑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A4%8D%E5%85%A5%E5%90%8E%E9%97%A8%E5%92%8C%E5%90%AF%E5%8A%A8"><span class="toc-number">2.</span> <span class="toc-text">植入后门和启动</span></a></li></ol>
-                    </div>
-                </span>
-            </div>
-        </div>
-        
-    </div>
-</aside>
-
-
-
-
-
-
-
-
-
-
-
-
+    
 
 
           </div>
@@ -443,8 +258,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
-		isArchive: false,
+		isPost: false,
+		isArchive: true,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,
@@ -618,6 +433,26 @@
                   <i class="icon-link icon"></i>
                 
                 -237.15℃ 捐赠了 ￥16.66
+              </a>
+            </li>
+          
+            <li class="search-li">
+              <a href="/" target="_blank" 
+                class="search-title" >
+                
+                  <i class="icon-link icon"></i>
+                
+                匿名(Z*E) 捐赠了 ￥20
+              </a>
+            </li>
+          
+            <li class="search-li">
+              <a href="/" target="_blank" 
+                class="search-title" >
+                
+                  <i class="icon-link icon"></i>
+                
+                慢慢 捐赠了 ￥88.88
               </a>
             </li>
           
