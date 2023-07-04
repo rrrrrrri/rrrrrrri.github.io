@@ -10,12 +10,12 @@
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="如何获取 FortiOS shell 权限？如何通过 License 授权验证？">
+  <meta name="description" content="关于获取 FortiOS shell 权限以及如何通过 License 授权验证。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="一种获取 FortiGate 权限的方法 &amp; License 授权分析">
 <meta property="og:url" content="https://wzt.ac.cn/2023/03/02/fortios_padding/index.html">
 <meta property="og:site_name" content="CataLpa&#39;s Site">
-<meta property="og:description" content="如何获取 FortiOS shell 权限？如何通过 License 授权验证？">
+<meta property="og:description" content="关于获取 FortiOS shell 权限以及如何通过 License 授权验证。">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://wzt.ac.cn/img/fortios_padding_1.png">
 <meta property="og:image" content="https://wzt.ac.cn/img/fortios_padding_2.png">
@@ -27,7 +27,7 @@
 <meta property="og:image" content="https://wzt.ac.cn/img/fortios_padding_8.png">
 <meta property="og:image" content="https://wzt.ac.cn/img/fortios_padding_9.png">
 <meta property="article:published_time" content="2023-03-01T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-03-02T10:27:06.000Z">
+<meta property="article:modified_time" content="2023-07-04T08:41:12.000Z">
 <meta property="article:author" content="CataLpa">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://wzt.ac.cn/img/fortios_padding_1.png">
@@ -212,7 +212,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">4.3k字</span>
+      <span class="post-count">4.1k字</span>
     </span>
   </span>
 
@@ -221,7 +221,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">20分</span>
+      <span class="post-count">19分</span>
     </span>
   </span>
 </div>
@@ -232,10 +232,10 @@
   
   <div class="article-entry" itemprop="articleBody">
     
-    <p>如何获取 FortiOS shell 权限？如何通过 License 授权验证？</p>
+    <p>关于获取 FortiOS shell 权限以及如何通过 License 授权验证。</p>
 <span id="more"></span>
 
-<h2 id="处理判断逻辑"><a href="#处理判断逻辑" class="headerlink" title="处理判断逻辑"></a>处理判断逻辑</h2><p>最近很多朋友来询问我如何获取新版本 FortiOS 的 root 权限，在前面文章中我提到过一篇<a target="_blank" rel="noopener" href="https://www.cnblogs.com/studyskill/p/6524672.html">参考资料</a>，不过这篇资料是针对旧版本 FortiOS 的，Fortinet 曾在 2019 年 11 月 14 日发布了一个影响 FortiOS 的 <a target="_blank" rel="noopener" href="https://www.fortiguard.com/psirt/FG-IR-19-017">CVE</a>，在这个漏洞的描述中，官方认为 VM 应用缺少对文件系统的检查，可能导致攻击者向系统中注入恶意程序。为此在启动流程中添加了文件系统校验，按照参考资料的步骤修改系统文件之后可能会导致无法启动或者无限重启。</p>
+<h2 id="处理判断逻辑"><a href="#处理判断逻辑" class="headerlink" title="处理判断逻辑"></a>处理判断逻辑</h2><p>本博客某历史文章中提到过一篇<a target="_blank" rel="noopener" href="https://www.cnblogs.com/studyskill/p/6524672.html">参考资料</a>，不过这篇资料是针对旧版本 FortiOS 的，Fortinet 曾在 2019 年 11 月 14 日发布了一个影响 FortiOS 的 <a target="_blank" rel="noopener" href="https://www.fortiguard.com/psirt/FG-IR-19-017">CVE</a>，在这个漏洞的描述中，官方认为 VM 应用缺少对文件系统的检查，可能导致攻击者向系统中注入恶意程序。为此在启动流程中添加了文件系统校验，按照参考资料的步骤修改系统文件之后可能会导致无法启动或者无限重启。</p>
 <p>对于这个问题，我们首先想到的是定位检查逻辑，看看能否根据算法打包出正确的文件或者直接将检查逻辑 patch 掉。先看一下系统启动时的输出信息：</p>
 <p><img src="/img/fortios_padding_1.png"></p>
 <p>考虑文件系统的校验可能是在内核或者用户态实现，我们首先在文件系统中尝试搜索 System is starting 字符串</p>
@@ -264,6 +264,7 @@
 <p>经过验证，只需要 patch fgtsum 和 rootfs 两个检验即可，将对应跳转指令取反，保存并替换原始文件。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( sub_44F240() )</span><br><span class="line">  do_halt();</span><br><span class="line"><span class="keyword">if</span> ( sub_44F1A0(<span class="number">1LL</span>, <span class="string">&quot;%s()-%d: %s: run_initlevel(SYSINIT)\n\n&quot;</span>) )</span><br><span class="line">  do_halt();</span><br><span class="line"><span class="keyword">if</span> ( sub_2745D50() )</span><br><span class="line">&#123;</span><br><span class="line">  sub_2825E00();</span><br><span class="line">  <span class="keyword">if</span> ( sub_44DFC0(<span class="string">&quot;/bin/fips_self_test&quot;</span>) )</span><br><span class="line">    do_halt();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">if</span> ( !sub_44F1F0(<span class="number">1LL</span>, <span class="string">&quot;%s()-%d: %s: run_initlevel(SYSINIT)\n\n&quot;</span>) )</span><br><span class="line">    do_halt();</span><br><span class="line">  sub_2781560();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<p>或者，我们使用更简单的补丁，直接将 do_halt 函数的第一条指令改为 ret，这样就算无法通过验证，也不会执行重启操作。</p>
 <h2 id="植入后门并启动"><a href="#植入后门并启动" class="headerlink" title="植入后门并启动"></a>植入后门并启动</h2><p>后续的操作和参考文章提到的类似，先用 msf 生成一个后门程序，替换 &#x2F;bin&#x2F;smartctl 文件，然后将 patch 的 init 程序替换 &#x2F;bin&#x2F;init，同时在系统中放置一个 busybox 并将 &#x2F;bin&#x2F;sh 指向 busybox 方便后续使用。</p>
 <p>根据前面的文章我们知道系统启动时会首先执行 &#x2F;sbin&#x2F;init，这个程序的逻辑很简单：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">__int64 __fastcall <span class="title function_">main</span><span class="params">(__int64 a1, <span class="type">char</span> **a2, <span class="type">char</span> **a3)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">char</span> *argv[<span class="number">4</span>]; <span class="comment">// [rsp+0h] [rbp-20h] BYREF</span></span><br><span class="line"></span><br><span class="line">  argv[<span class="number">3</span>] = (<span class="type">char</span> *)__readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  sub_4017D0(a1, a2, a3);</span><br><span class="line">  unlink(<span class="string">&quot;/sbin/init.chk&quot;</span>);</span><br><span class="line">  <span class="keyword">if</span> ( (<span class="type">int</span>)sub_401AD0(<span class="string">&quot;bin&quot;</span>) &gt;= <span class="number">0</span> &amp;&amp; (<span class="type">int</span>)sub_401AD0(<span class="string">&quot;migadmin&quot;</span>) &gt;= <span class="number">0</span> &amp;&amp; (<span class="type">int</span>)sub_401AD0(<span class="string">&quot;node-scripts&quot;</span>) &gt;= <span class="number">0</span> )</span><br><span class="line">    sub_401AD0(<span class="string">&quot;usr&quot;</span>);</span><br><span class="line">  argv[<span class="number">0</span>] = <span class="string">&quot;/bin/init&quot;</span>;</span><br><span class="line">  argv[<span class="number">1</span>] = <span class="number">0LL</span>;</span><br><span class="line">  execve(<span class="string">&quot;/bin/init&quot;</span>, argv, <span class="number">0LL</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0LL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -282,10 +283,7 @@
 
 <p>这样就可以获取一个完整的 root 权限：</p>
 <p><img src="/img/fortios_padding_6.png"></p>
-<p>由于有些朋友对操作还存在一定的疑问，我们总结一下具体的操作步骤为：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">1. 解包原始的 rootfs.gz</span><br><span class="line">2. 解包全部 xxx.tar.xz，同时保留原始的 xxx.tar.xz</span><br><span class="line">3. patch /bin/init 中的校验逻辑，以及植入后门程序</span><br><span class="line">4. 将文件系统重新打包成 rootfs.gz 替换到虚拟磁盘</span><br><span class="line">5. 为虚拟机添加调试桥 (请参考 https://wzt.ac.cn/2021/05/12/vm_shell/)</span><br><span class="line">6. 启动系统时附加 gdb，在执行 /sbin/init 之前断下，将 /sbin/init 字符串修改为 /bin/init</span><br><span class="line">7. 继续运行系统，进入 CLI 执行命令 diagnose hardware smartctl</span><br><span class="line">8. 在接收端得到 shell</span><br></pre></td></tr></table></figure>
-
-<p>本部分介绍了作者在研究 FortiOS 过程中使用的一种简单获取权限的方法，没有深入涉及 FortiOS 的文件系统检查逻辑，权当抛砖引玉，希望能对有需要的朋友有一些帮助。如果您有更简单的方法，也请分享给安全社区交流学习。</p>
+<p>另外，也可以使用我编写的一个简单<a target="_blank" rel="noopener" href="https://github.com/rrrrrrri/fgt-auto-repack">工具</a>，使用方法请参考说明文档。</p>
 <h2 id="License-授权分析"><a href="#License-授权分析" class="headerlink" title="License 授权分析"></a>License 授权分析</h2><p>第一次启动系统时，需要导入一个合适的 License 才能使用各项功能，在前面的文章中我们提到可以注册 FortiCloud 账户并使用评估版本 License，不过这样操作比较复杂，而且每有一个新版本就要重新注册一个账户，有没有一种方法可以绕过或者破解 License 验证呢？本部分将会介绍一种构造 License 的方法。</p>
 <p>首先定位校验 License 的逻辑，通过查询 FortiGate 手册，得知存在一个叫做 <code>vm-print-license</code> 的调试命令，使用方法为 <code>diagnose debug vm-print-license</code>，在未激活状态下执行会看到以下输出，提示我们当前处于试用状态。</p>
 <p><img src="/img/fortios_padding_7.png"></p>
@@ -741,6 +739,26 @@
                   <i class="icon-link icon"></i>
                 
                 天空之城 捐赠了 ￥140
+              </a>
+            </li>
+          
+            <li class="search-li">
+              <a href="/" target="_blank" 
+                class="search-title" >
+                
+                  <i class="icon-link icon"></i>
+                
+                匿名(c*0)捐赠了 ￥6.66
+              </a>
+            </li>
+          
+            <li class="search-li">
+              <a href="/" target="_blank" 
+                class="search-title" >
+                
+                  <i class="icon-link icon"></i>
+                
+                23654 捐赠了 ￥10
               </a>
             </li>
           
