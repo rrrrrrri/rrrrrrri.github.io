@@ -6,19 +6,15 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://wzt.ac.cn">
-  <title>IoT 设备中身份验证绕过的一些漏洞(2) | CataLpa&#39;s Site</title>
+  <title>Archives: 2023/8 | CataLpa&#39;s Site</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="CVE-2021-32030 &amp; CVE-2021-20090">
-<meta property="og:type" content="article">
-<meta property="og:title" content="IoT 设备中身份验证绕过的一些漏洞(2)">
-<meta property="og:url" content="https://wzt.ac.cn/2021/08/13/bypass_auth2/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="CataLpa&#39;s Site">
+<meta property="og:url" content="https://wzt.ac.cn/archives/2023/08/index.html">
 <meta property="og:site_name" content="CataLpa&#39;s Site">
-<meta property="og:description" content="CVE-2021-32030 &amp; CVE-2021-20090">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-08-12T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-10-17T14:07:22.000Z">
 <meta property="article:author" content="CataLpa">
 <meta name="twitter:card" content="summary">
   
@@ -174,246 +170,54 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-bypass_auth2" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
+            
+  
+  
     
-      <header class="article-header">
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2023" class="archive-year">2023</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	
+<a href="/2023/08/25/juniper202308/" class="archive-article-date">
+        <time datetime="2023-08-24T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-08-25</time>
+</a>
+
+        </div>
+    	 
   
+    <h1 itemprop="name">
+	
+	  <a class="archive-article-title" href="/2023/08/25/juniper202308/" target="_blank">CVE-2023-36845 &amp; CVE-2023-36846</a>
   
-    <h1 class="article-title" itemprop="name">
-      IoT 设备中身份验证绕过的一些漏洞(2)
     </h1>
   
 
 
-  
-  
-<a href="/2021/08/13/bypass_auth2/" class="archive-article-date">
-        <time datetime="2021-08-12T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-13</time>
-</a>
-
-  
-  
-    
-<div style="margin-top:10px;">
-  <span class="post-time">
-    <span class="post-meta-item-icon">
-      <!-- fonts.scss -->
-      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
-      <i class="icon-statistics"></i>
-      <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">2.3k字</span>
-    </span>
-  </span>
-
-  <span class="post-time">
-    &nbsp; | &nbsp;
-    <span class="post-meta-item-icon">
-      <i class="icon-book icon"></i>
-      <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">10分</span>
-    </span>
-  </span>
-</div>
-
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>CVE-2021-32030 &amp; CVE-2021-20090</p>
-<span id="more"></span>
-
-<h2 id="CVE-2021-32030"><a href="#CVE-2021-32030" class="headerlink" title="CVE-2021-32030"></a><strong>CVE-2021-32030</strong></h2><p>2021 年 5 月，来自 Atredis 的安全研究者披露了一个影响几乎所有 ASUS 路由器的身份验证绕过漏洞，利用该漏洞，未经授权的攻击者可以直接访问到后台管理接口，由于 ASUS 路由器在后台提供了开启 ssh 的功能，攻击者只需修改管理员密码并开启 ssh 即可获取 root shell。</p>
-<h3 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h3><p>固件下载链接：<a target="_blank" rel="noopener" href="https://dlcdnets.asus.com/pub/ASUS/wireless/RT-AX56U/FW_RT_AX56U_30043848253.zip">https://dlcdnets.asus.com/pub/ASUS/wireless/RT-AX56U/FW_RT_AX56U_30043848253.zip</a></p>
-<p>我们以 RT-AX56U 为例，使用 binwalk 对固件解包(解包之后有可能只会得到一个 100000.ubi 文件，可以使用 ubi_reader 继续解包)。解包后在 &#x2F;usr&#x2F;sbin&#x2F; 目录下找到一个叫做 httpd 的程序，此程序用于处理用户发送的 HTTP 请求。</p>
-<p>我们用 IDA 分析程序，搜索 httpd_handle_request 字符串可找到处理请求的入口位置，另外，由于 ASUS 路由器采用了一些开源组件，根据 GPL 规则，ASUS 在(数个版本之前)其官网发布了路由器的源代码，并且衍生出梅林等优秀的官改版固件，我们可以在 github 上找到 merlin 固件项目，利用<a target="_blank" rel="noopener" href="https://github.com/RMerl/asuswrt-merlin.ng/blob/6b60627c8c9c5c0271e956c914afb5277f81f9c4/release/src/router/httpd/httpd.c">源代码</a>辅助分析。</p>
-<p>httpd_handle_request 函数逻辑简述如下：</p>
-<p>首先对请求进行简单解析，利用 strncasecmp 等字符串操作函数从用户请求中匹配出一些结构，并将这些数据赋值到对应的变量。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( !strncasecmp(v4, <span class="string">&quot;Referer:&quot;</span>, <span class="number">8u</span>) )</span><br><span class="line">&#123;</span><br><span class="line">    stringp = v4 + <span class="number">8</span>;</span><br><span class="line">    v87 = &amp;stringp[<span class="built_in">strspn</span>(stringp, <span class="string">&quot; \t&quot;</span>)];</span><br><span class="line">    stringp = v87;</span><br><span class="line">    v20 = <span class="built_in">strlen</span>(v87);</span><br><span class="line">    v17 = v87;</span><br><span class="line">    v18 = v20 + <span class="number">1</span>;</span><br><span class="line">    LABEL_40:</span><br><span class="line">    v4 = &amp;v17[v18];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>然后过滤 URL，防止出现路径穿越。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( v28 == <span class="number">47</span></span><br><span class="line">    || !<span class="built_in">strcmp</span>(v26, <span class="string">&quot;..&quot;</span>)</span><br><span class="line">    || !<span class="built_in">strncmp</span>(v26, <span class="string">&quot;../&quot;</span>, <span class="number">3u</span>)</span><br><span class="line">    || <span class="built_in">strstr</span>(v26, <span class="string">&quot;/../&quot;</span>)</span><br><span class="line">    || (v30 = <span class="built_in">strcmp</span>(&amp;v26[v29 - <span class="number">3</span>], <span class="string">&quot;/..&quot;</span>)) == <span class="number">0</span> )</span><br><span class="line">&#123;</span><br><span class="line">    v2 = <span class="string">&quot;Illegal filename.&quot;</span>;</span><br><span class="line">    v3 = <span class="string">&quot;Bad Request&quot;</span>;</span><br><span class="line">    LABEL_60:</span><br><span class="line">    v24 = <span class="number">400</span>;</span><br><span class="line">    <span class="keyword">return</span> sub_5ED20(v24, v3, v2);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>之后根据用户访问的 URL 和 Method 执行不同逻辑，但所有需要身份验证的接口都要经过函数 auth_check(sub_5B560)，此函数从 Cookie 中获取 asus_token 参数的值，然后带入 sub_59588 进行检查</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> __fastcall <span class="title function_">sub_59588</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *a1)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">const</span> <span class="type">char</span> *v2; <span class="comment">// r0</span></span><br><span class="line">  <span class="type">const</span> <span class="type">char</span> *v3; <span class="comment">// r0</span></span><br><span class="line">  <span class="type">int</span> result; <span class="comment">// r0</span></span><br><span class="line"></span><br><span class="line">  v2 = nvram_get_1(<span class="string">&quot;ifttt_token&quot;</span>);</span><br><span class="line">  <span class="keyword">if</span> ( !<span class="built_in">strcmp</span>(a1, v2) )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> ( isFileExist(<span class="string">&quot;/tmp/IFTTT_ALEXA&quot;</span>) &gt; <span class="number">0</span> )</span><br><span class="line">      Debug2File(<span class="string">&quot;/tmp/IFTTT_ALEXA.log&quot;</span>, <span class="string">&quot;[%s:(%d)][HTTPD] IFTTT/ALEXA long token success.\n&quot;</span>, <span class="string">&quot;check_ifttt_token&quot;</span>, <span class="number">761</span>);</span><br><span class="line">    result = <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> ( isFileExist(<span class="string">&quot;/tmp/IFTTT_ALEXA&quot;</span>) &gt; <span class="number">0</span> )</span><br><span class="line">      Debug2File(<span class="string">&quot;/tmp/IFTTT_ALEXA.log&quot;</span>, <span class="string">&quot;[%s:(%d)][HTTPD] IFTTT/ALEXA long token fail.\n&quot;</span>, <span class="string">&quot;check_ifttt_token&quot;</span>, <span class="number">767</span>);</span><br><span class="line">    <span class="keyword">if</span> ( isFileExist(<span class="string">&quot;/tmp/IFTTT_ALEXA&quot;</span>) &gt; <span class="number">0</span> )</span><br><span class="line">      Debug2File(</span><br><span class="line">        <span class="string">&quot;/tmp/IFTTT_ALEXA.log&quot;</span>,</span><br><span class="line">        <span class="string">&quot;[%s:(%d)][HTTPD] IFTTT/ALEXA long token is %s.\n&quot;</span>,</span><br><span class="line">        <span class="string">&quot;check_ifttt_token&quot;</span>,</span><br><span class="line">        <span class="number">768</span>,</span><br><span class="line">        a1);</span><br><span class="line">    <span class="keyword">if</span> ( isFileExist(<span class="string">&quot;/tmp/IFTTT_ALEXA&quot;</span>) &gt; <span class="number">0</span> )</span><br><span class="line">    &#123;</span><br><span class="line">      v3 = nvram_get_1(<span class="string">&quot;ifttt_token&quot;</span>);</span><br><span class="line">      Debug2File(<span class="string">&quot;/tmp/IFTTT_ALEXA.log&quot;</span>, <span class="string">&quot;[%s:(%d)][HTTPD] httpd long token is %s.\n&quot;</span>, <span class="string">&quot;check_ifttt_token&quot;</span>, <span class="number">769</span>, v3);</span><br><span class="line">    &#125;</span><br><span class="line">    result = <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>我们注意到函数先从配置文件中获取 ifttt_token 参数的值，然后将 asus_token 和它比较，如果两者相等，则输出</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">IFTTT/ALEXA long token success.</span><br></pre></td></tr></table></figure>
-
-<p>同时返回 1，表示身份验证通过。</p>
-<p>但是在设备的默认配置下，IFTTT 功能没有开启，这导致 ifttt_token 默认值为空， 此时如果用户传入的 asus_token 也是空值，则 strcmp 会返回 0 表示比较成功，这样就能绕过后续的检查，实现身份验证绕过。</p>
-<p>新版 auth_check 函数将代码修改为</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( *a1 &amp;&amp; *nvram_safe_get_0(<span class="string">&quot;ifttt_token&quot;</span>) &amp;&amp; (v2 = nvram_safe_get_0(<span class="string">&quot;ifttt_token&quot;</span>), !<span class="built_in">strcmp</span>(a1, v2)) )</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> ( isFileExist(<span class="string">&quot;/tmp/IFTTT_ALEXA&quot;</span>) &gt; <span class="number">0</span> )</span><br><span class="line">        Debug2File(</span><br><span class="line">        <span class="string">&quot;/tmp/IFTTT_ALEXA.log&quot;</span>,</span><br><span class="line">        <span class="string">&quot;[%s:(%d)][HTTPD] IFTTT/ALEXA long token success.\n&quot;</span>,</span><br><span class="line">        <span class="string">&quot;check_ifttt_token&quot;</span>,</span><br><span class="line">        <span class="number">1020</span>);</span><br><span class="line">    result = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>首先判断 asus_token 是否为空，避免用户传入空值的情况出现，从而修复了此漏洞。</p>
-<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a target="_blank" rel="noopener" href="https://www.atredis.com/blog/2021/4/30/asus-authentication-bypass">https://www.atredis.com/blog/2021/4/30/asus-authentication-bypass</a></p>
-<h2 id="CVE-2021-20090"><a href="#CVE-2021-20090" class="headerlink" title="CVE-2021-20090"></a><strong>CVE-2021-20090</strong></h2><p>2021 年 4 月，Tenable 安全研究者披露了影响 Arcadyan 系列网络设备的一些漏洞，后续经确认，有多个厂商采用了 Arcadyan 开发的系统套件，从而遭受这些漏洞的影响。</p>
-<h3 id="漏洞分析-1"><a href="#漏洞分析-1" class="headerlink" title="漏洞分析"></a>漏洞分析</h3><p>根据披露信息，Arcadyan 提供的组件被多个网络设备厂商使用，我们以 ASUS DSL-AC88U 为例进行分析。</p>
-<p>固件版本：1.10.05_Build502，下载后 binwalk 即可解包。</p>
-<p>关键文件：&#x2F;usr&#x2F;sbin&#x2F;httpd</p>
-<p>IDA 加载分析，首先可以定位到名为 process_request 的函数，传入参数为解析后的 http 请求结构体，此函数关键代码如下</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">url_decode(&amp;req-&gt;url);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;[%s] url=[%s], args=[%s], method=[%s]\n&quot;</span>, <span class="string">&quot;process_request&quot;</span>, &amp;req-&gt;url, req-&gt;args, req-&gt;method);</span><br><span class="line"></span><br><span class="line"><span class="comment">//...</span></span><br><span class="line"></span><br><span class="line">req-&gt;is_url_valid = sub_DEB0(&amp;req-&gt;url);</span><br><span class="line">v7 = *(off_54FAC[<span class="number">0</span>] + <span class="number">5</span>);</span><br><span class="line"><span class="keyword">if</span> ( (!v7 || v7(req) != <span class="number">2</span>) &amp;&amp; (req-&gt;is_url_valid || !check_auth_0(&amp;req-&gt;url, <span class="number">0</span>, req)) )</span><br><span class="line">&#123;</span><br><span class="line">    req-&gt;dword798C = <span class="number">0</span>;</span><br><span class="line">    v8 = req-&gt;method;</span><br><span class="line">    <span class="keyword">if</span> ( !<span class="built_in">strcmp</span>(v8, <span class="string">&quot;HEAD&quot;</span>) )</span><br><span class="line">    &#123;</span><br><span class="line">        req-&gt;dword798C = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span> ( req-&gt;dword7988 )</span><br><span class="line">        &#123;</span><br><span class="line">            req-&gt;dword798C = <span class="number">0</span>;</span><br><span class="line">            LOG(req, <span class="number">400</span>, <span class="string">&quot;Invalid HTTP/0.9 method.&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">goto</span> LABEL_19;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> ( !<span class="built_in">strcmp</span>(v8, <span class="string">&quot;GET&quot;</span>) )</span><br><span class="line">    &#123;</span><br><span class="line">        LABEL_19:</span><br><span class="line">        process_get(req);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> ( !<span class="built_in">strcmp</span>(v8, <span class="string">&quot;POST&quot;</span>) )</span><br><span class="line">        process_post(req);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        LOG(req, <span class="number">400</span>, <span class="string">&quot;Invalid or unsupported method.&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>首先调用 url_decode 函数对 url 进行解码，然后调用 sub_DEB0 函数对 url 进行判断，关键代码如下</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> __fastcall <span class="title function_">sub_DEB0</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *url)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">const</span> <span class="type">char</span> *v2; <span class="comment">// r4</span></span><br><span class="line">  <span class="type">char</span> **i; <span class="comment">// r5</span></span><br><span class="line">  <span class="type">size_t</span> v5; <span class="comment">// r0</span></span><br><span class="line">  <span class="type">const</span> <span class="type">char</span> *v6; <span class="comment">// t1</span></span><br><span class="line"></span><br><span class="line">  v2 = allow_urls[<span class="number">0</span>];</span><br><span class="line">  <span class="keyword">if</span> ( !allow_urls[<span class="number">0</span>] )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> ( i = allow_urls; ; ++i )</span><br><span class="line">  &#123;</span><br><span class="line">    v5 = <span class="built_in">strlen</span>(v2);</span><br><span class="line">    <span class="keyword">if</span> ( !strncasecmp(url, v2, v5) )</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    v6 = i[<span class="number">1</span>];</span><br><span class="line">    v2 = v6;</span><br><span class="line">    <span class="keyword">if</span> ( !v6 )</span><br><span class="line">      <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>此函数从一个 allow_urls 列表中获取值，内容如下</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">/images/</span><br><span class="line">/lang/</span><br><span class="line">/js/</span><br><span class="line">/css/</span><br><span class="line">/login.htm</span><br><span class="line">/loginpserr.htm</span><br><span class="line">/relogin.htm</span><br><span class="line">/login.cgi</span><br><span class="line">/cgi/cgi_tel_dect_firmware_upgrade_state.js</span><br><span class="line">/wz_setpwd.cgi</span><br><span class="line">/error_page.htm</span><br><span class="line">/cgi/cgi_clients.js</span><br><span class="line">/blocking.htm</span><br><span class="line">/get_ver.htm</span><br></pre></td></tr></table></figure>
-
-<p>先获取 allow_urls  一项的长度，然后用 strncasecmp 函数和用户传入的 URL 比较，如果相等则返回 1，此时 req-&gt;is_url_valid 为 1。</p>
-<p>之后回到 process_request 函数，判断 req-&gt;is_url_valid 的值，如果它等于 1，则不会执行 check_auth_0 函数，相当于当用户访问静态资源时，自动跳过身份验证。</p>
-<p>随后判断 method，如果是 POST，则执行 process_post。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> __fastcall <span class="title function_">process_post</span><span class="params">(struct_req *req)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">char</span> *url; <span class="comment">// r4</span></span><br><span class="line"></span><br><span class="line">  url = &amp;req-&gt;url;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;[%s] path: %s, args: %s\n&quot;</span>, <span class="string">&quot;process_post&quot;</span>, &amp;req-&gt;url, req-&gt;args);</span><br><span class="line">  <span class="keyword">switch</span> ( sub_DF50(url) )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">-1</span>:</span><br><span class="line">      LOG(req, <span class="number">302</span>, url);</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">      <span class="keyword">if</span> ( !sub_14F9C(req) )</span><br><span class="line">        LOG(req, <span class="number">501</span>, <span class="string">&quot;POST to non-script&quot;</span>);</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">      exec_cgi_script(req);</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">      LOG(req, <span class="number">400</span>, url);</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>将 URL 传入 sub_DF50 函数，代码如下</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> __fastcall <span class="title function_">sub_DF50</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *url)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span> v2; <span class="comment">// r3</span></span><br><span class="line">  <span class="type">bool</span> v3; <span class="comment">// zf</span></span><br><span class="line">  <span class="type">int</span> i; <span class="comment">// r4</span></span><br><span class="line">  <span class="type">int</span> v5; <span class="comment">// r7</span></span><br><span class="line">  <span class="type">size_t</span> v6; <span class="comment">// r6</span></span><br><span class="line"></span><br><span class="line">  sub_167A8(url);</span><br><span class="line">  v2 = *url;</span><br><span class="line">  v3 = v2 == <span class="string">&#x27;/&#x27;</span>;</span><br><span class="line">  <span class="keyword">if</span> ( v2 != <span class="string">&#x27;/&#x27;</span> )</span><br><span class="line">    v3 = v2 == <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">if</span> ( !v3 )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">3</span>;</span><br><span class="line">  <span class="keyword">for</span> ( i = <span class="number">0</span>; i != <span class="number">528</span>; i += <span class="number">66</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> ( sub_17584((maybe_post_handlers + i)) )</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    v5 = maybe_post_handlers + i;</span><br><span class="line">    v6 = <span class="built_in">strlen</span>((maybe_post_handlers + i));</span><br><span class="line">    <span class="keyword">if</span> ( !<span class="built_in">strncmp</span>(url, v5, v6) &amp;&amp; (*(v5 + v6 - <span class="number">1</span>) == <span class="string">&#x27;/&#x27;</span> || v6 == <span class="built_in">strlen</span>(url) || url[v6] == <span class="string">&#x27;/&#x27;</span>) )</span><br><span class="line">    &#123;</span><br><span class="line">      sub_166D8(v6, url, (v5 + <span class="number">32</span>));</span><br><span class="line">      <span class="keyword">return</span> *(maybe_post_handlers + i + <span class="number">64</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  sub_166D8(<span class="number">0</span>, url, dword_61648);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>再将 URL 传入 sub_167A8，代码如下</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> __fastcall <span class="title function_">sub_167A8</span><span class="params">(<span class="type">int</span> url)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span> j; <span class="comment">// r2</span></span><br><span class="line">  <span class="type">int</span> k; <span class="comment">// r3</span></span><br><span class="line">  <span class="type">unsigned</span> __int8 *v3; <span class="comment">// r12</span></span><br><span class="line">  <span class="type">int</span> v4; <span class="comment">// r2</span></span><br><span class="line">  <span class="type">bool</span> v5; <span class="comment">// zf</span></span><br><span class="line">  <span class="type">int</span> v6; <span class="comment">// r5</span></span><br><span class="line">  <span class="type">int</span> v7; <span class="comment">// r1</span></span><br><span class="line">  <span class="type">int</span> v8; <span class="comment">// r2</span></span><br><span class="line">  <span class="type">int</span> v9; <span class="comment">// t1</span></span><br><span class="line"></span><br><span class="line">  j = <span class="number">0</span>;</span><br><span class="line">  k = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">while</span> ( *(url + k) )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> ( double_dot[j] == *(url + k) )          <span class="comment">// 判断当前位置 url 字符是否为 .</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">if</span> ( double_dot[++j] )</span><br><span class="line">      &#123;</span><br><span class="line">        ++k;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">else</span></span><br><span class="line">      &#123;</span><br><span class="line">        v3 = (url + k + <span class="number">1</span>);                     <span class="comment">// 指向 .. 下一个字节</span></span><br><span class="line">        v4 = *v3;                               <span class="comment">// 获取字节</span></span><br><span class="line">        v5 = v4 == <span class="string">&#x27;/&#x27;</span>;                         <span class="comment">// 判断是否为 /</span></span><br><span class="line">        <span class="keyword">if</span> ( v4 != <span class="string">&#x27;/&#x27;</span> )</span><br><span class="line">          v5 = v4 == <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span> ( v5 )                               <span class="comment">// 如果是</span></span><br><span class="line">        &#123;</span><br><span class="line">          <span class="keyword">if</span> ( k &lt;= <span class="number">3</span> || *(url + k - <span class="number">2</span>) == <span class="string">&#x27;/&#x27;</span> )<span class="comment">// 如果 url 长度小于等于3，或者存在 /..</span></span><br><span class="line">          &#123;</span><br><span class="line">            v6 = k + <span class="number">1</span>;                         <span class="comment">// .. 下一个位置</span></span><br><span class="line">            k -= <span class="number">3</span>;</span><br><span class="line">            <span class="keyword">if</span> ( k &gt;= <span class="number">0</span> )</span><br><span class="line">            &#123;</span><br><span class="line">              <span class="keyword">for</span> ( ; k &amp;&amp; *(url + k) != <span class="string">&#x27;/&#x27;</span>; --k )<span class="comment">// 倒退，直到找到一个 /</span></span><br><span class="line">                ;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">              k = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            v7 = url + k;                       <span class="comment">// 开头</span></span><br><span class="line">            v8 = *(url + v6);                   <span class="comment">// .. 下一个字节</span></span><br><span class="line">            *(url + k) = v8;                    <span class="comment">// 放到开头</span></span><br><span class="line">            <span class="keyword">if</span> ( v8 )</span><br><span class="line">            &#123;</span><br><span class="line">              <span class="keyword">do</span></span><br><span class="line">              &#123;</span><br><span class="line">                v9 = *++v3;                     <span class="comment">// 把后续字节拷贝到 url</span></span><br><span class="line">                *++v7 = v9;</span><br><span class="line">              &#125;</span><br><span class="line">              <span class="keyword">while</span> ( v9 );</span><br><span class="line">              j = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">              j = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">else</span></span><br><span class="line">          &#123;</span><br><span class="line">            j = <span class="number">0</span>;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">          j = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> ( j &lt;= <span class="number">0</span> )                          <span class="comment">// 如果不是 . （且没遇到过 .）就递增到 url 下一个字节</span></span><br><span class="line">    &#123;</span><br><span class="line">      ++k;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">      k += <span class="number">1</span> - j;</span><br><span class="line">      j = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> url;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>简单来讲，此函数会将形如 &#x2F;aaa&#x2F;..&#x2F;bbb 转换成 &#x2F;bbb。</p>
-<p>转换之后，回到 sub_DF50 函数，将 URL 和 maybe_post_handlers 列表中定义的 handler 比较，如果比较成功，就回到 process_post 用 exec_cgi_script 执行对应的 handler 函数。</p>
-<p>于是我们可以构造如 &#x2F;images&#x2F;..&#x2F;apply_abstract.cgi 类似的请求，程序先匹配到 &#x2F;images，绕过登录，然后替换 &#x2F;..&#x2F; 导致后续访问的是 &#x2F;apply_abstract.cgi 接口，实现身份验证绕过。</p>
-<h3 id="参考链接-1"><a href="#参考链接-1" class="headerlink" title="参考链接"></a>参考链接</h3><p><a target="_blank" rel="noopener" href="https://zh-cn.tenable.com/security/research/tra-2021-13?tns_redirect=true">https://zh-cn.tenable.com/security/research/tra-2021-13?tns_redirect=true</a></p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>身份验证绕过是一类影响比较严重的漏洞，通过此类漏洞可允许攻击者访问到后台更多敏感接口，通过组合利用漏洞可实现对设备的完全控制，从我们复现过的漏洞来看，身份验证绕过基本有以下几类</p>
-<ol>
-<li>设备的登录功能对于用户名&#x2F;密码处理不恰当，攻击者可通过传入空值&#x2F;硬编码值&#x2F;可本地计算的值来通过验证流程。</li>
-<li>设备的会话管理存在问题，攻击者通过控制 Cookie 值绕过会话检查。</li>
-<li>设备对于用户访问的资源路径处理不恰当，攻击者通过路径穿越&#x2F;插入特殊字符串等通过身份验证，但实际访问到敏感接口。</li>
-<li>设备区分了 PC 和 app 请求，app 请求可能存在弱校验。</li>
-<li>设备直接暴露了敏感接口，攻击者通过访问这些接口得到认证信息。</li>
-</ol>
-
-    
-
-    
-    <div class="page-reward">
-      <a href="javascript:void(0);" class="page-reward-btn tooltip-top" target="_self">
-        <div class="tooltip tooltip-east">
-          <span class="tooltip-item">
-            赏
-          </span>
-          <span class="tooltip-content">
-            <span class="tooltip-text">
-              <span class="tooltip-inner">
-                <p class="reward-p"><i class="icon icon-quo-left"></i>Buy me a cup of coffee~<i
-                    class="icon icon-quo-right"></i></p>
-                <div class="reward-box">
-                  
-                  
-                  <div class="reward-box-item">
-                    <img class="reward-img" src="/img/w.png">
-                    <span class="reward-type">微信</span>
-                  </div>
-                  
-                </div>
-              </span>
-            </span>
-          </span>
-        </div>
-      </a>
-    </div>
-    
-
-    
-    <div class="declare"> 
-      <ul class="post-copyright">
-        <li>
-          <strong>本文作者：</strong>
-          CataLpa
-        </li>
-        <li>
-          <strong>本文链接：</strong>
-          <a href="https://wzt.ac.cn/2021/08/13/bypass_auth2/" title="IoT 设备中身份验证绕过的一些漏洞(2)" target="_blank">https://wzt.ac.cn/2021/08/13/bypass_auth2/</a>
-        </li>
-        
-        <li>
-          <strong>版权声明： </strong>
+        <div class="article-info info-on-right">
           
-          <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br />本作品采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a>进行许可。
-        </li>
-        
-      </ul>
-    </div>
-    
+          
 
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-    
-
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
+        </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-
-<nav id="article-nav">
-  
-    <a href="/2021/08/15/firmadyne3/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          固件模拟 Case Study (3)
-        
-      </div>
-    </a>
   
   
-    <a href="/2021/05/29/moxa-nport-unpack/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Moxa Nport 系列设备固件解包</div>
-      <i class="icon-circle-right"></i>
-    </a>
+    </div></section>
   
-</nav>
 
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-        <div class="toc-container tooltip-left">
-            <i class="icon-font icon-category"></i>
-            <div class="tooltip tooltip-east">
-                <span class="tooltip-item">
-                </span>
-                <span class="tooltip-content">
-                    <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#CVE-2021-32030"><span class="toc-number">1.</span> <span class="toc-text">CVE-2021-32030</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90"><span class="toc-number">1.1.</span> <span class="toc-text">漏洞分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">1.2.</span> <span class="toc-text">参考链接</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CVE-2021-20090"><span class="toc-number">2.</span> <span class="toc-text">CVE-2021-20090</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90-1"><span class="toc-number">2.1.</span> <span class="toc-text">漏洞分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5-1"><span class="toc-number">2.2.</span> <span class="toc-text">参考链接</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li></ol>
-                    </div>
-                </span>
-            </div>
-        </div>
-        
-    </div>
-</aside>
-
-
-
-
-
-
-
-
-
-
-
-
+    
 
 
           </div>
@@ -454,8 +258,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
-		isArchive: false,
+		isPost: false,
+		isArchive: true,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,
