@@ -37,7 +37,7 @@
 <meta property="og:image" content="https://wzt.ac.cn/image/unlink18.png">
 <meta property="og:image" content="https://wzt.ac.cn/image/unlink19.png">
 <meta property="article:published_time" content="2018-05-27T05:10:00.000Z">
-<meta property="article:modified_time" content="2019-09-02T13:23:08.000Z">
+<meta property="article:modified_time" content="2023-11-08T02:09:47.971Z">
 <meta property="article:author" content="CataLpa">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://wzt.ac.cn/image/unlink1.png">
@@ -222,7 +222,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">3.6k字</span>
+      <span class="post-count">3.5k字</span>
     </span>
   </span>
 
@@ -231,7 +231,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">13分</span>
+      <span class="post-count">12分</span>
     </span>
   </span>
 </div>
@@ -298,7 +298,7 @@
 <p>我们直接来查看一下free之后的 link_list:</p>
 <p><img src="/image/unlink19.png" alt="image"></p>
 <p>可以看到，link_list[0] 已经被改写到 原link_list[0] - 0x18, 如果此程序提供了编辑功能，我们就能够操控 link_list[0] 的值，进而造成任意地址写入了。</p>
-<p>是不是感觉少了点什么？没错，我们之前关于fd和bk指针的问题还没有解决，现在，让我们思考一个问题，为什么支付宝好像从来没有爆出被黑客入侵而损失惨重的新闻？答案显而易见，它每天要遭受的攻击次数是难以想象的，但是正是这种无休止的攻击，造就了一个坚不可摧的系统，同样，我们的堆也一直在经历这样的摧残，在较早的时候，由于考虑不周加之堆的结构十分复杂，在很多地方缺少了必要的验证，其中之一就是对于unlink的验证，早期的ptmalloc对于unlink可以说几乎没有任何检查，这就导致了很严重的问题，如果攻击者能够控制fd和bk指针，就能实现任意地址写入（具体请参考上文的叙述），之后，设计者们对于堆增加了更多的验证，也提高了利用的难度，这里就包括对unlink增加的验证，查看malloc的代码就可以发现，增加了以下验证：</p>
+<p>早期的 ptmalloc 对于 unlink 可以说几乎没有任何检查，这就导致了很严重的问题，如果攻击者能够控制 fd 和 bk 指针，就能实现任意地址写入，之后，设计者们对于堆增加了更多的验证，也提高了利用的难度，这里就包括对 unlink 增加的验证，查看malloc的代码就可以发现，增加了以下验证：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if (__builtin_expect (FD-&gt;bk != P || BK-&gt;fd != P, 0))                     </span><br><span class="line">     malloc_printerr (check_action, &quot;corrupted double-linked list&quot;, P);</span><br></pre></td></tr></table></figure>
 <p>其实还有更多的检查，但是我们现在只关注这里，这段代码很好理解，它要求本堆块的前一个堆块的fd指针指向本堆块（BK-&gt;fd &#x3D;&#x3D; P），本堆块的后一个堆块的bk指针也指向本堆块（FD-&gt;bk &#x3D;&#x3D; P）两者任意一个不满足，就会报错“corrupted double-linked list（检测到堆表损坏）”，所以，我们在进行构造的时候不能像从前一样去随心所欲的放置指针了，而是像上文的利用方法，绕过这个检验。</p>
 <h2 id="四-总结"><a href="#四-总结" class="headerlink" title="四. 总结"></a>四. 总结</h2><p>本文着重介绍了unlink的有关机制，细心的读者可能会发现，我们并没有将 double free 和 unlink 区分的很明显，实际上，unlink并不属于攻击手段，它是 glibc 堆管理系统的一部分，我们使用的攻击方式其实叫做 双重释放（doublefree），只是它所借用的正是 unlink 审查不严的漏洞以及 恶性迷途指针 ，所以，一般情况下，这两者都是配套来看的。</p>
