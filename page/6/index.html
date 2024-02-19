@@ -177,6 +177,82 @@
             
 
   
+    <article id="post-CVE-2018-5767" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2019/03/19/CVE-2018-5767/" target="_blank">CVE-2018-5767 复现分析</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2019/03/19/CVE-2018-5767/" class="archive-article-date">
+        <time datetime="2019-03-18T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-19</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h2 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a><strong>0x01</strong></h2><p>CVE-2018-5767 是 TENDA-AC15 型号路由器上的一个漏洞，产生的原因是没有限制用户的输入，使用函数 sscanf 直接将输入拷贝到栈上，导致栈溢出，可以修改返回地址，进而远程执行代码。</p>
+<p>存在该漏洞的固件是Tenda cn Ac15_firmware:15.03.1.16</p>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2019/03/19/CVE-2018-5767/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-glibc_analyse2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -854,81 +930,6 @@
 
 
   
-    <article id="post-dedecompiler" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2018/11/02/dedecompiler/" target="_blank">De-DeCompiler</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2018/11/02/dedecompiler/" class="archive-article-date">
-        <time datetime="2018-11-01T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-02</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>简单的花指令。</p>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2018/11/02/dedecompiler/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/5/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/7/">下一页</a>
@@ -943,7 +944,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2019-2023 <a href="https://wzt.ac.cn/" target="_blank">CataLpa</a>
+    		&copy; 2018-2024 <a href="https://wzt.ac.cn/" target="_blank">CataLpa</a>
     	</div>
       	<div class="footer-right">
 			
@@ -1098,17 +1099,7 @@
                 
                   <i class="icon-link icon"></i>
                 
-                匿名 捐赠了 ￥14
-              </a>
-            </li>
-          
-            <li class="search-li">
-              <a href="/" target="_blank" 
-                class="search-title" >
-                
-                  <i class="icon-link icon"></i>
-                
-                匿名 捐赠了 ￥50
+                匿名 捐赠了 ￥64
               </a>
             </li>
           
@@ -1168,7 +1159,7 @@
                 
                   <i class="icon-link icon"></i>
                 
-                慢慢 捐赠了 ￥88.88
+                慢慢 捐赠了 ￥177
               </a>
             </li>
           
@@ -1299,6 +1290,36 @@
                   <i class="icon-link icon"></i>
                 
                 匿名(对*.) 捐赠了 ￥50
+              </a>
+            </li>
+          
+            <li class="search-li">
+              <a href="/" target="_blank" 
+                class="search-title" >
+                
+                  <i class="icon-link icon"></i>
+                
+                匿名(*队) 捐赠了 ￥100
+              </a>
+            </li>
+          
+            <li class="search-li">
+              <a href="/" target="_blank" 
+                class="search-title" >
+                
+                  <i class="icon-link icon"></i>
+                
+                小冰 捐赠了 ￥378
+              </a>
+            </li>
+          
+            <li class="search-li">
+              <a href="/" target="_blank" 
+                class="search-title" >
+                
+                  <i class="icon-link icon"></i>
+                
+                匿名(*育) 捐赠了 ￥30
               </a>
             </li>
           

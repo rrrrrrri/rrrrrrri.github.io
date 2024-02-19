@@ -18,7 +18,7 @@
 <meta property="og:description" content="2023 年 8 月，Juniper Networks 发布了影响 EX 和 SRX 中 J-Web 组件的远程代码执行漏洞相关信息，本次公开有 4 个漏洞，其中 CVE-2023-36845 &amp; CVE-2023-36846 影响 SRX 系列设备，本文对这两个漏洞进行分析。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-08-24T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-08-25T02:33:16.083Z">
+<meta property="article:modified_time" content="2024-01-04T01:18:15.274Z">
 <meta property="article:author" content="CataLpa">
 <meta name="twitter:card" content="summary">
   
@@ -202,7 +202,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">3.4k字</span>
+      <span class="post-count">3.5k字</span>
     </span>
   </span>
 
@@ -272,12 +272,14 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">language|s:7:&quot;english&quot;;device-hostname|s:6:&quot;NoName&quot;;device-model|s:4:&quot;vsrx&quot;;super-user|s:10:&quot;super-user&quot;;lsysuser|s:0:&quot;&quot;;tenantuser|s:0:&quot;&quot;;super|s:5:&quot;super&quot;;template-username|s:4:&quot;root&quot;;username|s:4:&quot;root&quot;;lsysname|s:0:&quot;&quot;;tenantname|s:0:&quot;&quot;;csrf_key|s:32:&quot;00000000000000000000000000000000&quot;;csrf_token|s:56:&quot;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa==&quot;;debug-asp|s:8:&quot;sp-0/0/0&quot;;debug-wizard-commit|b:1;jweb-authenticated|b:1;jweb-user-timeout|s:4:&quot;1800&quot;;jweb-last-access|i:1692806139;GLOBAL_MODE|s:7:&quot;Not set&quot;;junos-version|s:9:&quot;22.1R2.10&quot;;isModelL2NG|b:1;jweb-commit-mode|s:12:&quot;commit-check&quot;;TAP_MODE|b:0;SKYATP_ENABLED|b:0;DEVICE_ON_SDCLOUD|b:0;report_enabled|b:0;</span><br></pre></td></tr></table></figure>
 
 <p>参照这种格式利用代码执行漏洞在 sess 目录下新建一个令牌，使用此令牌即可以管理员身份登录到 J-Web 后台，控制设备的大部分配置。</p>
+<p>实际上，环境变量注入漏洞可以不依赖文件上传而直接实现远程代码执行，由于 web 服务使用 stdin 读取用户数据，所以可以将 PHPRC 直接指向 &#x2F;dev&#x2F;fd&#x2F;0 文件，然后在请求体中注入相关配置，即可执行任意 PHP 代码，具体可参考相关<a target="_blank" rel="noopener" href="https://github.com/kljunowsky/CVE-2023-36845">开源工具</a> 。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>除文中提到的思路外，还可以利用设备某些功能从 chroot 环境中逃逸出来，造成更加严重的安全风险。深入利用就留给感兴趣的朋友自行探索吧。</p>
 <p>本次 Juniper EX 和 SRX 漏洞利用了 web 服务器环境变量问题和文件上传，实现了较为稳定的远程代码执行。漏洞危害较大，目前官方已经发布了安全补丁，建议用户及时更新。</p>
 <h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><p><a target="_blank" rel="noopener" href="https://supportportal.juniper.net/JSA72300">https://supportportal.juniper.net/JSA72300</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/lisenlin/p/10302318.html">https://www.cnblogs.com/lisenlin/p/10302318.html</a></p>
 <p><a target="_blank" rel="noopener" href="https://forum.butian.net/index.php/share/1942">https://forum.butian.net/index.php/share/1942</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.elttam.com/blog/env/#content">https://www.elttam.com/blog/env/#content</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/kljunowsky/CVE-2023-36845">https://github.com/kljunowsky/CVE-2023-36845</a></p>
 
     
 
@@ -416,7 +418,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2019-2023 <a href="https://wzt.ac.cn/" target="_blank">CataLpa</a>
+    		&copy; 2018-2024 <a href="https://wzt.ac.cn/" target="_blank">CataLpa</a>
     	</div>
       	<div class="footer-right">
 			
@@ -571,17 +573,7 @@
                 
                   <i class="icon-link icon"></i>
                 
-                匿名 捐赠了 ￥14
-              </a>
-            </li>
-          
-            <li class="search-li">
-              <a href="/" target="_blank" 
-                class="search-title" >
-                
-                  <i class="icon-link icon"></i>
-                
-                匿名 捐赠了 ￥50
+                匿名 捐赠了 ￥64
               </a>
             </li>
           
@@ -641,7 +633,7 @@
                 
                   <i class="icon-link icon"></i>
                 
-                慢慢 捐赠了 ￥88.88
+                慢慢 捐赠了 ￥177
               </a>
             </li>
           
@@ -772,6 +764,36 @@
                   <i class="icon-link icon"></i>
                 
                 匿名(对*.) 捐赠了 ￥50
+              </a>
+            </li>
+          
+            <li class="search-li">
+              <a href="/" target="_blank" 
+                class="search-title" >
+                
+                  <i class="icon-link icon"></i>
+                
+                匿名(*队) 捐赠了 ￥100
+              </a>
+            </li>
+          
+            <li class="search-li">
+              <a href="/" target="_blank" 
+                class="search-title" >
+                
+                  <i class="icon-link icon"></i>
+                
+                小冰 捐赠了 ￥378
+              </a>
+            </li>
+          
+            <li class="search-li">
+              <a href="/" target="_blank" 
+                class="search-title" >
+                
+                  <i class="icon-link icon"></i>
+                
+                匿名(*育) 捐赠了 ￥30
               </a>
             </li>
           

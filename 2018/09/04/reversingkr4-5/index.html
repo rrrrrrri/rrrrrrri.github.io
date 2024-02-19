@@ -45,7 +45,7 @@
 <meta property="og:image" content="https://wzt.ac.cn/image/reversingkr5-10.png">
 <meta property="og:image" content="https://wzt.ac.cn/image/reversingkr5-11.png">
 <meta property="article:published_time" content="2018-09-03T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-03-16T04:27:34.000Z">
+<meta property="article:modified_time" content="2023-12-15T01:15:14.115Z">
 <meta property="article:author" content="CataLpa">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://wzt.ac.cn/image/reversingkr4-1.png">
@@ -253,20 +253,20 @@
     <h2 id="04-Music-Player"><a href="#04-Music-Player" class="headerlink" title="04 Music Player"></a>04 Music Player</h2><p>第四题增加了一些难度，打开文件，是一个简单的音乐播放器，但是载入的歌曲最多只能播放1分钟，根据题目提示，如果能够使它播放超过一分钟，就能看到flag。  </p>
 <span id="more"></span>
 
-<p>程序没有加壳，直接丢进IDA看会发现代码非常混乱，有很多未解析的代码，如果你使用PEID等工具检查了程序的话就会发现，程序使用VB编写，VB有两种编译模式，第一个叫做 **P-Code(伪代码编译)**，另一种则是正常的 <strong>本机代码编译</strong>，P-Code 模式会将代码编译为VB特有的伪代码形式，由 VB 的虚拟机运行，不巧的是，微软并没有公开这个虚拟机的信息，但是还是有逆向方法的，只不过需要注意一些细节，OD可以正常使用，但是在修改机器码的时候就需要特别注意了。通过使用VB专用的逆向工具也能得到一些有用的信息，比如使用 VBExplore 打开这个程序：<br><img src="/image/reversingkr4-1.png" alt="image"></p>
+<p>程序没有加壳，直接丢进IDA看会发现代码非常混乱，有很多未解析的代码，如果你使用PEID等工具检查了程序的话就会发现，程序使用VB编写，VB有两种编译模式，第一个叫做 P-Code(伪代码编译)，另一种则是正常的本机代码编译，P-Code 模式会将代码编译为VB特有的伪代码形式，由 VB 的虚拟机运行，不巧的是，微软并没有公开这个虚拟机的信息，但是还是有逆向方法的，只不过需要注意一些细节，OD可以正常使用，但是在修改机器码的时候就需要特别注意了。通过使用VB专用的逆向工具也能得到一些有用的信息，比如使用 VBExplore 打开这个程序：<br><img src="/image/reversingkr4-1.png" alt="image"></p>
 <p>大致浏览各个控件，再运行程序，可以一一对应，其中还有两个计时器，不过没有代码对照，可能无法得知它们的用途。<br>直接祭出 OD，开始调试程序。  </p>
 <p><strong>注意：还有一款实用软件 VB Decompiler，它可以反汇编以及反编译VB程序，对于这种P-CODE还是能够处理出一些有用的信息，但是代码比较难看，这里不以它为参考。</strong></p>
 <p>首先要了解逆向 VB 的一些基本技巧，由于这是一个GUI程序，所以想要定位关键代码，一定要了解一些VB的API，比如负责弹出窗口的 <strong>rtcMsgBox</strong> 或者 <strong>__vbaNew2</strong>，以及操作字符串的一些函数，这些都是破解中较为常用的，强大的 OD 已经集成了一些插件，可以让我们直接在这些系统函数中下断(打开OD后上面的灰色工具条中，点击VB)：<br><img src="/image/reversingkr4-2.png" alt="image"></p>
 <p>这里能看到很多实用的断点工具，本题主要使用第一项（因为在播放满一分钟时会弹出一个窗口），点击后再打开断点窗口，能看到新增加了一个断点:<br><img src="/image/reversingkr4-3.png" alt="image"></p>
 <p>这个断点就在 rtcMsgBox 了，以后程序的运行过程中，如果再次调用到了这个函数，调试器就会断在这里，方便我们进行回溯。<br>然后F9运行程序，打开一个MP3文件(大于1分钟)，点击播放按钮开始播放，等播放到1分钟(可以直接拖动进度条)，如果不出意外 OD 会触发之前下的断点：<br><img src="/image/reversingkr4-4.png" alt="image"></p>
 <p>这时观察栈中的数据，根据函数调用约定，这时栈顶的内容就是调用者的地址：<br><img src="/image/reversingkr4-5.png" alt="image"></p>
-<p>有些情况下栈顶可能并不是调用者的地址，这时可以点击上方工具栏中的 “k” 按钮，显示调用堆栈：<br><img src="/image/reversingkr4-6.png" alt="image"><br>这里也能看到调用者的信息。<br>双击调用者的地址，在反汇编窗口中转到关键函数，这时有两种办法，其一就是定位到函数开头(push ebp、mov ebp,esp …)下断点，然后单步弄清程序逻辑，另一种的思路是：由于我们已经找到关键函数的地址，所以可以在IDA中找到对应位置，然后尝试反编译出伪代码以减少工作量。<br>我们直接使用IDA载入，找到地址为 <strong>“0x004044C0”</strong> 的位置，直接 F5 是没用的，因为种种原因IDA没有把这块代码识别为函数，需要我们手动告诉IDA这里是一个函数，在这个地址上按下 P 键，再使用 F5 就可以看到伪代码了。<br>函数很长，截一部分：<br><img src="/image/reversingkr4-7.png" alt="image"></p>
+<p>有些情况下栈顶可能并不是调用者的地址，这时可以点击上方工具栏中的 “k” 按钮，显示调用堆栈：<br><img src="/image/reversingkr4-6.png" alt="image"><br>这里也能看到调用者的信息。<br>双击调用者的地址，在反汇编窗口中转到关键函数，这时有两种办法，其一就是定位到函数开头(push ebp、mov ebp,esp …)下断点，然后单步弄清程序逻辑，另一种的思路是：由于我们已经找到关键函数的地址，所以可以在IDA中找到对应位置，然后尝试反编译出伪代码以减少工作量。<br>我们直接使用IDA载入，找到地址为 <strong>0x004044C0</strong> 的位置，在这个地址上按下 P 键，再使用 F5 就可以看到伪代码了。<br>函数很长，截一部分：<br><img src="/image/reversingkr4-7.png" alt="image"></p>
 <p>很容易就能够想到，变量 v35 所存储的应该就是已经播放的时间，依据就是代码将 v35 与 60000 以及下面的 60010 进行比较，在 VB 中，计时器有关的时间(秒数)会放大 1000 倍，这里的 60000 所对应的应该就是 60 秒了。<br>对照着伪代码，整理出程序的逻辑，不停地(应该是1秒一次，可以在 VBExplore 中看计时器的属性)将已经播放的时间和 60000 比较，如果小于就执行一些操作，如果大于或等于，就弹窗。<br><img src="/image/reversingkr4-8.png" alt="image"></p>
 <p>当时间没有超过 60 秒时，有一处判断：<br><img src="/image/reversingkr4-9.png" alt="image"></p>
 <p>如果运行到这里，应该就会拿到 flag 了，那么直接暴力一波，在 OD 中做如下修改：<br><img src="/image/reversingkr4-10.png" alt="image"><br>改为：<br><img src="/image/reversingkr4-11.png" alt="image"></p>
 <p>再次运行程序(提示：<strong>可以将修改保存到程序，方便操作</strong>)，当播放到1分钟时，会弹出这样的对话框：<br><img src="/image/reversingkr4-12.png" alt="image"></p>
 <p>音频还在继续播放，但是点击确定之后程序会退出，而且也没有 flag 出来，百度一下可以找到关于这个错误的信息，一般是控件的属性设置出错导致的，也许你想尝试捕获这个对话框，但是无论断 rtcMsgBox 还是 __vbaNew2 都没有用处，OD 没有捕获到这两个断点，仔细思考一下，对话框弹出后音频却没有间断，那么显然这个对话框控制权并不在本程序，而是在其他位置，其实，这是一个系统所抛出的异常，它位于 kernel32.dll 中，想要捕获到这个窗口，需要了解一下 windows 异常处理机制(这里不详细介绍)，我们可以在系统函数 <strong>RaiseException</strong> 下断点，利用命令 <strong>bp RaiseException</strong> 即可。<br><img src="/image/reversingkr4-13.png" alt="image"></p>
-<p>在断点窗口中看到新的断点位于 kernel32.dll 中，下好断点 F9 开始执行程序，当播放时间满 1 分钟时，OD 会断在这个断点，打开调用堆栈窗口，就能找到程序领空中调用者的信息：<br><img src="/image/reversingkr4-14.png" alt="image"></p>
+<p>在断点窗口中看到新的断点位于 kernel32.dll 中，下好断点 F9 开始执行程序，当播放时间满 1 分钟时，会断在这个断点，打开调用堆栈窗口，就能找到程序中调用者的信息：<br><img src="/image/reversingkr4-14.png" alt="image"></p>
 <p>定位到这块代码，找到了触发异常的函数 <strong>__vbaHresultCheckObj</strong> ，关于这个函数的具体信息可以在百度上找到，它的用途是检查某个对象(应该是VB的特有函数？)，我们之前的修改可能造成了某个对象的属性出错，使得这个函数不能正常工作，但是这个函数上方正好有一处跳转：<br><img src="/image/reversingkr4-15.png" alt="image"></p>
 <p>可以将它改为无条件跳转(原来为 大于或等于 则跳转)： <strong>jmp short 004046BF</strong><br>然后将修改保存到文件，再次运行：<br><img src="/image/reversingkr4-16.png" alt="image"></p>
 <p>顺利拿到 flag ： <strong>LIstenCare</strong></p>
@@ -420,7 +420,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2019-2023 <a href="https://wzt.ac.cn/" target="_blank">CataLpa</a>
+    		&copy; 2018-2024 <a href="https://wzt.ac.cn/" target="_blank">CataLpa</a>
     	</div>
       	<div class="footer-right">
 			
@@ -575,17 +575,7 @@
                 
                   <i class="icon-link icon"></i>
                 
-                匿名 捐赠了 ￥14
-              </a>
-            </li>
-          
-            <li class="search-li">
-              <a href="/" target="_blank" 
-                class="search-title" >
-                
-                  <i class="icon-link icon"></i>
-                
-                匿名 捐赠了 ￥50
+                匿名 捐赠了 ￥64
               </a>
             </li>
           
@@ -645,7 +635,7 @@
                 
                   <i class="icon-link icon"></i>
                 
-                慢慢 捐赠了 ￥88.88
+                慢慢 捐赠了 ￥177
               </a>
             </li>
           
@@ -776,6 +766,36 @@
                   <i class="icon-link icon"></i>
                 
                 匿名(对*.) 捐赠了 ￥50
+              </a>
+            </li>
+          
+            <li class="search-li">
+              <a href="/" target="_blank" 
+                class="search-title" >
+                
+                  <i class="icon-link icon"></i>
+                
+                匿名(*队) 捐赠了 ￥100
+              </a>
+            </li>
+          
+            <li class="search-li">
+              <a href="/" target="_blank" 
+                class="search-title" >
+                
+                  <i class="icon-link icon"></i>
+                
+                小冰 捐赠了 ￥378
+              </a>
+            </li>
+          
+            <li class="search-li">
+              <a href="/" target="_blank" 
+                class="search-title" >
+                
+                  <i class="icon-link icon"></i>
+                
+                匿名(*育) 捐赠了 ￥30
               </a>
             </li>
           
