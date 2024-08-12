@@ -6,21 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://wzt.ac.cn">
-  <title>CataLpa&#39;s Site</title>
+  <title>简单的游戏修改器实现2 | CataLpa&#39;s Site</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-    
-    <!-- <meta name="keywords" content="">
-    <meta name="description" content=""> -->
-  
-  <meta property="og:type" content="website">
-<meta property="og:title" content="CataLpa&#39;s Site">
-<meta property="og:url" content="https://wzt.ac.cn/page/6/index.html">
+  <meta name="description" content="上次简单实现了一个修改器，功能比较简单，只能修改人物的血量，实际上想要写出功能强大的修改器，需要对游戏进程一定程度的逆向分析，以便于定位关键逻辑和相关数据结构。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="简单的游戏修改器实现2">
+<meta property="og:url" content="https://wzt.ac.cn/2020/03/03/game_trainer2/index.html">
 <meta property="og:site_name" content="CataLpa&#39;s Site">
+<meta property="og:description" content="上次简单实现了一个修改器，功能比较简单，只能修改人物的血量，实际上想要写出功能强大的修改器，需要对游戏进程一定程度的逆向分析，以便于定位关键逻辑和相关数据结构。">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://wzt.ac.cn/img/game_trainer2-1.png">
+<meta property="og:image" content="https://wzt.ac.cn/img/game_trainer2-2.png">
+<meta property="og:image" content="https://wzt.ac.cn/img/game_trainer2-3.png">
+<meta property="article:published_time" content="2020-03-02T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-08-12T01:42:14.649Z">
 <meta property="article:author" content="CataLpa">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wzt.ac.cn/img/game_trainer2-1.png">
   
     <link rel="alternative" href="/atom.xml" title="CataLpa&#39;s Site" type="application/atom+xml">
   
@@ -164,45 +168,130 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-
-  
-    <article id="post-DDCTF2019" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-game_trainer2" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
   
   
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2019/04/18/DDCTF2019/" target="_blank">DDCTF 2019</a>
-  
+    <h1 class="article-title" itemprop="name">
+      简单的游戏修改器实现2
     </h1>
   
 
 
   
   
-<a href="/2019/04/18/DDCTF2019/" class="archive-article-date">
-        <time datetime="2019-04-17T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-18</time>
+<a href="/2020/03/03/game_trainer2/" class="archive-article-date">
+        <time datetime="2020-03-02T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-03</time>
 </a>
 
   
   
     
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">1.4k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">4分</span>
+    </span>
+  </span>
+</div>
+
 
   
   </header>
   
   <div class="article-entry" itemprop="articleBody">
     
-    <p>最近打了 DDCTF。</p>
-<h2 id="真-签到题"><a href="#真-签到题" class="headerlink" title="真-签到题"></a>真-签到题</h2><p>在公告里面找到 flag</p>
-    
-    
+    <p>上次简单实现了一个修改器，功能比较简单，只能修改人物的血量，实际上想要写出功能强大的修改器，需要对游戏进程一定程度的逆向分析，以便于定位关键逻辑和相关数据结构。</p>
+<span id="more"></span>
+
+<h2 id="从内存数据入手"><a href="#从内存数据入手" class="headerlink" title="从内存数据入手"></a>从内存数据入手</h2><p>依旧以挺进地牢这款游戏为例，上次我们利用 CE 找到了一些静态指针，考虑到游戏开发的内容，角色的血量等数据肯定被保存在某个对象中，既然找到了血量，血量附近一定存在另外一些和角色相关的数据。</p>
+<p>首先找到血量所在的地址，将它添加到列表中，然后右键选择 Browse this memory region 选项，弹出一个窗口，选择 Tool 选项卡中的 Dissect data&#x2F;structures，弹出另外一个窗口，选择 Structures 选项卡中的 Define new structure，默认选项 ok 即可。</p>
+<p><img src="/img/game_trainer2-1.png"></p>
+<p>窗口中会出现很多数据，第一项是血量，其余数据暂时不知道是什么。保持这个窗口不要关闭，回到游戏操作人物，当进行某些特定操作的时候，列表中的数据会发生变动，例如当拾取了一个护甲，有数据会增加，那么我们可以合理的猜测这个数据代表了护甲的数量，依照此思路逐个搜索其他数据，例如子弹数量、金币数量等等，在这些数据附近会发现更多随着操作变动的内容。</p>
+<p>某些数据是可以猜测出来的，但是更多的数据看似在随机变动，并且手动修改也看不出来有什么影响，此时就需要对游戏进程一定程度的逆向分析，尝试从代码中梳理游戏的逻辑。</p>
+<h2 id="逆向分析"><a href="#逆向分析" class="headerlink" title="逆向分析"></a>逆向分析</h2><p>不同游戏逆向分析的过程是不同的，因为游戏采用了不一样的引擎，例如挺进地牢使用的是 Unity3D 引擎开发，意味着游戏使用 C# 编写，而其它引擎等可能使用的是 C++ 编写，不同语言开发的游戏在逆向上有一定的差别，但是思路大体相同。</p>
+<p>C# 逆向相对比较简单，游戏的主体是 Assembly-CSharp.dll，在没有混淆保护的情况下，使用 ILSpy、dnspy 等工具可轻易的反编译此文件。</p>
+<p>打开文件后看到其中定义了很多类，考虑到血量数据，我们首先寻找和单词 Health 有关的类。</p>
+<p>和 Health 相关的类较少，简单分析一下可以发现类 HealthHaver 很可疑，dnSpy 等工具包含“分析”功能，通过分析，发现这个类被很多类所引用，并且引用此类的类都和游戏角色(进一步讲，是具有血量的角色)有关，例如 AIActor、Player 等。查看此类的成员发现存在 currentHealth、currentArmor 等。</p>
+<p>单从逆向结果上看并不能确定这个类就和角色血量有关，此时我们可以结合 CE 修改来确定。首先在 dnSpy  中点击成员变量的 Token</p>
+<p><img src="/img/game_trainer2-2.png"></p>
+<p>左侧会显示出变量的正确定义顺序(默认情况是字母排序)，可以发现在 currentHealth 下方就是 currentArmor ，并且还有 maximumHealth 等</p>
+<p><img src="/img/game_trainer2-3.png"></p>
+<p>在 CE 的结构体列表中我们能够定位的是 CurrentHealth，那么尝试修改和它相邻的两个成员呢？</p>
+<p>修改之后返回游戏查看，角色的最大生命值和护甲将发生变化。这样我们就成功定位到了和血上限、护甲相关的数据。</p>
+<p>这个游戏中有很多武器，按照开发的思路来看，不同的武器应该会继承于同一个类，或者直接使用一个类来表示，武器拥有子弹数量，这个数量肯定通过类中的某个成员表示。那么和修改血量一样，我们可以通过搜索当前子弹数量来定位到枪械的结构体，在 dnSpy 中刚好发现了一个类叫做 Gun，里面包含子弹数量、武器名字等等数据。</p>
+<p>和修改血量的思路一样，在 dnSpy 中找到数据的位置，在 CE 中尝试修改即可逐步理清各个数据的作用。</p>
+<p>但是这里有一个问题，当修改完武器的数据之后，如果我们拾取了新的武器，刚刚修改的效果并不会转移到新的武器上面，思考其原因，保存角色信息的类肯定存在某个成员例如 currentGun，用于表示当前角色正在使用的武器对象，切换武器之后这个成员内容会发生变化。所以想要稳定修改所有武器的数据，就要找到保存角色信息的数据。</p>
+<p>按照以上思路，通过逆向分析找到角色信息类，然后通过 CE 修改确定。这里不在赘述，保存角色信息的类叫做 PlayerController，里面的 inventory 字段表示一个 GunInventory 对象，这个对象拥有 currentGun 成员，表示当前角色正在使用的武器对象。</p>
+<h2 id="代码实现修改器"><a href="#代码实现修改器" class="headerlink" title="代码实现修改器"></a>代码实现修改器</h2><p>基于以上思路，对之前的修改器进行修改，添加了无限子弹，一击必杀等功能(可能有 BUG)，修改版本已经上传到 Github，感兴趣的朋友可以看一下。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/rrrrrrri/MyEtGTrainer">https://github.com/rrrrrrri/MyEtGTrainer</a></p>
 
     
 
+    
+    <div class="page-reward">
+      <a href="javascript:void(0);" class="page-reward-btn tooltip-top" target="_self">
+        <div class="tooltip tooltip-east">
+          <span class="tooltip-item">
+            赏
+          </span>
+          <span class="tooltip-content">
+            <span class="tooltip-text">
+              <span class="tooltip-inner">
+                <p class="reward-p"><i class="icon icon-quo-left"></i>Buy me a cup of coffee~<i
+                    class="icon icon-quo-right"></i></p>
+                <div class="reward-box">
+                  
+                  
+                  <div class="reward-box-item">
+                    <img class="reward-img" src="/img/w.png">
+                    <span class="reward-type">微信</span>
+                  </div>
+                  
+                </div>
+              </span>
+            </span>
+          </span>
+        </div>
+      </a>
+    </div>
+    
+
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          CataLpa
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="https://wzt.ac.cn/2020/03/03/game_trainer2/" title="简单的游戏修改器实现2" target="_blank">https://wzt.ac.cn/2020/03/03/game_trainer2/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
+          
+          <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br />本作品采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a>进行许可。
+        </li>
+        
+      </ul>
+    </div>
     
 
   </div>
@@ -212,16 +301,33 @@
     
 
     
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2019/04/18/DDCTF2019/">展开全文 >></a>
-    </p>
-    
 
     
     <div class="clearfix"></div>
   </div>
   </div>
 </article>
+
+
+<nav id="article-nav">
+  
+    <a href="/2020/05/23/IPC43AN/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          TP-Link IP43AN
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/02/29/CVE-2019-7406/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">CVE-2019-7406 复现</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -236,696 +342,33 @@
         </div>
         
         
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-largebin_attack" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2019/04/18/largebin_attack/" target="_blank">Largebin attack [archived]</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2019/04/18/largebin_attack/" class="archive-article-date">
-        <time datetime="2019-04-17T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-18</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>最近打了西湖论剑预选赛，比赛中一道 pwn 题的利用手法是 largebin attack。largebin attack 在 CTF 比赛中的出现频率比较低，但是一旦出现肯定就是难度较高的题目。今天就来探究一下关于 largebin attack 的相关攻击手段。</p>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2019/04/18/largebin_attack/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8E%E5%86%85%E5%AD%98%E6%95%B0%E6%8D%AE%E5%85%A5%E6%89%8B"><span class="toc-number">1.</span> <span class="toc-text">从内存数据入手</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%86%E5%90%91%E5%88%86%E6%9E%90"><span class="toc-number">2.</span> <span class="toc-text">逆向分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%E4%BF%AE%E6%94%B9%E5%99%A8"><span class="toc-number">3.</span> <span class="toc-text">代码实现修改器</span></a></li></ol>
+                    </div>
+                </span>
             </div>
         </div>
         
-        
     </div>
 </aside>
 
 
 
 
-  
-    <article id="post-RFID" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2019/03/26/RFID/" target="_blank">RFID 安全初探</a>
-  
-    </h1>
-  
 
 
-  
-  
-<a href="/2019/03/26/RFID/" class="archive-article-date">
-        <time datetime="2019-03-25T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-26</time>
-</a>
 
-  
-  
-    
 
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h2 id="RFID-简介"><a href="#RFID-简介" class="headerlink" title="RFID 简介"></a>RFID 简介</h2><p>RFID(Radio Frequency Identification) 全称射频识别技术，这个名字大家可能比较陌生，但是提起我们生活中经常使用的饭卡，水卡，银行卡等等这些东西，大家应该很熟悉了。我们几乎每天都会使用这些小小的卡片，吃饭需要，取钱需要，甚至回家使用电梯也需要，可以说我们的生活已经离不开 RFID 这一技术了。</p>
-    
-    
 
-    
 
-    
 
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-    
 
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2019/03/26/RFID/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-CVE-2018-5767" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2019/03/19/CVE-2018-5767/" target="_blank">CVE-2018-5767 复现分析</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2019/03/19/CVE-2018-5767/" class="archive-article-date">
-        <time datetime="2019-03-18T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-19</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h2 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a><strong>0x01</strong></h2><p>CVE-2018-5767 是 TENDA-AC15 型号路由器上的一个漏洞，产生的原因是没有限制用户的输入，使用函数 sscanf 直接将输入拷贝到栈上，导致栈溢出，可以修改返回地址，进而远程执行代码。</p>
-<p>存在该漏洞的固件是Tenda cn Ac15_firmware:15.03.1.16</p>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2019/03/19/CVE-2018-5767/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-glibc_analyse2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2019/03/15/glibc_analyse2/" target="_blank">glibc 中的 malloc 与 free 概述 (二)</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2019/03/15/glibc_analyse2/" class="archive-article-date">
-        <time datetime="2019-03-14T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-15</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h2 id="malloc-中的-consolidate"><a href="#malloc-中的-consolidate" class="headerlink" title="malloc 中的 consolidate"></a>malloc 中的 consolidate</h2><p>在 malloc 的流程中有几处调用到了这个函数，它的主要作用是遍历 fastbin 链表，将其中的堆块进行合并，插入到 unsorted bin 当中。</p>
-<p>Update: 2020-11-02</p>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2019/03/15/glibc_analyse2/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-kanxue2019Q1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2019/03/11/kanxue2019Q1/" target="_blank">看雪 CTF 2019 Q1 [archived]</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2019/03/11/kanxue2019Q1/" class="archive-article-date">
-        <time datetime="2019-03-10T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-11</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h2 id="流浪者"><a href="#流浪者" class="headerlink" title="流浪者"></a>流浪者</h2><p>十道题中最简单的一道题目，程序要求输入一个密码，首先判断了密码是否由字母 + 数字组成，然后会将它们进行一步转换，其算法如下</p>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2019/03/11/kanxue2019Q1/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-glibc_analyse1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2019/03/07/glibc_analyse1/" target="_blank">glibc 中的 malloc 与 free 概述 (一)</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2019/03/07/glibc_analyse1/" class="archive-article-date">
-        <time datetime="2019-03-06T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-07</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h2 id="〇"><a href="#〇" class="headerlink" title="〇."></a>〇.</h2><p>最近做一些堆利用的题目时感觉基础掌握的不是很牢靠，之前没有仔细的研究过 glibc 中的内存管理策略，导致遇到某些题目的时候总是会忽略掉重要的细节(libc 层面)，所以这次就来仔细研究一下 malloc 和 free 的实现。<br><strong>文章中难免有疏漏，欢迎大家指正。</strong></p>
-<p>Update: 2020-11-02</p>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2019/03/07/glibc_analyse1/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-pyc-simple" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2019/02/13/pyc-simple/" target="_blank">PYC 文件的简单分析</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2019/02/13/pyc-simple/" class="archive-article-date">
-        <time datetime="2019-02-13T05:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-13</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>最近做 CTF 碰到了有关 pyc 的题目，通常来说这种题目都是用 uncompyle6 直接搞出源代码然后审计，但是某些情况下，反编译 pyc 可能会失败，造成失败的原因有很多，最常见的就是作者将 pyc 中的结构、byte-code或者一些逻辑进行修改和混淆，甚至会修改 python 的源代码来自定义 opcode。今天我们就来简单分析一下 pyc。</p>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2019/02/13/pyc-simple/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hgame-2019" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2019/02/02/hgame-2019/" target="_blank">HGAME 2019 week1</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2019/02/02/hgame-2019/" class="archive-article-date">
-        <time datetime="2019-02-01T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-02</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>感谢杭电的师傅们举办的精彩比赛！</p>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2019/02/02/hgame-2019/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-pcb2018-online" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2019/01/20/pcb2018-online/" target="_blank">鹏程杯 2018 部分题目复现 [archived]</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2019/01/20/pcb2018-online/" class="archive-article-date">
-        <time datetime="2019-01-19T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-20</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>这是一份迟来的 wp，最近一直在忙考试什么的，只能抽时间来复现一下题目。首先要吐槽一下 pcb 的线下比赛，虽然是第一次举办，但是平台也要测试好再上，否则会出现比赛一开始平台就崩了的尴尬情况  ORZ。<br>不过线上赛的题目质量还不错，学到了一些东西。</p>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2019/01/20/pcb2018-online/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-  
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/5/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/7/">下一页</a>
-    </nav>
-  
 
 
           </div>
@@ -965,8 +408,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
