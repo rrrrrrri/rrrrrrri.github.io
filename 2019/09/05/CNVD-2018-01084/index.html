@@ -1,1 +1,950 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="keywords" content="Hexo Theme Redefine"><meta name="author" content="Catalpa"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="canonical" href="https://wzt.ac.cn/2019/09/05/cnvd-2018-01084/"><meta name="robots" content="index,follow"><meta name="googlebot" content="index,follow"><meta name="revisit-after" content="1 days"><meta name="description" content="CNVD-2018-01084 是 Dlink 系列路由器的一个漏洞，影响设备包括 DIR 615&#x2F;645&#x2F;815 路由器。 漏洞存在于 &#x2F;htdocs&#x2F;cgibin 二进制文件中，漏洞成因是 service.cgi 中未经任何过滤检查就将用户的输入拼接到原始命令中，导致任意代码执行。"><meta property="og:type" content="article"><meta property="og:title" content="CNVD-2018-01084 漏洞复现"><meta property="og:url" content="https://wzt.ac.cn/2019/09/05/CNVD-2018-01084/index.html"><meta property="og:site_name" content="Catalpa&#39;s Site"><meta property="og:description" content="CNVD-2018-01084 是 Dlink 系列路由器的一个漏洞，影响设备包括 DIR 615&#x2F;645&#x2F;815 路由器。 漏洞存在于 &#x2F;htdocs&#x2F;cgibin 二进制文件中，漏洞成因是 service.cgi 中未经任何过滤检查就将用户的输入拼接到原始命令中，导致任意代码执行。"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://wzt.ac.cn/img/CNVD-2018-01084-1.png"><meta property="og:image" content="https://wzt.ac.cn/img/CNVD-2018-01084-2.png"><meta property="og:image" content="https://wzt.ac.cn/img/CNVD-2018-01084-3.png"><meta property="og:image" content="https://wzt.ac.cn/img/CNVD-2018-01084-4.png"><meta property="og:image" content="https://wzt.ac.cn/img/CNVD-2018-01084-5.png"><meta property="og:image" content="https://wzt.ac.cn/img/CNVD-2018-01084-6.png"><meta property="og:image" content="https://wzt.ac.cn/img/CNVD-2018-01084-7.png"><meta property="og:image" content="https://wzt.ac.cn/img/CNVD-2018-01084-8.png"><meta property="og:image" content="https://wzt.ac.cn/img/CNVD-2018-01084-9.png"><meta property="article:published_time" content="2019-09-04T16:00:00.000Z"><meta property="article:modified_time" content="2024-10-17T00:39:33.005Z"><meta property="article:author" content="Catalpa"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://wzt.ac.cn/img/CNVD-2018-01084-1.png"><link rel="icon" type="image/png" href="/img/favicon.ico" sizes="192x192"><link rel="apple-touch-icon" sizes="180x180" href="/img/favicon.ico"><meta name="theme-color" content="#A31F34"><link rel="shortcut icon" href="/img/favicon.ico"><title>CNVD-2018-01084 漏洞复现 | Catalpa&#39;s Site</title><link rel="stylesheet" href="/fonts/Chillax/chillax.css"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/build/tailwind.css"><link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css"><link rel="stylesheet" href="/fonts/Geist/geist.css"><script id="hexo-configurations">window.config={hostname:"wzt.ac.cn",root:"/",language:"en",path:"search.xml"},window.theme={articles:{style:{font_size:"16px",line_height:1.5,image_border_radius:"14px",image_alignment:"center",image_caption:!1,link_icon:!0,delete_mask:!1,title_alignment:"left",headings_top_spacing:{h1:"3.2rem",h2:"2.4rem",h3:"1.9rem",h4:"1.6rem",h5:"1.4rem",h6:"1.3rem"}},word_count:{enable:!0,count:!0,min2read:!0},author_label:{enable:!0,auto:!1,list:["网络安全爱好者"]},code_block:{copy:!0,style:"mac",highlight_theme:{light:"github",dark:"vs2015"},font:{enable:!1,family:null,url:null}},toc:{enable:!0,max_depth:3,number:!1,expand:!0,init_open:!0},copyright:{enable:!0,default:"cc_by_sa"},lazyload:!0,pangu_js:!1,recommendation:{enable:!1,title:"推荐阅读",limit:3,mobile_limit:2,placeholder:"/images/wallhaven-wqery6-light.webp",skip_dirs:[]}},colors:{primary:"#A31F34",secondary:null,default_mode:"light"},global:{fonts:{chinese:{enable:!1,family:null,url:null},english:{enable:!1,family:null,url:null},title:{enable:!1,family:null,url:null}},content_max_width:"1000px",sidebar_width:"210px",hover:{shadow:!0,scale:!1},scroll_progress:{bar:!1,percentage:!0},website_counter:{url:"https://cn.vercount.one/js",enable:!0,site_pv:!0,site_uv:!0,post_pv:!0},single_page:!0,preloader:{enable:!1,custom_message:null},open_graph:!0,google_analytics:{enable:!1,id:null}},home_banner:{enable:!0,style:"fixed",image:{light:"/img/bk.jpg",dark:"/img/bk.jpg"},title:"Welcome!",subtitle:{text:["欢迎来到本站!","今天有什么新鲜事吗?","知识不应该是付费的!","持续学习 持续进步","网络安全爱好者","非常感谢您的捐赠!","祝您拥有美好的一天!"],hitokoto:{enable:!1,show_author:!1,api:"https://v1.hitokoto.cn"},typing_speed:100,backing_speed:80,starting_delay:500,backing_delay:1500,loop:!0,smart_backspace:!0},text_color:{light:"#fff",dark:"#d1d1b6"},text_style:{title_size:"2.8rem",subtitle_size:"1.5rem",line_height:1.2},custom_font:{enable:!1,family:null,url:null},social_links:{enable:!0,style:"default",links:{github:"https://github.com/rrrrrrri",instagram:null,zhihu:null,twitter:null,email:"anu11@foxmail.com"},qrs:{weixin:null,"fa-solid fa-hand-holding-dollar":"/img/w.png"}}},plugins:{feed:{enable:!1},aplayer:{enable:!1,type:"fixed",audios:[{name:null,artist:null,url:null,cover:null,lrc:null}]},mermaid:{enable:!1,version:"9.3.0"}},version:"2.8.2",navbar:{auto_hide:!1,color:{left:"#f78736",right:"#367df7",transparency:35},width:{home:"1200px",pages:"1000px"},links:{Home:{path:"/",icon:"fa-regular fa-house"},"归档":{path:"/archives",icon:"fa-regular fa-archive"},"感谢捐赠":{path:"/donates",icon:"fa-solid fa-hand-holding-dollar"}},search:{enable:!0,preload:!0}},page_templates:{friends_column:2,tags_style:"blur"},home:{sidebar:{enable:!0,position:"left",first_item:"menu",announcement:"读者有责任遵守其所在国家或地区的所有法律，作者不对使用其文章中提到的任何内容所造成的任何损害负责。",show_on_mobile:!0,links:null},article_date_format:"auto",excerpt_length:200,categories:{enable:!1,limit:3},tags:{enable:!1,limit:3}},footerStart:"2018/9/1 08:00:00"},window.lang_ago={second:"%s seconds ago",minute:"%s minutes ago",hour:"%s hours ago",day:"%s days ago",week:"%s weeks ago",month:"%s months ago",year:"%s years ago"},window.data={masonry:!1}</script><link rel="stylesheet" href="/fontawesome/fontawesome.min.css"><link rel="stylesheet" href="/fontawesome/brands.min.css"><link rel="stylesheet" href="/fontawesome/solid.min.css"><link rel="stylesheet" href="/fontawesome/regular.min.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div class="progress-bar-container"><span class="pjax-progress-bar"></span></div><main class="page-container" id="swup"><div class="main-content-container flex flex-col justify-between min-h-dvh"><div class="main-content-header"><header class="navbar-container px-6 md:px-12"><div class="navbar-content transition-navbar"><div class="left"><a class="logo-image h-8 w-8 sm:w-10 sm:h-10 mr-3" href="/"><img src="/img/favicon.ico" class="w-full h-full rounded-sm"> </a><a class="logo-title" href="/">Catalpa&#39;s Site</a></div><div class="right"><div class="desktop"><ul class="navbar-list"><li class="navbar-item"><a href="/"><i class="fa-regular fa-house fa-fw"></i> HOME</a></li><li class="navbar-item"><a href="/archives"><i class="fa-regular fa-archive fa-fw"></i> 归档</a></li><li class="navbar-item"><a href="/donates"><i class="fa-solid fa-hand-holding-dollar fa-fw"></i> 感谢捐赠</a></li><li class="navbar-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></li></ul></div><div class="mobile"><div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div><div class="icon-item navbar-bar"><div class="navbar-bar-middle"></div></div></div></div></div><div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between"><ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start"><li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full"><a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full" href="/"><span>HOME </span><i class="fa-regular fa-house fa-sm fa-fw"></i></a></li><li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full"><a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full" href="/archives"><span>归档 </span><i class="fa-regular fa-archive fa-sm fa-fw"></i></a></li><li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full"><a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full" href="/donates"><span>感谢捐赠 </span><i class="fa-solid fa-hand-holding-dollar fa-sm fa-fw"></i></a></li></ul><div class="statistics flex justify-around my-2.5"><a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags"><div class="number text-2xl sm:text-xl text-second-text-color font-semibold">0</div><div class="label text-third-text-color text-sm">Tags</div></a><a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories"><div class="number text-2xl sm:text-xl text-second-text-color font-semibold">4</div><div class="label text-third-text-color text-sm">Categories</div></a><a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives"><div class="number text-2xl sm:text-xl text-second-text-color font-semibold">68</div><div class="label text-third-text-color text-sm">Posts</div></a></div></div><div class="window-mask"></div></header></div><div class="main-content-body transition-fade-up"><div class="main-content"><div class="post-page-container flex relative justify-between box-border w-full h-full"><div class="article-content-container"><div class="article-title relative w-full"><div class="w-full flex items-center pt-6 justify-start"><h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">CNVD-2018-01084 漏洞复现</h1></div></div><div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8"><div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]"><img src="/img/logo.png"></div><div class="info flex flex-col justify-between"><div class="author flex items-center"><span class="name text-default-text-color text-lg font-semibold">Catalpa</span> <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">网络安全爱好者</span></div><div class="meta-info"><div class="article-meta-info"><span class="article-date article-meta-item"><i class="fa-regular fa-pen-fancy"></i>&nbsp; <span class="desktop">2019-09-05</span> <span class="mobile">2019-09-05</span> <span class="hover-info">Created</span> </span><span class="article-date article-meta-item"><i class="fa-regular fa-wrench"></i>&nbsp; <span class="desktop">2024-10-17 08:39:33</span> <span class="mobile">2024-10-17 08:39:33</span> <span class="hover-info">Updated</span> </span><span class="article-categories article-meta-item"><i class="fa-regular fa-folders"></i>&nbsp;<ul><li><a href="/categories/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/">漏洞分析</a>&nbsp;</li></ul></span><span class="article-wordcount article-meta-item"><i class="fa-regular fa-typewriter"></i>&nbsp;<span>3.4k Words</span> </span><span class="article-min2read article-meta-item"><i class="fa-regular fa-clock"></i>&nbsp;<span>15 Mins</span> </span><span class="article-pv article-meta-item"><i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span></span></div></div></div></div><div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8"><p>CNVD-2018-01084 是 Dlink 系列路由器的一个漏洞，影响设备包括 DIR 615&#x2F;645&#x2F;815 路由器。</p><p>漏洞存在于 &#x2F;htdocs&#x2F;cgibin 二进制文件中，漏洞成因是 service.cgi 中未经任何过滤检查就将用户的输入拼接到原始命令中，导致任意代码执行。</p><span id="more"></span><h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><p>首先下载存在漏洞的固件，地址 <a class="link" href="ftp://ftp2.dlink.com/PRODUCTS/DIR-645/REVA/">ftp://ftp2.dlink.com/PRODUCTS/DIR-645/REVA/<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p><p>我下载的是 1.02 版本，这个漏洞在 1.03 以上版本被修复了，注意不要下错。</p><p>固件为 MIPS 架构，所以需要利用 QEMU 来模拟执行，关于 QEMU 和环境的具体搭建流程可以参考我上一篇文章 <a href="https://wzt.ac.cn/2019/03/19/CVE-2018-5767/">https://wzt.ac.cn/2019/03/19/CVE-2018-5767/</a></p><p>这个固件属于 CGI(通用网关接口)，所以不需要搭建网络环境即可运行。</p><p>装好必要的软件之后使用命令</p><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chroot . ./qemu -g 10000 ./htdocs/cgibin</span><br></pre></td></tr></table></figure></div><p>即可运行程序，如果添加了 -g 选项，那么在外部使用 gdb 链接到 10000 端口就能调试程序了。</p><p>运行起来会提示</p><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CGI.BIN, unknown command cgibin</span><br></pre></td></tr></table></figure></div><p>这是正常现象，因为我们还没有访问任何 CGI 服务。</p><h2 id="逆向分析"><a href="#逆向分析" class="headerlink" title="逆向分析"></a>逆向分析</h2><p>由于是 MIPS 程序，IDA 的反编译插件不能解析伪代码，在之前我们只能硬着头皮看汇编，或者利用 RETDEC 大概看看函数调用关系，但是今年上半年 NSA 发布了 Ghidra，相信大家都有所耳闻，到现在已经迭代了 5 个版本，在 GITHUB 上可以下载到最新的 9.0.4 版本源代码。</p><p>如果不想手动编译的可以直接去官方网站下载 release 版本。</p><p>Ghidra 虽然速度和交互性弱于 IDA，但是它能反编译 mips 等 IDA 暂不支持的架构，这次我们就利用它来完成逆向分析。</p><p>打开 Ghidra 新建项目，并导入 cgibin 文件，让 ghidra 自动分析：</p><p><img lazyload src="/images/loading.svg" data-src="/img/CNVD-2018-01084-1.png"></p><p>在左边的函数窗口中有一个搜索栏，搜索 main 即可找到 main 函数，点击汇编窗口，右侧的反编译窗口就自动出现的 main 函数的伪代码：</p><p><img lazyload src="/images/loading.svg" data-src="/img/CNVD-2018-01084-2.png"></p><p>反编译的效果感觉和 IDA 的不相上下，只是交互性和细节上差一些。</p><p>根据披露信息，漏洞位于 service.cgi 中，在 main 函数找一找就能找到这一项：</p><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span> &#123;</span><br><span class="line">  iVar2 = <span class="built_in">strcmp</span>(__s,<span class="string">&quot;pigwidgeon.cgi&quot;</span>);</span><br><span class="line">  <span class="keyword">if</span> (iVar2 == <span class="number">0</span>) &#123;</span><br><span class="line">    UNRECOVERED_JUMPTABLE = pigwidgeoncgi_main;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> &#123;</span><br><span class="line">    iVar2 = <span class="built_in">strcmp</span>(__s,<span class="string">&quot;service.cgi&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (iVar2 == <span class="number">0</span>) &#123;</span><br><span class="line">      UNRECOVERED_JUMPTABLE = servicecgi_main;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></div><p>观察代码发现 cgibin 从 web 端接受了请求，然后取出 URL 中的访问参数，筛选出对应的 cgi 服务，并调用相关函数。</p><p>Service.cgi 对应的是 servicecgi_main 函数，伪代码：</p><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">servicecgi_main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  undefined *__ptr;</span><br><span class="line">  <span class="type">char</span> *__s1;</span><br><span class="line">  <span class="type">int</span> *piVar1;</span><br><span class="line">  <span class="type">int</span> iVar2;</span><br><span class="line">  <span class="type">void</span> *__ptr_00;</span><br><span class="line">  uint uVar3;</span><br><span class="line">  <span class="type">char</span> *__format;</span><br><span class="line">  <span class="type">int</span> iVar4;</span><br><span class="line">  <span class="type">char</span> acStack280 [<span class="number">260</span>];</span><br><span class="line">  </span><br><span class="line">  <span class="built_in">memset</span>(acStack280,<span class="number">0</span>,<span class="number">0x100</span>);</span><br><span class="line">  __s1 = getenv(<span class="string">&quot;REQUEST_METHOD&quot;</span>);</span><br><span class="line">  <span class="keyword">if</span> (__s1 == (<span class="type">char</span> *)<span class="number">0x0</span>) &#123;</span><br><span class="line">    __s1 = <span class="string">&quot;No HTTP request&quot;</span>;</span><br><span class="line">    <span class="keyword">goto</span> LAB_0040ab48;</span><br><span class="line">  &#125;</span><br><span class="line">  iVar4 = strcasecmp(__s1,<span class="string">&quot;POST&quot;</span>);</span><br><span class="line">  <span class="keyword">if</span> (iVar4 == <span class="number">0</span>) &#123;</span><br><span class="line">    uVar3 = <span class="number">0x400</span>;</span><br><span class="line">LAB_0040aad0:</span><br><span class="line">    iVar4 = cgibin_parse_request(FUN_0040adcc,<span class="number">0</span>,uVar3);</span><br><span class="line">    <span class="keyword">if</span> (iVar4 &lt; <span class="number">0</span>) &#123;</span><br><span class="line">      __s1 = <span class="string">&quot;Unable to parse HTTP request&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">      iVar4 = sess_ispoweruser();</span><br><span class="line">      <span class="keyword">if</span> (iVar4 != <span class="number">0</span>) &#123;</span><br><span class="line">         iVar2 = FUN_0040a950(<span class="string">&quot;EVENT&quot;</span>);</span><br><span class="line">         __s1 = (<span class="type">char</span> *)FUN_0040a950(<span class="string">&quot;ACTION&quot;</span>);</span><br><span class="line">         iVar4 = FUN_0040a950(<span class="string">&quot;SERVICE&quot;</span>);</span><br><span class="line">         <span class="keyword">if</span> (iVar2 == <span class="number">0</span>) &#123;</span><br><span class="line">           <span class="keyword">if</span> ((iVar4 != <span class="number">0</span>) &amp;&amp; (__s1 != (<span class="type">char</span> *)<span class="number">0x0</span>)) &#123;</span><br><span class="line">             iVar2 = strcasecmp(__s1,<span class="string">&quot;START&quot;</span>);</span><br><span class="line">             <span class="keyword">if</span> (iVar2 == <span class="number">0</span>) &#123;</span><br><span class="line">                __s1 = <span class="string">&quot;service %s start &gt; /dev/null&quot;</span>;</span><br><span class="line">             &#125;</span><br><span class="line">             <span class="keyword">else</span> &#123;</span><br><span class="line">                iVar2 = strcasecmp(__s1,<span class="string">&quot;STOP&quot;</span>);</span><br><span class="line">                <span class="keyword">if</span> (iVar2 == <span class="number">0</span>) &#123;</span><br><span class="line">                  __s1 = <span class="string">&quot;service %s stop &gt; /dev/null&quot;</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span> &#123;</span><br><span class="line">                  iVar2 = strcasecmp(__s1,<span class="string">&quot;RESTART&quot;</span>);</span><br><span class="line">                  <span class="keyword">if</span> (iVar2 != <span class="number">0</span>) &#123;</span><br><span class="line">                    __format = <span class="string">&quot;Unknown action - \&#x27;%s\&#x27;&quot;</span>;</span><br><span class="line">                    <span class="keyword">goto</span> LAB_0040ab00;</span><br><span class="line">                  &#125;</span><br><span class="line">                  __s1 = <span class="string">&quot;service %s restart &gt; /dev/null&quot;</span>;</span><br><span class="line">                &#125;</span><br><span class="line">             &#125;</span><br><span class="line">             <span class="keyword">goto</span> LAB_0040ac38;</span><br><span class="line">           &#125;</span><br><span class="line">         &#125;</span><br><span class="line">         <span class="keyword">else</span> &#123;</span><br><span class="line">           __s1 = <span class="string">&quot;event %s &gt; /dev/null&quot;</span>;</span><br><span class="line">           iVar4 = iVar2;</span><br><span class="line">LAB_0040ac38:</span><br><span class="line">           lxmldbc_system(__s1,iVar4);</span><br><span class="line">         &#125;</span><br><span class="line">         <span class="built_in">memset</span>(acStack280,<span class="number">0</span>,<span class="number">0x100</span>);</span><br><span class="line">         iVar4 = <span class="number">0</span>;</span><br><span class="line">         <span class="keyword">goto</span> LAB_0040ac7c;</span><br><span class="line">      &#125;</span><br><span class="line">      __s1 = <span class="string">&quot;Not authorized&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">LAB_0040ab48:</span><br><span class="line">    <span class="built_in">snprintf</span>(acStack280,<span class="number">0x100</span>,__s1);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> &#123;</span><br><span class="line">    iVar4 = strcasecmp(__s1,<span class="string">&quot;GET&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (iVar4 == <span class="number">0</span>) &#123;</span><br><span class="line">      uVar3 = <span class="number">0x40</span>;</span><br><span class="line">      <span class="keyword">goto</span> LAB_0040aad0;</span><br><span class="line">    &#125;</span><br><span class="line">    __format = <span class="string">&quot;Unsupport HTTP request - %s&quot;</span>;</span><br><span class="line">LAB_0040ab00:</span><br><span class="line">    <span class="built_in">snprintf</span>(acStack280,<span class="number">0x100</span>,__format,__s1);</span><br><span class="line">  &#125;</span><br><span class="line">  iVar4 = <span class="number">-1</span>;</span><br><span class="line">LAB_0040ac7c:</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;HTTP/1.1 200 OK\r\nContent-Type: text/xml\r\n\r&quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;&lt;?xml version=\&quot;1.0\&quot; encoding=\&quot;utf-8\&quot;?&gt;&quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;&lt;report&gt;&quot;</span>);</span><br><span class="line">  <span class="keyword">if</span> (iVar4 == <span class="number">0</span>) &#123;</span><br><span class="line">    __s1 = <span class="string">&quot;OK&quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> &#123;</span><br><span class="line">    __s1 = <span class="string">&quot;FAILED&quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;\t&lt;result&gt;%s&lt;/result&gt;\n&quot;</span>,__s1);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;\t&lt;message&gt;%s&lt;/message&gt;\n&quot;</span>,acStack280);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;&lt;/report&gt;&quot;</span>);</span><br><span class="line">  cgibin_clean_tempfiles();</span><br><span class="line">  <span class="keyword">while</span> (__ptr = PTR_LOOP_00420120, (undefined **)PTR_LOOP_00420120 != &amp;PTR_LOOP_00420120) &#123;</span><br><span class="line">    piVar1 = *(<span class="type">int</span> **)(PTR_LOOP_00420120 + <span class="number">4</span>);</span><br><span class="line">    iVar2 = *(<span class="type">int</span> *)PTR_LOOP_00420120;</span><br><span class="line">    __ptr_00 = *(<span class="type">void</span> **)(PTR_LOOP_00420120 + <span class="number">8</span>);</span><br><span class="line">    *piVar1 = iVar2;</span><br><span class="line">    *(<span class="type">int</span> **)(iVar2 + <span class="number">4</span>) = piVar1;</span><br><span class="line">    *(undefined4 *)__ptr = <span class="number">0</span>;</span><br><span class="line">    *(undefined4 *)(__ptr + <span class="number">4</span>) = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (__ptr_00 != (<span class="type">void</span> *)<span class="number">0x0</span>) &#123;</span><br><span class="line">      <span class="built_in">free</span>(__ptr_00);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (*(<span class="type">void</span> **)(__ptr + <span class="number">0xc</span>) != (<span class="type">void</span> *)<span class="number">0x0</span>) &#123;</span><br><span class="line">      <span class="built_in">free</span>(*(<span class="type">void</span> **)(__ptr + <span class="number">0xc</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">free</span>(__ptr);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> iVar4;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></div><p>稍微观察一下发现函数内部先处理传递进来的 HTTP 请求，但是这里的请求处理流程很奇怪，利用 getenv 函数从系统环境变量中获取请求字段。</p><p>查找文件内容之后发现了调用 cgi 的文件，使用命令在 htdocs 目录查找所有包含 cgi 字符串的文件：</p><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -rn &quot;cgi&quot; *</span><br></pre></td></tr></table></figure></div><p>得到输出：</p><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">匹配到二进制文件 cgibin</span><br><span class="line">web/js/comm.js:393:	ajaxObj.sendRequest(&quot;hedwig.cgi&quot;, xml.XDoc);</span><br><span class="line">web/js/comm.js:396:/* submit the action type to pigwidgeon.cgi for caching(saving) config or restarting service */</span><br><span class="line">web/js/comm.js:409:	ajaxObj.sendRequest(&quot;pigwidgeon.cgi&quot;, payload);</span><br><span class="line">web/js/postxml.js:44:		AJAX.sendRequest(&quot;captcha.cgi&quot;, &quot;DUMMY=YES&quot;);</span><br><span class="line">web/js/postxml.js:73:		AJAX.sendRequest(&quot;session.cgi&quot;, payload);</span><br><span class="line">web/js/postxml.js:89:		AJAX.sendRequest(&quot;session.cgi&quot;, payload);</span><br><span class="line">webinc/js/wiz_wan_fresetv6.php:859:	ajaxObj.sendRequest(&quot;service.cgi&quot;, &quot;EVENT=&quot;+svc);</span><br><span class="line">webinc/js/bsc_sms_inbox.php:123:        ajaxObj.sendRequest(&quot;service.cgi&quot;, &quot;EVENT=&quot;+svc);</span><br><span class="line">webinc/js/adv_qos.php:627:	ajaxObj.sendRequest(&quot;service.cgi&quot;, &quot;EVENT=&quot;+svc);</span><br><span class="line">webinc/js/tools_system.php:67:	ajaxObj.sendRequest(&quot;service.cgi&quot;, &quot;EVENT=&quot;+svc);</span><br><span class="line">webinc/js/tools_time.php:318:		ajaxObj.sendRequest(&quot;service.cgi&quot;, &quot;SERVICE=DEVICE.TIME&amp;ACTION=RESTART&quot;);</span><br><span class="line">webinc/js/tools_time.php:360:		ajaxObj.sendRequest(&quot;service.cgi&quot;, &quot;SERVICE=DEVICE.TIME&amp;ACTION=RESTART&quot;);</span><br><span class="line">webinc/js/adv_wps.php:230:	ajaxObj.sendRequest(&quot;service.cgi&quot;, &quot;EVENT=&quot;+svc);</span><br><span class="line">webinc/js/tools_sys_ulcfg.php:67:	ajaxObj.sendRequest(&quot;service.cgi&quot;, &quot;EVENT=&quot;+svc);</span><br><span class="line">webinc/js/st_ipv6.php:17:	ajaxObj.sendRequest(&quot;service.cgi&quot;, &quot;EVENT=&quot;+EventName);</span><br><span class="line">webinc/js/tools_firmware.php:39:		ajaxObj.sendRequest(&quot;service.cgi&quot;, &quot;EVENT=CHECKFW&quot;);</span><br><span class="line">webinc/js/tools_email.php:153:        ajaxObj.sendRequest(&quot;service.cgi&quot;, &quot;EVENT=SENDMAIL&quot;);</span><br><span class="line">webinc/js/st_device.php:17:	ajaxObj.sendRequest(&quot;service.cgi&quot;, &quot;EVENT=&quot;+EventName);</span><br><span class="line">webinc/js/wiz_freset.php:1103:	ajaxObj.sendRequest(&quot;service.cgi&quot;, &quot;EVENT=&quot;+svc);</span><br><span class="line">webinc/js/adv_dlna.php:179:		ajaxObj.sendRequest(&quot;service.cgi&quot;, &quot;EVENT=&quot;+EventName);</span><br><span class="line">webinc/js/adv_routingv6.php:173:	ajaxObj.sendRequest(&quot;service.cgi&quot;, &quot;EVENT=&quot;+svc);</span><br><span class="line">webinc/js/bsc_lan.php:1027:	ajaxObj.sendRequest(&quot;service.cgi&quot;, &quot;EVENT=&quot;+svc);</span><br><span class="line">webinc/body/tools_system.php:8:	&lt;form id=&quot;dlcfgbin&quot; action=&quot;dlcfg.cgi&quot; method=&quot;post&quot;&gt;</span><br><span class="line">webinc/body/tools_system.php:18:	&lt;form id=&quot;ulcfgbin&quot; action=&quot;seama.cgi&quot; method=&quot;post&quot; enctype=&quot;multipart/form-data&quot;&gt;</span><br><span class="line">webinc/body/tools_firmware.php:63:&lt;form id=&quot;fwup&quot; action=&quot;fwup.cgi&quot; method=&quot;post&quot; enctype=&quot;multipart/form-data&quot;&gt;</span><br></pre></td></tr></table></figure></div><p>基本都是在 js 中调用的 service.cgi，例如 tools_system.php：</p><div class="code-container" data-rel="Php"><figure class="iseeu highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">ajaxObj.<span class="title function_ invoke__">createRequest</span>();</span><br><span class="line">	ajaxObj.onCallback = <span class="function"><span class="keyword">function</span> (<span class="params">xml</span>)</span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		ajaxObj.<span class="title function_ invoke__">release</span>();</span><br><span class="line">		<span class="keyword">if</span> (xml.<span class="title function_ invoke__">Get</span>(<span class="string">&quot;/report/result&quot;</span>)!=<span class="string">&quot;OK&quot;</span>)</span><br><span class="line">			BODY.<span class="title function_ invoke__">ShowAlert</span>(<span class="string">&quot;Internal ERROR!\nEVENT &quot;</span>+svc+<span class="string">&quot;: &quot;</span>+xml.<span class="title function_ invoke__">Get</span>(<span class="string">&quot;/report/message&quot;</span>));</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			BODY.<span class="title function_ invoke__">ShowCountdown</span>(banner, msgArray, sec, url);</span><br><span class="line">	&#125;</span><br><span class="line">	ajaxObj.<span class="title function_ invoke__">setHeader</span>(<span class="string">&quot;Content-Type&quot;</span>, <span class="string">&quot;application/x-www-form-urlencoded&quot;</span>);</span><br><span class="line">	ajaxObj.<span class="title function_ invoke__">sendRequest</span>(<span class="string">&quot;service.cgi&quot;</span>, <span class="string">&quot;EVENT=&quot;</span>+svc);</span><br></pre></td></tr></table></figure></div><p>类似的还有很多，web 端通过 js 构造请求，并将请求发送到 cgibin 进行进一步处理。</p><p>回到代码上，首先获取了 REQUEST_METHOD 字段，判断是否为 POST，然后进入 cgibin_parse_request 函数进一步解析 HTTP 请求。</p><p>cgibin_parse_request 函数中构造了 sobj 结构体，函数大致功能是取出 CONTENT_TYPE、CONTENT_LENGTH、REQUEST_URI 这几个请求字段，进行进一步操作。</p><p>关键点在于 REQUEST_URI，它表示了当前请求的访问参数，关键代码如下</p><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">__nptr_00 = getenv(<span class="string">&quot;REQUEST_URI&quot;</span>);</span><br><span class="line"><span class="keyword">if</span> (__nptr_00 == (<span class="type">char</span> *)<span class="number">0x0</span>) &#123;</span><br><span class="line">  iVar4 = <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> &#123;</span><br><span class="line">                  <span class="comment">/* get &#x27;?&#x27; */</span></span><br><span class="line">  __nptr_00 = <span class="built_in">strchr</span>(__nptr_00,<span class="number">0x3f</span>);</span><br><span class="line">  iVar4 = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">if</span> (__nptr_00 != (<span class="type">char</span> *)<span class="number">0x0</span>) &#123;</span><br><span class="line">     local_38 = <span class="number">0</span>;</span><br><span class="line">     sVar2 = <span class="built_in">strlen</span>(__nptr_00 + <span class="number">1</span>);</span><br><span class="line">     FUN_00402dc0(&amp;local_38,(<span class="type">int</span>)(__nptr_00 + <span class="number">1</span>),sVar2);</span><br><span class="line">     FUN_00402dc0(&amp;local_38,<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line">     iVar4 = <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div><p>从 REQUEST_URI 中定位 ? ，然后取出问号之后的内容，计算长度。</p><p>函数 FUN_00402dc0 的主要功能是对取出的参数进行 URLdecode，并写入某块内存区域。</p><p>当 cgibin_parse_request 函数完成了 HTTP 请求解析动作，并且正确的返回，servicecgi_main 函数会继续下一步操作。</p><p>首先检查当前用户 session 是否为管理员，对应函数是 sess_ispoweruser，由于在模拟环境中，这个函数无法获取到 session，我们可以直接 patch 掉这个函数。身份验证成功之后继续解析 REQUEST_URI 的内容，涉及的指令有三个：EVENT、ACTION、SERVICE。</p><p>观察代码发现 EVENT 的限制最少，当解析到 EVENT 的时候跳出 if 判断，进入 else 流程；</p><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span> &#123;</span><br><span class="line">  __s1 = <span class="string">&quot;event %s &gt; /dev/null&quot;</span>;</span><br><span class="line">  iVar4 = iVar2;</span><br><span class="line">  LAB_0040ac38:</span><br><span class="line">  lxmldbc_system(__s1,iVar4);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div><p>关键函数为 lxmldbc_system：</p><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">lxmldbc_system</span><span class="params">(<span class="type">char</span> *pcParm1,undefined4 uParm2,undefined4 uParm3,undefined4 uParm4)</span></span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  undefined4 local_res4;</span><br><span class="line">  undefined4 local_res8;</span><br><span class="line">  undefined4 local_resc;</span><br><span class="line">  <span class="type">char</span> acStack1036 [<span class="number">1028</span>];</span><br><span class="line">  </span><br><span class="line">  local_res4 = uParm2;</span><br><span class="line">  local_res8 = uParm3;</span><br><span class="line">  local_resc = uParm4;</span><br><span class="line">  vsnprintf(acStack1036,<span class="number">0x400</span>,pcParm1,&amp;local_res4);</span><br><span class="line">  system(acStack1036);</span><br><span class="line">  <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div><p>根据传入的参数，这个函数直接使用 vsnprintf 将 “event %s &gt; &#x2F;dev&#x2F;null” 和和用户传入的 EVENT 拼接，并利用 system 执行。</p><p>这里显然存在命令注入漏洞，注入的格式大概是；</p><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;Hello&quot;&amp;ls&amp;pwd</span><br></pre></td></tr></table></figure></div><p>运行上面的命令可以同时得到三条指令的结果。</p><p>如果我们构造 EVENT&#x3D;&amp;ls&amp;，那么拼接出来的结果就是 event &amp;ls&amp; &gt; &#x2F;dev&#x2F;null，从而完成任意命令执行。</p><h2 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h2><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Update(2021-02-24)：当 IDA 使用原生 gdb 调试的时候，会弹出警告信息，提示我们 IDA 无法读取某些内存区域的数据，通常来说这是正常情况，想要读取目标内存数据的话可以手动设置地址范围，具体做法大家可自行搜索。</span><br></pre></td></tr></table></figure></div><p>根据逆向分析的结果，我们需要手动传入一些参数以防止程序自动退出。按照网上的教程构造如下命令：</p><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chroot . ./qemu -0 &quot;service.cgi&quot; -g 10000 -E REQUEST_METHOD=&quot;POST&quot; -E CONTENT_LENGTH=10 -E REQUEST_URI=&quot;service.cgi?EVENT=%26ls%26&quot;  -E CONTENT_TYPE=&quot;application/x-www-form-urlencoded&quot; -E HTTP_COOKIE=&quot;uid=aaaaa&quot; ./htdocs/cgibin</span><br></pre></td></tr></table></figure></div><p>qemu 利用 -0 传入第一个参数，满足 main 函数的需求，进入 servicecgi_main 函数。</p><p>利用 -E 选项传入自定义的环境变量，满足判断，REQUEST_URI 中包含待注入的命令（URL 编码）。</p><p>在终端运行后打开 gdb-multiarch</p><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">file ./htdocs/cgibin</span><br><span class="line">target remote 127.0.0.1:10000</span><br></pre></td></tr></table></figure></div><p>两条命令连接到 cgibin 进程上面：</p><p><img lazyload src="/images/loading.svg" data-src="/img/CNVD-2018-01084-3.png"></p><p>按照程序逻辑我们在 0x0040aad8 下断点，然后运行程序</p><p>当返回 gdb 界面的时候 v0 可能是 -1，代表 cgibin_parse_request 的逻辑判断失败。不要慌，我们手动 patch 程序逻辑到正确的分支即：0x0040AB20。这里和网上的文档不同，我猜测是 qemu 的环境问题。</p><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set $pc = 0x40ab20</span><br></pre></td></tr></table></figure></div><p>接下来执行到 sess_ispoweruser 函数，程序会进入 20 秒左右的假死状态.</p><p>此处我们可以打开 -strace 寻找原因，修改启动命令，添加 -strace 选项再执行，到了 sess_ispoweruser 函数窗口会打印一堆信息：</p><p><img lazyload src="/images/loading.svg" data-src="/img/CNVD-2018-01084-4.png"></p><p>问题在于 qemu 模拟环境中找不到 &#x2F;var&#x2F;session 文件，但是函数一直尝试去获取 session，导致程序卡在这里循环。</p><p>去除 strace 选项继续调试，patch 掉 session 验证函数，转移到正确分支：0x0040AB58，接着就可以直接在存在漏洞的函数头部下断点了，地址是：00410f14</p><p>继续执行 gdb 断在 lxmldbc_system 函数头部，单步调试看到 vsnprintf 函数的几个参数：</p><p><img lazyload src="/images/loading.svg" data-src="/img/CNVD-2018-01084-5.png"></p><p>显然是把字符串 “&amp;ls&amp;” 拼接到了 “event %s &gt; &#x2F;dev&#x2F;null” 中，来到 system 函数内部，参数为：</p><p><img lazyload src="/images/loading.svg" data-src="/img/CNVD-2018-01084-6.png"></p><p>命令注入成功。</p><p>但是不要高兴的太早，如果继续执行程序有很大可能只会打印出如下信息：</p><div class="code-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Content-Type: text/xml</span><br><span class="line"></span><br><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">report</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">result</span>&gt;</span>OK<span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">message</span>&gt;</span><span class="tag">&lt;/<span class="name">message</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">report</span>&gt;</span></span><br></pre></td></tr></table></figure></div><p>我们已经注入了 ls 命令，为什么没有效果呢？</p><p>再次打开 strace(注意跳过 sess_ispoweruser 函数)</p><p><img lazyload src="/images/loading.svg" data-src="/img/CNVD-2018-01084-7.png"></p><p>这里找到了答案，execve 系统调用错误，显示找不到文件。后来在大佬的文章上看到这是 qemu 的锅，我的 qemu 是用 apt 安装的，版本在 2.5.0，这个版本的 qemu user 模式没有实现 execve 函数。需要下载 qemu 2.9 版本并且加上 -execve 参数才行(这么说我上一篇漏洞也是由于 qemu 的问题才起不来 shell QAQ)。</p><p>关于 2.9 qemu 加 patch 的问题，没有太多的教程，不过我发现 QEMU 3.0.0 版本存在一个 -sandbox 选项，内部有如下描述</p><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">use &#x27;elevateprivileges&#x27; to allow or deny QEMU process to elevate its privileges by blacklisting all set*uid|gid system calls.</span><br><span class="line">The value &#x27;children&#x27; will deny set*uid|gid system calls for main QEMU process but will allow forks and execves to run unprivileged</span><br></pre></td></tr></table></figure></div><p>不知道是不是官方添加的 execve 系统调用？</p><p>最后看一下官方的修复手段：</p><p>下载比较新的固件(1.03 以上)，用 Ghidra 打开，直接定位到存在漏洞的函数附近：</p><p><img lazyload src="/images/loading.svg" data-src="/img/CNVD-2018-01084-8.png"></p><p>发现函数的参数传递变成了 文件路径 + 参数形式。进入函数内部：</p><p><img lazyload src="/images/loading.svg" data-src="/img/CNVD-2018-01084-9.png"></p><p>修复手段简单粗暴，直接 fork 出一个新的进程，然后关闭 stdout，利用 execl 执行命令。</p><p>由于 execl 的特性，我们再注入的命令就无效了。例如下面两个程序：</p><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;execl test\n&quot;</span>);</span><br><span class="line">        <span class="type">char</span>* var1 = <span class="string">&quot;/bin/ls&quot;</span>;</span><br><span class="line">        <span class="type">char</span>* var2 = <span class="string">&quot;ls&quot;</span>;</span><br><span class="line">        <span class="type">char</span>* var3 = <span class="string">&quot;-la&quot;</span>;</span><br><span class="line">        <span class="type">char</span>* var4 = <span class="string">&quot;/etc/passwd&quot;</span>;</span><br><span class="line">        <span class="type">int</span> ret = execl(var1, var2, var3, var4, (<span class="type">char</span>*)<span class="number">0</span>);</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure></div><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;execl test\n&quot;</span>);</span><br><span class="line">        <span class="type">char</span>* var1 = <span class="string">&quot;/bin/ls&quot;</span>;</span><br><span class="line">        <span class="type">char</span>* var2 = <span class="string">&quot;ls&quot;</span>;</span><br><span class="line">        <span class="type">char</span>* var3 = <span class="string">&quot;-la&quot;</span>;</span><br><span class="line">        <span class="type">char</span>* var4 = <span class="string">&quot;/etc/passwd&amp;ls&amp;&quot;</span>;</span><br><span class="line">        <span class="type">int</span> ret = execl(var1, var2, var3, var4, (<span class="type">char</span>*)<span class="number">0</span>);</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure></div><p>大家可以自行编译运行查看结果。</p></div><div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8"><div class="article-copyright-info-container"><ul><li><strong>Title:</strong> CNVD-2018-01084 漏洞复现</li><li><strong>Author:</strong> Catalpa</li><li><strong>Created at :</strong> 2019-09-05 00:00:00</li><li><strong>Updated at :</strong> 2024-10-17 08:39:33</li><li><strong>Link:</strong> https://wzt.ac.cn/2019/09/05/CNVD-2018-01084/</li><li><strong>License: </strong>This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a>.</li></ul></div></div><div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8"><div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2"><a class="prev" rel="prev" href="/2019/09/18/D-Link_BUG/"><span class="left arrow-icon flex justify-center items-center"><i class="fa-solid fa-chevron-left"></i> </span><span class="title flex justify-center items-center"><span class="post-nav-title-item">家用路由器固件常用解包方法 &amp; D-Link DIR-878 BUGS</span> <span class="post-nav-item">Prev posts</span></span></a></div><div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2"><a class="next" rel="next" href="/2019/09/01/hello-world/"><span class="title flex justify-center items-center"><span class="post-nav-title-item">欢迎！</span> <span class="post-nav-item">Next posts</span> </span><span class="right arrow-icon flex justify-center items-center"><i class="fa-solid fa-chevron-right"></i></span></a></div></div></div><div class="toc-content-container"><div class="post-toc-wrap"><div class="post-toc"><div class="toc-title">On this page</div><div class="page-title">CNVD-2018-01084 漏洞复现</div><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="nav-text">环境搭建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%86%E5%90%91%E5%88%86%E6%9E%90"><span class="nav-text">逆向分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%83%E8%AF%95"><span class="nav-text">调试</span></a></li></ol></div></div></div></div></div></div><div class="main-content-footer"><footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color"><div class="info-container py-3 text-center"><div class="text-center">&copy; <span>2018</span> - 2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration:0.5s;color:#f54545"></i>&nbsp;&nbsp;<a href="/">Catalpa</a><p class="post-count space-x-0.5"><span>68 posts in total </span><span>258.4k words in total</span></p></div><script data-swup-reload-script src="https://cn.vercount.one/js"></script><div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right"><span id="busuanzi_container_site_uv" class="lg:!block"><span class="text-sm">VISITOR COUNT</span> <span id="busuanzi_value_site_uv"></span> </span><span id="busuanzi_container_site_pv" class="lg:!block"><span class="text-sm">TOTAL PAGE VIEWS</span> <span id="busuanzi_value_site_pv"></span></span></div><div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left"><span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span> <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.8.2</a></span></div><div>Blog up for <span class="odometer" id="runtime_days"></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec</div><script data-swup-reload-script>try{function odometer_init(){document.querySelectorAll(".odometer").forEach(e=>{new Odometer({el:e,format:"( ddd).dd",duration:200})})}odometer_init()}catch(e){}</script></div></footer></div></div><div class="post-tools"><div class="post-tools-container"><ul class="article-tools-list"><li class="right-bottom-tools page-aside-toggle"><i class="fa-regular fa-outdent"></i></li></ul></div></div><div class="right-side-tools-container"><div class="side-tools-container"><ul class="hidden-tools-list"><li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center"><i class="fa-regular fa-magnifying-glass-plus"></i></li><li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center"><i class="fa-regular fa-magnifying-glass-minus"></i></li><li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center"><i class="fa-regular fa-moon"></i></li><li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center"><i class="fa-regular fa-arrow-down"></i></li></ul><ul class="visible-tools-list"><li class="right-bottom-tools toggle-tools-list flex justify-center items-center"><i class="fa-regular fa-cog fa-spin"></i></li><li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center"><i class="arrow-up fas fa-arrow-up"></i> <span class="percent"></span></li></ul></div></div><div class="image-viewer-container"><img src=""></div><div class="search-pop-overlay"><div class="popup search-popup"><div class="search-header"><span class="search-input-field-pre"><i class="fa-solid fa-keyboard"></i></span><div class="search-input-container"><input autocomplete="off" autocorrect="off" autocapitalize="off" placeholder="Search..." spellcheck="false" type="search" class="search-input"></div><span class="popup-btn-close"><i class="fa-solid fa-times"></i></span></div><div id="search-result"><div id="no-result"><i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i></div></div></div></div></main><script src="/js/build/libs/Swup.min.js"></script><script src="/js/build/libs/SwupSlideTheme.min.js"></script><script src="/js/build/libs/SwupScriptsPlugin.min.js"></script><script src="/js/build/libs/SwupProgressPlugin.min.js"></script><script src="/js/build/libs/SwupScrollPlugin.min.js"></script><script src="/js/build/libs/SwupPreloadPlugin.min.js"></script><script>const swup=new Swup({plugins:[new SwupScriptsPlugin({optin:!0}),new SwupProgressPlugin,new SwupScrollPlugin({offset:80}),new SwupSlideTheme({mainElement:".main-content-body"}),new SwupPreloadPlugin],containers:["#swup"]})</script><script src="/js/build/tools/imageViewer.js" type="module"></script><script src="/js/build/utils.js" type="module"></script><script src="/js/build/main.js" type="module"></script><script src="/js/build/layouts/navbarShrink.js" type="module"></script><script src="/js/build/tools/scrollTopBottom.js" type="module"></script><script src="/js/build/tools/lightDarkSwitch.js" type="module"></script><script src="/js/build/layouts/categoryList.js" type="module"></script><script src="/js/build/tools/localSearch.js" type="module"></script><script src="/js/build/tools/codeBlock.js" type="module"></script><script src="/js/build/layouts/lazyload.js" type="module"></script><script src="/js/build/tools/runtime.js"></script><script src="/js/build/libs/odometer.min.js"></script><link rel="stylesheet" href="/assets/odometer-theme-minimal.css"><script src="/js/build/libs/Typed.min.js"></script><script src="/js/build/plugins/typed.js" type="module"></script><script src="/js/build/libs/anime.min.js"></script><script src="/js/build/tools/tocToggle.js" type="module" data-swup-reload-script=""></script><script src="/js/build/layouts/toc.js" type="module" data-swup-reload-script=""></script><script src="/js/build/plugins/tabs.js" type="module" data-swup-reload-script=""></script><script src="/js/build/libs/moment-with-locales.min.js" data-swup-reload-script=""></script><script src="/js/build/layouts/essays.js" type="module" data-swup-reload-script=""></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Catalpa">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="https://wzt.ac.cn/2019/09/05/cnvd-2018-01084/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+    
+    
+        
+        <meta name="description" content="CNVD-2018-01084 是 Dlink 系列路由器的一个漏洞，影响设备包括 DIR 615&#x2F;645&#x2F;815 路由器。 漏洞存在于 &#x2F;htdocs&#x2F;cgibin 二进制文件中，漏洞成因是 service.cgi 中未经任何过滤检查就将用户的输入拼接到原始命令中，导致任意代码执行。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CNVD-2018-01084 漏洞复现">
+<meta property="og:url" content="https://wzt.ac.cn/2019/09/05/CNVD-2018-01084/index.html">
+<meta property="og:site_name" content="Catalpa&#39;s Site">
+<meta property="og:description" content="CNVD-2018-01084 是 Dlink 系列路由器的一个漏洞，影响设备包括 DIR 615&#x2F;645&#x2F;815 路由器。 漏洞存在于 &#x2F;htdocs&#x2F;cgibin 二进制文件中，漏洞成因是 service.cgi 中未经任何过滤检查就将用户的输入拼接到原始命令中，导致任意代码执行。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://wzt.ac.cn/img/CNVD-2018-01084-1.png">
+<meta property="og:image" content="https://wzt.ac.cn/img/CNVD-2018-01084-2.png">
+<meta property="og:image" content="https://wzt.ac.cn/img/CNVD-2018-01084-3.png">
+<meta property="og:image" content="https://wzt.ac.cn/img/CNVD-2018-01084-4.png">
+<meta property="og:image" content="https://wzt.ac.cn/img/CNVD-2018-01084-5.png">
+<meta property="og:image" content="https://wzt.ac.cn/img/CNVD-2018-01084-6.png">
+<meta property="og:image" content="https://wzt.ac.cn/img/CNVD-2018-01084-7.png">
+<meta property="og:image" content="https://wzt.ac.cn/img/CNVD-2018-01084-8.png">
+<meta property="og:image" content="https://wzt.ac.cn/img/CNVD-2018-01084-9.png">
+<meta property="article:published_time" content="2019-09-04T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-10-17T00:39:33.005Z">
+<meta property="article:author" content="Catalpa">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wzt.ac.cn/img/CNVD-2018-01084-1.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/img/favicon.ico" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon.ico">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <!--- Page Info-->
+    
+    <title>
+        
+            CNVD-2018-01084 漏洞复现 | Catalpa&#39;s Site
+        
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/tailwind.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"wzt.ac.cn","root":"/","language":"en","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"delete_mask":false,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":["网络安全爱好者"]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_sa"},"lazyload":true,"pangu_js":false,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/img/bk.jpg","dark":"/img/bk.jpg"},"title":"Welcome!","subtitle":{"text":["欢迎来到本站!","今天有什么新鲜事吗?","知识不应该是付费的!","持续学习 持续进步","网络安全爱好者","非常感谢您的捐赠!","祝您拥有美好的一天!"],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"style":"default","links":{"github":"https://github.com/rrrrrrri","instagram":null,"zhihu":null,"twitter":null,"email":"anu11@foxmail.com"},"qrs":{"weixin":null,"fa-solid fa-hand-holding-dollar":"/img/w.png"}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.8.2","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"归档":{"path":"/archives","icon":"fa-regular fa-archive"},"感谢捐赠":{"path":"/donates","icon":"fa-solid fa-hand-holding-dollar"}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":"读者有责任遵守其所在国家或地区的所有法律，作者不对使用其文章中提到的任何内容所造成的任何损害负责。","show_on_mobile":true,"links":null},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":false,"limit":3},"tags":{"enable":false,"limit":3}},"footerStart":"2018/9/1 08:00:00"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+
+<body>
+	<div class="progress-bar-container">
+	
+
+	
+	<span class="pjax-progress-bar"></span>
+	<!--        <span class="swup-progress-icon">-->
+	<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+	<!--        </span>-->
+	
+</div>
+
+<main class="page-container" id="swup">
+
+	
+
+	<div class="main-content-container flex flex-col justify-between min-h-dvh">
+		<div class="main-content-header">
+			<header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+                <a class="logo-image h-8 w-8 sm:w-10 sm:h-10 mr-3" href="/">
+                    <img src="/img/favicon.ico" class="w-full h-full rounded-sm">
+                </a>
+            
+            <a class="logo-title" href="/">
+                
+                Catalpa&#39;s Site
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/archives"
+                                        >
+                                    <i class="fa-regular fa-archive fa-fw"></i>
+                                    归档
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/donates"
+                                        >
+                                    <i class="fa-solid fa-hand-holding-dollar fa-fw"></i>
+                                    感谢捐赠
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/archives"
+                        >
+                            <span>
+                                归档
+                            </span>
+                            
+                                <i class="fa-regular fa-archive fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/donates"
+                        >
+                            <span>
+                                感谢捐赠
+                            </span>
+                            
+                                <i class="fa-solid fa-hand-holding-dollar fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">0</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">4</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">69</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+		</div>
+
+		<div class="main-content-body transition-fade-up">
+			
+
+			<div class="main-content">
+				<div class="post-page-container flex relative justify-between box-border w-full h-full">
+	<div class="article-content-container">
+
+		<div class="article-title relative w-full">
+			
+			<div class="w-full flex items-center pt-6 justify-start">
+				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">CNVD-2018-01084 漏洞复现</h1>
+			</div>
+			
+		</div>
+
+		
+		<div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+			<div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+				<img src="/img/logo.png">
+			</div>
+			<div class="info flex flex-col justify-between">
+				<div class="author flex items-center">
+					<span class="name text-default-text-color text-lg font-semibold">Catalpa</span>
+					
+					<span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">网络安全爱好者</span>
+					
+				</div>
+				<div class="meta-info">
+					<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2019-09-05</span>
+        <span class="mobile">2019-09-05</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-10-17 08:39:33</span>
+            <span class="mobile">2024-10-17 08:39:33</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/">漏洞分析</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>3.4k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>15 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+				</div>
+			</div>
+		</div>
+		
+
+		
+
+
+		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+			<p>CNVD-2018-01084 是 Dlink 系列路由器的一个漏洞，影响设备包括 DIR 615&#x2F;645&#x2F;815 路由器。</p>
+<p>漏洞存在于 &#x2F;htdocs&#x2F;cgibin 二进制文件中，漏洞成因是 service.cgi 中未经任何过滤检查就将用户的输入拼接到原始命令中，导致任意代码执行。</p>
+<span id="more"></span>
+
+
+
+<h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><p>首先下载存在漏洞的固件，地址 <a class="link"   href="ftp://ftp2.dlink.com/PRODUCTS/DIR-645/REVA/" >ftp://ftp2.dlink.com/PRODUCTS/DIR-645/REVA/<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<p>我下载的是 1.02 版本，这个漏洞在 1.03 以上版本被修复了，注意不要下错。</p>
+<p>固件为 MIPS 架构，所以需要利用 QEMU 来模拟执行，关于 QEMU 和环境的具体搭建流程可以参考我上一篇文章 <a href="https://wzt.ac.cn/2019/03/19/CVE-2018-5767/">https://wzt.ac.cn/2019/03/19/CVE-2018-5767/</a></p>
+<p>这个固件属于 CGI(通用网关接口)，所以不需要搭建网络环境即可运行。</p>
+<p>装好必要的软件之后使用命令</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chroot . ./qemu -g 10000 ./htdocs/cgibin</span><br></pre></td></tr></table></figure></div>
+
+<p>即可运行程序，如果添加了 -g 选项，那么在外部使用 gdb 链接到 10000 端口就能调试程序了。</p>
+<p>运行起来会提示</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CGI.BIN, unknown command cgibin</span><br></pre></td></tr></table></figure></div>
+
+<p>这是正常现象，因为我们还没有访问任何 CGI 服务。</p>
+<h2 id="逆向分析"><a href="#逆向分析" class="headerlink" title="逆向分析"></a>逆向分析</h2><p>由于是 MIPS 程序，IDA 的反编译插件不能解析伪代码，在之前我们只能硬着头皮看汇编，或者利用 RETDEC 大概看看函数调用关系，但是今年上半年 NSA 发布了 Ghidra，相信大家都有所耳闻，到现在已经迭代了 5 个版本，在 GITHUB 上可以下载到最新的 9.0.4 版本源代码。</p>
+<p>如果不想手动编译的可以直接去官方网站下载 release 版本。</p>
+<p>Ghidra 虽然速度和交互性弱于 IDA，但是它能反编译 mips 等 IDA 暂不支持的架构，这次我们就利用它来完成逆向分析。</p>
+<p>打开 Ghidra 新建项目，并导入 cgibin 文件，让 ghidra 自动分析：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/CNVD-2018-01084-1.png"
+                     
+                ></p>
+<p>在左边的函数窗口中有一个搜索栏，搜索 main 即可找到 main 函数，点击汇编窗口，右侧的反编译窗口就自动出现的 main 函数的伪代码：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/CNVD-2018-01084-2.png"
+                     
+                ></p>
+<p>反编译的效果感觉和 IDA 的不相上下，只是交互性和细节上差一些。</p>
+<p>根据披露信息，漏洞位于 service.cgi 中，在 main 函数找一找就能找到这一项：</p>
+<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span> &#123;</span><br><span class="line">  iVar2 = <span class="built_in">strcmp</span>(__s,<span class="string">&quot;pigwidgeon.cgi&quot;</span>);</span><br><span class="line">  <span class="keyword">if</span> (iVar2 == <span class="number">0</span>) &#123;</span><br><span class="line">    UNRECOVERED_JUMPTABLE = pigwidgeoncgi_main;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> &#123;</span><br><span class="line">    iVar2 = <span class="built_in">strcmp</span>(__s,<span class="string">&quot;service.cgi&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (iVar2 == <span class="number">0</span>) &#123;</span><br><span class="line">      UNRECOVERED_JUMPTABLE = servicecgi_main;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>观察代码发现 cgibin 从 web 端接受了请求，然后取出 URL 中的访问参数，筛选出对应的 cgi 服务，并调用相关函数。</p>
+<p>Service.cgi 对应的是 servicecgi_main 函数，伪代码：</p>
+<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">servicecgi_main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  undefined *__ptr;</span><br><span class="line">  <span class="type">char</span> *__s1;</span><br><span class="line">  <span class="type">int</span> *piVar1;</span><br><span class="line">  <span class="type">int</span> iVar2;</span><br><span class="line">  <span class="type">void</span> *__ptr_00;</span><br><span class="line">  uint uVar3;</span><br><span class="line">  <span class="type">char</span> *__format;</span><br><span class="line">  <span class="type">int</span> iVar4;</span><br><span class="line">  <span class="type">char</span> acStack280 [<span class="number">260</span>];</span><br><span class="line">  </span><br><span class="line">  <span class="built_in">memset</span>(acStack280,<span class="number">0</span>,<span class="number">0x100</span>);</span><br><span class="line">  __s1 = getenv(<span class="string">&quot;REQUEST_METHOD&quot;</span>);</span><br><span class="line">  <span class="keyword">if</span> (__s1 == (<span class="type">char</span> *)<span class="number">0x0</span>) &#123;</span><br><span class="line">    __s1 = <span class="string">&quot;No HTTP request&quot;</span>;</span><br><span class="line">    <span class="keyword">goto</span> LAB_0040ab48;</span><br><span class="line">  &#125;</span><br><span class="line">  iVar4 = strcasecmp(__s1,<span class="string">&quot;POST&quot;</span>);</span><br><span class="line">  <span class="keyword">if</span> (iVar4 == <span class="number">0</span>) &#123;</span><br><span class="line">    uVar3 = <span class="number">0x400</span>;</span><br><span class="line">LAB_0040aad0:</span><br><span class="line">    iVar4 = cgibin_parse_request(FUN_0040adcc,<span class="number">0</span>,uVar3);</span><br><span class="line">    <span class="keyword">if</span> (iVar4 &lt; <span class="number">0</span>) &#123;</span><br><span class="line">      __s1 = <span class="string">&quot;Unable to parse HTTP request&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">      iVar4 = sess_ispoweruser();</span><br><span class="line">      <span class="keyword">if</span> (iVar4 != <span class="number">0</span>) &#123;</span><br><span class="line">         iVar2 = FUN_0040a950(<span class="string">&quot;EVENT&quot;</span>);</span><br><span class="line">         __s1 = (<span class="type">char</span> *)FUN_0040a950(<span class="string">&quot;ACTION&quot;</span>);</span><br><span class="line">         iVar4 = FUN_0040a950(<span class="string">&quot;SERVICE&quot;</span>);</span><br><span class="line">         <span class="keyword">if</span> (iVar2 == <span class="number">0</span>) &#123;</span><br><span class="line">           <span class="keyword">if</span> ((iVar4 != <span class="number">0</span>) &amp;&amp; (__s1 != (<span class="type">char</span> *)<span class="number">0x0</span>)) &#123;</span><br><span class="line">             iVar2 = strcasecmp(__s1,<span class="string">&quot;START&quot;</span>);</span><br><span class="line">             <span class="keyword">if</span> (iVar2 == <span class="number">0</span>) &#123;</span><br><span class="line">                __s1 = <span class="string">&quot;service %s start &gt; /dev/null&quot;</span>;</span><br><span class="line">             &#125;</span><br><span class="line">             <span class="keyword">else</span> &#123;</span><br><span class="line">                iVar2 = strcasecmp(__s1,<span class="string">&quot;STOP&quot;</span>);</span><br><span class="line">                <span class="keyword">if</span> (iVar2 == <span class="number">0</span>) &#123;</span><br><span class="line">                  __s1 = <span class="string">&quot;service %s stop &gt; /dev/null&quot;</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span> &#123;</span><br><span class="line">                  iVar2 = strcasecmp(__s1,<span class="string">&quot;RESTART&quot;</span>);</span><br><span class="line">                  <span class="keyword">if</span> (iVar2 != <span class="number">0</span>) &#123;</span><br><span class="line">                    __format = <span class="string">&quot;Unknown action - \&#x27;%s\&#x27;&quot;</span>;</span><br><span class="line">                    <span class="keyword">goto</span> LAB_0040ab00;</span><br><span class="line">                  &#125;</span><br><span class="line">                  __s1 = <span class="string">&quot;service %s restart &gt; /dev/null&quot;</span>;</span><br><span class="line">                &#125;</span><br><span class="line">             &#125;</span><br><span class="line">             <span class="keyword">goto</span> LAB_0040ac38;</span><br><span class="line">           &#125;</span><br><span class="line">         &#125;</span><br><span class="line">         <span class="keyword">else</span> &#123;</span><br><span class="line">           __s1 = <span class="string">&quot;event %s &gt; /dev/null&quot;</span>;</span><br><span class="line">           iVar4 = iVar2;</span><br><span class="line">LAB_0040ac38:</span><br><span class="line">           lxmldbc_system(__s1,iVar4);</span><br><span class="line">         &#125;</span><br><span class="line">         <span class="built_in">memset</span>(acStack280,<span class="number">0</span>,<span class="number">0x100</span>);</span><br><span class="line">         iVar4 = <span class="number">0</span>;</span><br><span class="line">         <span class="keyword">goto</span> LAB_0040ac7c;</span><br><span class="line">      &#125;</span><br><span class="line">      __s1 = <span class="string">&quot;Not authorized&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">LAB_0040ab48:</span><br><span class="line">    <span class="built_in">snprintf</span>(acStack280,<span class="number">0x100</span>,__s1);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> &#123;</span><br><span class="line">    iVar4 = strcasecmp(__s1,<span class="string">&quot;GET&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (iVar4 == <span class="number">0</span>) &#123;</span><br><span class="line">      uVar3 = <span class="number">0x40</span>;</span><br><span class="line">      <span class="keyword">goto</span> LAB_0040aad0;</span><br><span class="line">    &#125;</span><br><span class="line">    __format = <span class="string">&quot;Unsupport HTTP request - %s&quot;</span>;</span><br><span class="line">LAB_0040ab00:</span><br><span class="line">    <span class="built_in">snprintf</span>(acStack280,<span class="number">0x100</span>,__format,__s1);</span><br><span class="line">  &#125;</span><br><span class="line">  iVar4 = <span class="number">-1</span>;</span><br><span class="line">LAB_0040ac7c:</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;HTTP/1.1 200 OK\r\nContent-Type: text/xml\r\n\r&quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;&lt;?xml version=\&quot;1.0\&quot; encoding=\&quot;utf-8\&quot;?&gt;&quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;&lt;report&gt;&quot;</span>);</span><br><span class="line">  <span class="keyword">if</span> (iVar4 == <span class="number">0</span>) &#123;</span><br><span class="line">    __s1 = <span class="string">&quot;OK&quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> &#123;</span><br><span class="line">    __s1 = <span class="string">&quot;FAILED&quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;\t&lt;result&gt;%s&lt;/result&gt;\n&quot;</span>,__s1);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;\t&lt;message&gt;%s&lt;/message&gt;\n&quot;</span>,acStack280);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;&lt;/report&gt;&quot;</span>);</span><br><span class="line">  cgibin_clean_tempfiles();</span><br><span class="line">  <span class="keyword">while</span> (__ptr = PTR_LOOP_00420120, (undefined **)PTR_LOOP_00420120 != &amp;PTR_LOOP_00420120) &#123;</span><br><span class="line">    piVar1 = *(<span class="type">int</span> **)(PTR_LOOP_00420120 + <span class="number">4</span>);</span><br><span class="line">    iVar2 = *(<span class="type">int</span> *)PTR_LOOP_00420120;</span><br><span class="line">    __ptr_00 = *(<span class="type">void</span> **)(PTR_LOOP_00420120 + <span class="number">8</span>);</span><br><span class="line">    *piVar1 = iVar2;</span><br><span class="line">    *(<span class="type">int</span> **)(iVar2 + <span class="number">4</span>) = piVar1;</span><br><span class="line">    *(undefined4 *)__ptr = <span class="number">0</span>;</span><br><span class="line">    *(undefined4 *)(__ptr + <span class="number">4</span>) = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (__ptr_00 != (<span class="type">void</span> *)<span class="number">0x0</span>) &#123;</span><br><span class="line">      <span class="built_in">free</span>(__ptr_00);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (*(<span class="type">void</span> **)(__ptr + <span class="number">0xc</span>) != (<span class="type">void</span> *)<span class="number">0x0</span>) &#123;</span><br><span class="line">      <span class="built_in">free</span>(*(<span class="type">void</span> **)(__ptr + <span class="number">0xc</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">free</span>(__ptr);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> iVar4;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+
+<p>稍微观察一下发现函数内部先处理传递进来的 HTTP 请求，但是这里的请求处理流程很奇怪，利用 getenv 函数从系统环境变量中获取请求字段。</p>
+<p>查找文件内容之后发现了调用 cgi 的文件，使用命令在 htdocs 目录查找所有包含 cgi 字符串的文件：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -rn &quot;cgi&quot; *</span><br></pre></td></tr></table></figure></div>
+
+<p>得到输出：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">匹配到二进制文件 cgibin</span><br><span class="line">web/js/comm.js:393:	ajaxObj.sendRequest(&quot;hedwig.cgi&quot;, xml.XDoc);</span><br><span class="line">web/js/comm.js:396:/* submit the action type to pigwidgeon.cgi for caching(saving) config or restarting service */</span><br><span class="line">web/js/comm.js:409:	ajaxObj.sendRequest(&quot;pigwidgeon.cgi&quot;, payload);</span><br><span class="line">web/js/postxml.js:44:		AJAX.sendRequest(&quot;captcha.cgi&quot;, &quot;DUMMY=YES&quot;);</span><br><span class="line">web/js/postxml.js:73:		AJAX.sendRequest(&quot;session.cgi&quot;, payload);</span><br><span class="line">web/js/postxml.js:89:		AJAX.sendRequest(&quot;session.cgi&quot;, payload);</span><br><span class="line">webinc/js/wiz_wan_fresetv6.php:859:	ajaxObj.sendRequest(&quot;service.cgi&quot;, &quot;EVENT=&quot;+svc);</span><br><span class="line">webinc/js/bsc_sms_inbox.php:123:        ajaxObj.sendRequest(&quot;service.cgi&quot;, &quot;EVENT=&quot;+svc);</span><br><span class="line">webinc/js/adv_qos.php:627:	ajaxObj.sendRequest(&quot;service.cgi&quot;, &quot;EVENT=&quot;+svc);</span><br><span class="line">webinc/js/tools_system.php:67:	ajaxObj.sendRequest(&quot;service.cgi&quot;, &quot;EVENT=&quot;+svc);</span><br><span class="line">webinc/js/tools_time.php:318:		ajaxObj.sendRequest(&quot;service.cgi&quot;, &quot;SERVICE=DEVICE.TIME&amp;ACTION=RESTART&quot;);</span><br><span class="line">webinc/js/tools_time.php:360:		ajaxObj.sendRequest(&quot;service.cgi&quot;, &quot;SERVICE=DEVICE.TIME&amp;ACTION=RESTART&quot;);</span><br><span class="line">webinc/js/adv_wps.php:230:	ajaxObj.sendRequest(&quot;service.cgi&quot;, &quot;EVENT=&quot;+svc);</span><br><span class="line">webinc/js/tools_sys_ulcfg.php:67:	ajaxObj.sendRequest(&quot;service.cgi&quot;, &quot;EVENT=&quot;+svc);</span><br><span class="line">webinc/js/st_ipv6.php:17:	ajaxObj.sendRequest(&quot;service.cgi&quot;, &quot;EVENT=&quot;+EventName);</span><br><span class="line">webinc/js/tools_firmware.php:39:		ajaxObj.sendRequest(&quot;service.cgi&quot;, &quot;EVENT=CHECKFW&quot;);</span><br><span class="line">webinc/js/tools_email.php:153:        ajaxObj.sendRequest(&quot;service.cgi&quot;, &quot;EVENT=SENDMAIL&quot;);</span><br><span class="line">webinc/js/st_device.php:17:	ajaxObj.sendRequest(&quot;service.cgi&quot;, &quot;EVENT=&quot;+EventName);</span><br><span class="line">webinc/js/wiz_freset.php:1103:	ajaxObj.sendRequest(&quot;service.cgi&quot;, &quot;EVENT=&quot;+svc);</span><br><span class="line">webinc/js/adv_dlna.php:179:		ajaxObj.sendRequest(&quot;service.cgi&quot;, &quot;EVENT=&quot;+EventName);</span><br><span class="line">webinc/js/adv_routingv6.php:173:	ajaxObj.sendRequest(&quot;service.cgi&quot;, &quot;EVENT=&quot;+svc);</span><br><span class="line">webinc/js/bsc_lan.php:1027:	ajaxObj.sendRequest(&quot;service.cgi&quot;, &quot;EVENT=&quot;+svc);</span><br><span class="line">webinc/body/tools_system.php:8:	&lt;form id=&quot;dlcfgbin&quot; action=&quot;dlcfg.cgi&quot; method=&quot;post&quot;&gt;</span><br><span class="line">webinc/body/tools_system.php:18:	&lt;form id=&quot;ulcfgbin&quot; action=&quot;seama.cgi&quot; method=&quot;post&quot; enctype=&quot;multipart/form-data&quot;&gt;</span><br><span class="line">webinc/body/tools_firmware.php:63:&lt;form id=&quot;fwup&quot; action=&quot;fwup.cgi&quot; method=&quot;post&quot; enctype=&quot;multipart/form-data&quot;&gt;</span><br></pre></td></tr></table></figure></div>
+
+<p>基本都是在 js 中调用的 service.cgi，例如 tools_system.php：</p>
+<div class="code-container" data-rel="Php"><figure class="iseeu highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">ajaxObj.<span class="title function_ invoke__">createRequest</span>();</span><br><span class="line">	ajaxObj.onCallback = <span class="function"><span class="keyword">function</span> (<span class="params">xml</span>)</span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		ajaxObj.<span class="title function_ invoke__">release</span>();</span><br><span class="line">		<span class="keyword">if</span> (xml.<span class="title function_ invoke__">Get</span>(<span class="string">&quot;/report/result&quot;</span>)!=<span class="string">&quot;OK&quot;</span>)</span><br><span class="line">			BODY.<span class="title function_ invoke__">ShowAlert</span>(<span class="string">&quot;Internal ERROR!\nEVENT &quot;</span>+svc+<span class="string">&quot;: &quot;</span>+xml.<span class="title function_ invoke__">Get</span>(<span class="string">&quot;/report/message&quot;</span>));</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			BODY.<span class="title function_ invoke__">ShowCountdown</span>(banner, msgArray, sec, url);</span><br><span class="line">	&#125;</span><br><span class="line">	ajaxObj.<span class="title function_ invoke__">setHeader</span>(<span class="string">&quot;Content-Type&quot;</span>, <span class="string">&quot;application/x-www-form-urlencoded&quot;</span>);</span><br><span class="line">	ajaxObj.<span class="title function_ invoke__">sendRequest</span>(<span class="string">&quot;service.cgi&quot;</span>, <span class="string">&quot;EVENT=&quot;</span>+svc);</span><br></pre></td></tr></table></figure></div>
+
+<p>类似的还有很多，web 端通过 js 构造请求，并将请求发送到 cgibin 进行进一步处理。</p>
+<p>回到代码上，首先获取了 REQUEST_METHOD 字段，判断是否为 POST，然后进入 cgibin_parse_request 函数进一步解析 HTTP 请求。</p>
+<p>cgibin_parse_request 函数中构造了 sobj 结构体，函数大致功能是取出 CONTENT_TYPE、CONTENT_LENGTH、REQUEST_URI 这几个请求字段，进行进一步操作。</p>
+<p>关键点在于 REQUEST_URI，它表示了当前请求的访问参数，关键代码如下</p>
+<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">__nptr_00 = getenv(<span class="string">&quot;REQUEST_URI&quot;</span>);</span><br><span class="line"><span class="keyword">if</span> (__nptr_00 == (<span class="type">char</span> *)<span class="number">0x0</span>) &#123;</span><br><span class="line">  iVar4 = <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> &#123;</span><br><span class="line">                  <span class="comment">/* get &#x27;?&#x27; */</span></span><br><span class="line">  __nptr_00 = <span class="built_in">strchr</span>(__nptr_00,<span class="number">0x3f</span>);</span><br><span class="line">  iVar4 = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">if</span> (__nptr_00 != (<span class="type">char</span> *)<span class="number">0x0</span>) &#123;</span><br><span class="line">     local_38 = <span class="number">0</span>;</span><br><span class="line">     sVar2 = <span class="built_in">strlen</span>(__nptr_00 + <span class="number">1</span>);</span><br><span class="line">     FUN_00402dc0(&amp;local_38,(<span class="type">int</span>)(__nptr_00 + <span class="number">1</span>),sVar2);</span><br><span class="line">     FUN_00402dc0(&amp;local_38,<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line">     iVar4 = <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>从 REQUEST_URI 中定位 ? ，然后取出问号之后的内容，计算长度。</p>
+<p>函数 FUN_00402dc0 的主要功能是对取出的参数进行 URLdecode，并写入某块内存区域。</p>
+<p>当 cgibin_parse_request 函数完成了 HTTP 请求解析动作，并且正确的返回，servicecgi_main 函数会继续下一步操作。</p>
+<p>首先检查当前用户 session 是否为管理员，对应函数是 sess_ispoweruser，由于在模拟环境中，这个函数无法获取到 session，我们可以直接 patch 掉这个函数。身份验证成功之后继续解析 REQUEST_URI 的内容，涉及的指令有三个：EVENT、ACTION、SERVICE。</p>
+<p>观察代码发现 EVENT 的限制最少，当解析到 EVENT 的时候跳出 if 判断，进入 else 流程；</p>
+<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span> &#123;</span><br><span class="line">  __s1 = <span class="string">&quot;event %s &gt; /dev/null&quot;</span>;</span><br><span class="line">  iVar4 = iVar2;</span><br><span class="line">  LAB_0040ac38:</span><br><span class="line">  lxmldbc_system(__s1,iVar4);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>关键函数为 lxmldbc_system：</p>
+<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">lxmldbc_system</span><span class="params">(<span class="type">char</span> *pcParm1,undefined4 uParm2,undefined4 uParm3,undefined4 uParm4)</span></span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  undefined4 local_res4;</span><br><span class="line">  undefined4 local_res8;</span><br><span class="line">  undefined4 local_resc;</span><br><span class="line">  <span class="type">char</span> acStack1036 [<span class="number">1028</span>];</span><br><span class="line">  </span><br><span class="line">  local_res4 = uParm2;</span><br><span class="line">  local_res8 = uParm3;</span><br><span class="line">  local_resc = uParm4;</span><br><span class="line">  vsnprintf(acStack1036,<span class="number">0x400</span>,pcParm1,&amp;local_res4);</span><br><span class="line">  system(acStack1036);</span><br><span class="line">  <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>根据传入的参数，这个函数直接使用 vsnprintf 将 “event %s &gt; &#x2F;dev&#x2F;null” 和和用户传入的 EVENT 拼接，并利用 system 执行。</p>
+<p>这里显然存在命令注入漏洞，注入的格式大概是；</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;Hello&quot;&amp;ls&amp;pwd</span><br></pre></td></tr></table></figure></div>
+
+<p>运行上面的命令可以同时得到三条指令的结果。</p>
+<p>如果我们构造 EVENT&#x3D;&amp;ls&amp;，那么拼接出来的结果就是 event &amp;ls&amp; &gt; &#x2F;dev&#x2F;null，从而完成任意命令执行。</p>
+<h2 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h2><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Update(2021-02-24)：当 IDA 使用原生 gdb 调试的时候，会弹出警告信息，提示我们 IDA 无法读取某些内存区域的数据，通常来说这是正常情况，想要读取目标内存数据的话可以手动设置地址范围，具体做法大家可自行搜索。</span><br></pre></td></tr></table></figure></div>
+
+<p>根据逆向分析的结果，我们需要手动传入一些参数以防止程序自动退出。按照网上的教程构造如下命令：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chroot . ./qemu -0 &quot;service.cgi&quot; -g 10000 -E REQUEST_METHOD=&quot;POST&quot; -E CONTENT_LENGTH=10 -E REQUEST_URI=&quot;service.cgi?EVENT=%26ls%26&quot;  -E CONTENT_TYPE=&quot;application/x-www-form-urlencoded&quot; -E HTTP_COOKIE=&quot;uid=aaaaa&quot; ./htdocs/cgibin</span><br></pre></td></tr></table></figure></div>
+
+<p>qemu 利用 -0 传入第一个参数，满足 main 函数的需求，进入 servicecgi_main 函数。</p>
+<p>利用 -E 选项传入自定义的环境变量，满足判断，REQUEST_URI 中包含待注入的命令（URL 编码）。</p>
+<p>在终端运行后打开 gdb-multiarch</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">file ./htdocs/cgibin</span><br><span class="line">target remote 127.0.0.1:10000</span><br></pre></td></tr></table></figure></div>
+
+<p>两条命令连接到 cgibin 进程上面：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/CNVD-2018-01084-3.png"
+                     
+                ></p>
+<p>按照程序逻辑我们在 0x0040aad8 下断点，然后运行程序</p>
+<p>当返回 gdb 界面的时候 v0 可能是 -1，代表 cgibin_parse_request 的逻辑判断失败。不要慌，我们手动 patch 程序逻辑到正确的分支即：0x0040AB20。这里和网上的文档不同，我猜测是 qemu 的环境问题。</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set $pc = 0x40ab20</span><br></pre></td></tr></table></figure></div>
+
+<p>接下来执行到 sess_ispoweruser 函数，程序会进入 20 秒左右的假死状态.</p>
+<p>此处我们可以打开 -strace 寻找原因，修改启动命令，添加 -strace 选项再执行，到了 sess_ispoweruser 函数窗口会打印一堆信息：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/CNVD-2018-01084-4.png"
+                     
+                ></p>
+<p>问题在于 qemu 模拟环境中找不到 &#x2F;var&#x2F;session 文件，但是函数一直尝试去获取 session，导致程序卡在这里循环。</p>
+<p>去除 strace 选项继续调试，patch 掉 session 验证函数，转移到正确分支：0x0040AB58，接着就可以直接在存在漏洞的函数头部下断点了，地址是：00410f14</p>
+<p>继续执行 gdb 断在 lxmldbc_system 函数头部，单步调试看到 vsnprintf 函数的几个参数：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/CNVD-2018-01084-5.png"
+                     
+                ></p>
+<p>显然是把字符串 “&amp;ls&amp;” 拼接到了 “event %s &gt; &#x2F;dev&#x2F;null” 中，来到 system 函数内部，参数为：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/CNVD-2018-01084-6.png"
+                     
+                ></p>
+<p>命令注入成功。</p>
+<p>但是不要高兴的太早，如果继续执行程序有很大可能只会打印出如下信息：</p>
+<div class="code-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Content-Type: text/xml</span><br><span class="line"></span><br><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">report</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">result</span>&gt;</span>OK<span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">message</span>&gt;</span><span class="tag">&lt;/<span class="name">message</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">report</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>我们已经注入了 ls 命令，为什么没有效果呢？</p>
+<p>再次打开 strace(注意跳过 sess_ispoweruser 函数)</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/CNVD-2018-01084-7.png"
+                     
+                ></p>
+<p>这里找到了答案，execve 系统调用错误，显示找不到文件。后来在大佬的文章上看到这是 qemu 的锅，我的 qemu 是用 apt 安装的，版本在 2.5.0，这个版本的 qemu user 模式没有实现 execve 函数。需要下载 qemu 2.9 版本并且加上 -execve 参数才行(这么说我上一篇漏洞也是由于 qemu 的问题才起不来 shell QAQ)。</p>
+<p>关于 2.9 qemu 加 patch 的问题，没有太多的教程，不过我发现 QEMU 3.0.0 版本存在一个 -sandbox 选项，内部有如下描述</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">use &#x27;elevateprivileges&#x27; to allow or deny QEMU process to elevate its privileges by blacklisting all set*uid|gid system calls.</span><br><span class="line">The value &#x27;children&#x27; will deny set*uid|gid system calls for main QEMU process but will allow forks and execves to run unprivileged</span><br></pre></td></tr></table></figure></div>
+
+<p>不知道是不是官方添加的 execve 系统调用？</p>
+<p>最后看一下官方的修复手段：</p>
+<p>下载比较新的固件(1.03 以上)，用 Ghidra 打开，直接定位到存在漏洞的函数附近：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/CNVD-2018-01084-8.png"
+                     
+                ></p>
+<p>发现函数的参数传递变成了 文件路径 + 参数形式。进入函数内部：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/CNVD-2018-01084-9.png"
+                     
+                ></p>
+<p>修复手段简单粗暴，直接 fork 出一个新的进程，然后关闭 stdout，利用 execl 执行命令。</p>
+<p>由于 execl 的特性，我们再注入的命令就无效了。例如下面两个程序：</p>
+<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;execl test\n&quot;</span>);</span><br><span class="line">        <span class="type">char</span>* var1 = <span class="string">&quot;/bin/ls&quot;</span>;</span><br><span class="line">        <span class="type">char</span>* var2 = <span class="string">&quot;ls&quot;</span>;</span><br><span class="line">        <span class="type">char</span>* var3 = <span class="string">&quot;-la&quot;</span>;</span><br><span class="line">        <span class="type">char</span>* var4 = <span class="string">&quot;/etc/passwd&quot;</span>;</span><br><span class="line">        <span class="type">int</span> ret = execl(var1, var2, var3, var4, (<span class="type">char</span>*)<span class="number">0</span>);</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;execl test\n&quot;</span>);</span><br><span class="line">        <span class="type">char</span>* var1 = <span class="string">&quot;/bin/ls&quot;</span>;</span><br><span class="line">        <span class="type">char</span>* var2 = <span class="string">&quot;ls&quot;</span>;</span><br><span class="line">        <span class="type">char</span>* var3 = <span class="string">&quot;-la&quot;</span>;</span><br><span class="line">        <span class="type">char</span>* var4 = <span class="string">&quot;/etc/passwd&amp;ls&amp;&quot;</span>;</span><br><span class="line">        <span class="type">int</span> ret = execl(var1, var2, var3, var4, (<span class="type">char</span>*)<span class="number">0</span>);</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure></div>
+
+<p>大家可以自行编译运行查看结果。</p>
+
+		</div>
+
+		
+		<div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+			<div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> CNVD-2018-01084 漏洞复现</li>
+        <li><strong>Author:</strong> Catalpa</li>
+        <li><strong>Created at
+                :</strong> 2019-09-05 00:00:00</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2024-10-17 08:39:33
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://wzt.ac.cn/2019/09/05/CNVD-2018-01084/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+		</div>
+		
+
+		
+
+		
+
+		
+		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+			
+			<div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="prev" rel="prev" href="/2019/09/18/D-Link_BUG/">
+					<span class="left arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-left"></i>
+					</span>
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item">家用路由器固件常用解包方法 &amp; D-Link DIR-878 BUGS</span>
+						<span class="post-nav-item">Prev posts</span>
+					</span>
+				</a>
+			</div>
+			
+			
+			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="next" rel="next" href="/2019/09/01/hello-world/">
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item">欢迎！</span>
+						<span class="post-nav-item">Next posts</span>
+					</span>
+					<span class="right arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-right"></i>
+					</span>
+				</a>
+			</div>
+			
+		</div>
+		
+
+
+		
+	</div>
+
+	
+	<div class="toc-content-container">
+		<div class="post-toc-wrap">
+	<div class="post-toc">
+		<div class="toc-title">On this page</div>
+		<div class="page-title">CNVD-2018-01084 漏洞复现</div>
+		<ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="nav-text">环境搭建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%86%E5%90%91%E5%88%86%E6%9E%90"><span class="nav-text">逆向分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%83%E8%AF%95"><span class="nav-text">调试</span></a></li></ol>
+
+	</div>
+</div>
+	</div>
+	
+</div>
+			</div>
+
+			
+		</div>
+
+		<div class="main-content-footer">
+			<footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2018</span>
+              -
+            
+            2025&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Catalpa</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        69 posts in total
+                    </span>
+                    
+                        <span>
+                            261.4k words in total
+                        </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.8.2</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+		</div>
+	</div>
+
+	
+	<div class="post-tools">
+		<div class="post-tools-container">
+	<ul class="article-tools-list">
+		<!-- TOC aside toggle -->
+		
+		<li class="right-bottom-tools page-aside-toggle">
+			<i class="fa-regular fa-outdent"></i>
+		</li>
+		
+
+		<!-- go comment -->
+		
+	</ul>
+</div>
+	</div>
+	
+
+	<div class="right-side-tools-container">
+		<div class="side-tools-container">
+	<ul class="hidden-tools-list">
+		<li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-plus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-minus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+			<i class="fa-regular fa-moon"></i>
+		</li>
+
+		<!-- rss -->
+		
+
+		
+
+		<li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+			<i class="fa-regular fa-arrow-down"></i>
+		</li>
+	</ul>
+
+	<ul class="visible-tools-list">
+		<li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+			<i class="fa-regular fa-cog fa-spin"></i>
+		</li>
+		
+		<li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+			<i class="arrow-up fas fa-arrow-up"></i>
+			<span class="percent"></span>
+		</li>
+		
+		
+	</ul>
+</div>
+	</div>
+
+	<div class="image-viewer-container">
+	<img src="">
+</div>
+
+	
+	<div class="search-pop-overlay">
+	<div class="popup search-popup">
+		<div class="search-header">
+			<span class="search-input-field-pre">
+				<i class="fa-solid fa-keyboard"></i>
+			</span>
+			<div class="search-input-container">
+				<input autocomplete="off" autocorrect="off" autocapitalize="off" placeholder="Search..." spellcheck="false" type="search" class="search-input">
+			</div>
+			<span class="popup-btn-close">
+				<i class="fa-solid fa-times"></i>
+			</span>
+		</div>
+		<div id="search-result">
+			<div id="no-result">
+				<i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+			</div>
+		</div>
+	</div>
+</div>
+	
+
+</main>
+
+
+
+<script src="/js/build/libs/Swup.min.js"></script>
+
+<script src="/js/build/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/build/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+	
+<script src="/js/build/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/build/utils.js" type="module"></script>
+
+<script src="/js/build/main.js" type="module"></script>
+
+<script src="/js/build/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/build/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/build/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/build/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/build/tools/localSearch.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/tools/runtime.js"></script>
+
+    
+<script src="/js/build/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/build/libs/Typed.min.js"></script>
+
+  
+<script src="/js/build/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+    
+<script src="/js/build/libs/anime.min.js"></script>
+
+
+
+
+
+    
+<script src="/js/build/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+<script src="/js/build/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+
+<script src="/js/build/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+
+	
+</body>
+
+</html>

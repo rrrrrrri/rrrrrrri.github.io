@@ -1,1 +1,912 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="keywords" content="Hexo Theme Redefine"><meta name="author" content="Catalpa"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="canonical" href="https://wzt.ac.cn/2021/05/12/vm_shell/"><meta name="robots" content="index,follow"><meta name="googlebot" content="index,follow"><meta name="revisit-after" content="1 days"><meta name="description" content="前端时间碰到一些网络设备，它们可以以虚拟机形式进行安装部署，在分析此类设备的时候，获取一个 root shell 会更加方便，但是大部分设备镜像中都设置了自定义的 cli 作为 jail，防止用户直接访问到 linux sh，提高设备安全性。现总结一些获取虚拟机设备 root shell 的方法，分享给大家。"><meta property="og:type" content="article"><meta property="og:title" content="一些虚拟机获取 shell 的方法"><meta property="og:url" content="https://wzt.ac.cn/2021/05/12/vm_shell/index.html"><meta property="og:site_name" content="Catalpa&#39;s Site"><meta property="og:description" content="前端时间碰到一些网络设备，它们可以以虚拟机形式进行安装部署，在分析此类设备的时候，获取一个 root shell 会更加方便，但是大部分设备镜像中都设置了自定义的 cli 作为 jail，防止用户直接访问到 linux sh，提高设备安全性。现总结一些获取虚拟机设备 root shell 的方法，分享给大家。"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://wzt.ac.cn/img/vmshell-1.png"><meta property="og:image" content="https://wzt.ac.cn/img/vmshell-2.png"><meta property="og:image" content="https://wzt.ac.cn/img/vmshell-3.png"><meta property="og:image" content="https://wzt.ac.cn/img/vmshell-4.png"><meta property="og:image" content="https://wzt.ac.cn/img/vmshell-5.png"><meta property="og:image" content="https://wzt.ac.cn/img/vmshell-6.png"><meta property="og:image" content="https://wzt.ac.cn/img/vmshell-7.png"><meta property="article:published_time" content="2021-05-11T16:00:00.000Z"><meta property="article:modified_time" content="2024-10-17T00:56:10.077Z"><meta property="article:author" content="Catalpa"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://wzt.ac.cn/img/vmshell-1.png"><link rel="icon" type="image/png" href="/img/favicon.ico" sizes="192x192"><link rel="apple-touch-icon" sizes="180x180" href="/img/favicon.ico"><meta name="theme-color" content="#A31F34"><link rel="shortcut icon" href="/img/favicon.ico"><title>一些虚拟机获取 shell 的方法 | Catalpa&#39;s Site</title><link rel="stylesheet" href="/fonts/Chillax/chillax.css"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/build/tailwind.css"><link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css"><link rel="stylesheet" href="/fonts/Geist/geist.css"><script id="hexo-configurations">window.config={hostname:"wzt.ac.cn",root:"/",language:"en",path:"search.xml"},window.theme={articles:{style:{font_size:"16px",line_height:1.5,image_border_radius:"14px",image_alignment:"center",image_caption:!1,link_icon:!0,delete_mask:!1,title_alignment:"left",headings_top_spacing:{h1:"3.2rem",h2:"2.4rem",h3:"1.9rem",h4:"1.6rem",h5:"1.4rem",h6:"1.3rem"}},word_count:{enable:!0,count:!0,min2read:!0},author_label:{enable:!0,auto:!1,list:["网络安全爱好者"]},code_block:{copy:!0,style:"mac",highlight_theme:{light:"github",dark:"vs2015"},font:{enable:!1,family:null,url:null}},toc:{enable:!0,max_depth:3,number:!1,expand:!0,init_open:!0},copyright:{enable:!0,default:"cc_by_sa"},lazyload:!0,pangu_js:!1,recommendation:{enable:!1,title:"推荐阅读",limit:3,mobile_limit:2,placeholder:"/images/wallhaven-wqery6-light.webp",skip_dirs:[]}},colors:{primary:"#A31F34",secondary:null,default_mode:"light"},global:{fonts:{chinese:{enable:!1,family:null,url:null},english:{enable:!1,family:null,url:null},title:{enable:!1,family:null,url:null}},content_max_width:"1000px",sidebar_width:"210px",hover:{shadow:!0,scale:!1},scroll_progress:{bar:!1,percentage:!0},website_counter:{url:"https://cn.vercount.one/js",enable:!0,site_pv:!0,site_uv:!0,post_pv:!0},single_page:!0,preloader:{enable:!1,custom_message:null},open_graph:!0,google_analytics:{enable:!1,id:null}},home_banner:{enable:!0,style:"fixed",image:{light:"/img/bk.jpg",dark:"/img/bk.jpg"},title:"Welcome!",subtitle:{text:["欢迎来到本站!","今天有什么新鲜事吗?","知识不应该是付费的!","持续学习 持续进步","网络安全爱好者","非常感谢您的捐赠!","祝您拥有美好的一天!"],hitokoto:{enable:!1,show_author:!1,api:"https://v1.hitokoto.cn"},typing_speed:100,backing_speed:80,starting_delay:500,backing_delay:1500,loop:!0,smart_backspace:!0},text_color:{light:"#fff",dark:"#d1d1b6"},text_style:{title_size:"2.8rem",subtitle_size:"1.5rem",line_height:1.2},custom_font:{enable:!1,family:null,url:null},social_links:{enable:!0,style:"default",links:{github:"https://github.com/rrrrrrri",instagram:null,zhihu:null,twitter:null,email:"anu11@foxmail.com"},qrs:{weixin:null,"fa-solid fa-hand-holding-dollar":"/img/w.png"}}},plugins:{feed:{enable:!1},aplayer:{enable:!1,type:"fixed",audios:[{name:null,artist:null,url:null,cover:null,lrc:null}]},mermaid:{enable:!1,version:"9.3.0"}},version:"2.8.2",navbar:{auto_hide:!1,color:{left:"#f78736",right:"#367df7",transparency:35},width:{home:"1200px",pages:"1000px"},links:{Home:{path:"/",icon:"fa-regular fa-house"},"归档":{path:"/archives",icon:"fa-regular fa-archive"},"感谢捐赠":{path:"/donates",icon:"fa-solid fa-hand-holding-dollar"}},search:{enable:!0,preload:!0}},page_templates:{friends_column:2,tags_style:"blur"},home:{sidebar:{enable:!0,position:"left",first_item:"menu",announcement:"读者有责任遵守其所在国家或地区的所有法律，作者不对使用其文章中提到的任何内容所造成的任何损害负责。",show_on_mobile:!0,links:null},article_date_format:"auto",excerpt_length:200,categories:{enable:!1,limit:3},tags:{enable:!1,limit:3}},footerStart:"2018/9/1 08:00:00"},window.lang_ago={second:"%s seconds ago",minute:"%s minutes ago",hour:"%s hours ago",day:"%s days ago",week:"%s weeks ago",month:"%s months ago",year:"%s years ago"},window.data={masonry:!1}</script><link rel="stylesheet" href="/fontawesome/fontawesome.min.css"><link rel="stylesheet" href="/fontawesome/brands.min.css"><link rel="stylesheet" href="/fontawesome/solid.min.css"><link rel="stylesheet" href="/fontawesome/regular.min.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div class="progress-bar-container"><span class="pjax-progress-bar"></span></div><main class="page-container" id="swup"><div class="main-content-container flex flex-col justify-between min-h-dvh"><div class="main-content-header"><header class="navbar-container px-6 md:px-12"><div class="navbar-content transition-navbar"><div class="left"><a class="logo-image h-8 w-8 sm:w-10 sm:h-10 mr-3" href="/"><img src="/img/favicon.ico" class="w-full h-full rounded-sm"> </a><a class="logo-title" href="/">Catalpa&#39;s Site</a></div><div class="right"><div class="desktop"><ul class="navbar-list"><li class="navbar-item"><a href="/"><i class="fa-regular fa-house fa-fw"></i> HOME</a></li><li class="navbar-item"><a href="/archives"><i class="fa-regular fa-archive fa-fw"></i> 归档</a></li><li class="navbar-item"><a href="/donates"><i class="fa-solid fa-hand-holding-dollar fa-fw"></i> 感谢捐赠</a></li><li class="navbar-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></li></ul></div><div class="mobile"><div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div><div class="icon-item navbar-bar"><div class="navbar-bar-middle"></div></div></div></div></div><div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between"><ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start"><li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full"><a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full" href="/"><span>HOME </span><i class="fa-regular fa-house fa-sm fa-fw"></i></a></li><li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full"><a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full" href="/archives"><span>归档 </span><i class="fa-regular fa-archive fa-sm fa-fw"></i></a></li><li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full"><a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full" href="/donates"><span>感谢捐赠 </span><i class="fa-solid fa-hand-holding-dollar fa-sm fa-fw"></i></a></li></ul><div class="statistics flex justify-around my-2.5"><a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags"><div class="number text-2xl sm:text-xl text-second-text-color font-semibold">0</div><div class="label text-third-text-color text-sm">Tags</div></a><a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories"><div class="number text-2xl sm:text-xl text-second-text-color font-semibold">4</div><div class="label text-third-text-color text-sm">Categories</div></a><a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives"><div class="number text-2xl sm:text-xl text-second-text-color font-semibold">68</div><div class="label text-third-text-color text-sm">Posts</div></a></div></div><div class="window-mask"></div></header></div><div class="main-content-body transition-fade-up"><div class="main-content"><div class="post-page-container flex relative justify-between box-border w-full h-full"><div class="article-content-container"><div class="article-title relative w-full"><div class="w-full flex items-center pt-6 justify-start"><h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">一些虚拟机获取 shell 的方法</h1></div></div><div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8"><div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]"><img src="/img/logo.png"></div><div class="info flex flex-col justify-between"><div class="author flex items-center"><span class="name text-default-text-color text-lg font-semibold">Catalpa</span> <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">网络安全爱好者</span></div><div class="meta-info"><div class="article-meta-info"><span class="article-date article-meta-item"><i class="fa-regular fa-pen-fancy"></i>&nbsp; <span class="desktop">2021-05-12</span> <span class="mobile">2021-05-12</span> <span class="hover-info">Created</span> </span><span class="article-date article-meta-item"><i class="fa-regular fa-wrench"></i>&nbsp; <span class="desktop">2024-10-17 08:56:10</span> <span class="mobile">2024-10-17 08:56:10</span> <span class="hover-info">Updated</span> </span><span class="article-categories article-meta-item"><i class="fa-regular fa-folders"></i>&nbsp;<ul><li><a href="/categories/MISC/">MISC</a>&nbsp;</li></ul></span><span class="article-wordcount article-meta-item"><i class="fa-regular fa-typewriter"></i>&nbsp;<span>2.3k Words</span> </span><span class="article-min2read article-meta-item"><i class="fa-regular fa-clock"></i>&nbsp;<span>9 Mins</span> </span><span class="article-pv article-meta-item"><i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span></span></div></div></div></div><div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8"><p>前端时间碰到一些网络设备，它们可以以虚拟机形式进行安装部署，在分析此类设备的时候，获取一个 root shell 会更加方便，但是大部分设备镜像中都设置了自定义的 cli 作为 jail，防止用户直接访问到 linux sh，提高设备安全性。现总结一些获取虚拟机设备 root shell 的方法，分享给大家。</p><span id="more"></span><h2 id="shell-提权"><a href="#shell-提权" class="headerlink" title="shell 提权"></a>shell 提权</h2><p>某些设备没有内置自定义的 cli 程序，但是它们默认提供的 shell 权限较低，此时可以考虑通过某些历史漏洞进行提权，获取 root 权限，例如前段时间爆出的 sudo 堆溢出漏洞等，由于设备内核版本普遍不高，一般都可以成功提权。</p><h2 id="cli-自带的功能"><a href="#cli-自带的功能" class="headerlink" title="cli 自带的功能"></a>cli 自带的功能</h2><p>为了更方便的维护设备，cli jail 中可能会添加一些特殊的命令，通过执行这些命令就能获取 linux sh，以 Citrix Netscaler 为例，其 cli 提供了 shell 命令，直接执行就可以获取 linux shell</p><p><img lazyload src="/images/loading.svg" data-src="/img/vmshell-1.png"></p><p>另外例如 check point Gateway，可使用 set expert-password 设置专家模式密码，然后用 expert 命令进入专家模式，所谓专家模式就是 linux root shell。</p><p><img lazyload src="/images/loading.svg" data-src="/img/vmshell-2.png"></p><p>所以遇到一款新设备应该先查看其 cli 命令手册，看看是否存在能够直接获取 root shell 的命令。</p><h2 id="利用历史漏洞获取-shell"><a href="#利用历史漏洞获取-shell" class="headerlink" title="利用历史漏洞获取 shell"></a>利用历史漏洞获取 shell</h2><p>通过查看历史 CVE 或官方漏洞通告信息，可以发现一些 cli jail 存在命令注入&#x2F;逃逸的问题，通过利用这些历史漏洞就能拿到 linux shell。</p><p><a class="link" target="_blank" rel="noopener" href="https://repo.zenk-security.com/Conferences/HITB/D2T1%20-%20Felix%20Wilhelm%20-%20Attacking%20Next%20Generation%20Firewalls.pdf">参考资料<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p><h2 id="解包修改文件系统"><a href="#解包修改文件系统" class="headerlink" title="解包修改文件系统"></a>解包修改文件系统</h2><p>前提：磁盘文件没有加密</p><p>cli jail 背后对应着某个程序，通过解包文件系统，我们可以尝试修改这个 jail 程序或者直接在初始化脚本等位置添加代码，例如启动 telnet 或者反弹 shell 来实现逃逸。</p><p>需要注意的是系统可能对 file system 进行检测，如果发现文件被修改则拒绝启动，此时有两种解决方案。</p><ol><li>修改 vmtools 相关文件，位于 &#x2F;etc&#x2F;vmware-tools 目录下的 vmtools 脚本文件属于第三方代码，厂商可能不会对它们进行检查。</li><li>修改文件系统检测程序，这种方式需要对程序进行逆向分析，尝试定位具体的检查逻辑。</li></ol><h2 id="rbash-逃逸思路"><a href="#rbash-逃逸思路" class="headerlink" title="rbash 逃逸思路"></a>rbash 逃逸思路</h2><p>某些 cli jail 中可使用部分正常的 linux 命令，例如 find、more 等，方便用户操作，其中某些 linux 命令可用于逃逸，例如 find 的 exec 参数</p><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -exec /bin/bash \;</span><br></pre></td></tr></table></figure></div><p>more 的 subshell，在交互式界面使用感叹号执行命令</p><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">catalpa@CataLpa:/$ cat /bin/bash | more</span><br><span class="line">ELFxxxxxxxx</span><br><span class="line">--More--    // press h</span><br><span class="line">Most commands optionally preceded by integer argument k.  Defaults in brackets.</span><br><span class="line">Star (*) indicates argument becomes new default.</span><br><span class="line">-------------------------------------------------------------------------------</span><br><span class="line">&lt;space&gt;                 Display next k lines of text [current screen size]</span><br><span class="line">z                       Display next k lines of text [current screen size]*</span><br><span class="line">&lt;return&gt;                Display next k lines of text [1]*</span><br><span class="line">d or ctrl-D             Scroll k lines [current scroll size, initially 11]*</span><br><span class="line">q or Q or &lt;interrupt&gt;   Exit from more</span><br><span class="line">s                       Skip forward k lines of text [1]</span><br><span class="line">f                       Skip forward k screenfuls of text [1]</span><br><span class="line">b or ctrl-B             Skip backwards k screenfuls of text [1]</span><br><span class="line">&#x27;                       Go to place where previous search started</span><br><span class="line">=                       Display current line number</span><br><span class="line">/&lt;regular expression&gt;   Search for kth occurrence of regular expression [1]</span><br><span class="line">n                       Search for kth occurrence of last r.e [1]</span><br><span class="line">!&lt;cmd&gt; or :!&lt;cmd&gt;       Execute &lt;cmd&gt; in a subshell</span><br><span class="line">v                       Start up /usr/bin/vi at current line</span><br><span class="line">ctrl-L                  Redraw screen</span><br><span class="line">:n                      Go to kth next file [1]</span><br><span class="line">:p                      Go to kth previous file [1]</span><br><span class="line">:f                      Display current file name and line number</span><br><span class="line">.                       Repeat previous command</span><br><span class="line">-------------------------------------------------------------------------------</span><br><span class="line">!uname -a</span><br><span class="line">Linux CataLpa 4.4.0-19041-Microsoft #488-Microsoft Mon Sep 01 13:43:00 PST 2020 x86_64 x86_64 x86_64 GNU/Linux</span><br><span class="line">------------------------</span><br></pre></td></tr></table></figure></div><p>less 的 MISCELLANEOUS COMMANDS，可以使用 !command 或 |Xcommand 等执行命令</p><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">---------------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">                   MISCELLANEOUS COMMANDS</span><br><span class="line"></span><br><span class="line"> -&lt;flag&gt;              Toggle a command line option [see OPTIONS below].</span><br><span class="line"> --&lt;name&gt;             Toggle a command line option, by name.</span><br><span class="line"> _&lt;flag&gt;              Display the setting of a command line option.</span><br><span class="line"> __&lt;name&gt;             Display the setting of an option, by name.</span><br><span class="line"> +cmd                 Execute the less cmd each time a new file is examined.</span><br><span class="line"></span><br><span class="line"> !command             Execute the shell command with $SHELL.</span><br><span class="line"> |Xcommand            Pipe file between current pos &amp; mark X to shell command.</span><br><span class="line"> s file               Save input to a file.</span><br><span class="line"> v                    Edit the current file with $VISUAL or $EDITOR.</span><br><span class="line"> V                    Print version number of &quot;less&quot;.</span><br><span class="line">---------------------------------------------------------------------------</span><br></pre></td></tr></table></figure></div><p>还有一些方法可参考<a class="link" target="_blank" rel="noopener" href="https://www.exploit-db.com/docs/english/44592-linux-restricted-shell-bypass-guide.pdf">此文章<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>。</p><h2 id="虚拟机调试"><a href="#虚拟机调试" class="headerlink" title="虚拟机调试"></a>虚拟机调试</h2><p>blackhat DEVCORE 团队成员的议题中提到的一种方法。首先要大概了解 linux 系统的启动引导流程，详情可以参考此<a class="link" target="_blank" rel="noopener" href="https://blog.csdn.net/star19830909/article/details/88235535">文章<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>。简单来说，Linux 启动时，主要做了以下操作:</p><ol><li>BIOS 运行，执行 POST，硬件自检。</li><li>硬件自检通过，BIOS 在磁盘查找引导记录，并加载到内存执行 (MBR)。</li><li>引导记录启动引导加载器，常用的加载器包括 GRUB、GRUB2、LILO 等。</li><li>引导加载器在磁盘寻找内核文件并装载到内存，将控制权转移到内核继续执行。</li><li>内核通常是自解压文件，文件名带有 vmlinuz 前缀，内核负责完成剩余的启动流程。</li></ol><p>关键在于 vmlinuz 内核初始化操作中，详细流程可参考此<a class="link" target="_blank" rel="noopener" href="https://blog.csdn.net/zxygww/article/details/49154859">文章<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>。</p><p>在初始化流程中最后一步，内核会执行 init_post 函数，此时内核初始化接近尾声，此函数主要用于启动用户空间中的 init 进程，代码如下</p><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">int</span> noinline <span class="title function_">init_post</span><span class="params">(<span class="type">void</span>)</span>  </span><br><span class="line">&#123;  </span><br><span class="line">    free_initmem();  </span><br><span class="line">    unlock_kernel();  </span><br><span class="line">    mark_rodata_ro();  </span><br><span class="line">    system_state = SYSTEM_RUNNING;  </span><br><span class="line">    numa_default_policy();  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">if</span> (sys_open((<span class="type">const</span> <span class="type">char</span> __user *) <span class="string">&quot;/dev/console&quot;</span>, O_RDWR, <span class="number">0</span>) &lt; <span class="number">0</span>)  </span><br><span class="line">        printk(KERN_WARNING <span class="string">&quot;Warning: unable to open an initial console.\n&quot;</span>);  </span><br><span class="line">  </span><br><span class="line">    (<span class="type">void</span>) sys_dup(<span class="number">0</span>);  </span><br><span class="line">    (<span class="type">void</span>) sys_dup(<span class="number">0</span>);  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">if</span> (ramdisk_execute_command) &#123;  </span><br><span class="line">        run_init_process(ramdisk_execute_command);  </span><br><span class="line">        printk(KERN_WARNING <span class="string">&quot;Failed to execute %s\n&quot;</span>,  </span><br><span class="line">                ramdisk_execute_command);  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="comment">/*  </span></span><br><span class="line"><span class="comment">     * We try each of these until one succeeds.  </span></span><br><span class="line"><span class="comment">     *  </span></span><br><span class="line"><span class="comment">     * The Bourne shell can be used instead of init if we are  </span></span><br><span class="line"><span class="comment">     * trying to recover a really broken machine.  </span></span><br><span class="line"><span class="comment">     */</span>  </span><br><span class="line">    <span class="keyword">if</span> (execute_command) &#123;  </span><br><span class="line">        run_init_process(execute_command);  </span><br><span class="line">        printk(KERN_WARNING <span class="string">&quot;Failed to execute %s.  Attempting &quot;</span>  </span><br><span class="line">                    <span class="string">&quot;defaults...\n&quot;</span>, execute_command);  </span><br><span class="line">    &#125;  </span><br><span class="line">    run_init_process(<span class="string">&quot;/sbin/init&quot;</span>);  </span><br><span class="line">    run_init_process(<span class="string">&quot;/etc/init&quot;</span>);  </span><br><span class="line">    run_init_process(<span class="string">&quot;/bin/init&quot;</span>);  </span><br><span class="line">    run_init_process(<span class="string">&quot;/bin/sh&quot;</span>);  </span><br><span class="line">  </span><br><span class="line">    panic(<span class="string">&quot;No init found.  Try passing init= option to kernel.&quot;</span>);  </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure></div><p>我们可以看到在函数末尾包含 4 个 run_init_process，分别尝试执行 &#x2F;sbin&#x2F;init、&#x2F;etc&#x2F;init、&#x2F;bin&#x2F;init、&#x2F;bin&#x2F;sh，通常文件系统中都会包含 &#x2F;sbin&#x2F;init，它会作为用户空间的第一个进程执行剩余的初始化操作。</p><p>所以，如果我们能够修改 run_init_process 的参数，例如将 &#x2F;sbin&#x2F;init 修改成 &#x2F;bin&#x2F;sh，或者劫持内核的流程到 run_init_process(“&#x2F;bin&#x2F;sh”)，可能就会得到一个 linux shell。</p><p>为了实现上述操作，要解决几个问题。</p><p><strong>如何对内核进行 debug</strong></p><p>vmware workstation 提供了虚拟机调试接口，官方文档指出只需要在虚拟机的 vmx 文件中添加以下选项，即可在外部使用 gdb 附加到虚拟机上，从而实现对虚拟机的调试</p><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">debugStub.listen.guest64 = &quot;TRUE&quot;</span><br><span class="line">debugStub.listen.guest64.remote = &quot;TRUE&quot;</span><br><span class="line">debugStub.port.guest64 = &quot;12345&quot;</span><br><span class="line">debugStub.listen.guest32 = &quot;TRUE&quot;</span><br><span class="line">debugStub.listen.guest32.remote = &quot;TRUE&quot;</span><br><span class="line">debugStub.port.guest32 = &quot;12346&quot;</span><br></pre></td></tr></table></figure></div><p><strong>如何定位 init_post 函数代码</strong></p><p>某些设备 vmdk 未加密，可以直接从中解出 vmlinuz 内核文件，通过解压 vmdk 文件获取 vmlinuz 内核。</p><p>获取内核之后需要进一步处理，将格式转换为 elf 方便分析，已经有大佬开发了工具 <a class="link" target="_blank" rel="noopener" href="https://github.com/marin-m/vmlinux-to-elf">vmlinux-to-elf<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>，直接转换即可。</p><p>修复的内核用 IDA 分析，搜索字符串能够定位 &#x2F;sbin&#x2F;init，交叉引用记下 init_post 函数的地址。</p><p>如果 vmdk 无法解出内核文件，请参考下文。</p><p><strong>修改内存</strong></p><p>以 fortiweb 虚拟机为例，首先在 vmware 中导入 ovf 文件，如图</p><p><img lazyload src="/images/loading.svg" data-src="/img/vmshell-3.png"></p><p>虚拟机库中选择导入的虚拟机，右键打开虚拟机目录，找到 .vmx 配置文件，用文本编辑器打开。</p><p>在文件末尾添加配置并保存</p><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">debugStub.listen.guest64 = &quot;TRUE&quot;</span><br><span class="line">debugStub.listen.guest64.remote = &quot;TRUE&quot;</span><br><span class="line">debugStub.port.guest64 = &quot;12345&quot;</span><br><span class="line">debugStub.listen.guest32 = &quot;TRUE&quot;</span><br><span class="line">debugStub.listen.guest32.remote = &quot;TRUE&quot;</span><br><span class="line">debugStub.port.guest32 = &quot;12346&quot;</span><br></pre></td></tr></table></figure></div><p>在宿主机打开终端，开启 gdb。windows 下推荐使用 wsl，在 wsl 中启动 gdb 即可。</p><p>vmware 启动虚拟机，同时在 gdb 中执行命令</p><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">target remote 0:12345</span><br></pre></td></tr></table></figure></div><p>注：附加的时间要仔细调整，太早会由于调试桥的原因导致 gdb 附加失败，太晚又会错过 init_post 阶段。</p><p>当出现以下信息说明附加正确。</p><p><img lazyload src="/images/loading.svg" data-src="/img/vmshell-4.png"></p><p>大多数内核中地址都形如 0xffffffff8xxxxxxx。附加成功后根据之前得到的 init_post 函数地址下断点，然后继续运行。如果无法获得内核文件，可以直接从内存中搜索，执行命令</p><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find 0xffffffff80000000, 0xffffffff81000000, &quot;/sbin/init&quot;</span><br></pre></td></tr></table></figure></div><p>如果提示 Unable to access 16010 bytes，说明开始地址太小，可逐渐调整直到能够正常搜索。</p><p>如果搜索正确会出现以下信息</p><p><img lazyload src="/images/loading.svg" data-src="/img/vmshell-5.png"></p><p>查看此处内存内容</p><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x /10s 0xffffffff80f7df37</span><br></pre></td></tr></table></figure></div><p><img lazyload src="/images/loading.svg" data-src="/img/vmshell-6.png"></p><p>修改字符串信息</p><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set &#123;char [8]&#125; 0xffffffff80f7df37 = &quot;/bin/sh&quot;</span><br></pre></td></tr></table></figure></div><p>之后 continue 让内核继续执行，如果操作无误就得到一个 linux shell。</p><p><img lazyload src="/images/loading.svg" data-src="/img/vmshell-7.png"></p><p>需要注意的是由于我们修改了用户空间的 init 为 sh，所以此时系统是没有完全初始化的，现在可进行固件导出操作，也可以尝试修改 vmtools 或者其他操作来在下一次开机时获取完整的 shell。</p><h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a class="link" target="_blank" rel="noopener" href="https://repo.zenk-security.com/Conferences/HITB/D2T1%20-%20Felix%20Wilhelm%20-%20Attacking%20Next%20Generation%20Firewalls.pdf">Attacking NextGeneration Firewalls<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p><p><a class="link" target="_blank" rel="noopener" href="https://www.exploit-db.com/docs/english/44592-linux-restricted-shell-bypass-guide.pdf">Linux Restricted Shell Bypass<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p><p><a class="link" target="_blank" rel="noopener" href="https://blog.csdn.net/zxygww/article/details/49154859">Linux启动流程解析：init_post函数<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p><p><a class="link" target="_blank" rel="noopener" href="https://blog.csdn.net/star19830909/article/details/88235535">Linux 开机引导和启动过程详解<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p><p><a class="link" target="_blank" rel="noopener" href="https://github.com/marin-m/vmlinux-to-elf">vmlinux-to-elf<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p><p><a class="link" target="_blank" rel="noopener" href="https://i.blackhat.com/USA-19/Wednesday/us-19-Tsai-Infiltrating-Corporate-Intranet-Like-NSA.pdf">Infiltrating Corporate Intranet Like NSA<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p></div><div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8"><div class="article-copyright-info-container"><ul><li><strong>Title:</strong> 一些虚拟机获取 shell 的方法</li><li><strong>Author:</strong> Catalpa</li><li><strong>Created at :</strong> 2021-05-12 00:00:00</li><li><strong>Updated at :</strong> 2024-10-17 08:56:10</li><li><strong>Link:</strong> https://wzt.ac.cn/2021/05/12/vm_shell/</li><li><strong>License: </strong>This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a>.</li></ul></div></div><div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8"><div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2"><a class="prev" rel="prev" href="/2021/05/28/QEMU-networking/"><span class="left arrow-icon flex justify-center items-center"><i class="fa-solid fa-chevron-left"></i> </span><span class="title flex justify-center items-center"><span class="post-nav-title-item">QEMU 网络配置一把梭</span> <span class="post-nav-item">Prev posts</span></span></a></div><div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2"><a class="next" rel="next" href="/2021/01/17/DCS-960L/"><span class="title flex justify-center items-center"><span class="post-nav-title-item">Dlink DCS-960L 漏洞复现</span> <span class="post-nav-item">Next posts</span> </span><span class="right arrow-icon flex justify-center items-center"><i class="fa-solid fa-chevron-right"></i></span></a></div></div></div><div class="toc-content-container"><div class="post-toc-wrap"><div class="post-toc"><div class="toc-title">On this page</div><div class="page-title">一些虚拟机获取 shell 的方法</div><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#shell-%E6%8F%90%E6%9D%83"><span class="nav-text">shell 提权</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cli-%E8%87%AA%E5%B8%A6%E7%9A%84%E5%8A%9F%E8%83%BD"><span class="nav-text">cli 自带的功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A9%E7%94%A8%E5%8E%86%E5%8F%B2%E6%BC%8F%E6%B4%9E%E8%8E%B7%E5%8F%96-shell"><span class="nav-text">利用历史漏洞获取 shell</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%8C%85%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="nav-text">解包修改文件系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rbash-%E9%80%83%E9%80%B8%E6%80%9D%E8%B7%AF"><span class="nav-text">rbash 逃逸思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E6%9C%BA%E8%B0%83%E8%AF%95"><span class="nav-text">虚拟机调试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-text">Reference</span></a></li></ol></div></div></div></div></div></div><div class="main-content-footer"><footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color"><div class="info-container py-3 text-center"><div class="text-center">&copy; <span>2018</span> - 2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration:0.5s;color:#f54545"></i>&nbsp;&nbsp;<a href="/">Catalpa</a><p class="post-count space-x-0.5"><span>68 posts in total </span><span>258.4k words in total</span></p></div><script data-swup-reload-script src="https://cn.vercount.one/js"></script><div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right"><span id="busuanzi_container_site_uv" class="lg:!block"><span class="text-sm">VISITOR COUNT</span> <span id="busuanzi_value_site_uv"></span> </span><span id="busuanzi_container_site_pv" class="lg:!block"><span class="text-sm">TOTAL PAGE VIEWS</span> <span id="busuanzi_value_site_pv"></span></span></div><div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left"><span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span> <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.8.2</a></span></div><div>Blog up for <span class="odometer" id="runtime_days"></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec</div><script data-swup-reload-script>try{function odometer_init(){document.querySelectorAll(".odometer").forEach(e=>{new Odometer({el:e,format:"( ddd).dd",duration:200})})}odometer_init()}catch(e){}</script></div></footer></div></div><div class="post-tools"><div class="post-tools-container"><ul class="article-tools-list"><li class="right-bottom-tools page-aside-toggle"><i class="fa-regular fa-outdent"></i></li></ul></div></div><div class="right-side-tools-container"><div class="side-tools-container"><ul class="hidden-tools-list"><li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center"><i class="fa-regular fa-magnifying-glass-plus"></i></li><li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center"><i class="fa-regular fa-magnifying-glass-minus"></i></li><li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center"><i class="fa-regular fa-moon"></i></li><li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center"><i class="fa-regular fa-arrow-down"></i></li></ul><ul class="visible-tools-list"><li class="right-bottom-tools toggle-tools-list flex justify-center items-center"><i class="fa-regular fa-cog fa-spin"></i></li><li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center"><i class="arrow-up fas fa-arrow-up"></i> <span class="percent"></span></li></ul></div></div><div class="image-viewer-container"><img src=""></div><div class="search-pop-overlay"><div class="popup search-popup"><div class="search-header"><span class="search-input-field-pre"><i class="fa-solid fa-keyboard"></i></span><div class="search-input-container"><input autocomplete="off" autocorrect="off" autocapitalize="off" placeholder="Search..." spellcheck="false" type="search" class="search-input"></div><span class="popup-btn-close"><i class="fa-solid fa-times"></i></span></div><div id="search-result"><div id="no-result"><i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i></div></div></div></div></main><script src="/js/build/libs/Swup.min.js"></script><script src="/js/build/libs/SwupSlideTheme.min.js"></script><script src="/js/build/libs/SwupScriptsPlugin.min.js"></script><script src="/js/build/libs/SwupProgressPlugin.min.js"></script><script src="/js/build/libs/SwupScrollPlugin.min.js"></script><script src="/js/build/libs/SwupPreloadPlugin.min.js"></script><script>const swup=new Swup({plugins:[new SwupScriptsPlugin({optin:!0}),new SwupProgressPlugin,new SwupScrollPlugin({offset:80}),new SwupSlideTheme({mainElement:".main-content-body"}),new SwupPreloadPlugin],containers:["#swup"]})</script><script src="/js/build/tools/imageViewer.js" type="module"></script><script src="/js/build/utils.js" type="module"></script><script src="/js/build/main.js" type="module"></script><script src="/js/build/layouts/navbarShrink.js" type="module"></script><script src="/js/build/tools/scrollTopBottom.js" type="module"></script><script src="/js/build/tools/lightDarkSwitch.js" type="module"></script><script src="/js/build/layouts/categoryList.js" type="module"></script><script src="/js/build/tools/localSearch.js" type="module"></script><script src="/js/build/tools/codeBlock.js" type="module"></script><script src="/js/build/layouts/lazyload.js" type="module"></script><script src="/js/build/tools/runtime.js"></script><script src="/js/build/libs/odometer.min.js"></script><link rel="stylesheet" href="/assets/odometer-theme-minimal.css"><script src="/js/build/libs/Typed.min.js"></script><script src="/js/build/plugins/typed.js" type="module"></script><script src="/js/build/libs/anime.min.js"></script><script src="/js/build/tools/tocToggle.js" type="module" data-swup-reload-script=""></script><script src="/js/build/layouts/toc.js" type="module" data-swup-reload-script=""></script><script src="/js/build/plugins/tabs.js" type="module" data-swup-reload-script=""></script><script src="/js/build/libs/moment-with-locales.min.js" data-swup-reload-script=""></script><script src="/js/build/layouts/essays.js" type="module" data-swup-reload-script=""></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Catalpa">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="https://wzt.ac.cn/2021/05/12/vm_shell/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+    
+    
+        
+        <meta name="description" content="前端时间碰到一些网络设备，它们可以以虚拟机形式进行安装部署，在分析此类设备的时候，获取一个 root shell 会更加方便，但是大部分设备镜像中都设置了自定义的 cli 作为 jail，防止用户直接访问到 linux sh，提高设备安全性。现总结一些获取虚拟机设备 root shell 的方法，分享给大家。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一些虚拟机获取 shell 的方法">
+<meta property="og:url" content="https://wzt.ac.cn/2021/05/12/vm_shell/index.html">
+<meta property="og:site_name" content="Catalpa&#39;s Site">
+<meta property="og:description" content="前端时间碰到一些网络设备，它们可以以虚拟机形式进行安装部署，在分析此类设备的时候，获取一个 root shell 会更加方便，但是大部分设备镜像中都设置了自定义的 cli 作为 jail，防止用户直接访问到 linux sh，提高设备安全性。现总结一些获取虚拟机设备 root shell 的方法，分享给大家。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://wzt.ac.cn/img/vmshell-1.png">
+<meta property="og:image" content="https://wzt.ac.cn/img/vmshell-2.png">
+<meta property="og:image" content="https://wzt.ac.cn/img/vmshell-3.png">
+<meta property="og:image" content="https://wzt.ac.cn/img/vmshell-4.png">
+<meta property="og:image" content="https://wzt.ac.cn/img/vmshell-5.png">
+<meta property="og:image" content="https://wzt.ac.cn/img/vmshell-6.png">
+<meta property="og:image" content="https://wzt.ac.cn/img/vmshell-7.png">
+<meta property="article:published_time" content="2021-05-11T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-10-17T00:56:10.077Z">
+<meta property="article:author" content="Catalpa">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wzt.ac.cn/img/vmshell-1.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/img/favicon.ico" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon.ico">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <!--- Page Info-->
+    
+    <title>
+        
+            一些虚拟机获取 shell 的方法 | Catalpa&#39;s Site
+        
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/tailwind.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"wzt.ac.cn","root":"/","language":"en","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"delete_mask":false,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":["网络安全爱好者"]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_sa"},"lazyload":true,"pangu_js":false,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/img/bk.jpg","dark":"/img/bk.jpg"},"title":"Welcome!","subtitle":{"text":["欢迎来到本站!","今天有什么新鲜事吗?","知识不应该是付费的!","持续学习 持续进步","网络安全爱好者","非常感谢您的捐赠!","祝您拥有美好的一天!"],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"style":"default","links":{"github":"https://github.com/rrrrrrri","instagram":null,"zhihu":null,"twitter":null,"email":"anu11@foxmail.com"},"qrs":{"weixin":null,"fa-solid fa-hand-holding-dollar":"/img/w.png"}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.8.2","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"归档":{"path":"/archives","icon":"fa-regular fa-archive"},"感谢捐赠":{"path":"/donates","icon":"fa-solid fa-hand-holding-dollar"}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":"读者有责任遵守其所在国家或地区的所有法律，作者不对使用其文章中提到的任何内容所造成的任何损害负责。","show_on_mobile":true,"links":null},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":false,"limit":3},"tags":{"enable":false,"limit":3}},"footerStart":"2018/9/1 08:00:00"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+
+<body>
+	<div class="progress-bar-container">
+	
+
+	
+	<span class="pjax-progress-bar"></span>
+	<!--        <span class="swup-progress-icon">-->
+	<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+	<!--        </span>-->
+	
+</div>
+
+<main class="page-container" id="swup">
+
+	
+
+	<div class="main-content-container flex flex-col justify-between min-h-dvh">
+		<div class="main-content-header">
+			<header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+                <a class="logo-image h-8 w-8 sm:w-10 sm:h-10 mr-3" href="/">
+                    <img src="/img/favicon.ico" class="w-full h-full rounded-sm">
+                </a>
+            
+            <a class="logo-title" href="/">
+                
+                Catalpa&#39;s Site
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/archives"
+                                        >
+                                    <i class="fa-regular fa-archive fa-fw"></i>
+                                    归档
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/donates"
+                                        >
+                                    <i class="fa-solid fa-hand-holding-dollar fa-fw"></i>
+                                    感谢捐赠
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/archives"
+                        >
+                            <span>
+                                归档
+                            </span>
+                            
+                                <i class="fa-regular fa-archive fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/donates"
+                        >
+                            <span>
+                                感谢捐赠
+                            </span>
+                            
+                                <i class="fa-solid fa-hand-holding-dollar fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">0</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">4</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">69</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+		</div>
+
+		<div class="main-content-body transition-fade-up">
+			
+
+			<div class="main-content">
+				<div class="post-page-container flex relative justify-between box-border w-full h-full">
+	<div class="article-content-container">
+
+		<div class="article-title relative w-full">
+			
+			<div class="w-full flex items-center pt-6 justify-start">
+				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">一些虚拟机获取 shell 的方法</h1>
+			</div>
+			
+		</div>
+
+		
+		<div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+			<div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+				<img src="/img/logo.png">
+			</div>
+			<div class="info flex flex-col justify-between">
+				<div class="author flex items-center">
+					<span class="name text-default-text-color text-lg font-semibold">Catalpa</span>
+					
+					<span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">网络安全爱好者</span>
+					
+				</div>
+				<div class="meta-info">
+					<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2021-05-12</span>
+        <span class="mobile">2021-05-12</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-10-17 08:56:10</span>
+            <span class="mobile">2024-10-17 08:56:10</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/MISC/">MISC</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>2.3k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>9 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+				</div>
+			</div>
+		</div>
+		
+
+		
+
+
+		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+			<p>前端时间碰到一些网络设备，它们可以以虚拟机形式进行安装部署，在分析此类设备的时候，获取一个 root shell 会更加方便，但是大部分设备镜像中都设置了自定义的 cli 作为 jail，防止用户直接访问到 linux sh，提高设备安全性。现总结一些获取虚拟机设备 root shell 的方法，分享给大家。</p>
+<span id="more"></span>
+
+<h2 id="shell-提权"><a href="#shell-提权" class="headerlink" title="shell 提权"></a>shell 提权</h2><p>某些设备没有内置自定义的 cli 程序，但是它们默认提供的 shell 权限较低，此时可以考虑通过某些历史漏洞进行提权，获取 root 权限，例如前段时间爆出的 sudo 堆溢出漏洞等，由于设备内核版本普遍不高，一般都可以成功提权。</p>
+<h2 id="cli-自带的功能"><a href="#cli-自带的功能" class="headerlink" title="cli 自带的功能"></a>cli 自带的功能</h2><p>为了更方便的维护设备，cli jail 中可能会添加一些特殊的命令，通过执行这些命令就能获取 linux sh，以 Citrix Netscaler 为例，其 cli 提供了 shell 命令，直接执行就可以获取 linux shell</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/vmshell-1.png"
+                     
+                ></p>
+<p>另外例如 check point Gateway，可使用 set expert-password 设置专家模式密码，然后用 expert 命令进入专家模式，所谓专家模式就是 linux root shell。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/vmshell-2.png"
+                     
+                ></p>
+<p>所以遇到一款新设备应该先查看其 cli 命令手册，看看是否存在能够直接获取 root shell 的命令。</p>
+<h2 id="利用历史漏洞获取-shell"><a href="#利用历史漏洞获取-shell" class="headerlink" title="利用历史漏洞获取 shell"></a>利用历史漏洞获取 shell</h2><p>通过查看历史 CVE 或官方漏洞通告信息，可以发现一些 cli jail 存在命令注入&#x2F;逃逸的问题，通过利用这些历史漏洞就能拿到 linux shell。</p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://repo.zenk-security.com/Conferences/HITB/D2T1%20-%20Felix%20Wilhelm%20-%20Attacking%20Next%20Generation%20Firewalls.pdf" >参考资料<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<h2 id="解包修改文件系统"><a href="#解包修改文件系统" class="headerlink" title="解包修改文件系统"></a>解包修改文件系统</h2><p>前提：磁盘文件没有加密</p>
+<p>cli jail 背后对应着某个程序，通过解包文件系统，我们可以尝试修改这个 jail 程序或者直接在初始化脚本等位置添加代码，例如启动 telnet 或者反弹 shell 来实现逃逸。</p>
+<p>需要注意的是系统可能对 file system 进行检测，如果发现文件被修改则拒绝启动，此时有两种解决方案。</p>
+<ol>
+<li>修改 vmtools 相关文件，位于 &#x2F;etc&#x2F;vmware-tools 目录下的 vmtools 脚本文件属于第三方代码，厂商可能不会对它们进行检查。</li>
+<li>修改文件系统检测程序，这种方式需要对程序进行逆向分析，尝试定位具体的检查逻辑。</li>
+</ol>
+<h2 id="rbash-逃逸思路"><a href="#rbash-逃逸思路" class="headerlink" title="rbash 逃逸思路"></a>rbash 逃逸思路</h2><p>某些 cli jail 中可使用部分正常的 linux 命令，例如 find、more 等，方便用户操作，其中某些 linux 命令可用于逃逸，例如 find 的 exec 参数</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -exec /bin/bash \;</span><br></pre></td></tr></table></figure></div>
+
+<p>more 的 subshell，在交互式界面使用感叹号执行命令</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">catalpa@CataLpa:/$ cat /bin/bash | more</span><br><span class="line">ELFxxxxxxxx</span><br><span class="line">--More--    // press h</span><br><span class="line">Most commands optionally preceded by integer argument k.  Defaults in brackets.</span><br><span class="line">Star (*) indicates argument becomes new default.</span><br><span class="line">-------------------------------------------------------------------------------</span><br><span class="line">&lt;space&gt;                 Display next k lines of text [current screen size]</span><br><span class="line">z                       Display next k lines of text [current screen size]*</span><br><span class="line">&lt;return&gt;                Display next k lines of text [1]*</span><br><span class="line">d or ctrl-D             Scroll k lines [current scroll size, initially 11]*</span><br><span class="line">q or Q or &lt;interrupt&gt;   Exit from more</span><br><span class="line">s                       Skip forward k lines of text [1]</span><br><span class="line">f                       Skip forward k screenfuls of text [1]</span><br><span class="line">b or ctrl-B             Skip backwards k screenfuls of text [1]</span><br><span class="line">&#x27;                       Go to place where previous search started</span><br><span class="line">=                       Display current line number</span><br><span class="line">/&lt;regular expression&gt;   Search for kth occurrence of regular expression [1]</span><br><span class="line">n                       Search for kth occurrence of last r.e [1]</span><br><span class="line">!&lt;cmd&gt; or :!&lt;cmd&gt;       Execute &lt;cmd&gt; in a subshell</span><br><span class="line">v                       Start up /usr/bin/vi at current line</span><br><span class="line">ctrl-L                  Redraw screen</span><br><span class="line">:n                      Go to kth next file [1]</span><br><span class="line">:p                      Go to kth previous file [1]</span><br><span class="line">:f                      Display current file name and line number</span><br><span class="line">.                       Repeat previous command</span><br><span class="line">-------------------------------------------------------------------------------</span><br><span class="line">!uname -a</span><br><span class="line">Linux CataLpa 4.4.0-19041-Microsoft #488-Microsoft Mon Sep 01 13:43:00 PST 2020 x86_64 x86_64 x86_64 GNU/Linux</span><br><span class="line">------------------------</span><br></pre></td></tr></table></figure></div>
+
+<p>less 的 MISCELLANEOUS COMMANDS，可以使用 !command 或 |Xcommand 等执行命令</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">---------------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">                   MISCELLANEOUS COMMANDS</span><br><span class="line"></span><br><span class="line"> -&lt;flag&gt;              Toggle a command line option [see OPTIONS below].</span><br><span class="line"> --&lt;name&gt;             Toggle a command line option, by name.</span><br><span class="line"> _&lt;flag&gt;              Display the setting of a command line option.</span><br><span class="line"> __&lt;name&gt;             Display the setting of an option, by name.</span><br><span class="line"> +cmd                 Execute the less cmd each time a new file is examined.</span><br><span class="line"></span><br><span class="line"> !command             Execute the shell command with $SHELL.</span><br><span class="line"> |Xcommand            Pipe file between current pos &amp; mark X to shell command.</span><br><span class="line"> s file               Save input to a file.</span><br><span class="line"> v                    Edit the current file with $VISUAL or $EDITOR.</span><br><span class="line"> V                    Print version number of &quot;less&quot;.</span><br><span class="line">---------------------------------------------------------------------------</span><br></pre></td></tr></table></figure></div>
+
+<p>还有一些方法可参考<a class="link"   target="_blank" rel="noopener" href="https://www.exploit-db.com/docs/english/44592-linux-restricted-shell-bypass-guide.pdf" >此文章<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>。</p>
+<h2 id="虚拟机调试"><a href="#虚拟机调试" class="headerlink" title="虚拟机调试"></a>虚拟机调试</h2><p>blackhat DEVCORE 团队成员的议题中提到的一种方法。首先要大概了解 linux 系统的启动引导流程，详情可以参考此<a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/star19830909/article/details/88235535" >文章<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>。简单来说，Linux 启动时，主要做了以下操作:</p>
+<ol>
+<li>BIOS 运行，执行 POST，硬件自检。</li>
+<li>硬件自检通过，BIOS 在磁盘查找引导记录，并加载到内存执行 (MBR)。</li>
+<li>引导记录启动引导加载器，常用的加载器包括 GRUB、GRUB2、LILO 等。</li>
+<li>引导加载器在磁盘寻找内核文件并装载到内存，将控制权转移到内核继续执行。</li>
+<li>内核通常是自解压文件，文件名带有 vmlinuz 前缀，内核负责完成剩余的启动流程。</li>
+</ol>
+<p>关键在于 vmlinuz 内核初始化操作中，详细流程可参考此<a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/zxygww/article/details/49154859" >文章<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>。</p>
+<p>在初始化流程中最后一步，内核会执行 init_post 函数，此时内核初始化接近尾声，此函数主要用于启动用户空间中的 init 进程，代码如下</p>
+<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">int</span> noinline <span class="title function_">init_post</span><span class="params">(<span class="type">void</span>)</span>  </span><br><span class="line">&#123;  </span><br><span class="line">    free_initmem();  </span><br><span class="line">    unlock_kernel();  </span><br><span class="line">    mark_rodata_ro();  </span><br><span class="line">    system_state = SYSTEM_RUNNING;  </span><br><span class="line">    numa_default_policy();  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">if</span> (sys_open((<span class="type">const</span> <span class="type">char</span> __user *) <span class="string">&quot;/dev/console&quot;</span>, O_RDWR, <span class="number">0</span>) &lt; <span class="number">0</span>)  </span><br><span class="line">        printk(KERN_WARNING <span class="string">&quot;Warning: unable to open an initial console.\n&quot;</span>);  </span><br><span class="line">  </span><br><span class="line">    (<span class="type">void</span>) sys_dup(<span class="number">0</span>);  </span><br><span class="line">    (<span class="type">void</span>) sys_dup(<span class="number">0</span>);  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">if</span> (ramdisk_execute_command) &#123;  </span><br><span class="line">        run_init_process(ramdisk_execute_command);  </span><br><span class="line">        printk(KERN_WARNING <span class="string">&quot;Failed to execute %s\n&quot;</span>,  </span><br><span class="line">                ramdisk_execute_command);  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="comment">/*  </span></span><br><span class="line"><span class="comment">     * We try each of these until one succeeds.  </span></span><br><span class="line"><span class="comment">     *  </span></span><br><span class="line"><span class="comment">     * The Bourne shell can be used instead of init if we are  </span></span><br><span class="line"><span class="comment">     * trying to recover a really broken machine.  </span></span><br><span class="line"><span class="comment">     */</span>  </span><br><span class="line">    <span class="keyword">if</span> (execute_command) &#123;  </span><br><span class="line">        run_init_process(execute_command);  </span><br><span class="line">        printk(KERN_WARNING <span class="string">&quot;Failed to execute %s.  Attempting &quot;</span>  </span><br><span class="line">                    <span class="string">&quot;defaults...\n&quot;</span>, execute_command);  </span><br><span class="line">    &#125;  </span><br><span class="line">    run_init_process(<span class="string">&quot;/sbin/init&quot;</span>);  </span><br><span class="line">    run_init_process(<span class="string">&quot;/etc/init&quot;</span>);  </span><br><span class="line">    run_init_process(<span class="string">&quot;/bin/init&quot;</span>);  </span><br><span class="line">    run_init_process(<span class="string">&quot;/bin/sh&quot;</span>);  </span><br><span class="line">  </span><br><span class="line">    panic(<span class="string">&quot;No init found.  Try passing init= option to kernel.&quot;</span>);  </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure></div>
+
+<p>我们可以看到在函数末尾包含 4 个 run_init_process，分别尝试执行 &#x2F;sbin&#x2F;init、&#x2F;etc&#x2F;init、&#x2F;bin&#x2F;init、&#x2F;bin&#x2F;sh，通常文件系统中都会包含 &#x2F;sbin&#x2F;init，它会作为用户空间的第一个进程执行剩余的初始化操作。</p>
+<p>所以，如果我们能够修改 run_init_process 的参数，例如将 &#x2F;sbin&#x2F;init 修改成 &#x2F;bin&#x2F;sh，或者劫持内核的流程到 run_init_process(“&#x2F;bin&#x2F;sh”)，可能就会得到一个 linux shell。</p>
+<p>为了实现上述操作，要解决几个问题。</p>
+<p><strong>如何对内核进行 debug</strong></p>
+<p>vmware workstation 提供了虚拟机调试接口，官方文档指出只需要在虚拟机的 vmx 文件中添加以下选项，即可在外部使用 gdb 附加到虚拟机上，从而实现对虚拟机的调试</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">debugStub.listen.guest64 = &quot;TRUE&quot;</span><br><span class="line">debugStub.listen.guest64.remote = &quot;TRUE&quot;</span><br><span class="line">debugStub.port.guest64 = &quot;12345&quot;</span><br><span class="line">debugStub.listen.guest32 = &quot;TRUE&quot;</span><br><span class="line">debugStub.listen.guest32.remote = &quot;TRUE&quot;</span><br><span class="line">debugStub.port.guest32 = &quot;12346&quot;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>如何定位 init_post 函数代码</strong></p>
+<p>某些设备 vmdk 未加密，可以直接从中解出 vmlinuz 内核文件，通过解压 vmdk 文件获取 vmlinuz 内核。</p>
+<p>获取内核之后需要进一步处理，将格式转换为 elf 方便分析，已经有大佬开发了工具 <a class="link"   target="_blank" rel="noopener" href="https://github.com/marin-m/vmlinux-to-elf" >vmlinux-to-elf<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>，直接转换即可。</p>
+<p>修复的内核用 IDA 分析，搜索字符串能够定位 &#x2F;sbin&#x2F;init，交叉引用记下 init_post 函数的地址。</p>
+<p>如果 vmdk 无法解出内核文件，请参考下文。</p>
+<p><strong>修改内存</strong></p>
+<p>以 fortiweb 虚拟机为例，首先在 vmware 中导入 ovf 文件，如图</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/vmshell-3.png"
+                     
+                ></p>
+<p>虚拟机库中选择导入的虚拟机，右键打开虚拟机目录，找到 .vmx 配置文件，用文本编辑器打开。</p>
+<p>在文件末尾添加配置并保存</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">debugStub.listen.guest64 = &quot;TRUE&quot;</span><br><span class="line">debugStub.listen.guest64.remote = &quot;TRUE&quot;</span><br><span class="line">debugStub.port.guest64 = &quot;12345&quot;</span><br><span class="line">debugStub.listen.guest32 = &quot;TRUE&quot;</span><br><span class="line">debugStub.listen.guest32.remote = &quot;TRUE&quot;</span><br><span class="line">debugStub.port.guest32 = &quot;12346&quot;</span><br></pre></td></tr></table></figure></div>
+
+<p>在宿主机打开终端，开启 gdb。windows 下推荐使用 wsl，在 wsl 中启动 gdb 即可。</p>
+<p>vmware 启动虚拟机，同时在 gdb 中执行命令</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">target remote 0:12345</span><br></pre></td></tr></table></figure></div>
+
+<p>注：附加的时间要仔细调整，太早会由于调试桥的原因导致 gdb 附加失败，太晚又会错过 init_post 阶段。</p>
+<p>当出现以下信息说明附加正确。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/vmshell-4.png"
+                     
+                ></p>
+<p>大多数内核中地址都形如 0xffffffff8xxxxxxx。附加成功后根据之前得到的 init_post 函数地址下断点，然后继续运行。如果无法获得内核文件，可以直接从内存中搜索，执行命令</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find 0xffffffff80000000, 0xffffffff81000000, &quot;/sbin/init&quot;</span><br></pre></td></tr></table></figure></div>
+
+<p>如果提示  Unable to access 16010 bytes，说明开始地址太小，可逐渐调整直到能够正常搜索。</p>
+<p>如果搜索正确会出现以下信息</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/vmshell-5.png"
+                     
+                ></p>
+<p>查看此处内存内容</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x /10s 0xffffffff80f7df37</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/vmshell-6.png"
+                     
+                ></p>
+<p>修改字符串信息</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set &#123;char [8]&#125; 0xffffffff80f7df37 = &quot;/bin/sh&quot;</span><br></pre></td></tr></table></figure></div>
+
+<p>之后 continue 让内核继续执行，如果操作无误就得到一个 linux shell。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/vmshell-7.png"
+                     
+                ></p>
+<p>需要注意的是由于我们修改了用户空间的 init 为 sh，所以此时系统是没有完全初始化的，现在可进行固件导出操作，也可以尝试修改 vmtools 或者其他操作来在下一次开机时获取完整的 shell。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a class="link"   target="_blank" rel="noopener" href="https://repo.zenk-security.com/Conferences/HITB/D2T1%20-%20Felix%20Wilhelm%20-%20Attacking%20Next%20Generation%20Firewalls.pdf" >Attacking NextGeneration Firewalls<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://www.exploit-db.com/docs/english/44592-linux-restricted-shell-bypass-guide.pdf" >Linux Restricted Shell Bypass<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/zxygww/article/details/49154859" >Linux启动流程解析：init_post函数<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/star19830909/article/details/88235535" >Linux 开机引导和启动过程详解<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://github.com/marin-m/vmlinux-to-elf" >vmlinux-to-elf<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://i.blackhat.com/USA-19/Wednesday/us-19-Tsai-Infiltrating-Corporate-Intranet-Like-NSA.pdf" >Infiltrating Corporate Intranet Like NSA<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+
+		</div>
+
+		
+		<div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+			<div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> 一些虚拟机获取 shell 的方法</li>
+        <li><strong>Author:</strong> Catalpa</li>
+        <li><strong>Created at
+                :</strong> 2021-05-12 00:00:00</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2024-10-17 08:56:10
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://wzt.ac.cn/2021/05/12/vm_shell/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+		</div>
+		
+
+		
+
+		
+
+		
+		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+			
+			<div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="prev" rel="prev" href="/2021/05/28/QEMU-networking/">
+					<span class="left arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-left"></i>
+					</span>
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item">QEMU 网络配置一把梭</span>
+						<span class="post-nav-item">Prev posts</span>
+					</span>
+				</a>
+			</div>
+			
+			
+			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="next" rel="next" href="/2021/01/17/DCS-960L/">
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item">Dlink DCS-960L 漏洞复现</span>
+						<span class="post-nav-item">Next posts</span>
+					</span>
+					<span class="right arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-right"></i>
+					</span>
+				</a>
+			</div>
+			
+		</div>
+		
+
+
+		
+	</div>
+
+	
+	<div class="toc-content-container">
+		<div class="post-toc-wrap">
+	<div class="post-toc">
+		<div class="toc-title">On this page</div>
+		<div class="page-title">一些虚拟机获取 shell 的方法</div>
+		<ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#shell-%E6%8F%90%E6%9D%83"><span class="nav-text">shell 提权</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cli-%E8%87%AA%E5%B8%A6%E7%9A%84%E5%8A%9F%E8%83%BD"><span class="nav-text">cli 自带的功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A9%E7%94%A8%E5%8E%86%E5%8F%B2%E6%BC%8F%E6%B4%9E%E8%8E%B7%E5%8F%96-shell"><span class="nav-text">利用历史漏洞获取 shell</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%8C%85%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="nav-text">解包修改文件系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rbash-%E9%80%83%E9%80%B8%E6%80%9D%E8%B7%AF"><span class="nav-text">rbash 逃逸思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E6%9C%BA%E8%B0%83%E8%AF%95"><span class="nav-text">虚拟机调试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-text">Reference</span></a></li></ol>
+
+	</div>
+</div>
+	</div>
+	
+</div>
+			</div>
+
+			
+		</div>
+
+		<div class="main-content-footer">
+			<footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2018</span>
+              -
+            
+            2025&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Catalpa</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        69 posts in total
+                    </span>
+                    
+                        <span>
+                            261.4k words in total
+                        </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.8.2</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+		</div>
+	</div>
+
+	
+	<div class="post-tools">
+		<div class="post-tools-container">
+	<ul class="article-tools-list">
+		<!-- TOC aside toggle -->
+		
+		<li class="right-bottom-tools page-aside-toggle">
+			<i class="fa-regular fa-outdent"></i>
+		</li>
+		
+
+		<!-- go comment -->
+		
+	</ul>
+</div>
+	</div>
+	
+
+	<div class="right-side-tools-container">
+		<div class="side-tools-container">
+	<ul class="hidden-tools-list">
+		<li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-plus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-minus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+			<i class="fa-regular fa-moon"></i>
+		</li>
+
+		<!-- rss -->
+		
+
+		
+
+		<li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+			<i class="fa-regular fa-arrow-down"></i>
+		</li>
+	</ul>
+
+	<ul class="visible-tools-list">
+		<li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+			<i class="fa-regular fa-cog fa-spin"></i>
+		</li>
+		
+		<li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+			<i class="arrow-up fas fa-arrow-up"></i>
+			<span class="percent"></span>
+		</li>
+		
+		
+	</ul>
+</div>
+	</div>
+
+	<div class="image-viewer-container">
+	<img src="">
+</div>
+
+	
+	<div class="search-pop-overlay">
+	<div class="popup search-popup">
+		<div class="search-header">
+			<span class="search-input-field-pre">
+				<i class="fa-solid fa-keyboard"></i>
+			</span>
+			<div class="search-input-container">
+				<input autocomplete="off" autocorrect="off" autocapitalize="off" placeholder="Search..." spellcheck="false" type="search" class="search-input">
+			</div>
+			<span class="popup-btn-close">
+				<i class="fa-solid fa-times"></i>
+			</span>
+		</div>
+		<div id="search-result">
+			<div id="no-result">
+				<i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+			</div>
+		</div>
+	</div>
+</div>
+	
+
+</main>
+
+
+
+<script src="/js/build/libs/Swup.min.js"></script>
+
+<script src="/js/build/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/build/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+	
+<script src="/js/build/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/build/utils.js" type="module"></script>
+
+<script src="/js/build/main.js" type="module"></script>
+
+<script src="/js/build/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/build/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/build/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/build/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/build/tools/localSearch.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/tools/runtime.js"></script>
+
+    
+<script src="/js/build/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/build/libs/Typed.min.js"></script>
+
+  
+<script src="/js/build/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+    
+<script src="/js/build/libs/anime.min.js"></script>
+
+
+
+
+
+    
+<script src="/js/build/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+<script src="/js/build/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+
+<script src="/js/build/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+
+	
+</body>
+
+</html>

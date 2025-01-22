@@ -1,1 +1,1009 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="keywords" content="Hexo Theme Redefine"><meta name="author" content="Catalpa"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="canonical" href="https://wzt.ac.cn/2022/02/08/sonicwall_dec1/"><meta name="robots" content="index,follow"><meta name="googlebot" content="index,follow"><meta name="revisit-after" content="1 days"><meta name="description" content="12本文由作者首发于安全客：https:&#x2F;&#x2F;www.anquanke.com&#x2F;post&#x2F;id&#x2F;266078转载请注明出处"><meta property="og:type" content="article"><meta property="og:title" content="SonicOS 固件解密 (1)"><meta property="og:url" content="https://wzt.ac.cn/2022/02/08/sonicwall_dec1/index.html"><meta property="og:site_name" content="Catalpa&#39;s Site"><meta property="og:description" content="12本文由作者首发于安全客：https:&#x2F;&#x2F;www.anquanke.com&#x2F;post&#x2F;id&#x2F;266078转载请注明出处"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://wzt.ac.cn/img/nsv-dec-1.png"><meta property="og:image" content="https://wzt.ac.cn/img/nsv-dec-2.png"><meta property="og:image" content="https://wzt.ac.cn/img/nsv-dec-3.png"><meta property="og:image" content="https://wzt.ac.cn/img/nsv-dec-4.png"><meta property="og:image" content="https://wzt.ac.cn/img/nsv-dec-5.png"><meta property="og:image" content="https://wzt.ac.cn/img/nsv-dec-6.png"><meta property="og:image" content="https://wzt.ac.cn/img/nsv-dec-7.png"><meta property="og:image" content="https://wzt.ac.cn/img/nsv-dec-8.png"><meta property="og:image" content="https://wzt.ac.cn/img/nsv-dec-9.png"><meta property="og:image" content="https://wzt.ac.cn/img/nsv-dec-10.png"><meta property="og:image" content="https://wzt.ac.cn/img/nsv-dec-14.png"><meta property="og:image" content="https://wzt.ac.cn/img/nsv-dec-15.png"><meta property="og:image" content="https://wzt.ac.cn/img/nsv-dec-16.png"><meta property="og:image" content="https://wzt.ac.cn/img/nsv-dec-17.png"><meta property="og:image" content="https://wzt.ac.cn/img/nsv-dec-18.png"><meta property="og:image" content="https://wzt.ac.cn/img/nsv-dec-19.png"><meta property="og:image" content="https://wzt.ac.cn/img/nsv-dec-20.png"><meta property="article:published_time" content="2022-02-07T16:00:00.000Z"><meta property="article:modified_time" content="2024-10-17T00:55:10.109Z"><meta property="article:author" content="Catalpa"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://wzt.ac.cn/img/nsv-dec-1.png"><link rel="icon" type="image/png" href="/img/favicon.ico" sizes="192x192"><link rel="apple-touch-icon" sizes="180x180" href="/img/favicon.ico"><meta name="theme-color" content="#A31F34"><link rel="shortcut icon" href="/img/favicon.ico"><title>SonicOS 固件解密 (1) | Catalpa&#39;s Site</title><link rel="stylesheet" href="/fonts/Chillax/chillax.css"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/build/tailwind.css"><link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css"><link rel="stylesheet" href="/fonts/Geist/geist.css"><script id="hexo-configurations">window.config={hostname:"wzt.ac.cn",root:"/",language:"en",path:"search.xml"},window.theme={articles:{style:{font_size:"16px",line_height:1.5,image_border_radius:"14px",image_alignment:"center",image_caption:!1,link_icon:!0,delete_mask:!1,title_alignment:"left",headings_top_spacing:{h1:"3.2rem",h2:"2.4rem",h3:"1.9rem",h4:"1.6rem",h5:"1.4rem",h6:"1.3rem"}},word_count:{enable:!0,count:!0,min2read:!0},author_label:{enable:!0,auto:!1,list:["网络安全爱好者"]},code_block:{copy:!0,style:"mac",highlight_theme:{light:"github",dark:"vs2015"},font:{enable:!1,family:null,url:null}},toc:{enable:!0,max_depth:3,number:!1,expand:!0,init_open:!0},copyright:{enable:!0,default:"cc_by_sa"},lazyload:!0,pangu_js:!1,recommendation:{enable:!1,title:"推荐阅读",limit:3,mobile_limit:2,placeholder:"/images/wallhaven-wqery6-light.webp",skip_dirs:[]}},colors:{primary:"#A31F34",secondary:null,default_mode:"light"},global:{fonts:{chinese:{enable:!1,family:null,url:null},english:{enable:!1,family:null,url:null},title:{enable:!1,family:null,url:null}},content_max_width:"1000px",sidebar_width:"210px",hover:{shadow:!0,scale:!1},scroll_progress:{bar:!1,percentage:!0},website_counter:{url:"https://cn.vercount.one/js",enable:!0,site_pv:!0,site_uv:!0,post_pv:!0},single_page:!0,preloader:{enable:!1,custom_message:null},open_graph:!0,google_analytics:{enable:!1,id:null}},home_banner:{enable:!0,style:"fixed",image:{light:"/img/bk.jpg",dark:"/img/bk.jpg"},title:"Welcome!",subtitle:{text:["欢迎来到本站!","今天有什么新鲜事吗?","知识不应该是付费的!","持续学习 持续进步","网络安全爱好者","非常感谢您的捐赠!","祝您拥有美好的一天!"],hitokoto:{enable:!1,show_author:!1,api:"https://v1.hitokoto.cn"},typing_speed:100,backing_speed:80,starting_delay:500,backing_delay:1500,loop:!0,smart_backspace:!0},text_color:{light:"#fff",dark:"#d1d1b6"},text_style:{title_size:"2.8rem",subtitle_size:"1.5rem",line_height:1.2},custom_font:{enable:!1,family:null,url:null},social_links:{enable:!0,style:"default",links:{github:"https://github.com/rrrrrrri",instagram:null,zhihu:null,twitter:null,email:"anu11@foxmail.com"},qrs:{weixin:null,"fa-solid fa-hand-holding-dollar":"/img/w.png"}}},plugins:{feed:{enable:!1},aplayer:{enable:!1,type:"fixed",audios:[{name:null,artist:null,url:null,cover:null,lrc:null}]},mermaid:{enable:!1,version:"9.3.0"}},version:"2.8.2",navbar:{auto_hide:!1,color:{left:"#f78736",right:"#367df7",transparency:35},width:{home:"1200px",pages:"1000px"},links:{Home:{path:"/",icon:"fa-regular fa-house"},"归档":{path:"/archives",icon:"fa-regular fa-archive"},"感谢捐赠":{path:"/donates",icon:"fa-solid fa-hand-holding-dollar"}},search:{enable:!0,preload:!0}},page_templates:{friends_column:2,tags_style:"blur"},home:{sidebar:{enable:!0,position:"left",first_item:"menu",announcement:"读者有责任遵守其所在国家或地区的所有法律，作者不对使用其文章中提到的任何内容所造成的任何损害负责。",show_on_mobile:!0,links:null},article_date_format:"auto",excerpt_length:200,categories:{enable:!1,limit:3},tags:{enable:!1,limit:3}},footerStart:"2018/9/1 08:00:00"},window.lang_ago={second:"%s seconds ago",minute:"%s minutes ago",hour:"%s hours ago",day:"%s days ago",week:"%s weeks ago",month:"%s months ago",year:"%s years ago"},window.data={masonry:!1}</script><link rel="stylesheet" href="/fontawesome/fontawesome.min.css"><link rel="stylesheet" href="/fontawesome/brands.min.css"><link rel="stylesheet" href="/fontawesome/solid.min.css"><link rel="stylesheet" href="/fontawesome/regular.min.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div class="progress-bar-container"><span class="pjax-progress-bar"></span></div><main class="page-container" id="swup"><div class="main-content-container flex flex-col justify-between min-h-dvh"><div class="main-content-header"><header class="navbar-container px-6 md:px-12"><div class="navbar-content transition-navbar"><div class="left"><a class="logo-image h-8 w-8 sm:w-10 sm:h-10 mr-3" href="/"><img src="/img/favicon.ico" class="w-full h-full rounded-sm"> </a><a class="logo-title" href="/">Catalpa&#39;s Site</a></div><div class="right"><div class="desktop"><ul class="navbar-list"><li class="navbar-item"><a href="/"><i class="fa-regular fa-house fa-fw"></i> HOME</a></li><li class="navbar-item"><a href="/archives"><i class="fa-regular fa-archive fa-fw"></i> 归档</a></li><li class="navbar-item"><a href="/donates"><i class="fa-solid fa-hand-holding-dollar fa-fw"></i> 感谢捐赠</a></li><li class="navbar-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></li></ul></div><div class="mobile"><div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div><div class="icon-item navbar-bar"><div class="navbar-bar-middle"></div></div></div></div></div><div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between"><ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start"><li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full"><a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full" href="/"><span>HOME </span><i class="fa-regular fa-house fa-sm fa-fw"></i></a></li><li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full"><a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full" href="/archives"><span>归档 </span><i class="fa-regular fa-archive fa-sm fa-fw"></i></a></li><li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full"><a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full" href="/donates"><span>感谢捐赠 </span><i class="fa-solid fa-hand-holding-dollar fa-sm fa-fw"></i></a></li></ul><div class="statistics flex justify-around my-2.5"><a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags"><div class="number text-2xl sm:text-xl text-second-text-color font-semibold">0</div><div class="label text-third-text-color text-sm">Tags</div></a><a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories"><div class="number text-2xl sm:text-xl text-second-text-color font-semibold">4</div><div class="label text-third-text-color text-sm">Categories</div></a><a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives"><div class="number text-2xl sm:text-xl text-second-text-color font-semibold">68</div><div class="label text-third-text-color text-sm">Posts</div></a></div></div><div class="window-mask"></div></header></div><div class="main-content-body transition-fade-up"><div class="main-content"><div class="post-page-container flex relative justify-between box-border w-full h-full"><div class="article-content-container"><div class="article-title relative w-full"><div class="w-full flex items-center pt-6 justify-start"><h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">SonicOS 固件解密 (1)</h1></div></div><div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8"><div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]"><img src="/img/logo.png"></div><div class="info flex flex-col justify-between"><div class="author flex items-center"><span class="name text-default-text-color text-lg font-semibold">Catalpa</span> <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">网络安全爱好者</span></div><div class="meta-info"><div class="article-meta-info"><span class="article-date article-meta-item"><i class="fa-regular fa-pen-fancy"></i>&nbsp; <span class="desktop">2022-02-08</span> <span class="mobile">2022-02-08</span> <span class="hover-info">Created</span> </span><span class="article-date article-meta-item"><i class="fa-regular fa-wrench"></i>&nbsp; <span class="desktop">2024-10-17 08:55:10</span> <span class="mobile">2024-10-17 08:55:10</span> <span class="hover-info">Updated</span> </span><span class="article-categories article-meta-item"><i class="fa-regular fa-folders"></i>&nbsp;<ul><li><a href="/categories/MISC/">MISC</a>&nbsp;</li></ul></span><span class="article-wordcount article-meta-item"><i class="fa-regular fa-typewriter"></i>&nbsp;<span>2.3k Words</span> </span><span class="article-min2read article-meta-item"><i class="fa-regular fa-clock"></i>&nbsp;<span>8 Mins</span> </span><span class="article-pv article-meta-item"><i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span></span></div></div></div></div><div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8"><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">本文由作者首发于安全客：https://www.anquanke.com/post/id/266078</span><br><span class="line">转载请注明出处</span><br></pre></td></tr></table></figure></div><span id="more"></span><p>最近 SonicWall 官方发布了影响 SonicOS 的数个缓冲区溢出漏洞，编号 CVE-2021-20048、CVE-2021-20046 等。在研究复现过程中发现针对此设备的解包思路比较有趣，所以在这里分享给大家。</p><h3 id="固件获取"><a href="#固件获取" class="headerlink" title="固件获取"></a>固件获取</h3><p>该设备固件前段时间可以从 mysonicwall 网站上获取，但目前 sonicwall 下架了 nsv200(SonicOS GEN6) 相关固件，所以这里提供旧版固件的<a class="link" target="_blank" rel="noopener" href="https://pan.baidu.com/s/1O6iyLwHUgyQKSymsaVO7Iw">网盘链接<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>(提取码：1a30)，感兴趣的朋友可以自行下载。</p><h3 id="安装和配置"><a href="#安装和配置" class="headerlink" title="安装和配置"></a>安装和配置</h3><p>用 VMWare 打开 ova 文件，一路确定并等待开机完成。虚拟机会从 DHCP 自动获取到 IP 地址，访问可以看到登录界面：</p><p><img lazyload src="/images/loading.svg" data-src="/img/nsv-dec-1.png"></p><p>默认用户名和密码：admin:password</p><h3 id="解包"><a href="#解包" class="headerlink" title="解包"></a>解包</h3><h4 id="启动分析"><a href="#启动分析" class="headerlink" title="启动分析"></a>启动分析</h4><p>sonicwall nsv 的默认终端是一个自定义 CLI 程序，不提供 Linux root shell，所以想要得到关键文件，必须解包固件。</p><p>查看虚拟机的启动过程，输出很少的信息之后就会出现 sonicwall logo</p><p><img lazyload src="/images/loading.svg" data-src="/img/nsv-dec-2.png"></p><p>厂商使用这种方式遮蔽了系统启动时输出的信息，只能直接从固件下手。</p><p>找到虚拟机的 vmdk 磁盘文件，使用 7-zip 打开，可以看到内部有数个分区文件</p><p><img lazyload src="/images/loading.svg" data-src="/img/nsv-dec-3.png"></p><p>这里也可尝试直接将磁盘挂载到已有的 Linux 虚拟机上，虚拟机设置 -&gt; 添加 -&gt; 硬盘 -&gt; SCSI -&gt; 使用现有虚拟磁盘 -&gt; 选择 sonicwall vmdk 文件 -&gt; 保持现有格式</p><p>挂载之后分区状态如下</p><p><img lazyload src="/images/loading.svg" data-src="/img/nsv-dec-4.png"></p><p>系统识别到 4 个分区，但是全部加密，猜测文件系统就位于其中一个分区内。</p><p>ls 查看 &#x2F;dev&#x2F; 目录下信息，发现还有 sdb1、2 等没有在文件管理器显示出来，尝试手动挂载</p><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mount /dev/sdb1 ./test</span><br></pre></td></tr></table></figure></div><p>第一个分区存放了 BOOT 相关文件，并有一个 coreos 目录，可能是基于开源项目制作的。在 boot 分区中我们发现虚拟机使用了 GRUB 引导系统启动，GRUB 是一个常见的启动引导程序，它具有命令行功能。根据官方文档，当系统引导失败时会自动进入 GRUB 救援模式，可以执行一些和文件系统相关的操作。</p><h4 id="加密方式"><a href="#加密方式" class="headerlink" title="加密方式"></a>加密方式</h4><p>明确了后续思路，我们还需要知道分区的加密方式是什么。</p><p>用 7-zip 解压出其中一个较小的加密分区 OEM.img，然后加载到 16 进制编辑器看到文件开头是 LUKS</p><p><img lazyload src="/images/loading.svg" data-src="/img/nsv-dec-5.png"></p><p>LUKS 是一种磁盘加密标准，nsv 设备使用 LUKS 实现了全盘加密。</p><p>网络上存在一些 LUKS 全盘加密的<a class="link" target="_blank" rel="noopener" href="https://www.ajfriesen.com/decrypt-and-mount-luks-volume-in-grub-rescue-mode/">解密方法<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>，可以进入 GRUB 的救援模式命令行并使用 cryptomount 命令&amp;密码解密。但目前还不知道加密密码是什么，需要研究一下 LUKS 的加密逻辑。</p><p>既然系统可以正常启动，说明在引导阶段就通过某种方式解密了各个分区。参考分区的加密方式，密码应该被保存在 luks 相关的模块中。</p><p>关于 LUKS 解密的具体逻辑可参考它的项目源码，解密关键函数是 grub_crypto_pbkdf2，原型如下</p><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">grub_crypto_pbkdf2 (<span class="type">const</span> <span class="keyword">struct</span> gcry_md_spec *md,</span><br><span class="line">		    <span class="type">const</span> <span class="type">grub_uint8_t</span> *P, <span class="type">grub_size_t</span> Plen,</span><br><span class="line">		    <span class="type">const</span> <span class="type">grub_uint8_t</span> *S, <span class="type">grub_size_t</span> Slen,</span><br><span class="line">		    <span class="type">unsigned</span> <span class="type">int</span> c,</span><br><span class="line">		    <span class="type">grub_uint8_t</span> *DK, <span class="type">grub_size_t</span> dkLen)</span><br></pre></td></tr></table></figure></div><p>其中第二个参数是用于解密分区的密钥。</p><p>在 BOOT 分区搜索正好可以找到 luks.mod 模块，将它解压，然后用 IDA 分析，通过交叉引用找到解密相关代码</p><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">grub_real_dprintf(<span class="string">&quot;disk/luks.c&quot;</span>, <span class="number">246LL</span>, <span class="string">&quot;luks&quot;</span>, <span class="string">&quot;Trying keyslot %d\n&quot;</span>, k);</span><br><span class="line">v32 = grub_crypto_pbkdf2(*(a2 + <span class="number">88</span>), a4, v43, v31, <span class="number">32LL</span>, _byteswap_ulong(*(v31 - <span class="number">1</span>)), v51, v38);</span><br></pre></td></tr></table></figure></div><p>我们看到解密时会输出 log 信息 “Trying keyslot xx”，而变量 a4 应该就是 key。</p><h4 id="提取密钥"><a href="#提取密钥" class="headerlink" title="提取密钥"></a>提取密钥</h4><p>为了解密分区，需要通过某种手段获取模块中的密钥，而密钥又保存在 luks 模块中，所以具体思路是进入 GRUB 命令行，然后加载和解密相关的各个模块，接着利用调试器附加到 luks.mod 上，尝试中断在 grub_crypto_pbkdf2 函数，并提取其参数。</p><p>为了能完成上述操作，首先我们需要一种能够在启动虚拟机后从外部修改文件的方式。这一点可利用 qemu-nbd 实现。</p><p>其次还要支持调试器，用于调试 luks 相关模块。可以利用 Linux 下虚拟化平台 QEMU&#x2F;KVM 虚拟机实现。</p><p><strong>工具配置</strong></p><p>安装 qemu-utils 和 KVM &amp; VMM</p><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install qemu-utils</span><br><span class="line">sudo apt install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils virtinst virt-manager</span><br></pre></td></tr></table></figure></div><p><strong>转换镜像</strong></p><p>vmware 使用的是 vmdk 虚拟磁盘镜像，为了使用 qemu-nbd 修改镜像，首先要把 vmdk 转换成 qcow2 格式。</p><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-img convert -f vmdk ./image.vmdk -O qcow2 sonicwall.qcow2</span><br></pre></td></tr></table></figure></div><p><strong>配置虚拟机</strong></p><p>注：虚拟机需要开启 Intel-VTx 或 AMD-V 支持。</p><p>将转换之后的镜像使用 qemu-nbd 挂载到本地</p><div class="code-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo modprobe nbd max_part=8    <span class="comment"># 加载 nbd 模块</span></span><br><span class="line">sudo qemu-nbd --connect=/dev/nbd0 ./sonicwall.qcow2    <span class="comment"># 挂载镜像</span></span><br><span class="line">sudo fdisk /dev/nbd0 -l    <span class="comment"># 查看分区信息</span></span><br></pre></td></tr></table></figure></div><p><img lazyload src="/images/loading.svg" data-src="/img/nsv-dec-6.png"></p><p>此时已经成功挂载。</p><p>然后导入挂载的镜像到 KVM 虚拟机，在 VMM 中添加一个虚拟机，导入现有磁盘映像 -&gt; 存储路径：&#x2F;dev&#x2F;nbd0</p><p><strong>配置调试接口</strong></p><p>和 vmware 一样，KVM 也支持对虚拟机添加调试接口，在终端输入命令</p><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh edit &lt;虚拟机名称&gt;</span><br></pre></td></tr></table></figure></div><p>进入命令行模式，随意选择一个编辑器修改配置文件。</p><p>修改 &lt;domain type&#x3D;’kvm’&gt; 为</p><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;domain type=&#x27;kvm&#x27;</span><br><span class="line">        xmlns:qemu=&#x27;http://libvirt.org/schemas/domain/qemu/1.0&#x27; &gt;</span><br><span class="line">        &lt;qemu:commandline&gt;</span><br><span class="line">        &lt;qemu:arg value=&#x27;-gdb&#x27;/&gt;</span><br><span class="line">        &lt;qemu:arg value=&#x27;tcp::12345&#x27;/&gt;</span><br><span class="line">        &lt;/qemu:commandline&gt;</span><br></pre></td></tr></table></figure></div><p>这样当虚拟机启动之后就可以用 gdb 附加到 localhost:12345 对其进行调试了。</p><p><strong>进入救援模式</strong></p><p>我们重命名 boot 分区中的一些文件，当 GRUB 引导时就会由于找不到关键文件而进入救援模式。</p><p>首先挂载 nbd 中的 BOOT 分区到本地目录。</p><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mount /dev/nbd0p1 ./test</span><br></pre></td></tr></table></figure></div><p>然后进入 &#x2F;coreos&#x2F;grub 目录，并重命名其中的三个目录</p><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mv i386-pc i386-pc-bak</span><br><span class="line">mv x86_64-efi x86_64-efi-bak</span><br><span class="line">mv x86_64-xen x86_64-xen-bak</span><br><span class="line">sync</span><br><span class="line">sync</span><br></pre></td></tr></table></figure></div><p>启动虚拟机，此时系统会自动进入救援模式。</p><p><img lazyload src="/images/loading.svg" data-src="/img/nsv-dec-7.png"></p><p>这里可用 TAB 键看看有哪些可用的命令。</p><p>ls 命令显示分区列表</p><p><img lazyload src="/images/loading.svg" data-src="/img/nsv-dec-8.png"></p><p><strong>使用解密功能</strong></p><p>解密分区命令为 cryptomount，不过在使用之前需要恢复 BOOT 分区中的目录名。</p><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mv ./i386-pc-bak i386-pc     </span><br><span class="line">mv x86_64-efi-bak x86_64-efi     </span><br><span class="line">mv x86_64-xen-bak x86_64-xen</span><br><span class="line">sync</span><br><span class="line">sync</span><br></pre></td></tr></table></figure></div><p>使用 cryptomount 尝试解密 (hd0,gpt3) 报错</p><p><img lazyload src="/images/loading.svg" data-src="/img/nsv-dec-9.png"></p><p>这是因为相关模块没加载，需要手动将部分模块加载一遍，经过测试，至少要加载 gcry_rijndael、luks、gcry_sha256 三个模块</p><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">insmod luks</span><br><span class="line">insmod gcry_rijndael</span><br><span class="line">insmod gcry_sha256</span><br></pre></td></tr></table></figure></div><p>然后再对 gpt3 分区进行解密</p><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cryptomount (hd0,gpt3)</span><br></pre></td></tr></table></figure></div><p>这样解密成功，还可以加载 ext2 模块并用 ls 命令查看文件系统结构</p><p><img lazyload src="/images/loading.svg" data-src="/img/nsv-dec-10.png"></p><p><strong>调试 luks 模块</strong></p><p>在救援模式下已经成功解密分区，但无法将文件提取出来，所以需要调试 LUKS 模块取得相关密钥，再挂载镜像到普通的 Linux 系统解密。</p><p>重新启动虚拟机，然后另开一个终端，启动 gdb，并附加到当前虚拟机</p><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">target remote 0:12345</span><br><span class="line">continue</span><br></pre></td></tr></table></figure></div><p>加载 gcry_rijndael 等模块，之后通过搜索 LUKS.mod 中特殊字符串来定位关键代码</p><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find 0,0x8000000,&quot;Trying keyslot %d\n&quot;</span><br></pre></td></tr></table></figure></div><p><img lazyload src="/images/loading.svg" data-src="/img/nsv-dec-14.png"></p><p>这里找到两个结果，依次从每个地址附近查找关键代码，例如进行以下搜索</p><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x /30i 0x7f56fb7 - 0xbf0</span><br></pre></td></tr></table></figure></div><p>继续向下找到关键函数开头</p><p><img lazyload src="/images/loading.svg" data-src="/img/nsv-dec-15.png"></p><p>根据指令偏移量找到关键位置</p><p><img lazyload src="/images/loading.svg" data-src="/img/nsv-dec-16.png"></p><p>这些指令序列和 IDA 对应位置相同</p><p><img lazyload src="/images/loading.svg" data-src="/img/nsv-dec-17.png"></p><p>在 call 指令下断点，然后让系统继续运行，接着在命令行中解密 gpt3 分区，gdb 将会断下</p><p><img lazyload src="/images/loading.svg" data-src="/img/nsv-dec-18.png"></p><p>此时 rcx 寄存器值表示密钥的长度，而在 rdx 寄存器指向的地址中就能找到解密分区使用的密钥</p><p><img lazyload src="/images/loading.svg" data-src="/img/nsv-dec-19.png"></p><h4 id="解密文件"><a href="#解密文件" class="headerlink" title="解密文件"></a>解密文件</h4><p>我们已经获取解密 gpt3 分区的密钥，接下来可以在本地 Linux 系统中尝试解密分区。</p><p>将 vmdk 重新挂载到本地 Linux 系统，并把调试得到的密钥保存到一个文件中，然后执行以下命令尝试解密。</p><div class="code-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> key_p3 | sudo cryptsetup luksOpen /dev/sdb3 p3    <span class="comment"># 解密分区</span></span><br><span class="line"><span class="built_in">dd</span> <span class="keyword">if</span>=/dev/mapper/p3 of=./part3    <span class="comment"># 某些情况下挂载分区会报错，我们将分区拷贝到  Windows 下解压</span></span><br></pre></td></tr></table></figure></div><p>将生成的 part3 分区文件解压即可得到解密后的文件系统</p><p><img lazyload src="/images/loading.svg" data-src="/img/nsv-dec-20.png"></p><p>同理，对于剩下的几个加密分区也能通过同样的方式实现解密。</p><h3 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h3><p><a class="link" target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1087439">qemu-nbd技术分析<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p><p><a class="link" target="_blank" rel="noopener" href="https://www.ajfriesen.com/decrypt-and-mount-luks-volume-in-grub-rescue-mode/">Decrypt and mount LUKS volume in GRUB rescue mode<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p><p><a class="link" target="_blank" rel="noopener" href="http://pavelhan.tech/post/2020-07-07-00-Linux%E7%9A%84%E7%A3%81%E7%9B%98%E5%8A%A0%E5%AF%86%E6%8A%80%E6%9C%AFLUKS/">Linux的磁盘加密技术LUKS<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p><p>本文未收取稿费</p></div><div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8"><div class="article-copyright-info-container"><ul><li><strong>Title:</strong> SonicOS 固件解密 (1)</li><li><strong>Author:</strong> Catalpa</li><li><strong>Created at :</strong> 2022-02-08 00:00:00</li><li><strong>Updated at :</strong> 2024-10-17 08:55:10</li><li><strong>Link:</strong> https://wzt.ac.cn/2022/02/08/sonicwall_dec1/</li><li><strong>License: </strong>This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a>.</li></ul></div></div><div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8"><div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2"><a class="prev" rel="prev" href="/2022/03/21/command-inject/"><span class="left arrow-icon flex justify-center items-center"><i class="fa-solid fa-chevron-left"></i> </span><span class="title flex justify-center items-center"><span class="post-nav-title-item">Linux 命令注入备忘录</span> <span class="post-nav-item">Prev posts</span></span></a></div><div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2"><a class="next" rel="next" href="/2021/12/14/CVE-2019-17059/"><span class="title flex justify-center items-center"><span class="post-nav-title-item">CVE-2019-17059</span> <span class="post-nav-item">Next posts</span> </span><span class="right arrow-icon flex justify-center items-center"><i class="fa-solid fa-chevron-right"></i></span></a></div></div></div><div class="toc-content-container"><div class="post-toc-wrap"><div class="post-toc"><div class="toc-title">On this page</div><div class="page-title">SonicOS 固件解密 (1)</div><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BA%E4%BB%B6%E8%8E%B7%E5%8F%96"><span class="nav-text">固件获取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE"><span class="nav-text">安装和配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%8C%85"><span class="nav-text">解包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="nav-text">参考文章</span></a></li></ol></div></div></div></div></div></div><div class="main-content-footer"><footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color"><div class="info-container py-3 text-center"><div class="text-center">&copy; <span>2018</span> - 2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration:0.5s;color:#f54545"></i>&nbsp;&nbsp;<a href="/">Catalpa</a><p class="post-count space-x-0.5"><span>68 posts in total </span><span>258.4k words in total</span></p></div><script data-swup-reload-script src="https://cn.vercount.one/js"></script><div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right"><span id="busuanzi_container_site_uv" class="lg:!block"><span class="text-sm">VISITOR COUNT</span> <span id="busuanzi_value_site_uv"></span> </span><span id="busuanzi_container_site_pv" class="lg:!block"><span class="text-sm">TOTAL PAGE VIEWS</span> <span id="busuanzi_value_site_pv"></span></span></div><div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left"><span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span> <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.8.2</a></span></div><div>Blog up for <span class="odometer" id="runtime_days"></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec</div><script data-swup-reload-script>try{function odometer_init(){document.querySelectorAll(".odometer").forEach(e=>{new Odometer({el:e,format:"( ddd).dd",duration:200})})}odometer_init()}catch(e){}</script></div></footer></div></div><div class="post-tools"><div class="post-tools-container"><ul class="article-tools-list"><li class="right-bottom-tools page-aside-toggle"><i class="fa-regular fa-outdent"></i></li></ul></div></div><div class="right-side-tools-container"><div class="side-tools-container"><ul class="hidden-tools-list"><li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center"><i class="fa-regular fa-magnifying-glass-plus"></i></li><li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center"><i class="fa-regular fa-magnifying-glass-minus"></i></li><li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center"><i class="fa-regular fa-moon"></i></li><li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center"><i class="fa-regular fa-arrow-down"></i></li></ul><ul class="visible-tools-list"><li class="right-bottom-tools toggle-tools-list flex justify-center items-center"><i class="fa-regular fa-cog fa-spin"></i></li><li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center"><i class="arrow-up fas fa-arrow-up"></i> <span class="percent"></span></li></ul></div></div><div class="image-viewer-container"><img src=""></div><div class="search-pop-overlay"><div class="popup search-popup"><div class="search-header"><span class="search-input-field-pre"><i class="fa-solid fa-keyboard"></i></span><div class="search-input-container"><input autocomplete="off" autocorrect="off" autocapitalize="off" placeholder="Search..." spellcheck="false" type="search" class="search-input"></div><span class="popup-btn-close"><i class="fa-solid fa-times"></i></span></div><div id="search-result"><div id="no-result"><i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i></div></div></div></div></main><script src="/js/build/libs/Swup.min.js"></script><script src="/js/build/libs/SwupSlideTheme.min.js"></script><script src="/js/build/libs/SwupScriptsPlugin.min.js"></script><script src="/js/build/libs/SwupProgressPlugin.min.js"></script><script src="/js/build/libs/SwupScrollPlugin.min.js"></script><script src="/js/build/libs/SwupPreloadPlugin.min.js"></script><script>const swup=new Swup({plugins:[new SwupScriptsPlugin({optin:!0}),new SwupProgressPlugin,new SwupScrollPlugin({offset:80}),new SwupSlideTheme({mainElement:".main-content-body"}),new SwupPreloadPlugin],containers:["#swup"]})</script><script src="/js/build/tools/imageViewer.js" type="module"></script><script src="/js/build/utils.js" type="module"></script><script src="/js/build/main.js" type="module"></script><script src="/js/build/layouts/navbarShrink.js" type="module"></script><script src="/js/build/tools/scrollTopBottom.js" type="module"></script><script src="/js/build/tools/lightDarkSwitch.js" type="module"></script><script src="/js/build/layouts/categoryList.js" type="module"></script><script src="/js/build/tools/localSearch.js" type="module"></script><script src="/js/build/tools/codeBlock.js" type="module"></script><script src="/js/build/layouts/lazyload.js" type="module"></script><script src="/js/build/tools/runtime.js"></script><script src="/js/build/libs/odometer.min.js"></script><link rel="stylesheet" href="/assets/odometer-theme-minimal.css"><script src="/js/build/libs/Typed.min.js"></script><script src="/js/build/plugins/typed.js" type="module"></script><script src="/js/build/libs/anime.min.js"></script><script src="/js/build/tools/tocToggle.js" type="module" data-swup-reload-script=""></script><script src="/js/build/layouts/toc.js" type="module" data-swup-reload-script=""></script><script src="/js/build/plugins/tabs.js" type="module" data-swup-reload-script=""></script><script src="/js/build/libs/moment-with-locales.min.js" data-swup-reload-script=""></script><script src="/js/build/layouts/essays.js" type="module" data-swup-reload-script=""></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Catalpa">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="https://wzt.ac.cn/2022/02/08/sonicwall_dec1/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+    
+    
+        
+        <meta name="description" content="12本文由作者首发于安全客：https:&#x2F;&#x2F;www.anquanke.com&#x2F;post&#x2F;id&#x2F;266078转载请注明出处">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SonicOS 固件解密 (1)">
+<meta property="og:url" content="https://wzt.ac.cn/2022/02/08/sonicwall_dec1/index.html">
+<meta property="og:site_name" content="Catalpa&#39;s Site">
+<meta property="og:description" content="12本文由作者首发于安全客：https:&#x2F;&#x2F;www.anquanke.com&#x2F;post&#x2F;id&#x2F;266078转载请注明出处">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://wzt.ac.cn/img/nsv-dec-1.png">
+<meta property="og:image" content="https://wzt.ac.cn/img/nsv-dec-2.png">
+<meta property="og:image" content="https://wzt.ac.cn/img/nsv-dec-3.png">
+<meta property="og:image" content="https://wzt.ac.cn/img/nsv-dec-4.png">
+<meta property="og:image" content="https://wzt.ac.cn/img/nsv-dec-5.png">
+<meta property="og:image" content="https://wzt.ac.cn/img/nsv-dec-6.png">
+<meta property="og:image" content="https://wzt.ac.cn/img/nsv-dec-7.png">
+<meta property="og:image" content="https://wzt.ac.cn/img/nsv-dec-8.png">
+<meta property="og:image" content="https://wzt.ac.cn/img/nsv-dec-9.png">
+<meta property="og:image" content="https://wzt.ac.cn/img/nsv-dec-10.png">
+<meta property="og:image" content="https://wzt.ac.cn/img/nsv-dec-14.png">
+<meta property="og:image" content="https://wzt.ac.cn/img/nsv-dec-15.png">
+<meta property="og:image" content="https://wzt.ac.cn/img/nsv-dec-16.png">
+<meta property="og:image" content="https://wzt.ac.cn/img/nsv-dec-17.png">
+<meta property="og:image" content="https://wzt.ac.cn/img/nsv-dec-18.png">
+<meta property="og:image" content="https://wzt.ac.cn/img/nsv-dec-19.png">
+<meta property="og:image" content="https://wzt.ac.cn/img/nsv-dec-20.png">
+<meta property="article:published_time" content="2022-02-07T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-10-17T00:55:10.109Z">
+<meta property="article:author" content="Catalpa">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wzt.ac.cn/img/nsv-dec-1.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/img/favicon.ico" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon.ico">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <!--- Page Info-->
+    
+    <title>
+        
+            SonicOS 固件解密 (1) | Catalpa&#39;s Site
+        
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/tailwind.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"wzt.ac.cn","root":"/","language":"en","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"delete_mask":false,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":["网络安全爱好者"]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_sa"},"lazyload":true,"pangu_js":false,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/img/bk.jpg","dark":"/img/bk.jpg"},"title":"Welcome!","subtitle":{"text":["欢迎来到本站!","今天有什么新鲜事吗?","知识不应该是付费的!","持续学习 持续进步","网络安全爱好者","非常感谢您的捐赠!","祝您拥有美好的一天!"],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"style":"default","links":{"github":"https://github.com/rrrrrrri","instagram":null,"zhihu":null,"twitter":null,"email":"anu11@foxmail.com"},"qrs":{"weixin":null,"fa-solid fa-hand-holding-dollar":"/img/w.png"}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.8.2","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"归档":{"path":"/archives","icon":"fa-regular fa-archive"},"感谢捐赠":{"path":"/donates","icon":"fa-solid fa-hand-holding-dollar"}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":"读者有责任遵守其所在国家或地区的所有法律，作者不对使用其文章中提到的任何内容所造成的任何损害负责。","show_on_mobile":true,"links":null},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":false,"limit":3},"tags":{"enable":false,"limit":3}},"footerStart":"2018/9/1 08:00:00"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+
+<body>
+	<div class="progress-bar-container">
+	
+
+	
+	<span class="pjax-progress-bar"></span>
+	<!--        <span class="swup-progress-icon">-->
+	<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+	<!--        </span>-->
+	
+</div>
+
+<main class="page-container" id="swup">
+
+	
+
+	<div class="main-content-container flex flex-col justify-between min-h-dvh">
+		<div class="main-content-header">
+			<header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+                <a class="logo-image h-8 w-8 sm:w-10 sm:h-10 mr-3" href="/">
+                    <img src="/img/favicon.ico" class="w-full h-full rounded-sm">
+                </a>
+            
+            <a class="logo-title" href="/">
+                
+                Catalpa&#39;s Site
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/archives"
+                                        >
+                                    <i class="fa-regular fa-archive fa-fw"></i>
+                                    归档
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/donates"
+                                        >
+                                    <i class="fa-solid fa-hand-holding-dollar fa-fw"></i>
+                                    感谢捐赠
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/archives"
+                        >
+                            <span>
+                                归档
+                            </span>
+                            
+                                <i class="fa-regular fa-archive fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/donates"
+                        >
+                            <span>
+                                感谢捐赠
+                            </span>
+                            
+                                <i class="fa-solid fa-hand-holding-dollar fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">0</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">4</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">69</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+		</div>
+
+		<div class="main-content-body transition-fade-up">
+			
+
+			<div class="main-content">
+				<div class="post-page-container flex relative justify-between box-border w-full h-full">
+	<div class="article-content-container">
+
+		<div class="article-title relative w-full">
+			
+			<div class="w-full flex items-center pt-6 justify-start">
+				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">SonicOS 固件解密 (1)</h1>
+			</div>
+			
+		</div>
+
+		
+		<div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+			<div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+				<img src="/img/logo.png">
+			</div>
+			<div class="info flex flex-col justify-between">
+				<div class="author flex items-center">
+					<span class="name text-default-text-color text-lg font-semibold">Catalpa</span>
+					
+					<span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">网络安全爱好者</span>
+					
+				</div>
+				<div class="meta-info">
+					<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2022-02-08</span>
+        <span class="mobile">2022-02-08</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-10-17 08:55:10</span>
+            <span class="mobile">2024-10-17 08:55:10</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/MISC/">MISC</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>2.3k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>8 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+				</div>
+			</div>
+		</div>
+		
+
+		
+
+
+		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+			<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">本文由作者首发于安全客：https://www.anquanke.com/post/id/266078</span><br><span class="line">转载请注明出处</span><br></pre></td></tr></table></figure></div>
+
+<span id="more"></span>
+
+<p>最近 SonicWall 官方发布了影响 SonicOS 的数个缓冲区溢出漏洞，编号 CVE-2021-20048、CVE-2021-20046 等。在研究复现过程中发现针对此设备的解包思路比较有趣，所以在这里分享给大家。</p>
+<h3 id="固件获取"><a href="#固件获取" class="headerlink" title="固件获取"></a>固件获取</h3><p>该设备固件前段时间可以从 mysonicwall 网站上获取，但目前 sonicwall 下架了 nsv200(SonicOS GEN6) 相关固件，所以这里提供旧版固件的<a class="link"   target="_blank" rel="noopener" href="https://pan.baidu.com/s/1O6iyLwHUgyQKSymsaVO7Iw" >网盘链接<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>(提取码：1a30)，感兴趣的朋友可以自行下载。</p>
+<h3 id="安装和配置"><a href="#安装和配置" class="headerlink" title="安装和配置"></a>安装和配置</h3><p>用 VMWare 打开 ova 文件，一路确定并等待开机完成。虚拟机会从 DHCP 自动获取到 IP 地址，访问可以看到登录界面：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/nsv-dec-1.png"
+                     
+                ></p>
+<p>默认用户名和密码：admin:password</p>
+<h3 id="解包"><a href="#解包" class="headerlink" title="解包"></a>解包</h3><h4 id="启动分析"><a href="#启动分析" class="headerlink" title="启动分析"></a>启动分析</h4><p>sonicwall nsv 的默认终端是一个自定义 CLI 程序，不提供 Linux root shell，所以想要得到关键文件，必须解包固件。</p>
+<p>查看虚拟机的启动过程，输出很少的信息之后就会出现 sonicwall logo</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/nsv-dec-2.png"
+                     
+                ></p>
+<p>厂商使用这种方式遮蔽了系统启动时输出的信息，只能直接从固件下手。</p>
+<p>找到虚拟机的 vmdk 磁盘文件，使用 7-zip 打开，可以看到内部有数个分区文件</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/nsv-dec-3.png"
+                     
+                ></p>
+<p>这里也可尝试直接将磁盘挂载到已有的 Linux 虚拟机上，虚拟机设置 -&gt; 添加 -&gt; 硬盘 -&gt; SCSI -&gt; 使用现有虚拟磁盘 -&gt; 选择 sonicwall vmdk 文件 -&gt; 保持现有格式</p>
+<p>挂载之后分区状态如下</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/nsv-dec-4.png"
+                     
+                ></p>
+<p>系统识别到 4 个分区，但是全部加密，猜测文件系统就位于其中一个分区内。</p>
+<p>ls 查看 &#x2F;dev&#x2F; 目录下信息，发现还有 sdb1、2 等没有在文件管理器显示出来，尝试手动挂载</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mount /dev/sdb1 ./test</span><br></pre></td></tr></table></figure></div>
+
+<p>第一个分区存放了 BOOT 相关文件，并有一个 coreos 目录，可能是基于开源项目制作的。在 boot 分区中我们发现虚拟机使用了 GRUB 引导系统启动，GRUB 是一个常见的启动引导程序，它具有命令行功能。根据官方文档，当系统引导失败时会自动进入 GRUB 救援模式，可以执行一些和文件系统相关的操作。</p>
+<h4 id="加密方式"><a href="#加密方式" class="headerlink" title="加密方式"></a>加密方式</h4><p>明确了后续思路，我们还需要知道分区的加密方式是什么。</p>
+<p>用 7-zip 解压出其中一个较小的加密分区 OEM.img，然后加载到 16 进制编辑器看到文件开头是 LUKS</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/nsv-dec-5.png"
+                     
+                ></p>
+<p>LUKS 是一种磁盘加密标准，nsv 设备使用 LUKS 实现了全盘加密。</p>
+<p>网络上存在一些 LUKS 全盘加密的<a class="link"   target="_blank" rel="noopener" href="https://www.ajfriesen.com/decrypt-and-mount-luks-volume-in-grub-rescue-mode/" >解密方法<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>，可以进入 GRUB 的救援模式命令行并使用 cryptomount 命令&amp;密码解密。但目前还不知道加密密码是什么，需要研究一下 LUKS 的加密逻辑。</p>
+<p>既然系统可以正常启动，说明在引导阶段就通过某种方式解密了各个分区。参考分区的加密方式，密码应该被保存在 luks 相关的模块中。</p>
+<p>关于 LUKS 解密的具体逻辑可参考它的项目源码，解密关键函数是 grub_crypto_pbkdf2，原型如下</p>
+<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">grub_crypto_pbkdf2 (<span class="type">const</span> <span class="keyword">struct</span> gcry_md_spec *md,</span><br><span class="line">		    <span class="type">const</span> <span class="type">grub_uint8_t</span> *P, <span class="type">grub_size_t</span> Plen,</span><br><span class="line">		    <span class="type">const</span> <span class="type">grub_uint8_t</span> *S, <span class="type">grub_size_t</span> Slen,</span><br><span class="line">		    <span class="type">unsigned</span> <span class="type">int</span> c,</span><br><span class="line">		    <span class="type">grub_uint8_t</span> *DK, <span class="type">grub_size_t</span> dkLen)</span><br></pre></td></tr></table></figure></div>
+
+<p>其中第二个参数是用于解密分区的密钥。</p>
+<p>在 BOOT 分区搜索正好可以找到 luks.mod 模块，将它解压，然后用 IDA 分析，通过交叉引用找到解密相关代码</p>
+<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">grub_real_dprintf(<span class="string">&quot;disk/luks.c&quot;</span>, <span class="number">246LL</span>, <span class="string">&quot;luks&quot;</span>, <span class="string">&quot;Trying keyslot %d\n&quot;</span>, k);</span><br><span class="line">v32 = grub_crypto_pbkdf2(*(a2 + <span class="number">88</span>), a4, v43, v31, <span class="number">32LL</span>, _byteswap_ulong(*(v31 - <span class="number">1</span>)), v51, v38);</span><br></pre></td></tr></table></figure></div>
+
+<p>我们看到解密时会输出 log 信息 “Trying keyslot xx”，而变量 a4 应该就是 key。</p>
+<h4 id="提取密钥"><a href="#提取密钥" class="headerlink" title="提取密钥"></a>提取密钥</h4><p>为了解密分区，需要通过某种手段获取模块中的密钥，而密钥又保存在 luks 模块中，所以具体思路是进入 GRUB 命令行，然后加载和解密相关的各个模块，接着利用调试器附加到 luks.mod 上，尝试中断在 grub_crypto_pbkdf2 函数，并提取其参数。</p>
+<p>为了能完成上述操作，首先我们需要一种能够在启动虚拟机后从外部修改文件的方式。这一点可利用 qemu-nbd 实现。</p>
+<p>其次还要支持调试器，用于调试 luks 相关模块。可以利用 Linux 下虚拟化平台 QEMU&#x2F;KVM 虚拟机实现。</p>
+<p><strong>工具配置</strong></p>
+<p>安装 qemu-utils 和 KVM &amp; VMM</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install qemu-utils</span><br><span class="line">sudo apt install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils virtinst virt-manager</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>转换镜像</strong></p>
+<p>vmware 使用的是 vmdk 虚拟磁盘镜像，为了使用 qemu-nbd 修改镜像，首先要把 vmdk 转换成 qcow2 格式。</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-img convert -f vmdk ./image.vmdk -O qcow2 sonicwall.qcow2</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>配置虚拟机</strong></p>
+<p>注：虚拟机需要开启 Intel-VTx 或 AMD-V 支持。</p>
+<p>将转换之后的镜像使用 qemu-nbd 挂载到本地</p>
+<div class="code-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo modprobe nbd max_part=8    <span class="comment"># 加载 nbd 模块</span></span><br><span class="line">sudo qemu-nbd --connect=/dev/nbd0 ./sonicwall.qcow2    <span class="comment"># 挂载镜像</span></span><br><span class="line">sudo fdisk /dev/nbd0 -l    <span class="comment"># 查看分区信息</span></span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/nsv-dec-6.png"
+                     
+                ></p>
+<p>此时已经成功挂载。</p>
+<p>然后导入挂载的镜像到 KVM 虚拟机，在 VMM 中添加一个虚拟机，导入现有磁盘映像 -&gt; 存储路径：&#x2F;dev&#x2F;nbd0</p>
+<p><strong>配置调试接口</strong></p>
+<p>和 vmware 一样，KVM 也支持对虚拟机添加调试接口，在终端输入命令</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh edit &lt;虚拟机名称&gt;</span><br></pre></td></tr></table></figure></div>
+
+<p>进入命令行模式，随意选择一个编辑器修改配置文件。</p>
+<p>修改 &lt;domain type&#x3D;’kvm’&gt; 为</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;domain type=&#x27;kvm&#x27;</span><br><span class="line">        xmlns:qemu=&#x27;http://libvirt.org/schemas/domain/qemu/1.0&#x27; &gt;</span><br><span class="line">        &lt;qemu:commandline&gt;</span><br><span class="line">        &lt;qemu:arg value=&#x27;-gdb&#x27;/&gt;</span><br><span class="line">        &lt;qemu:arg value=&#x27;tcp::12345&#x27;/&gt;</span><br><span class="line">        &lt;/qemu:commandline&gt;</span><br></pre></td></tr></table></figure></div>
+
+<p>这样当虚拟机启动之后就可以用 gdb 附加到 localhost:12345 对其进行调试了。</p>
+<p><strong>进入救援模式</strong></p>
+<p>我们重命名 boot 分区中的一些文件，当 GRUB 引导时就会由于找不到关键文件而进入救援模式。</p>
+<p>首先挂载 nbd 中的 BOOT 分区到本地目录。</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mount /dev/nbd0p1 ./test</span><br></pre></td></tr></table></figure></div>
+
+<p>然后进入 &#x2F;coreos&#x2F;grub 目录，并重命名其中的三个目录</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mv i386-pc i386-pc-bak</span><br><span class="line">mv x86_64-efi x86_64-efi-bak</span><br><span class="line">mv x86_64-xen x86_64-xen-bak</span><br><span class="line">sync</span><br><span class="line">sync</span><br></pre></td></tr></table></figure></div>
+
+<p>启动虚拟机，此时系统会自动进入救援模式。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/nsv-dec-7.png"
+                     
+                ></p>
+<p>这里可用 TAB 键看看有哪些可用的命令。</p>
+<p>ls 命令显示分区列表</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/nsv-dec-8.png"
+                     
+                ></p>
+<p><strong>使用解密功能</strong></p>
+<p>解密分区命令为 cryptomount，不过在使用之前需要恢复 BOOT 分区中的目录名。</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mv ./i386-pc-bak i386-pc     </span><br><span class="line">mv x86_64-efi-bak x86_64-efi     </span><br><span class="line">mv x86_64-xen-bak x86_64-xen</span><br><span class="line">sync</span><br><span class="line">sync</span><br></pre></td></tr></table></figure></div>
+
+<p>使用 cryptomount 尝试解密 (hd0,gpt3) 报错</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/nsv-dec-9.png"
+                     
+                ></p>
+<p>这是因为相关模块没加载，需要手动将部分模块加载一遍，经过测试，至少要加载 gcry_rijndael、luks、gcry_sha256 三个模块</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">insmod luks</span><br><span class="line">insmod gcry_rijndael</span><br><span class="line">insmod gcry_sha256</span><br></pre></td></tr></table></figure></div>
+
+<p>然后再对 gpt3 分区进行解密</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cryptomount (hd0,gpt3)</span><br></pre></td></tr></table></figure></div>
+
+<p>这样解密成功，还可以加载 ext2 模块并用 ls 命令查看文件系统结构</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/nsv-dec-10.png"
+                     
+                ></p>
+<p><strong>调试 luks 模块</strong></p>
+<p>在救援模式下已经成功解密分区，但无法将文件提取出来，所以需要调试 LUKS 模块取得相关密钥，再挂载镜像到普通的 Linux 系统解密。</p>
+<p>重新启动虚拟机，然后另开一个终端，启动 gdb，并附加到当前虚拟机</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">target remote 0:12345</span><br><span class="line">continue</span><br></pre></td></tr></table></figure></div>
+
+<p>加载 gcry_rijndael 等模块，之后通过搜索 LUKS.mod 中特殊字符串来定位关键代码</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find 0,0x8000000,&quot;Trying keyslot %d\n&quot;</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/nsv-dec-14.png"
+                     
+                ></p>
+<p>这里找到两个结果，依次从每个地址附近查找关键代码，例如进行以下搜索</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x /30i 0x7f56fb7 - 0xbf0</span><br></pre></td></tr></table></figure></div>
+
+<p>继续向下找到关键函数开头</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/nsv-dec-15.png"
+                     
+                ></p>
+<p>根据指令偏移量找到关键位置</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/nsv-dec-16.png"
+                     
+                ></p>
+<p>这些指令序列和 IDA 对应位置相同</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/nsv-dec-17.png"
+                     
+                ></p>
+<p>在 call 指令下断点，然后让系统继续运行，接着在命令行中解密 gpt3 分区，gdb 将会断下</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/nsv-dec-18.png"
+                     
+                ></p>
+<p>此时 rcx 寄存器值表示密钥的长度，而在 rdx 寄存器指向的地址中就能找到解密分区使用的密钥</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/nsv-dec-19.png"
+                     
+                ></p>
+<h4 id="解密文件"><a href="#解密文件" class="headerlink" title="解密文件"></a>解密文件</h4><p>我们已经获取解密 gpt3 分区的密钥，接下来可以在本地 Linux 系统中尝试解密分区。</p>
+<p>将 vmdk 重新挂载到本地 Linux 系统，并把调试得到的密钥保存到一个文件中，然后执行以下命令尝试解密。</p>
+<div class="code-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> key_p3 | sudo cryptsetup luksOpen /dev/sdb3 p3    <span class="comment"># 解密分区</span></span><br><span class="line"><span class="built_in">dd</span> <span class="keyword">if</span>=/dev/mapper/p3 of=./part3    <span class="comment"># 某些情况下挂载分区会报错，我们将分区拷贝到  Windows 下解压</span></span><br></pre></td></tr></table></figure></div>
+
+<p>将生成的 part3 分区文件解压即可得到解密后的文件系统</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/img/nsv-dec-20.png"
+                     
+                ></p>
+<p>同理，对于剩下的几个加密分区也能通过同样的方式实现解密。</p>
+<h3 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h3><p><a class="link"   target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1087439" >qemu-nbd技术分析<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://www.ajfriesen.com/decrypt-and-mount-luks-volume-in-grub-rescue-mode/" >Decrypt and mount LUKS volume in GRUB rescue mode<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<p><a class="link"   target="_blank" rel="noopener" href="http://pavelhan.tech/post/2020-07-07-00-Linux%E7%9A%84%E7%A3%81%E7%9B%98%E5%8A%A0%E5%AF%86%E6%8A%80%E6%9C%AFLUKS/" >Linux的磁盘加密技术LUKS<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<p>本文未收取稿费</p>
+
+		</div>
+
+		
+		<div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+			<div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> SonicOS 固件解密 (1)</li>
+        <li><strong>Author:</strong> Catalpa</li>
+        <li><strong>Created at
+                :</strong> 2022-02-08 00:00:00</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2024-10-17 08:55:10
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://wzt.ac.cn/2022/02/08/sonicwall_dec1/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+		</div>
+		
+
+		
+
+		
+
+		
+		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+			
+			<div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="prev" rel="prev" href="/2022/03/21/command-inject/">
+					<span class="left arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-left"></i>
+					</span>
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item">Linux 命令注入备忘录</span>
+						<span class="post-nav-item">Prev posts</span>
+					</span>
+				</a>
+			</div>
+			
+			
+			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="next" rel="next" href="/2021/12/14/CVE-2019-17059/">
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item">CVE-2019-17059</span>
+						<span class="post-nav-item">Next posts</span>
+					</span>
+					<span class="right arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-right"></i>
+					</span>
+				</a>
+			</div>
+			
+		</div>
+		
+
+
+		
+	</div>
+
+	
+	<div class="toc-content-container">
+		<div class="post-toc-wrap">
+	<div class="post-toc">
+		<div class="toc-title">On this page</div>
+		<div class="page-title">SonicOS 固件解密 (1)</div>
+		<ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BA%E4%BB%B6%E8%8E%B7%E5%8F%96"><span class="nav-text">固件获取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE"><span class="nav-text">安装和配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%8C%85"><span class="nav-text">解包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="nav-text">参考文章</span></a></li></ol>
+
+	</div>
+</div>
+	</div>
+	
+</div>
+			</div>
+
+			
+		</div>
+
+		<div class="main-content-footer">
+			<footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2018</span>
+              -
+            
+            2025&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Catalpa</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        69 posts in total
+                    </span>
+                    
+                        <span>
+                            261.4k words in total
+                        </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.8.2</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+		</div>
+	</div>
+
+	
+	<div class="post-tools">
+		<div class="post-tools-container">
+	<ul class="article-tools-list">
+		<!-- TOC aside toggle -->
+		
+		<li class="right-bottom-tools page-aside-toggle">
+			<i class="fa-regular fa-outdent"></i>
+		</li>
+		
+
+		<!-- go comment -->
+		
+	</ul>
+</div>
+	</div>
+	
+
+	<div class="right-side-tools-container">
+		<div class="side-tools-container">
+	<ul class="hidden-tools-list">
+		<li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-plus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-minus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+			<i class="fa-regular fa-moon"></i>
+		</li>
+
+		<!-- rss -->
+		
+
+		
+
+		<li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+			<i class="fa-regular fa-arrow-down"></i>
+		</li>
+	</ul>
+
+	<ul class="visible-tools-list">
+		<li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+			<i class="fa-regular fa-cog fa-spin"></i>
+		</li>
+		
+		<li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+			<i class="arrow-up fas fa-arrow-up"></i>
+			<span class="percent"></span>
+		</li>
+		
+		
+	</ul>
+</div>
+	</div>
+
+	<div class="image-viewer-container">
+	<img src="">
+</div>
+
+	
+	<div class="search-pop-overlay">
+	<div class="popup search-popup">
+		<div class="search-header">
+			<span class="search-input-field-pre">
+				<i class="fa-solid fa-keyboard"></i>
+			</span>
+			<div class="search-input-container">
+				<input autocomplete="off" autocorrect="off" autocapitalize="off" placeholder="Search..." spellcheck="false" type="search" class="search-input">
+			</div>
+			<span class="popup-btn-close">
+				<i class="fa-solid fa-times"></i>
+			</span>
+		</div>
+		<div id="search-result">
+			<div id="no-result">
+				<i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+			</div>
+		</div>
+	</div>
+</div>
+	
+
+</main>
+
+
+
+<script src="/js/build/libs/Swup.min.js"></script>
+
+<script src="/js/build/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/build/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+	
+<script src="/js/build/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/build/utils.js" type="module"></script>
+
+<script src="/js/build/main.js" type="module"></script>
+
+<script src="/js/build/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/build/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/build/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/build/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/build/tools/localSearch.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/tools/runtime.js"></script>
+
+    
+<script src="/js/build/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/build/libs/Typed.min.js"></script>
+
+  
+<script src="/js/build/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+    
+<script src="/js/build/libs/anime.min.js"></script>
+
+
+
+
+
+    
+<script src="/js/build/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+<script src="/js/build/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+
+<script src="/js/build/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+
+	
+</body>
+
+</html>

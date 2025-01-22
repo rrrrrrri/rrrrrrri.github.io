@@ -1,1 +1,2 @@
-function formatEssayDates(){var e=document.querySelectorAll(".essay-date");e&&e.forEach(function(e){var t=e.getAttribute("data-date"),a=config.language||"en",t=moment(t).locale(a).calendar();e.textContent=t})}try{swup.hooks.on("page:view",formatEssayDates)}catch(e){console.error(e)}document.addEventListener("DOMContentLoaded",formatEssayDates);
+function formatEssayDates(){const t=document.querySelectorAll(".essay-date");t&&t.forEach((function(t){const e=t.getAttribute("data-date"),a=config.language||"en",o=moment(e).locale(a).calendar();t.textContent=o}))}try{swup.hooks.on("page:view",formatEssayDates)}catch(t){console.error(t)}document.addEventListener("DOMContentLoaded",formatEssayDates);
+//# sourceMappingURL=essays.js.map

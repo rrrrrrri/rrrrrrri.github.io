@@ -1,1 +1,977 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="keywords" content="Hexo Theme Redefine"><meta name="author" content="Catalpa"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="canonical" href="https://wzt.ac.cn/2018/09/04/reversingkr4-5/"><meta name="robots" content="index,follow"><meta name="googlebot" content="index,follow"><meta name="revisit-after" content="1 days"><meta name="description" content="Reversing.kr 上面的题目。"><meta property="og:type" content="article"><meta property="og:title" content="Reversing.kr 4 5"><meta property="og:url" content="https://wzt.ac.cn/2018/09/04/reversingkr4-5/index.html"><meta property="og:site_name" content="Catalpa&#39;s Site"><meta property="og:description" content="Reversing.kr 上面的题目。"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://wzt.ac.cn/image/reversingkr4-1.png"><meta property="og:image" content="https://wzt.ac.cn/image/reversingkr4-2.png"><meta property="og:image" content="https://wzt.ac.cn/image/reversingkr4-3.png"><meta property="og:image" content="https://wzt.ac.cn/image/reversingkr4-4.png"><meta property="og:image" content="https://wzt.ac.cn/image/reversingkr4-5.png"><meta property="og:image" content="https://wzt.ac.cn/image/reversingkr4-6.png"><meta property="og:image" content="https://wzt.ac.cn/image/reversingkr4-7.png"><meta property="og:image" content="https://wzt.ac.cn/image/reversingkr4-8.png"><meta property="og:image" content="https://wzt.ac.cn/image/reversingkr4-9.png"><meta property="og:image" content="https://wzt.ac.cn/image/reversingkr4-10.png"><meta property="og:image" content="https://wzt.ac.cn/image/reversingkr4-11.png"><meta property="og:image" content="https://wzt.ac.cn/image/reversingkr4-12.png"><meta property="og:image" content="https://wzt.ac.cn/image/reversingkr4-13.png"><meta property="og:image" content="https://wzt.ac.cn/image/reversingkr4-14.png"><meta property="og:image" content="https://wzt.ac.cn/image/reversingkr4-15.png"><meta property="og:image" content="https://wzt.ac.cn/image/reversingkr4-16.png"><meta property="og:image" content="https://wzt.ac.cn/image/reversingkr5-1.png"><meta property="og:image" content="https://wzt.ac.cn/image/reversingkr5-2.png"><meta property="og:image" content="https://wzt.ac.cn/image/reversingkr5-3.png"><meta property="og:image" content="https://wzt.ac.cn/image/reversingkr5-4.png"><meta property="og:image" content="https://wzt.ac.cn/image/reversingkr5-5.png"><meta property="og:image" content="https://wzt.ac.cn/image/reversingkr5-6.png"><meta property="og:image" content="https://wzt.ac.cn/image/reversingkr5-7.png"><meta property="og:image" content="https://wzt.ac.cn/image/reversingkr5-8.png"><meta property="og:image" content="https://wzt.ac.cn/image/reversingkr5-9.png"><meta property="og:image" content="https://wzt.ac.cn/image/reversingkr5-10.png"><meta property="og:image" content="https://wzt.ac.cn/image/reversingkr5-11.png"><meta property="article:published_time" content="2018-09-03T16:00:00.000Z"><meta property="article:modified_time" content="2024-10-17T00:53:47.878Z"><meta property="article:author" content="Catalpa"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://wzt.ac.cn/image/reversingkr4-1.png"><link rel="icon" type="image/png" href="/img/favicon.ico" sizes="192x192"><link rel="apple-touch-icon" sizes="180x180" href="/img/favicon.ico"><meta name="theme-color" content="#A31F34"><link rel="shortcut icon" href="/img/favicon.ico"><title>Reversing.kr 4 5 | Catalpa&#39;s Site</title><link rel="stylesheet" href="/fonts/Chillax/chillax.css"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/build/tailwind.css"><link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css"><link rel="stylesheet" href="/fonts/Geist/geist.css"><script id="hexo-configurations">window.config={hostname:"wzt.ac.cn",root:"/",language:"en",path:"search.xml"},window.theme={articles:{style:{font_size:"16px",line_height:1.5,image_border_radius:"14px",image_alignment:"center",image_caption:!1,link_icon:!0,delete_mask:!1,title_alignment:"left",headings_top_spacing:{h1:"3.2rem",h2:"2.4rem",h3:"1.9rem",h4:"1.6rem",h5:"1.4rem",h6:"1.3rem"}},word_count:{enable:!0,count:!0,min2read:!0},author_label:{enable:!0,auto:!1,list:["网络安全爱好者"]},code_block:{copy:!0,style:"mac",highlight_theme:{light:"github",dark:"vs2015"},font:{enable:!1,family:null,url:null}},toc:{enable:!0,max_depth:3,number:!1,expand:!0,init_open:!0},copyright:{enable:!0,default:"cc_by_sa"},lazyload:!0,pangu_js:!1,recommendation:{enable:!1,title:"推荐阅读",limit:3,mobile_limit:2,placeholder:"/images/wallhaven-wqery6-light.webp",skip_dirs:[]}},colors:{primary:"#A31F34",secondary:null,default_mode:"light"},global:{fonts:{chinese:{enable:!1,family:null,url:null},english:{enable:!1,family:null,url:null},title:{enable:!1,family:null,url:null}},content_max_width:"1000px",sidebar_width:"210px",hover:{shadow:!0,scale:!1},scroll_progress:{bar:!1,percentage:!0},website_counter:{url:"https://cn.vercount.one/js",enable:!0,site_pv:!0,site_uv:!0,post_pv:!0},single_page:!0,preloader:{enable:!1,custom_message:null},open_graph:!0,google_analytics:{enable:!1,id:null}},home_banner:{enable:!0,style:"fixed",image:{light:"/img/bk.jpg",dark:"/img/bk.jpg"},title:"Welcome!",subtitle:{text:["欢迎来到本站!","今天有什么新鲜事吗?","知识不应该是付费的!","持续学习 持续进步","网络安全爱好者","非常感谢您的捐赠!","祝您拥有美好的一天!"],hitokoto:{enable:!1,show_author:!1,api:"https://v1.hitokoto.cn"},typing_speed:100,backing_speed:80,starting_delay:500,backing_delay:1500,loop:!0,smart_backspace:!0},text_color:{light:"#fff",dark:"#d1d1b6"},text_style:{title_size:"2.8rem",subtitle_size:"1.5rem",line_height:1.2},custom_font:{enable:!1,family:null,url:null},social_links:{enable:!0,style:"default",links:{github:"https://github.com/rrrrrrri",instagram:null,zhihu:null,twitter:null,email:"anu11@foxmail.com"},qrs:{weixin:null,"fa-solid fa-hand-holding-dollar":"/img/w.png"}}},plugins:{feed:{enable:!1},aplayer:{enable:!1,type:"fixed",audios:[{name:null,artist:null,url:null,cover:null,lrc:null}]},mermaid:{enable:!1,version:"9.3.0"}},version:"2.8.2",navbar:{auto_hide:!1,color:{left:"#f78736",right:"#367df7",transparency:35},width:{home:"1200px",pages:"1000px"},links:{Home:{path:"/",icon:"fa-regular fa-house"},"归档":{path:"/archives",icon:"fa-regular fa-archive"},"感谢捐赠":{path:"/donates",icon:"fa-solid fa-hand-holding-dollar"}},search:{enable:!0,preload:!0}},page_templates:{friends_column:2,tags_style:"blur"},home:{sidebar:{enable:!0,position:"left",first_item:"menu",announcement:"读者有责任遵守其所在国家或地区的所有法律，作者不对使用其文章中提到的任何内容所造成的任何损害负责。",show_on_mobile:!0,links:null},article_date_format:"auto",excerpt_length:200,categories:{enable:!1,limit:3},tags:{enable:!1,limit:3}},footerStart:"2018/9/1 08:00:00"},window.lang_ago={second:"%s seconds ago",minute:"%s minutes ago",hour:"%s hours ago",day:"%s days ago",week:"%s weeks ago",month:"%s months ago",year:"%s years ago"},window.data={masonry:!1}</script><link rel="stylesheet" href="/fontawesome/fontawesome.min.css"><link rel="stylesheet" href="/fontawesome/brands.min.css"><link rel="stylesheet" href="/fontawesome/solid.min.css"><link rel="stylesheet" href="/fontawesome/regular.min.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div class="progress-bar-container"><span class="pjax-progress-bar"></span></div><main class="page-container" id="swup"><div class="main-content-container flex flex-col justify-between min-h-dvh"><div class="main-content-header"><header class="navbar-container px-6 md:px-12"><div class="navbar-content transition-navbar"><div class="left"><a class="logo-image h-8 w-8 sm:w-10 sm:h-10 mr-3" href="/"><img src="/img/favicon.ico" class="w-full h-full rounded-sm"> </a><a class="logo-title" href="/">Catalpa&#39;s Site</a></div><div class="right"><div class="desktop"><ul class="navbar-list"><li class="navbar-item"><a href="/"><i class="fa-regular fa-house fa-fw"></i> HOME</a></li><li class="navbar-item"><a href="/archives"><i class="fa-regular fa-archive fa-fw"></i> 归档</a></li><li class="navbar-item"><a href="/donates"><i class="fa-solid fa-hand-holding-dollar fa-fw"></i> 感谢捐赠</a></li><li class="navbar-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></li></ul></div><div class="mobile"><div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div><div class="icon-item navbar-bar"><div class="navbar-bar-middle"></div></div></div></div></div><div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between"><ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start"><li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full"><a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full" href="/"><span>HOME </span><i class="fa-regular fa-house fa-sm fa-fw"></i></a></li><li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full"><a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full" href="/archives"><span>归档 </span><i class="fa-regular fa-archive fa-sm fa-fw"></i></a></li><li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full"><a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full" href="/donates"><span>感谢捐赠 </span><i class="fa-solid fa-hand-holding-dollar fa-sm fa-fw"></i></a></li></ul><div class="statistics flex justify-around my-2.5"><a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags"><div class="number text-2xl sm:text-xl text-second-text-color font-semibold">0</div><div class="label text-third-text-color text-sm">Tags</div></a><a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories"><div class="number text-2xl sm:text-xl text-second-text-color font-semibold">4</div><div class="label text-third-text-color text-sm">Categories</div></a><a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives"><div class="number text-2xl sm:text-xl text-second-text-color font-semibold">68</div><div class="label text-third-text-color text-sm">Posts</div></a></div></div><div class="window-mask"></div></header></div><div class="main-content-body transition-fade-up"><div class="main-content"><div class="post-page-container flex relative justify-between box-border w-full h-full"><div class="article-content-container"><div class="article-title relative w-full"><div class="w-full flex items-center pt-6 justify-start"><h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">Reversing.kr 4 5</h1></div></div><div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8"><div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]"><img src="/img/logo.png"></div><div class="info flex flex-col justify-between"><div class="author flex items-center"><span class="name text-default-text-color text-lg font-semibold">Catalpa</span> <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">网络安全爱好者</span></div><div class="meta-info"><div class="article-meta-info"><span class="article-date article-meta-item"><i class="fa-regular fa-pen-fancy"></i>&nbsp; <span class="desktop">2018-09-04</span> <span class="mobile">2018-09-04</span> <span class="hover-info">Created</span> </span><span class="article-date article-meta-item"><i class="fa-regular fa-wrench"></i>&nbsp; <span class="desktop">2024-10-17 08:53:47</span> <span class="mobile">2024-10-17 08:53:47</span> <span class="hover-info">Updated</span> </span><span class="article-categories article-meta-item"><i class="fa-regular fa-folders"></i>&nbsp;<ul><li><a href="/categories/CTF/">CTF</a>&nbsp;</li></ul></span><span class="article-wordcount article-meta-item"><i class="fa-regular fa-typewriter"></i>&nbsp;<span>2.4k Words</span> </span><span class="article-min2read article-meta-item"><i class="fa-regular fa-clock"></i>&nbsp;<span>8 Mins</span> </span><span class="article-pv article-meta-item"><i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span></span></div></div></div></div><div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8"><p>Reversing.kr 上面的题目。</p><span id="more"></span><h2 id="04-Music-Player"><a href="#04-Music-Player" class="headerlink" title="04 Music Player"></a>04 Music Player</h2><p>第四题增加了一些难度，打开文件，是一个简单的音乐播放器，但是载入的歌曲最多只能播放1分钟，根据题目提示，如果能够使它播放超过一分钟，就能看到flag。</p><p>程序没有加壳，直接丢进IDA看会发现代码非常混乱，有很多未解析的代码，如果你使用PEID等工具检查了程序的话就会发现，程序使用VB编写，VB有两种编译模式，第一个叫做 P-Code(伪代码编译)，另一种则是正常的本机代码编译，P-Code 模式会将代码编译为VB特有的伪代码形式，由 VB 的虚拟机运行，不巧的是，微软并没有公开这个虚拟机的信息，但是还是有逆向方法的，只不过需要注意一些细节，OD可以正常使用，但是在修改机器码的时候就需要特别注意了。通过使用VB专用的逆向工具也能得到一些有用的信息，比如使用 VBExplore 打开这个程序：<br><img lazyload src="/images/loading.svg" data-src="/image/reversingkr4-1.png" alt="image"></p><p>大致浏览各个控件，再运行程序，可以一一对应，其中还有两个计时器，不过没有代码对照，可能无法得知它们的用途。<br>直接祭出 OD，开始调试程序。</p><p><strong>注意：还有一款实用软件 VB Decompiler，它可以反汇编以及反编译VB程序，对于这种P-CODE还是能够处理出一些有用的信息，但是代码比较难看，这里不以它为参考。</strong></p><p>首先要了解逆向 VB 的一些基本技巧，由于这是一个GUI程序，所以想要定位关键代码，一定要了解一些VB的API，比如负责弹出窗口的 <strong>rtcMsgBox</strong> 或者 <strong>__vbaNew2</strong>，以及操作字符串的一些函数，这些都是破解中较为常用的，强大的 OD 已经集成了一些插件，可以让我们直接在这些系统函数中下断(打开OD后上面的灰色工具条中，点击VB)：<br><img lazyload src="/images/loading.svg" data-src="/image/reversingkr4-2.png" alt="image"></p><p>这里能看到很多实用的断点工具，本题主要使用第一项（因为在播放满一分钟时会弹出一个窗口），点击后再打开断点窗口，能看到新增加了一个断点:<br><img lazyload src="/images/loading.svg" data-src="/image/reversingkr4-3.png" alt="image"></p><p>这个断点就在 rtcMsgBox 了，以后程序的运行过程中，如果再次调用到了这个函数，调试器就会断在这里，方便我们进行回溯。<br>然后F9运行程序，打开一个MP3文件(大于1分钟)，点击播放按钮开始播放，等播放到1分钟(可以直接拖动进度条)，如果不出意外 OD 会触发之前下的断点：<br><img lazyload src="/images/loading.svg" data-src="/image/reversingkr4-4.png" alt="image"></p><p>这时观察栈中的数据，根据函数调用约定，这时栈顶的内容就是调用者的地址：<br><img lazyload src="/images/loading.svg" data-src="/image/reversingkr4-5.png" alt="image"></p><p>有些情况下栈顶可能并不是调用者的地址，这时可以点击上方工具栏中的 “k” 按钮，显示调用堆栈：<br><img lazyload src="/images/loading.svg" data-src="/image/reversingkr4-6.png" alt="image"><br>这里也能看到调用者的信息。<br>双击调用者的地址，在反汇编窗口中转到关键函数，这时有两种办法，其一就是定位到函数开头(push ebp、mov ebp,esp …)下断点，然后单步弄清程序逻辑，另一种的思路是：由于我们已经找到关键函数的地址，所以可以在IDA中找到对应位置，然后尝试反编译出伪代码以减少工作量。<br>我们直接使用IDA载入，找到地址为 <strong>0x004044C0</strong> 的位置，在这个地址上按下 P 键，再使用 F5 就可以看到伪代码了。<br>函数很长，截一部分：<br><img lazyload src="/images/loading.svg" data-src="/image/reversingkr4-7.png" alt="image"></p><p>很容易就能够想到，变量 v35 所存储的应该就是已经播放的时间，依据就是代码将 v35 与 60000 以及下面的 60010 进行比较，在 VB 中，计时器有关的时间(秒数)会放大 1000 倍，这里的 60000 所对应的应该就是 60 秒了。<br>对照着伪代码，整理出程序的逻辑，不停地(应该是1秒一次，可以在 VBExplore 中看计时器的属性)将已经播放的时间和 60000 比较，如果小于就执行一些操作，如果大于或等于，就弹窗。<br><img lazyload src="/images/loading.svg" data-src="/image/reversingkr4-8.png" alt="image"></p><p>当时间没有超过 60 秒时，有一处判断：<br><img lazyload src="/images/loading.svg" data-src="/image/reversingkr4-9.png" alt="image"></p><p>如果运行到这里，应该就会拿到 flag 了，那么直接暴力一波，在 OD 中做如下修改：<br><img lazyload src="/images/loading.svg" data-src="/image/reversingkr4-10.png" alt="image"><br>改为：<br><img lazyload src="/images/loading.svg" data-src="/image/reversingkr4-11.png" alt="image"></p><p>再次运行程序(提示：<strong>可以将修改保存到程序，方便操作</strong>)，当播放到1分钟时，会弹出这样的对话框：<br><img lazyload src="/images/loading.svg" data-src="/image/reversingkr4-12.png" alt="image"></p><p>音频还在继续播放，但是点击确定之后程序会退出，而且也没有 flag 出来，百度一下可以找到关于这个错误的信息，一般是控件的属性设置出错导致的，也许你想尝试捕获这个对话框，但是无论断 rtcMsgBox 还是 __vbaNew2 都没有用处，OD 没有捕获到这两个断点，仔细思考一下，对话框弹出后音频却没有间断，那么显然这个对话框控制权并不在本程序，而是在其他位置，其实，这是一个系统所抛出的异常，它位于 kernel32.dll 中，想要捕获到这个窗口，需要了解一下 windows 异常处理机制(这里不详细介绍)，我们可以在系统函数 <strong>RaiseException</strong> 下断点，利用命令 <strong>bp RaiseException</strong> 即可。<br><img lazyload src="/images/loading.svg" data-src="/image/reversingkr4-13.png" alt="image"></p><p>在断点窗口中看到新的断点位于 kernel32.dll 中，下好断点 F9 开始执行程序，当播放时间满 1 分钟时，会断在这个断点，打开调用堆栈窗口，就能找到程序中调用者的信息：<br><img lazyload src="/images/loading.svg" data-src="/image/reversingkr4-14.png" alt="image"></p><p>定位到这块代码，找到了触发异常的函数 <strong>__vbaHresultCheckObj</strong> ，关于这个函数的具体信息可以在百度上找到，它的用途是检查某个对象(应该是VB的特有函数？)，我们之前的修改可能造成了某个对象的属性出错，使得这个函数不能正常工作，但是这个函数上方正好有一处跳转：<br><img lazyload src="/images/loading.svg" data-src="/image/reversingkr4-15.png" alt="image"></p><p>可以将它改为无条件跳转(原来为 大于或等于 则跳转)： <strong>jmp short 004046BF</strong><br>然后将修改保存到文件，再次运行：<br><img lazyload src="/images/loading.svg" data-src="/image/reversingkr4-16.png" alt="image"></p><p>顺利拿到 flag ： <strong>LIstenCare</strong></p><h2 id="05-Replace"><a href="#05-Replace" class="headerlink" title="05 Replace"></a>05 Replace</h2><p>第五题是一道经典的 输入-验证 类型题目，打开程序，要求输入一些内容，然后进行 check，随便输入一些内容(<strong>输入的时候发现，只能输入数字</strong>)：<br><img lazyload src="/images/loading.svg" data-src="/image/reversingkr5-1.png" alt="image"><br>程序直接崩溃了，这个验证的过程应该不会很简单，我们直接使用IDA打开程序，通过搜索字符串的方式定位关键函数，直接定位到了函数 <strong>DialogFunc</strong>，反编译后查看伪代码：<br><img lazyload src="/images/loading.svg" data-src="/image/reversingkr5-2.png" alt="image"></p><p>代码比较奇怪，反编译的似乎不太正确，很多函数无法反编译，而且 IDA 也提示我们输出的结果可能是错误的，静态分析暂时没有什么好办法，那么打开 OD 尝试动态分析。<br>依旧是先在关键函数下断点(我们在 <strong>GetDlgItemInt</strong> 上面下断)，然后 F9 运行程序，在随意输入一些数字后，点击check按钮，程序触发断点：<br><img lazyload src="/images/loading.svg" data-src="/image/reversingkr5-3.png" alt="image"></p><p>步过这个系统函数之后发现 EAX 中存储的值为我们输入数字的十六进制，例如输入 12345，EAX中的值就是 0x3039。</p><p>单步程序，当单步跟踪到这里：<br><img lazyload src="/images/loading.svg" data-src="/image/reversingkr5-4.png" alt="image"></p><p>有一句奇怪的指令 db 81 ，查询 INTEL 手册并没有发现 0x81 对应着什么指令，猜测这个字节是多余的，右键这句代码 –&gt; 分析 –&gt; 从模块删除分析：<br><img lazyload src="/images/loading.svg" data-src="/image/reversingkr5-5.png" alt="image"></p><p>代码就会变成这样，看上去比原来好一些(下面的 pushad 以及 popad 相当于没有执行任何操作)：<br><img lazyload src="/images/loading.svg" data-src="/image/reversingkr5-6.png" alt="image"></p><p>通过单步整理逻辑，0x4084D0 中存储的是我们输入的数字 + 2，这里再加上 0x601605C7 ，继续单步，又加了2，那么最后 0x4084D0 中所存储的就是 <strong>输入 + 4 + 0x601605C7</strong>。<br>随后程序执行到了这里：<br><img lazyload src="/images/loading.svg" data-src="/image/reversingkr5-7.png" alt="image"></p><p>两条 JMP ，紧跟的就是字符串 correct ，这种情况下，如果没有另一处跳转能够直接转到 0x401073 的话，是永远不可能出现 correct 提示的，接着单步程序，来到这段代码：<br><img lazyload src="/images/loading.svg" data-src="/image/reversingkr5-8.png" alt="image"></p><p>动态在 0x40466F 生成了一条代码，并将执行流切换到那里(期间还会对 0x4084D0 进行几次自增，但是在自增前已经将其中的值取出到 EAX 中了，所以并不干扰计算)。<br><img lazyload src="/images/loading.svg" data-src="/image/reversingkr5-9.png" alt="image"></p><p>将 0x90 赋值给 EAX 对应的地址，而此时 EAX 中的值就是上面经过处理的输入，根据 INTEL 手册，0X90 所对应的指令为 nop ，思路比较明显，如果能使这里的 EAX 的值为 <strong>0x401071</strong> ，那么就能将那两条 JMP 中的第二条去掉，从而使程序输出 correct。<br>不过我们的输入会经过加法处理，经过处理的数据已经很大了，并不能达到目标地址，这里利用整数溢出，输入一个很大的整数，使执行加法的时候产生溢出，达到理想的地址。<br>于是我们需要满足算式： <strong>input + 0x601605C7 + 4 &#x3D; 0x401071</strong><br>使用计算器计算：<br><img lazyload src="/images/loading.svg" data-src="/image/reversingkr5-10.png" alt="image"></p><p>由于是 INT 型数据，所以只取后4个字节 即 0xA02A0AA6,转换成十进制就是 2687109798，输入程序：<br><img lazyload src="/images/loading.svg" data-src="/image/reversingkr5-11.png" alt="image"></p><p>flag：<strong>2687109798</strong></p></div><div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8"><div class="article-copyright-info-container"><ul><li><strong>Title:</strong> Reversing.kr 4 5</li><li><strong>Author:</strong> Catalpa</li><li><strong>Created at :</strong> 2018-09-04 00:00:00</li><li><strong>Updated at :</strong> 2024-10-17 08:53:47</li><li><strong>Link:</strong> https://wzt.ac.cn/2018/09/04/reversingkr4-5/</li><li><strong>License: </strong>This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a>.</li></ul></div></div><div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8"><div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2"><a class="prev" rel="prev" href="/2018/09/08/reversingkr6-9/"><span class="left arrow-icon flex justify-center items-center"><i class="fa-solid fa-chevron-left"></i> </span><span class="title flex justify-center items-center"><span class="post-nav-title-item">Reversing.kr 6-9</span> <span class="post-nav-item">Prev posts</span></span></a></div><div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2"><a class="next" rel="next" href="/2018/09/02/reversingkr1-3/"><span class="title flex justify-center items-center"><span class="post-nav-title-item">Reversing.kr 1-3</span> <span class="post-nav-item">Next posts</span> </span><span class="right arrow-icon flex justify-center items-center"><i class="fa-solid fa-chevron-right"></i></span></a></div></div></div><div class="toc-content-container"><div class="post-toc-wrap"><div class="post-toc"><div class="toc-title">On this page</div><div class="page-title">Reversing.kr 4 5</div><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#04-Music-Player"><span class="nav-text">04 Music Player</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#05-Replace"><span class="nav-text">05 Replace</span></a></li></ol></div></div></div></div></div></div><div class="main-content-footer"><footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color"><div class="info-container py-3 text-center"><div class="text-center">&copy; <span>2018</span> - 2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration:0.5s;color:#f54545"></i>&nbsp;&nbsp;<a href="/">Catalpa</a><p class="post-count space-x-0.5"><span>68 posts in total </span><span>258.4k words in total</span></p></div><script data-swup-reload-script src="https://cn.vercount.one/js"></script><div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right"><span id="busuanzi_container_site_uv" class="lg:!block"><span class="text-sm">VISITOR COUNT</span> <span id="busuanzi_value_site_uv"></span> </span><span id="busuanzi_container_site_pv" class="lg:!block"><span class="text-sm">TOTAL PAGE VIEWS</span> <span id="busuanzi_value_site_pv"></span></span></div><div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left"><span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span> <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.8.2</a></span></div><div>Blog up for <span class="odometer" id="runtime_days"></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec</div><script data-swup-reload-script>try{function odometer_init(){document.querySelectorAll(".odometer").forEach(e=>{new Odometer({el:e,format:"( ddd).dd",duration:200})})}odometer_init()}catch(e){}</script></div></footer></div></div><div class="post-tools"><div class="post-tools-container"><ul class="article-tools-list"><li class="right-bottom-tools page-aside-toggle"><i class="fa-regular fa-outdent"></i></li></ul></div></div><div class="right-side-tools-container"><div class="side-tools-container"><ul class="hidden-tools-list"><li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center"><i class="fa-regular fa-magnifying-glass-plus"></i></li><li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center"><i class="fa-regular fa-magnifying-glass-minus"></i></li><li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center"><i class="fa-regular fa-moon"></i></li><li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center"><i class="fa-regular fa-arrow-down"></i></li></ul><ul class="visible-tools-list"><li class="right-bottom-tools toggle-tools-list flex justify-center items-center"><i class="fa-regular fa-cog fa-spin"></i></li><li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center"><i class="arrow-up fas fa-arrow-up"></i> <span class="percent"></span></li></ul></div></div><div class="image-viewer-container"><img src=""></div><div class="search-pop-overlay"><div class="popup search-popup"><div class="search-header"><span class="search-input-field-pre"><i class="fa-solid fa-keyboard"></i></span><div class="search-input-container"><input autocomplete="off" autocorrect="off" autocapitalize="off" placeholder="Search..." spellcheck="false" type="search" class="search-input"></div><span class="popup-btn-close"><i class="fa-solid fa-times"></i></span></div><div id="search-result"><div id="no-result"><i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i></div></div></div></div></main><script src="/js/build/libs/Swup.min.js"></script><script src="/js/build/libs/SwupSlideTheme.min.js"></script><script src="/js/build/libs/SwupScriptsPlugin.min.js"></script><script src="/js/build/libs/SwupProgressPlugin.min.js"></script><script src="/js/build/libs/SwupScrollPlugin.min.js"></script><script src="/js/build/libs/SwupPreloadPlugin.min.js"></script><script>const swup=new Swup({plugins:[new SwupScriptsPlugin({optin:!0}),new SwupProgressPlugin,new SwupScrollPlugin({offset:80}),new SwupSlideTheme({mainElement:".main-content-body"}),new SwupPreloadPlugin],containers:["#swup"]})</script><script src="/js/build/tools/imageViewer.js" type="module"></script><script src="/js/build/utils.js" type="module"></script><script src="/js/build/main.js" type="module"></script><script src="/js/build/layouts/navbarShrink.js" type="module"></script><script src="/js/build/tools/scrollTopBottom.js" type="module"></script><script src="/js/build/tools/lightDarkSwitch.js" type="module"></script><script src="/js/build/layouts/categoryList.js" type="module"></script><script src="/js/build/tools/localSearch.js" type="module"></script><script src="/js/build/tools/codeBlock.js" type="module"></script><script src="/js/build/layouts/lazyload.js" type="module"></script><script src="/js/build/tools/runtime.js"></script><script src="/js/build/libs/odometer.min.js"></script><link rel="stylesheet" href="/assets/odometer-theme-minimal.css"><script src="/js/build/libs/Typed.min.js"></script><script src="/js/build/plugins/typed.js" type="module"></script><script src="/js/build/libs/anime.min.js"></script><script src="/js/build/tools/tocToggle.js" type="module" data-swup-reload-script=""></script><script src="/js/build/layouts/toc.js" type="module" data-swup-reload-script=""></script><script src="/js/build/plugins/tabs.js" type="module" data-swup-reload-script=""></script><script src="/js/build/libs/moment-with-locales.min.js" data-swup-reload-script=""></script><script src="/js/build/layouts/essays.js" type="module" data-swup-reload-script=""></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Catalpa">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="https://wzt.ac.cn/2018/09/04/reversingkr4-5/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+    
+    
+        
+        <meta name="description" content="Reversing.kr 上面的题目。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Reversing.kr 4 5">
+<meta property="og:url" content="https://wzt.ac.cn/2018/09/04/reversingkr4-5/index.html">
+<meta property="og:site_name" content="Catalpa&#39;s Site">
+<meta property="og:description" content="Reversing.kr 上面的题目。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://wzt.ac.cn/image/reversingkr4-1.png">
+<meta property="og:image" content="https://wzt.ac.cn/image/reversingkr4-2.png">
+<meta property="og:image" content="https://wzt.ac.cn/image/reversingkr4-3.png">
+<meta property="og:image" content="https://wzt.ac.cn/image/reversingkr4-4.png">
+<meta property="og:image" content="https://wzt.ac.cn/image/reversingkr4-5.png">
+<meta property="og:image" content="https://wzt.ac.cn/image/reversingkr4-6.png">
+<meta property="og:image" content="https://wzt.ac.cn/image/reversingkr4-7.png">
+<meta property="og:image" content="https://wzt.ac.cn/image/reversingkr4-8.png">
+<meta property="og:image" content="https://wzt.ac.cn/image/reversingkr4-9.png">
+<meta property="og:image" content="https://wzt.ac.cn/image/reversingkr4-10.png">
+<meta property="og:image" content="https://wzt.ac.cn/image/reversingkr4-11.png">
+<meta property="og:image" content="https://wzt.ac.cn/image/reversingkr4-12.png">
+<meta property="og:image" content="https://wzt.ac.cn/image/reversingkr4-13.png">
+<meta property="og:image" content="https://wzt.ac.cn/image/reversingkr4-14.png">
+<meta property="og:image" content="https://wzt.ac.cn/image/reversingkr4-15.png">
+<meta property="og:image" content="https://wzt.ac.cn/image/reversingkr4-16.png">
+<meta property="og:image" content="https://wzt.ac.cn/image/reversingkr5-1.png">
+<meta property="og:image" content="https://wzt.ac.cn/image/reversingkr5-2.png">
+<meta property="og:image" content="https://wzt.ac.cn/image/reversingkr5-3.png">
+<meta property="og:image" content="https://wzt.ac.cn/image/reversingkr5-4.png">
+<meta property="og:image" content="https://wzt.ac.cn/image/reversingkr5-5.png">
+<meta property="og:image" content="https://wzt.ac.cn/image/reversingkr5-6.png">
+<meta property="og:image" content="https://wzt.ac.cn/image/reversingkr5-7.png">
+<meta property="og:image" content="https://wzt.ac.cn/image/reversingkr5-8.png">
+<meta property="og:image" content="https://wzt.ac.cn/image/reversingkr5-9.png">
+<meta property="og:image" content="https://wzt.ac.cn/image/reversingkr5-10.png">
+<meta property="og:image" content="https://wzt.ac.cn/image/reversingkr5-11.png">
+<meta property="article:published_time" content="2018-09-03T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-10-17T00:53:47.878Z">
+<meta property="article:author" content="Catalpa">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wzt.ac.cn/image/reversingkr4-1.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/img/favicon.ico" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon.ico">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <!--- Page Info-->
+    
+    <title>
+        
+            Reversing.kr 4 5 | Catalpa&#39;s Site
+        
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/tailwind.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"wzt.ac.cn","root":"/","language":"en","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"delete_mask":false,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":["网络安全爱好者"]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_sa"},"lazyload":true,"pangu_js":false,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/img/bk.jpg","dark":"/img/bk.jpg"},"title":"Welcome!","subtitle":{"text":["欢迎来到本站!","今天有什么新鲜事吗?","知识不应该是付费的!","持续学习 持续进步","网络安全爱好者","非常感谢您的捐赠!","祝您拥有美好的一天!"],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"style":"default","links":{"github":"https://github.com/rrrrrrri","instagram":null,"zhihu":null,"twitter":null,"email":"anu11@foxmail.com"},"qrs":{"weixin":null,"fa-solid fa-hand-holding-dollar":"/img/w.png"}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.8.2","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"归档":{"path":"/archives","icon":"fa-regular fa-archive"},"感谢捐赠":{"path":"/donates","icon":"fa-solid fa-hand-holding-dollar"}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":"读者有责任遵守其所在国家或地区的所有法律，作者不对使用其文章中提到的任何内容所造成的任何损害负责。","show_on_mobile":true,"links":null},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":false,"limit":3},"tags":{"enable":false,"limit":3}},"footerStart":"2018/9/1 08:00:00"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+
+<body>
+	<div class="progress-bar-container">
+	
+
+	
+	<span class="pjax-progress-bar"></span>
+	<!--        <span class="swup-progress-icon">-->
+	<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+	<!--        </span>-->
+	
+</div>
+
+<main class="page-container" id="swup">
+
+	
+
+	<div class="main-content-container flex flex-col justify-between min-h-dvh">
+		<div class="main-content-header">
+			<header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+                <a class="logo-image h-8 w-8 sm:w-10 sm:h-10 mr-3" href="/">
+                    <img src="/img/favicon.ico" class="w-full h-full rounded-sm">
+                </a>
+            
+            <a class="logo-title" href="/">
+                
+                Catalpa&#39;s Site
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/archives"
+                                        >
+                                    <i class="fa-regular fa-archive fa-fw"></i>
+                                    归档
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/donates"
+                                        >
+                                    <i class="fa-solid fa-hand-holding-dollar fa-fw"></i>
+                                    感谢捐赠
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/archives"
+                        >
+                            <span>
+                                归档
+                            </span>
+                            
+                                <i class="fa-regular fa-archive fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/donates"
+                        >
+                            <span>
+                                感谢捐赠
+                            </span>
+                            
+                                <i class="fa-solid fa-hand-holding-dollar fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">0</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">4</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">69</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+		</div>
+
+		<div class="main-content-body transition-fade-up">
+			
+
+			<div class="main-content">
+				<div class="post-page-container flex relative justify-between box-border w-full h-full">
+	<div class="article-content-container">
+
+		<div class="article-title relative w-full">
+			
+			<div class="w-full flex items-center pt-6 justify-start">
+				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">Reversing.kr 4 5</h1>
+			</div>
+			
+		</div>
+
+		
+		<div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+			<div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+				<img src="/img/logo.png">
+			</div>
+			<div class="info flex flex-col justify-between">
+				<div class="author flex items-center">
+					<span class="name text-default-text-color text-lg font-semibold">Catalpa</span>
+					
+					<span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">网络安全爱好者</span>
+					
+				</div>
+				<div class="meta-info">
+					<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2018-09-04</span>
+        <span class="mobile">2018-09-04</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-10-17 08:53:47</span>
+            <span class="mobile">2024-10-17 08:53:47</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/CTF/">CTF</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>2.4k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>8 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+				</div>
+			</div>
+		</div>
+		
+
+		
+
+
+		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+			<p>Reversing.kr 上面的题目。</p>
+<span id="more"></span>
+
+<h2 id="04-Music-Player"><a href="#04-Music-Player" class="headerlink" title="04 Music Player"></a>04 Music Player</h2><p>第四题增加了一些难度，打开文件，是一个简单的音乐播放器，但是载入的歌曲最多只能播放1分钟，根据题目提示，如果能够使它播放超过一分钟，就能看到flag。  </p>
+<p>程序没有加壳，直接丢进IDA看会发现代码非常混乱，有很多未解析的代码，如果你使用PEID等工具检查了程序的话就会发现，程序使用VB编写，VB有两种编译模式，第一个叫做 P-Code(伪代码编译)，另一种则是正常的本机代码编译，P-Code 模式会将代码编译为VB特有的伪代码形式，由 VB 的虚拟机运行，不巧的是，微软并没有公开这个虚拟机的信息，但是还是有逆向方法的，只不过需要注意一些细节，OD可以正常使用，但是在修改机器码的时候就需要特别注意了。通过使用VB专用的逆向工具也能得到一些有用的信息，比如使用 VBExplore 打开这个程序：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/reversingkr4-1.png"
+                      alt="image"
+                ></p>
+<p>大致浏览各个控件，再运行程序，可以一一对应，其中还有两个计时器，不过没有代码对照，可能无法得知它们的用途。<br>直接祭出 OD，开始调试程序。  </p>
+<p><strong>注意：还有一款实用软件 VB Decompiler，它可以反汇编以及反编译VB程序，对于这种P-CODE还是能够处理出一些有用的信息，但是代码比较难看，这里不以它为参考。</strong></p>
+<p>首先要了解逆向 VB 的一些基本技巧，由于这是一个GUI程序，所以想要定位关键代码，一定要了解一些VB的API，比如负责弹出窗口的 <strong>rtcMsgBox</strong> 或者 <strong>__vbaNew2</strong>，以及操作字符串的一些函数，这些都是破解中较为常用的，强大的 OD 已经集成了一些插件，可以让我们直接在这些系统函数中下断(打开OD后上面的灰色工具条中，点击VB)：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/reversingkr4-2.png"
+                      alt="image"
+                ></p>
+<p>这里能看到很多实用的断点工具，本题主要使用第一项（因为在播放满一分钟时会弹出一个窗口），点击后再打开断点窗口，能看到新增加了一个断点:<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/reversingkr4-3.png"
+                      alt="image"
+                ></p>
+<p>这个断点就在 rtcMsgBox 了，以后程序的运行过程中，如果再次调用到了这个函数，调试器就会断在这里，方便我们进行回溯。<br>然后F9运行程序，打开一个MP3文件(大于1分钟)，点击播放按钮开始播放，等播放到1分钟(可以直接拖动进度条)，如果不出意外 OD 会触发之前下的断点：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/reversingkr4-4.png"
+                      alt="image"
+                ></p>
+<p>这时观察栈中的数据，根据函数调用约定，这时栈顶的内容就是调用者的地址：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/reversingkr4-5.png"
+                      alt="image"
+                ></p>
+<p>有些情况下栈顶可能并不是调用者的地址，这时可以点击上方工具栏中的 “k” 按钮，显示调用堆栈：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/reversingkr4-6.png"
+                      alt="image"
+                ><br>这里也能看到调用者的信息。<br>双击调用者的地址，在反汇编窗口中转到关键函数，这时有两种办法，其一就是定位到函数开头(push ebp、mov ebp,esp …)下断点，然后单步弄清程序逻辑，另一种的思路是：由于我们已经找到关键函数的地址，所以可以在IDA中找到对应位置，然后尝试反编译出伪代码以减少工作量。<br>我们直接使用IDA载入，找到地址为 <strong>0x004044C0</strong> 的位置，在这个地址上按下 P 键，再使用 F5 就可以看到伪代码了。<br>函数很长，截一部分：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/reversingkr4-7.png"
+                      alt="image"
+                ></p>
+<p>很容易就能够想到，变量 v35 所存储的应该就是已经播放的时间，依据就是代码将 v35 与 60000 以及下面的 60010 进行比较，在 VB 中，计时器有关的时间(秒数)会放大 1000 倍，这里的 60000 所对应的应该就是 60 秒了。<br>对照着伪代码，整理出程序的逻辑，不停地(应该是1秒一次，可以在 VBExplore 中看计时器的属性)将已经播放的时间和 60000 比较，如果小于就执行一些操作，如果大于或等于，就弹窗。<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/reversingkr4-8.png"
+                      alt="image"
+                ></p>
+<p>当时间没有超过 60 秒时，有一处判断：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/reversingkr4-9.png"
+                      alt="image"
+                ></p>
+<p>如果运行到这里，应该就会拿到 flag 了，那么直接暴力一波，在 OD 中做如下修改：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/reversingkr4-10.png"
+                      alt="image"
+                ><br>改为：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/reversingkr4-11.png"
+                      alt="image"
+                ></p>
+<p>再次运行程序(提示：<strong>可以将修改保存到程序，方便操作</strong>)，当播放到1分钟时，会弹出这样的对话框：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/reversingkr4-12.png"
+                      alt="image"
+                ></p>
+<p>音频还在继续播放，但是点击确定之后程序会退出，而且也没有 flag 出来，百度一下可以找到关于这个错误的信息，一般是控件的属性设置出错导致的，也许你想尝试捕获这个对话框，但是无论断 rtcMsgBox 还是 __vbaNew2 都没有用处，OD 没有捕获到这两个断点，仔细思考一下，对话框弹出后音频却没有间断，那么显然这个对话框控制权并不在本程序，而是在其他位置，其实，这是一个系统所抛出的异常，它位于 kernel32.dll 中，想要捕获到这个窗口，需要了解一下 windows 异常处理机制(这里不详细介绍)，我们可以在系统函数 <strong>RaiseException</strong> 下断点，利用命令 <strong>bp RaiseException</strong> 即可。<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/reversingkr4-13.png"
+                      alt="image"
+                ></p>
+<p>在断点窗口中看到新的断点位于 kernel32.dll 中，下好断点 F9 开始执行程序，当播放时间满 1 分钟时，会断在这个断点，打开调用堆栈窗口，就能找到程序中调用者的信息：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/reversingkr4-14.png"
+                      alt="image"
+                ></p>
+<p>定位到这块代码，找到了触发异常的函数 <strong>__vbaHresultCheckObj</strong> ，关于这个函数的具体信息可以在百度上找到，它的用途是检查某个对象(应该是VB的特有函数？)，我们之前的修改可能造成了某个对象的属性出错，使得这个函数不能正常工作，但是这个函数上方正好有一处跳转：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/reversingkr4-15.png"
+                      alt="image"
+                ></p>
+<p>可以将它改为无条件跳转(原来为 大于或等于 则跳转)： <strong>jmp short 004046BF</strong><br>然后将修改保存到文件，再次运行：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/reversingkr4-16.png"
+                      alt="image"
+                ></p>
+<p>顺利拿到 flag ： <strong>LIstenCare</strong></p>
+<h2 id="05-Replace"><a href="#05-Replace" class="headerlink" title="05 Replace"></a>05 Replace</h2><p>第五题是一道经典的 输入-验证 类型题目，打开程序，要求输入一些内容，然后进行 check，随便输入一些内容(<strong>输入的时候发现，只能输入数字</strong>)：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/reversingkr5-1.png"
+                      alt="image"
+                ><br>程序直接崩溃了，这个验证的过程应该不会很简单，我们直接使用IDA打开程序，通过搜索字符串的方式定位关键函数，直接定位到了函数 <strong>DialogFunc</strong>，反编译后查看伪代码：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/reversingkr5-2.png"
+                      alt="image"
+                ></p>
+<p>代码比较奇怪，反编译的似乎不太正确，很多函数无法反编译，而且 IDA 也提示我们输出的结果可能是错误的，静态分析暂时没有什么好办法，那么打开 OD 尝试动态分析。<br>依旧是先在关键函数下断点(我们在 <strong>GetDlgItemInt</strong> 上面下断)，然后 F9 运行程序，在随意输入一些数字后，点击check按钮，程序触发断点：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/reversingkr5-3.png"
+                      alt="image"
+                ></p>
+<p>步过这个系统函数之后发现 EAX 中存储的值为我们输入数字的十六进制，例如输入 12345，EAX中的值就是 0x3039。</p>
+<p>单步程序，当单步跟踪到这里：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/reversingkr5-4.png"
+                      alt="image"
+                ></p>
+<p>有一句奇怪的指令 db 81 ，查询 INTEL 手册并没有发现 0x81 对应着什么指令，猜测这个字节是多余的，右键这句代码 –&gt; 分析 –&gt; 从模块删除分析：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/reversingkr5-5.png"
+                      alt="image"
+                ></p>
+<p>代码就会变成这样，看上去比原来好一些(下面的 pushad 以及 popad 相当于没有执行任何操作)：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/reversingkr5-6.png"
+                      alt="image"
+                ></p>
+<p>通过单步整理逻辑，0x4084D0 中存储的是我们输入的数字 + 2，这里再加上 0x601605C7 ，继续单步，又加了2，那么最后 0x4084D0 中所存储的就是 <strong>输入 + 4 + 0x601605C7</strong>。<br>随后程序执行到了这里：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/reversingkr5-7.png"
+                      alt="image"
+                ></p>
+<p>两条 JMP ，紧跟的就是字符串 correct ，这种情况下，如果没有另一处跳转能够直接转到 0x401073 的话，是永远不可能出现 correct 提示的，接着单步程序，来到这段代码：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/reversingkr5-8.png"
+                      alt="image"
+                ></p>
+<p>动态在 0x40466F 生成了一条代码，并将执行流切换到那里(期间还会对 0x4084D0 进行几次自增，但是在自增前已经将其中的值取出到 EAX 中了，所以并不干扰计算)。<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/reversingkr5-9.png"
+                      alt="image"
+                ></p>
+<p>将 0x90 赋值给 EAX 对应的地址，而此时 EAX 中的值就是上面经过处理的输入，根据 INTEL 手册，0X90 所对应的指令为 nop ，思路比较明显，如果能使这里的 EAX 的值为 <strong>0x401071</strong> ，那么就能将那两条 JMP 中的第二条去掉，从而使程序输出 correct。<br>不过我们的输入会经过加法处理，经过处理的数据已经很大了，并不能达到目标地址，这里利用整数溢出，输入一个很大的整数，使执行加法的时候产生溢出，达到理想的地址。<br>于是我们需要满足算式： <strong>input + 0x601605C7 + 4 &#x3D; 0x401071</strong><br>使用计算器计算：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/reversingkr5-10.png"
+                      alt="image"
+                ></p>
+<p>由于是 INT 型数据，所以只取后4个字节 即 0xA02A0AA6,转换成十进制就是 2687109798，输入程序：<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/image/reversingkr5-11.png"
+                      alt="image"
+                ></p>
+<p>flag：<strong>2687109798</strong></p>
+
+		</div>
+
+		
+		<div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+			<div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> Reversing.kr 4 5</li>
+        <li><strong>Author:</strong> Catalpa</li>
+        <li><strong>Created at
+                :</strong> 2018-09-04 00:00:00</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2024-10-17 08:53:47
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://wzt.ac.cn/2018/09/04/reversingkr4-5/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+		</div>
+		
+
+		
+
+		
+
+		
+		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+			
+			<div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="prev" rel="prev" href="/2018/09/08/reversingkr6-9/">
+					<span class="left arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-left"></i>
+					</span>
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item">Reversing.kr 6-9</span>
+						<span class="post-nav-item">Prev posts</span>
+					</span>
+				</a>
+			</div>
+			
+			
+			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="next" rel="next" href="/2018/09/02/reversingkr1-3/">
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item">Reversing.kr 1-3</span>
+						<span class="post-nav-item">Next posts</span>
+					</span>
+					<span class="right arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-right"></i>
+					</span>
+				</a>
+			</div>
+			
+		</div>
+		
+
+
+		
+	</div>
+
+	
+	<div class="toc-content-container">
+		<div class="post-toc-wrap">
+	<div class="post-toc">
+		<div class="toc-title">On this page</div>
+		<div class="page-title">Reversing.kr 4 5</div>
+		<ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#04-Music-Player"><span class="nav-text">04 Music Player</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#05-Replace"><span class="nav-text">05 Replace</span></a></li></ol>
+
+	</div>
+</div>
+	</div>
+	
+</div>
+			</div>
+
+			
+		</div>
+
+		<div class="main-content-footer">
+			<footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2018</span>
+              -
+            
+            2025&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Catalpa</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        69 posts in total
+                    </span>
+                    
+                        <span>
+                            261.4k words in total
+                        </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.8.2</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+		</div>
+	</div>
+
+	
+	<div class="post-tools">
+		<div class="post-tools-container">
+	<ul class="article-tools-list">
+		<!-- TOC aside toggle -->
+		
+		<li class="right-bottom-tools page-aside-toggle">
+			<i class="fa-regular fa-outdent"></i>
+		</li>
+		
+
+		<!-- go comment -->
+		
+	</ul>
+</div>
+	</div>
+	
+
+	<div class="right-side-tools-container">
+		<div class="side-tools-container">
+	<ul class="hidden-tools-list">
+		<li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-plus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-minus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+			<i class="fa-regular fa-moon"></i>
+		</li>
+
+		<!-- rss -->
+		
+
+		
+
+		<li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+			<i class="fa-regular fa-arrow-down"></i>
+		</li>
+	</ul>
+
+	<ul class="visible-tools-list">
+		<li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+			<i class="fa-regular fa-cog fa-spin"></i>
+		</li>
+		
+		<li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+			<i class="arrow-up fas fa-arrow-up"></i>
+			<span class="percent"></span>
+		</li>
+		
+		
+	</ul>
+</div>
+	</div>
+
+	<div class="image-viewer-container">
+	<img src="">
+</div>
+
+	
+	<div class="search-pop-overlay">
+	<div class="popup search-popup">
+		<div class="search-header">
+			<span class="search-input-field-pre">
+				<i class="fa-solid fa-keyboard"></i>
+			</span>
+			<div class="search-input-container">
+				<input autocomplete="off" autocorrect="off" autocapitalize="off" placeholder="Search..." spellcheck="false" type="search" class="search-input">
+			</div>
+			<span class="popup-btn-close">
+				<i class="fa-solid fa-times"></i>
+			</span>
+		</div>
+		<div id="search-result">
+			<div id="no-result">
+				<i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+			</div>
+		</div>
+	</div>
+</div>
+	
+
+</main>
+
+
+
+<script src="/js/build/libs/Swup.min.js"></script>
+
+<script src="/js/build/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/build/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+	
+<script src="/js/build/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/build/utils.js" type="module"></script>
+
+<script src="/js/build/main.js" type="module"></script>
+
+<script src="/js/build/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/build/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/build/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/build/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/build/tools/localSearch.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/tools/runtime.js"></script>
+
+    
+<script src="/js/build/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/build/libs/Typed.min.js"></script>
+
+  
+<script src="/js/build/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+    
+<script src="/js/build/libs/anime.min.js"></script>
+
+
+
+
+
+    
+<script src="/js/build/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+<script src="/js/build/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+
+<script src="/js/build/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+
+	
+</body>
+
+</html>
