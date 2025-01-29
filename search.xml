@@ -13,7 +13,7 @@
     <title>CVE-2024-53704</title>
     <url>/2025/01/28/cve-2024-53704/</url>
     <content><![CDATA[<p>2025 年 1 月 8 日，Sonicwall 公开了影响 SonicOS GEN6、GEN7、GEN8 硬件与虚拟化设备的一批漏洞，其中 <a class="link"   href="https://psirt.global.sonicwall.com/vuln-detail/SNWLID-2025-0003" >CVE-2024-53704<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> 被描述为 SSLVPN 身份验证绕过，本文对此漏洞进行简要分析。</p>
-<p><strong>没有证据表明该漏洞存在在野利用，但鉴于其影响范围，建议用户及时更新最新版本。</strong></p>
+<p><strong>没有证据表明该漏洞存在在野利用，但鉴于 PoC 已经公开，建议用户及时更新最新版本。</strong></p>
 <span id="more"></span>
 
 <h1 id="基本信息"><a href="#基本信息" class="headerlink" title="基本信息"></a>基本信息</h1><p>Sonicwall 发布的公告中提到该漏洞为 SSLVPN 服务的身份验证绕过，影响 SonicOS GEN7 7.1.x 以及 GEN8 版本，该公告中没有给出任何具体信息。2025 年 1 月 9 日，<a class="link"   href="https://www.zerodayinitiative.com/advisories/ZDI-25-012/" >ZDI<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> 公开了关于该漏洞更详细的信息，我们可以得知漏洞出现在 SSLVPN 服务验证 session 的过程中，具体来说是 BASE64 格式的 session 验证存在缺陷，导致身份验证绕过。</p>
@@ -61,6 +61,7 @@
 <p>这里的问题在于，代码获取了外部传入 session 的一个字节之后，会先在 if 条件中判断获取到的这个字节是否为 NULL，如果是就释放 session 列表并返回 <strong>obj 对象</strong>。假设我们传入 session 为 <code>\x00abcd</code>，那么 <code>find_cookie</code> 函数就会直接返回 session 列表中的第一个对象，跳过后续的字符验证，这样就可以直接获得列表中的第一个用户会话信息，造成身份验证绕过。此外，由于 session 由小写字母组成，我们可以控制第二个字节为 NULL，遍历第一个字节来获取 session 列表中的其它用户信息。</p>
 <h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><p><a class="link"   href="https://psirt.global.sonicwall.com/vuln-detail/SNWLID-2025-0003" >https://psirt.global.sonicwall.com/vuln-detail/SNWLID-2025-0003<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
 <p><a class="link"   href="https://www.zerodayinitiative.com/advisories/ZDI-25-012/" >https://www.zerodayinitiative.com/advisories/ZDI-25-012/<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<p><a class="link"   href="https://attackerkb.com/topics/UB3P3xHVAo/cve-2024-53704/rapid7-analysis" >https://attackerkb.com/topics/UB3P3xHVAo/cve-2024-53704/rapid7-analysis<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
 ]]></content>
       <categories>
         <category>漏洞分析</category>
